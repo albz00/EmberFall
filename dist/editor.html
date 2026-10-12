@@ -1,0 +1,26 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#241d2c"><title>Emberfall map editor</title><link rel="icon" href="./favicon.svg"><link rel="stylesheet" href="./editor.css?v=46"></head><body>
+<canvas id="view" aria-label="Map view"></canvas>
+<header class="ed-bar">
+ <a class="ed-button" href="./index.html">Game</a>
+ <div class="ed-group"><button class="ed-button" id="undo" title="Undo (Ctrl+Z)">Undo</button><button class="ed-button" id="redo" title="Redo (Ctrl+Shift+Z)">Redo</button></div>
+ <div class="ed-group"><button class="ed-button" id="view-orbit" aria-pressed="true">Orbit</button><button class="ed-button" id="view-top" aria-pressed="false" title="Top view (T)">Top</button></div>
+ <div class="ed-group" id="layers">
+  <button class="ed-chip" data-layer="colliders" aria-pressed="true">Colliders</button><button class="ed-chip" data-layer="surfaces" aria-pressed="true">Surfaces</button><button class="ed-chip" data-layer="regions" aria-pressed="true">Regions</button><button class="ed-chip" data-layer="markers" aria-pressed="true">Markers</button>
+ </div>
+ <div class="ed-group ed-end"><button class="ed-button" id="import">Import</button><button class="ed-button" id="export">Export</button><button class="ed-button" id="reset" title="Replace the draft with the bundled map">Reset</button><button class="ed-primary" id="play">Play draft</button></div>
+ <input type="file" id="import-file" accept=".json,application/json" hidden>
+</header>
+<aside class="ed-panel ed-left">
+ <div class="ed-add"><select id="add-prefab" aria-label="Object prefab"></select><button class="ed-button" id="add-object">Add</button></div>
+ <div class="ed-add"><select id="add-list" aria-label="Point list"><option value="destinations">Bot destination</option><option value="bridgeCover">Cover point</option><option value="supplyDrops">Supply drop</option></select><button class="ed-button" id="add-point">Add</button></div>
+ <nav id="outline" aria-label="Map entries"></nav>
+</aside>
+<aside class="ed-panel ed-right">
+ <section id="inspector"></section>
+ <section id="issues" aria-live="polite"></section>
+</aside>
+<div id="readout" aria-hidden="true"></div><div id="hover-label" class="hidden"></div><div id="toast" role="status"></div>
+<div id="fatal" class="hidden"><h2>Unable to load</h2><p id="fatal-message"></p><button onclick="location.reload()">Reload</button></div>
+<script>function editorFatal(m){document.getElementById('fatal').classList.remove('hidden');document.getElementById('fatal-message').textContent=m;}addEventListener('error',e=>{if(e.error)editorFatal(e.error.message);});</script>
+<script type="module" src="./editor.js?v=50" onerror="editorFatal('Editor files could not be loaded. Check that the server is running, then reload.')"></script>
+</body></html>

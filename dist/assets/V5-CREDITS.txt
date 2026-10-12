@@ -1,0 +1,57 @@
+Emberfall v5 asset credits
+
+All models are the exact models linked by the user. Original geometry, topology, normals, materials and colors retained. No external textures. Static geometry, no skeletons or animation. Normalization changes root transforms only, preserving originals under Poly Pizza IDs.
+
+armor-metal.glb: "Armor Metal" by Quaternius
+Source: https://poly.pizza/m/TMUoxILh9w
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. No scaling applied to armor.
+
+armor-leather.glb: "Armor Leather" by Quaternius
+Source: https://poly.pizza/m/na9KfWiKN8
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. No scaling applied to armor.
+
+armor-helmet.glb: "Helmet" by CreativeTechLab
+Source: https://poly.pizza/m/uSCGe4LD2v
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. No scaling applied to armor.
+
+staff-frost.glb: "Staff" by Zsky
+Source: https://poly.pizza/m/DZpBi0DSgZ
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+staff-arcane.glb: "Magick wand" by Jakob Hippe
+Source: https://poly.pizza/m/51f2Nk9BHq-
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+staff-venom.glb: "Staff" by Zsky
+Source: https://poly.pizza/m/bKCpO8LRCM
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+potion-healing.glb: "Complex Health Potion" by Garrett LeFever
+Source: https://poly.pizza/m/5DvOJDIgDYu
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+potion-haste.glb: "Potion Bottle - Game Asset" by Don Carson
+Source: https://poly.pizza/m/dOREefQfDQu
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+potion-guard.glb: "Healing potion" by Spiros Koutsourelis
+Source: https://poly.pizza/m/3Db7LQbUEEt
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+ledge-table.glb: "wizard table" by mario tofani
+Source: https://poly.pizza/m/fpd7imG8Vxa
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Changes: Original geometry, materials and transparency preserved; root pivot and scale normalized. 
+
+Runtime changes: body armor fitted to Chest; helmet rotated to face forward and fitted to the selected character’s Head. Transparent glass disables depth writing. Staff rarity variants can add emissive color. Models otherwise retain the supplied geometry.
+
+Audio: original 112 BPM, 34.29-second synthesized minor string, bass and hand-drum loop. No samples or third-party composition. Source: scripts/render-music.py.

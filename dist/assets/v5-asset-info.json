@@ -1,0 +1,680 @@
+[
+  {
+    "file": "armor-metal.glb",
+    "id": "TMUoxILh9w",
+    "title": "Armor Metal",
+    "author": "Quaternius",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://poly.pizza/m/TMUoxILh9w",
+    "download": "https://static.poly.pizza/60ccfcdb-6aa7-4caf-a688-9b16a2a5f300.glb",
+    "bytes": 39956,
+    "type": "armor",
+    "originalSHA256": "f584937911ef122d874fe463912f534cdb153e63fabb05fc0c10d2f629216af0",
+    "originalBounds": {
+      "min": [
+        -0.7699464447796345,
+        -0.5115235427557309,
+        -0.3352114213796931
+      ],
+      "max": [
+        0.7699464447796345,
+        0.5884679786294515,
+        0.42432346937494625
+      ],
+      "size": [
+        1.539892889559269,
+        1.0999915213851823,
+        0.7595348907546393
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.7699464447796345,
+        -0.5499957606925912,
+        -0.37976744537731966
+      ],
+      "max": [
+        0.7699464447796345,
+        0.5499957606925912,
+        0.37976744537731966
+      ],
+      "size": [
+        1.539892889559269,
+        1.0999915213851823,
+        0.7595348907546393
+      ]
+    },
+    "normalization": {
+      "scale": 1.0,
+      "sourcePivot": [
+        0.0,
+        0.03847221793686034,
+        0.044556023997626565
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. No scaling applied to armor.",
+    "centerPivot": true,
+    "verticalAxis": "+Y",
+    "frontAxis": "+Z",
+    "rigged": false,
+    "parts": [
+      {
+        "node": "Armor_Metal2",
+        "material": "LightSteel",
+        "originalMin": [
+          -0.7699464447796345,
+          -0.5115235427557309,
+          -0.3352114213796931
+        ],
+        "originalMax": [
+          0.7699464447796345,
+          0.5884679786294515,
+          0.42432346937494625
+        ]
+      }
+    ]
+  },
+  {
+    "file": "armor-leather.glb",
+    "id": "na9KfWiKN8",
+    "title": "Armor Leather",
+    "author": "Quaternius",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://poly.pizza/m/na9KfWiKN8",
+    "download": "https://static.poly.pizza/79e120cf-db14-4d0b-b5ff-1fea0e9483a1.glb",
+    "bytes": 17488,
+    "type": "armor",
+    "originalSHA256": "80326a8e690cfa8813638f22c284f81ea0b0e8d525caa0ccd78f765933c66cfd",
+    "originalBounds": {
+      "min": [
+        -0.48771053552627563,
+        -0.4281139828137383,
+        -0.3352114213796931
+      ],
+      "max": [
+        0.48771053552627563,
+        0.39351459409937284,
+        0.33521144583433604
+      ],
+      "size": [
+        0.9754210710525513,
+        0.8216285769131111,
+        0.6704228672140291
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.48771053552627563,
+        -0.41081428845655554,
+        -0.33521143360701455
+      ],
+      "max": [
+        0.48771053552627563,
+        0.41081428845655554,
+        0.33521143360701455
+      ],
+      "size": [
+        0.9754210710525513,
+        0.8216285769131111,
+        0.6704228672140291
+      ]
+    },
+    "normalization": {
+      "scale": 1.0,
+      "sourcePivot": [
+        0.0,
+        -0.017299694357182732,
+        1.2227321460889229e-08
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. No scaling applied to armor.",
+    "centerPivot": true,
+    "verticalAxis": "+Y",
+    "frontAxis": "+Z",
+    "rigged": false,
+    "parts": [
+      {
+        "node": "Armor_Leather",
+        "material": "Brown",
+        "originalMin": [
+          -0.48771053552627563,
+          -0.4281139828137383,
+          -0.3352114213796931
+        ],
+        "originalMax": [
+          0.48771053552627563,
+          0.39351459409937284,
+          0.33521144583433604
+        ]
+      }
+    ]
+  },
+  {
+    "file": "armor-helmet.glb",
+    "id": "uSCGe4LD2v",
+    "title": "Helmet",
+    "author": "CreativeTechLab",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/uSCGe4LD2v",
+    "download": "https://static.poly.pizza/2e4ff75d-264b-4527-ac18-c9cb939e4e89.glb",
+    "bytes": 25980,
+    "type": "armor",
+    "originalSHA256": "afa91de0a1753dabc2e9953e0dade78571202f0744a070cc9f4c241e68b59286",
+    "originalBounds": {
+      "min": [
+        -0.14845388767130757,
+        -0.1987727193010231,
+        -0.23579180545126707
+      ],
+      "max": [
+        0.148472599622579,
+        0.19184503917270973,
+        0.196591838721871
+      ],
+      "size": [
+        0.2969264872938866,
+        0.3906177584737328,
+        0.43238364417313807
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.1484632436469433,
+        -0.1953088792368664,
+        -0.21619182208656904
+      ],
+      "max": [
+        0.1484632436469433,
+        0.1953088792368664,
+        0.21619182208656904
+      ],
+      "size": [
+        0.2969264872938866,
+        0.3906177584737328,
+        0.43238364417313807
+      ]
+    },
+    "normalization": {
+      "scale": 1.0,
+      "sourcePivot": [
+        9.355975635713665e-06,
+        -0.0034638400641566897,
+        -0.019599983364698037
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. No scaling applied to armor.",
+    "centerPivot": true,
+    "verticalAxis": "+Y",
+    "frontAxis": "-Z",
+    "rigged": false,
+    "parts": [
+      {
+        "node": "helmet",
+        "material": "iron",
+        "originalMin": [
+          -0.14845388767130757,
+          -0.1987727193010231,
+          -0.22849874067645667
+        ],
+        "originalMax": [
+          0.148472599622579,
+          0.1850338176108781,
+          0.18245665265057343
+        ]
+      },
+      {
+        "node": "helmet",
+        "material": "redPaint",
+        "originalMin": [
+          -0.06801577415265117,
+          -0.19277930298195575,
+          -0.23579180545126707
+        ],
+        "originalMax": [
+          0.06803451540801679,
+          0.19184503917270973,
+          0.196591838721871
+        ]
+      }
+    ]
+  },
+  {
+    "file": "staff-frost.glb",
+    "id": "DZpBi0DSgZ",
+    "title": "Staff",
+    "author": "Zsky",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/DZpBi0DSgZ",
+    "download": "https://static.poly.pizza/16783e13-5748-42aa-ac5c-73666390e625.glb",
+    "bytes": 13416,
+    "type": "staff",
+    "originalSHA256": "54fc2a9da35f4aedce8ea6ef9f6528a6bca5b44cff1c64de08dd11366301ec9e",
+    "originalBounds": {
+      "min": [
+        -0.477198988199234,
+        -6.964728832244873,
+        -0.5231549739837646
+      ],
+      "max": [
+        0.5956199765205383,
+        5.373751163482666,
+        0.5058910250663757
+      ],
+      "size": [
+        1.0728189647197723,
+        12.338479995727539,
+        1.0290459990501404
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.06161603420368703,
+        -0.5,
+        -0.06831700740416634
+      ],
+      "max": [
+        0.08184987832367266,
+        1.15,
+        0.0692952348672216
+      ],
+      "size": [
+        0.14346591252735968,
+        1.6500000000000001,
+        0.13761224227138794
+      ]
+    },
+    "normalization": {
+      "scale": 0.13372797950568852,
+      "sourcePivot": [
+        -0.016442500054836273,
+        -3.225795500206225,
+        -0.01228950172662735
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "totalLength": 1.65,
+    "gripOrigin": [
+      0,
+      0,
+      0
+    ],
+    "bottomY": -0.5,
+    "topY": 1.15,
+    "verticalAxis": "+Y"
+  },
+  {
+    "file": "staff-arcane.glb",
+    "id": "51f2Nk9BHq-",
+    "title": "Magick wand",
+    "author": "Jakob Hippe",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/51f2Nk9BHq-",
+    "download": "https://static.poly.pizza/92921ef3-791c-4631-9401-891b08b8d1d3.glb",
+    "bytes": 43524,
+    "type": "staff",
+    "originalSHA256": "fa4478d6896d47b14675cd31fe0647896b62e0ad693d67265c78f818cc432053",
+    "originalBounds": {
+      "min": [
+        -0.13636110723018646,
+        -1.0756269693374634,
+        -0.057248588651418686
+      ],
+      "max": [
+        0.09872657060623169,
+        0.4469585120677948,
+        0.07365965843200684
+      ],
+      "size": [
+        0.23508767783641815,
+        1.5225854814052582,
+        0.13090824708342552
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.18817098807613816,
+        -0.4999999999999999,
+        -0.04913294512979043
+      ],
+      "max": [
+        0.06658953155792903,
+        1.15,
+        0.09273009660123796
+      ],
+      "size": [
+        0.2547605196340672,
+        1.65,
+        0.1418630417310284
+      ]
+    },
+    "normalization": {
+      "scale": 1.0836829985250782,
+      "sourcePivot": [
+        0.03727914396157714,
+        -0.6142374295176882,
+        -0.011909734764570136
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "totalLength": 1.65,
+    "gripOrigin": [
+      0,
+      0,
+      0
+    ],
+    "bottomY": -0.5,
+    "topY": 1.15,
+    "verticalAxis": "+Y"
+  },
+  {
+    "file": "staff-venom.glb",
+    "id": "bKCpO8LRCM",
+    "title": "Staff",
+    "author": "Zsky",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/bKCpO8LRCM",
+    "download": "https://static.poly.pizza/d07b08e8-3e2a-48c5-a979-8ee8f4b23c79.glb",
+    "bytes": 31364,
+    "type": "staff",
+    "originalSHA256": "9b616f3ea73ec88b742193543306d95bca2e7d310c4e443d4c092ebc509fb30e",
+    "originalBounds": {
+      "min": [
+        -1.0532770156860352,
+        -8.151013374328613,
+        -0.33690598607063293
+      ],
+      "max": [
+        0.9318060278892517,
+        2.5183660984039307,
+        0.33788201212882996
+      ],
+      "size": [
+        1.9850830435752869,
+        10.669379472732544,
+        0.6747879981994629
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.2450788469669562,
+        -0.5,
+        -0.05217742904954808
+      ],
+      "max": [
+        0.061910611067603816,
+        1.1500000000000001,
+        0.052177299346288036
+      ],
+      "size": [
+        0.30698945803456,
+        1.6500000000000001,
+        0.10435472839583612
+      ]
+    },
+    "normalization": {
+      "scale": 0.1546481690164702,
+      "sourcePivot": [
+        0.5314740261504515,
+        -4.917868079561176,
+        0.0004884323785834116
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "totalLength": 1.65,
+    "gripOrigin": [
+      0,
+      0,
+      0
+    ],
+    "bottomY": -0.5,
+    "topY": 1.15,
+    "verticalAxis": "+Y"
+  },
+  {
+    "file": "potion-healing.glb",
+    "id": "5DvOJDIgDYu",
+    "title": "Complex Health Potion",
+    "author": "Garrett LeFever",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/5DvOJDIgDYu",
+    "download": "https://static.poly.pizza/adcd0e78-2632-43bd-aa78-2e5b7b20a5cf.glb",
+    "bytes": 38920,
+    "type": "potion",
+    "originalSHA256": "9a81daeb485f9e20257293f363fd3c0cab621b11f7031f0b16a039e9794bf98b",
+    "originalBounds": {
+      "min": [
+        -0.053658220916986465,
+        -0.08622495830059052,
+        -0.05378377065062523
+      ],
+      "max": [
+        0.054670628160238266,
+        0.058783579617738724,
+        0.05454504117369652
+      ],
+      "size": [
+        0.10832884907722473,
+        0.14500853791832924,
+        0.10832881182432175
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.1195282436549903,
+        0.0,
+        -0.11952820255075904
+      ],
+      "max": [
+        0.1195282436549903,
+        0.32,
+        0.11952820255075904
+      ],
+      "size": [
+        0.2390564873099806,
+        0.32,
+        0.23905640510151807
+      ]
+    },
+    "normalization": {
+      "scale": 2.206766612461318,
+      "sourcePivot": [
+        0.0005062036216259003,
+        -0.08622495830059052,
+        0.00038063526153564453
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "height": 0.32,
+    "floorPivot": true,
+    "verticalAxis": "+Y",
+    "transparentGlass": true
+  },
+  {
+    "file": "potion-haste.glb",
+    "id": "dOREefQfDQu",
+    "title": "Potion Bottle - Game Asset",
+    "author": "Don Carson",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/dOREefQfDQu",
+    "download": "https://static.poly.pizza/b2a6e47f-0e90-4a34-9213-e01f26ee9b19.glb",
+    "bytes": 81412,
+    "type": "potion",
+    "originalSHA256": "4f7d23d230f98a74b0215ff800dee5f743ce2aab6426dcac5b90142a4005aa86",
+    "originalBounds": {
+      "min": [
+        -0.09979681670665741,
+        -0.14794239401817322,
+        -0.09038028120994568
+      ],
+      "max": [
+        0.08987873792648315,
+        0.19283929467201233,
+        0.09496089816093445
+      ],
+      "size": [
+        0.18967555463314056,
+        0.34078168869018555,
+        0.18534117937088013
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.08905434108841691,
+        0.0,
+        -0.0870193137821459
+      ],
+      "max": [
+        0.08905434108841691,
+        0.32,
+        0.0870193137821459
+      ],
+      "size": [
+        0.17810868217683382,
+        0.32,
+        0.1740386275642918
+      ]
+    },
+    "normalization": {
+      "scale": 0.9390175899120015,
+      "sourcePivot": [
+        -0.004959039390087128,
+        -0.14794239401817322,
+        0.0022903084754943848
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "height": 0.32,
+    "floorPivot": true,
+    "verticalAxis": "+Y",
+    "transparentGlass": true
+  },
+  {
+    "file": "potion-guard.glb",
+    "id": "3Db7LQbUEEt",
+    "title": "Healing potion",
+    "author": "Spiros Koutsourelis",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/3Db7LQbUEEt",
+    "download": "https://static.poly.pizza/6521e6b7-2edc-49fc-9101-b9cd0ba0fd4d.glb",
+    "bytes": 398420,
+    "type": "potion",
+    "originalSHA256": "fb644ac762ca2923abb47cae157437218a8a848c739599b5e2cafb25549689a2",
+    "originalBounds": {
+      "min": [
+        -0.22497090697288513,
+        -0.3964709937572479,
+        -0.22159959375858307
+      ],
+      "max": [
+        0.44093960523605347,
+        0.4602993130683899,
+        0.43880438804626465
+      ],
+      "size": [
+        0.6659105122089386,
+        0.8567703068256378,
+        0.6604039818048477
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.08738810984567824,
+        0.0,
+        -0.08604686424561248
+      ],
+      "max": [
+        0.16132658323976592,
+        0.32,
+        0.1606111635757918
+      ],
+      "size": [
+        0.24871469308544417,
+        0.32,
+        0.24665802782140428
+      ]
+    },
+    "normalization": {
+      "scale": 0.37349567025217123,
+      "sourcePivot": [
+        0.009002648293972015,
+        -0.3964709937572479,
+        0.008782900869846344
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "height": 0.32,
+    "floorPivot": true,
+    "verticalAxis": "+Y",
+    "transparentGlass": true
+  },
+  {
+    "file": "ledge-table.glb",
+    "id": "fpd7imG8Vxa",
+    "title": "wizard table",
+    "author": "mario tofani",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/fpd7imG8Vxa",
+    "download": "https://static.poly.pizza/b813f740-9d32-443f-9dee-6f963460d826.glb",
+    "bytes": 197720,
+    "type": "table",
+    "originalSHA256": "586b570060c198b8fc046d00111c1e50b1d2b3114858565b4eb2615323d45acc",
+    "originalBounds": {
+      "min": [
+        -1.1917619705200195,
+        -1.804121971130371,
+        -1.1848410367965698
+      ],
+      "max": [
+        1.2282400131225586,
+        0.6610080003738403,
+        0.9951590895652771
+      ],
+      "size": [
+        2.420001983642578,
+        2.4651299715042114,
+        2.180000126361847
+      ]
+    },
+    "bounds": {
+      "min": [
+        -1.3,
+        0.0,
+        -1.1710734881318876
+      ],
+      "max": [
+        1.3,
+        2.648484575315776,
+        1.1710734881318876
+      ],
+      "size": [
+        2.6,
+        2.648484575315776,
+        2.342146976263775
+      ]
+    },
+    "normalization": {
+      "scale": 1.0743792846345066,
+      "sourcePivot": [
+        0.01823902130126953,
+        -1.804121971130371,
+        -0.09484097361564636
+      ]
+    },
+    "changes": "Original geometry, materials and transparency preserved; root pivot and scale normalized. ",
+    "width": 2.6,
+    "floorPivot": true,
+    "verticalAxis": "+Y",
+    "tabletopY": 1.6867990822035062,
+    "topPropsY": 2.648484575315776
+  }
+]

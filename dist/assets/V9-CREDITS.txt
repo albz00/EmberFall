@@ -1,0 +1,12 @@
+Emberfall v9 asset credits
+
+banner.glb: "Wall Flag" by Quaternius
+Source: https://poly.pizza/m/TWDvd4qPzq
+Original model download: https://static.poly.pizza/02708091-4dee-4da7-b965-dd20a82b5fdb.glb
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Source page license verified: 2026-10-11
+Changes: Added only a root translation for a top wall mount pivot. Native scale, original geometry, topology, normals, orientation and Flag/Wood/Metal materials retained. No replacement or approximation. Self-contained GLB; no textures, skins or animations.
+Axes and mounting: Upright +Y; cloth hangs down -Y; width along X; front faces +Z. Origin is centered horizontally at the top of the metal caps (Y=0), with the rear bracket endpoint on the wall plane (Z=0). Point +Z away from the wall.
+Dimensions (X/Y/Z): 1.126686763 / 2.354318162 / 0.322363432 m at native scale.
+Geometry: 1 source mesh, 3 material primitives, 368 triangles, 284 vertices. Three.js loads the primitives as three mesh objects.
+Original SHA-256: b1105a7f0e99dec5d2a6aaef6b9925873d031762fb8deeec42a6a1c399d11de9

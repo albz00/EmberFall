@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {createRequire} from 'node:module';
+import * as T from '../dist/vendor/three.module.js';
+import {COSMETICS,purchaseCosmetic,makeProfile,weaponStats,equippedItem,RANKS,rankFor} from '../dist/progression.js';
+import {updateCosmetic} from '../dist/cosmetics.js';
+import {rankIcon,drawRankIcon} from '../dist/rank-icons.js';
+import {botReply,CHAT_TOPICS} from '../dist/bot-chat.js';
+import {MINI,assignTeams,matchOutcome,miniResolve,miniBlocked,miniGround} from '../dist/duels.js';
+const p=makeProfile({coins:1600});const original=weaponStats(equippedItem(p));assert(!purchaseCosmetic(p,'prism-bad').ok);assert(!purchaseCosmetic(p,'__proto__').ok);
+assert(purchaseCosmetic(p,'prism').ok);assert.equal(p.coins,700);assert(purchaseCosmetic(p,'prism').ok);assert.equal(p.coins,700,'owned appearances never charge twice');
+assert(purchaseCosmetic(p,'bloodmoon').ok);assert.equal(p.coins,220);assert(!purchaseCosmetic(p,'starfall').ok);assert.equal(p.cosmetic,'bloodmoon');
+assert.deepEqual(weaponStats(equippedItem(p)),original);const saved=makeProfile(JSON.parse(JSON.stringify(p)));assert.equal(saved.cosmetic,'bloodmoon');assert(saved.ownedCosmetics.includes('prism'));purchaseCosmetic(saved,'none');assert.equal(saved.cosmetic,'none');assert(saved.ownedCosmetics.includes('bloodmoon'));
+const bad=makeProfile({ownedCosmetics:['bogus','__proto__','ember','ember'],cosmetic:'prism'});assert.deepEqual(bad.ownedCosmetics,['none','ember']);assert.equal(bad.cosmetic,'none');
+const actor={root:new T.Group(),alive:true};for(const id of Object.keys(COSMETICS).filter(id=>id!=='none'&&!['pressure','ascension'].includes(COSMETICS[id].style))){for(const time of[0,.5,2.1,13.6]){updateCosmetic(actor,id,time,true);assert.equal(actor.cosmetic.userData.id,id);const particles=actor.cosmetic.children[3];assert.equal(particles.count,36);assert([...particles.instanceMatrix.array].every(Number.isFinite));assert([...particles.instanceColor.array].every(n=>Number.isFinite(n)&&n>=0&&n<=1));}assert.equal(actor.root.children.length,1,'switching effects removes old pool');}updateCosmetic(actor,'none',20);assert.equal(actor.root.children.length,0);
+const icons=RANKS.map(rankIcon);assert.equal(new Set(icons).size,31,'every rank gets a distinct emblem');assert(icons.every(x=>x.includes('viewBox="0 0 64 64"')&&!x.includes('undefined')));
+const require=createRequire(import.meta.url),{createCanvas}=require('@napi-rs/canvas');
+const sheet=createCanvas(1000,600),ctx=sheet.getContext('2d');ctx.fillStyle='#28212f';ctx.fillRect(0,0,1000,600);for(const [i,r]of RANKS.entries()){const x=(i%8)*125,y=Math.floor(i/8)*145;drawRankIcon(ctx,rankFor(r.min),x+26,y+7,75);ctx.textAlign='center';ctx.font='bold 12px sans-serif';ctx.fillStyle=r.color;ctx.fillText(r.name,x+63,y+109);}await writeFile(join(tmpdir(),'emberfall-rank-emblems.png'),sheet.toBuffer('image/png'));
+const bot={id:4,name:'Rook',role:'duelist',account:p,stats:weaponStats(equippedItem(p)),armor:'none',helmet:'none',hp:180,kit:{health:340},rating:1200,skill:{cps:7.3},alive:true,state:'fight',plan:'duel',kills:4,deaths:2},context={playerName:'Alex',playerKills:5,playerStreak:2,hunt:false,eventName:null};
+const prompts=['hello','gg','what weapon are you using','bleed','chest','coins','rank','health','event','map','jump','combo','strategy','are you an ai','god','music','cosmetic','streak','rematch','trash','lol','thanks','sorry','bye','favorite','2v2'];
+const replies=new Set();for(const prompt of prompts){const local=new Set();for(let i=0;i<8;i++){const reply=botReply(bot,prompt,context);assert(reply.length>2&&reply.length<340);assert(!reply.includes('undefined'));local.add(reply);replies.add(reply);}assert(local.size>=2,prompt+' has varied responses');}
+assert(replies.size>=130,'expanded dialogue has broad independent wording');botReply(bot,'what weapon are you using',context);botReply(bot,'tell me more',context);assert.equal(bot.lastChatTopic,'weapons','short follow-ups remember their subject');
+const player={health:340,maxHealth:340},bots=[{id:1,skill:{cps:3},alive:true,hp:340,kit:{health:340}},{id:2,skill:{cps:7},alive:true,hp:340,kit:{health:340}},{id:3,skill:{cps:11},alive:true,hp:340,kit:{health:340}}];const teams=assignTeams(player,bots);assert.equal(teams.blue.length,2);assert.equal(teams.red.length,2);assert.equal(new Set([...teams.blue,...teams.red]).size,4);assert.equal(matchOutcome(teams,player),null);teams.red.forEach(b=>b.alive=false);assert.equal(matchOutcome(teams,player),'blue');
+const position=new T.Vector3(MINI.x+40,0,40);miniResolve(position);assert(position.x<=MINI.x+MINI.halfWidth&&position.z<=MINI.halfDepth);assert(miniBlocked(92,-2,0));assert.equal(miniGround(92,-2,4),3.2);assert(!miniBlocked(96,0,0));
+console.log(JSON.stringify({presentation:'passed',paidCosmetics:Object.keys(COSMETICS).length-1,persistedOwnership:true,finiteEffects:true,uniqueRankIcons:31,dialogueTopics:Object.keys(CHAT_TOPICS).length,distinctReplies:replies.size,teamAssignment:true,courtyardCollisions:true}));

@@ -1,0 +1,168 @@
+{
+  "creator": "Quaternius",
+  "license": "CC0 1.0 Universal",
+  "packSource": "https://poly.pizza/bundle/Ultimate-Modular-Men-Pack-ZiH8muWqwQ",
+  "officialPackSource": "https://quaternius.com/packs/ultimatemodularcharacters.html",
+  "swordSource": "https://poly.pizza/m/9lLmH8Et4K",
+  "notes": "All art is real downloaded CC0 Quaternius models. fighter-*.glb are original glTF pack assets repackaged losslessly as GLB, sourced through a public mirror. These have simpler unit-scale armatures than the FBX-converted Poly Pizza files.",
+  "characters": [
+    {
+      "file": "fighter-adventurer.glb",
+      "bytes": 2069236,
+      "forward": "+Z",
+      "up": "+Y",
+      "bindBounds": {
+        "min": [
+          -0.8377335071563721,
+          -0.001223093713633716,
+          -0.26301610469818115
+        ],
+        "max": [
+          0.8377335071563721,
+          1.8559409379959106,
+          0.2866884469985962
+        ]
+      },
+      "worldHeight": 1.8571640317095444,
+      "armatureScale": 1,
+      "handNodeInFile": "Wrist.R",
+      "handNodeInThree": "WristR",
+      "animations": [
+        "Death",
+        "Gun_Shoot",
+        "HitRecieve",
+        "HitRecieve_2",
+        "Idle",
+        "Idle_Gun",
+        "Idle_Gun_Pointing",
+        "Idle_Gun_Shoot",
+        "Idle_Neutral",
+        "Idle_Sword",
+        "Interact",
+        "Kick_Left",
+        "Kick_Right",
+        "Punch_Left",
+        "Punch_Right",
+        "Roll",
+        "Run",
+        "Run_Back",
+        "Run_Left",
+        "Run_Right",
+        "Run_Shoot",
+        "Sword_Slash",
+        "Walk",
+        "Wave"
+      ],
+      "source": "https://github.com/agentkaerf/FreeModels/tree/main/Ultimate%20Modular%20Men-%20Feb%202022",
+      "sha256": "175498543cd5800c15906fb510869a8cd6d6c09addc1c1206125f9ae2e17349b"
+    },
+    {
+      "file": "fighter-king.glb",
+      "bytes": 2159652,
+      "forward": "+Z",
+      "up": "+Y",
+      "bindBounds": {
+        "min": [
+          -0.8377335071563721,
+          -0.0011520972475409508,
+          -0.08215702325105667
+        ],
+        "max": [
+          0.8377335071563721,
+          1.9030406475067139,
+          0.28288137912750244
+        ]
+      },
+      "worldHeight": 1.9041927447542548,
+      "armatureScale": 1,
+      "handNodeInFile": "Wrist.R",
+      "handNodeInThree": "WristR",
+      "animations": [
+        "Death",
+        "Gun_Shoot",
+        "HitRecieve",
+        "HitRecieve_2",
+        "Idle",
+        "Idle_Gun",
+        "Idle_Gun_Pointing",
+        "Idle_Gun_Shoot",
+        "Idle_Neutral",
+        "Idle_Sword",
+        "Interact",
+        "Kick_Left",
+        "Kick_Right",
+        "Punch_Left",
+        "Punch_Right",
+        "Roll",
+        "Run",
+        "Run_Back",
+        "Run_Left",
+        "Run_Right",
+        "Run_Shoot",
+        "Sword_Slash",
+        "Walk",
+        "Wave"
+      ],
+      "source": "https://github.com/agentkaerf/FreeModels/tree/main/Ultimate%20Modular%20Men-%20Feb%202022",
+      "sha256": "fb5b45f5c308d90466381d33d40e23ffba29c413cdf4c7788697eb5b52c2d602"
+    },
+    {
+      "file": "fighter-punk.glb",
+      "bytes": 1568824,
+      "forward": "+Z",
+      "up": "+Y",
+      "bindBounds": {
+        "min": [
+          -0.8377335071563721,
+          -0.004176006652414799,
+          -0.15946418046951294
+        ],
+        "max": [
+          0.8377335071563721,
+          1.9654122591018677,
+          0.2866884469985962
+        ]
+      },
+      "worldHeight": 1.9695882657542825,
+      "armatureScale": 1,
+      "handNodeInFile": "Wrist.R",
+      "handNodeInThree": "WristR",
+      "animations": [
+        "Death",
+        "Gun_Shoot",
+        "HitRecieve",
+        "HitRecieve_2",
+        "Idle",
+        "Idle_Gun",
+        "Idle_Gun_Pointing",
+        "Idle_Gun_Shoot",
+        "Idle_Neutral",
+        "Idle_Sword",
+        "Interact",
+        "Kick_Left",
+        "Kick_Right",
+        "Punch_Left",
+        "Punch_Right",
+        "Roll",
+        "Run",
+        "Run_Back",
+        "Run_Left",
+        "Run_Right",
+        "Run_Shoot",
+        "Sword_Slash",
+        "Walk",
+        "Wave"
+      ],
+      "source": "https://github.com/agentkaerf/FreeModels/tree/main/Ultimate%20Modular%20Men-%20Feb%202022",
+      "sha256": "07f3019a3e77899c6a5742b635c889d88a257d7e8703c6ab58b7a5012ca1cca2"
+    }
+  ],
+  "sword": {
+    "file": "sword.glb",
+    "forwardBlade": "+Y",
+    "worldLength": 2.302063652314246,
+    "recommendedScaleFor1Point2m": 0.5213,
+    "gripPivot": "origin near middle of handle",
+    "url": "https://static.poly.pizza/65837148-8c3c-42d5-9ce7-c55f9295cc7e.glb"
+  }
+}

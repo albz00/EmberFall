@@ -1,0 +1,145 @@
+EMBERFALL ATTRIBUTION NOTICE
+
+This notice covers every third-party file shipped with Emberfall.
+The same notice is shown in the game's Credits screen.
+Detailed change records remain in CREDITS.txt, ADDITIONAL-CREDITS.txt,
+V3-CREDITS.txt, V5-CREDITS.txt, V7-CREDITS.txt, V9-CREDITS.txt,
+and ANIMATION-CREDITS.txt.
+
+Models were downloaded from Poly Pizza (https://poly.pizza), which
+distributes each file under the creator's own license. Emberfall follows
+that creator license. Poly Pizza is the catalog, not the copyright holder.
+
+Adaptations: pivots and scale were normalized, some embedded textures were
+resized, character rigs were fitted, and animations were retargeted.
+Supplied geometry was kept. In-game rarity variants recolor materials.
+The original creators do not endorse Emberfall.
+
+PUBLIC DOMAIN — CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+Attribution is not required. It is included anyway.
+
+Quaternius — https://quaternius.com
+- Ultimate Modular Men Pack (fighter-adventurer.glb, fighter-punk.glb, fighter-king.glb, and sword.glb)
+  https://poly.pizza/bundle/Ultimate-Modular-Men-Pack-ZiH8muWqwQ
+  https://quaternius.com/packs/ultimatemodularcharacters.html
+- Sword (weapon-classic.glb) — https://poly.pizza/m/9lLmH8Et4K
+- Sword (weapon-broadsword.glb) — https://poly.pizza/m/ajOJ2NLz5m
+- Dagger (weapon-dagger.glb) — https://poly.pizza/m/kSMpR711Y2
+- Sword Wall Mount (sword-rack.glb) — https://poly.pizza/m/3LyJaWgoJG
+- Chest (treasure-chest.glb) — https://poly.pizza/m/O72u4Drp8k
+- Armor Golden (armor-gold.glb) — https://poly.pizza/m/65ltdmlBcy
+- Armor Metal (armor-metal.glb) — https://poly.pizza/m/TMUoxILh9w
+- Armor Leather (armor-leather.glb) — https://poly.pizza/m/na9KfWiKN8
+- Rocks (rock-pack.glb) — https://poly.pizza/m/gYhoEOKItJ
+- Crate (supply-crate.glb) — https://poly.pizza/m/3VGWnZPXmG
+- Wall Flag (banner.glb) — https://poly.pizza/m/TWDvd4qPzq
+  The file is included. The banners drawn in the cavern are original geometry.
+- Doublesided Hammer (exotic-thunderclap.glb) — https://poly.pizza/m/UIXvQ73DS1
+- Universal Animation Library, Standard (quaternius-source.glb and the retargeted animation files)
+  https://quaternius.com/packs/universalanimationlibrary.html
+  https://quaternius.itch.io/universal-animation-library
+
+Polygonal Mind — static full-body meshes. Rigs and skin weights were added for this game.
+- Robot (avatar-robot.glb) — https://poly.pizza/m/ejDr8lRglP
+- Astronaut (avatar-astronaut.glb) — https://poly.pizza/m/4orkFqR9c9
+- Adventurer (avatar-adventurer.glb) — https://poly.pizza/m/BCMT02FrVE
+- Skeleton Costume (avatar-skeleton.glb) — https://poly.pizza/m/6DlLXFdP3r
+- Mask Woman (avatar-mask.glb) — https://poly.pizza/m/aEiJdtjqqc
+- Wizard (avatar-wizard.glb) — https://poly.pizza/m/6kY9VaAfPv
+- Pirate Woman (avatar-pirate.glb) — https://poly.pizza/m/qRDrzfs8j9
+- Tribal Man (avatar-tribal.glb) — https://poly.pizza/m/vrdJP4oV26
+- Eye Summoner (npc-eye-squaller.glb, the merchant Eye Squaller) — https://poly.pizza/m/3DS872gR6u
+  Its face shape keys were removed.
+
+MiniPoly
+- Sword (exotic-riftfang.glb) — https://poly.pizza/m/eclLAgGuob
+
+CreativeTrio
+- Pumpkin (pumpkin.glb) — https://poly.pizza/m/XYPzyxSw3c
+
+ATTRIBUTION REQUIRED — CC BY 3.0
+https://creativecommons.org/licenses/by/3.0/
+You may use these works commercially if this notice stays with the game:
+creator name, work title, source link, this license link, and the
+adaptations noted above. Do not imply that a creator endorses Emberfall.
+
+- Two Handed Sword (weapon-gemblade.glb) by PscycoPatate — https://poly.pizza/m/oG60CgwatX
+- d20 mace (weapon-mace.glb) by Robin Goldenberg — https://poly.pizza/m/32NZ3FY4yo-
+- Armor Used (armor-iron.glb) by CreativeTechLab — https://poly.pizza/m/EEtHhE4M94
+- Helmet (armor-helmet.glb) by CreativeTechLab — https://poly.pizza/m/uSCGe4LD2v
+- Knight (actor-knight.glb) by Dawid2K — https://poly.pizza/m/isC73B8SKq
+  Animations on this character were retargeted onto the adapted skeleton.
+- Volcano (volcano.glb) by Poly by Google — https://poly.pizza/m/dwSigTeSMCo
+- Bow (bow.glb) by Zsky — https://poly.pizza/m/XkJVO6cACA
+- Staff (staff-frost.glb) by Zsky — https://poly.pizza/m/DZpBi0DSgZ
+- Staff (staff-venom.glb) by Zsky — https://poly.pizza/m/bKCpO8LRCM
+- Magick wand (staff-arcane.glb) by Jakob Hippe — https://poly.pizza/m/51f2Nk9BHq-
+- Complex Health Potion (potion-healing.glb) by Garrett LeFever — https://poly.pizza/m/5DvOJDIgDYu
+- Potion Bottle - Game Asset (potion-haste.glb) by Don Carson — https://poly.pizza/m/dOREefQfDQu
+- Healing potion (potion-guard.glb) by Spiros Koutsourelis — https://poly.pizza/m/3Db7LQbUEEt
+- wizard table (ledge-table.glb) by mario tofani — https://poly.pizza/m/fpd7imG8Vxa
+- A Slightly Fancy Sword (exotic-gilded-oath.glb) by Skie Radscale — https://poly.pizza/m/cI9Vt3az-hU
+- SCi-FI Axe (exotic-voidsplitter.glb) by Qubzy — https://poly.pizza/m/wpRlt3OQc2
+- SCI-FI Sword (exotic-eclipse-edge.glb) by Qubzy — https://poly.pizza/m/vH8a7TMtCt
+  The three exotic weapons above were rotated, scaled, and given a grip pivot.
+  Their geometry and materials were kept.
+- Barbarian by Delapouite — https://game-icons.net/1x1/delapouite/barbarian.html
+- Cowled by Lorc — https://game-icons.net/1x1/lorc/cowled.html
+- Brutal helm by Carl Olsen — https://game-icons.net/1x1/carl-olsen/brutal-helm.html
+  These three are from Game-icons.net (https://game-icons.net) and are used
+  as the Vanguard, Rogue, and Sentinel buttons. Backgrounds were removed and
+  the shapes were recolored with class gradients. The creators do not endorse Emberfall.
+- Crown coin by Lorc — https://game-icons.net/1x1/lorc/crown-coin.html
+- Knapsack by Lorc — https://game-icons.net/1x1/lorc/knapsack.html
+- Cog by Lorc — https://game-icons.net/1x1/lorc/cog.html
+- Help by sbed — https://game-icons.net/1x1/sbed/help.html
+  These four are from Game-icons.net and are used for the coin, inventory,
+  settings, and help buttons. Backgrounds were removed and the shapes were
+  recolored. The creators do not endorse Emberfall.
+- Chat bubble by Delapouite — https://game-icons.net/1x1/delapouite/chat-bubble.html
+- House by Delapouite — https://game-icons.net/1x1/delapouite/house.html
+  These two are from Game-icons.net and are used for the in-game chat and
+  return-home buttons. Backgrounds were removed and the shapes were recolored.
+  The creator does not endorse Emberfall.
+- Heart wings by Delapouite — https://game-icons.net/1x1/delapouite/heart-wings.html
+  From Game-icons.net, used on the health bar. The background was removed and
+  the shape was recolored. The creator does not endorse Emberfall.
+
+SOFTWARE
+- Three.js by the three.js authors, MIT License. See vendor/THREE-LICENSE.txt.
+  https://github.com/mrdoob/three.js
+- Nunito by The Nunito Project Authors, SIL Open Font License 1.1.
+  The font is bundled with the game and is not sold by itself.
+  See assets/NUNITO-LICENSE.txt. https://scripts.sil.org/OFL
+
+MUSIC
+Royalty-free music downloaded from Pixabay and bundled with the game.
+License: Pixabay Content License — https://pixabay.com/service/license-summary/
+The license allows free use, including in this game, and does not require attribution.
+These tracks are part of the game. They are not sold or distributed on their own.
+The creators do not endorse Emberfall.
+Arena playlist:
+- Lofi Gaming by ZephiraMusic — https://pixabay.com/music/lofi-lofi-gaming-606302/
+  File: assets/music/lofi-gaming.mp3
+- Tokyo Lofi by ZephiraMusic — https://pixabay.com/music/lofi-tokyo-lofi-604786/
+  File: assets/music/tokyo-lofi.mp3
+- Lofi Focus by ZephiraMusic — https://pixabay.com/music/lofi-lofi-focus-606303/
+  File: assets/music/lofi-focus.mp3
+- Lofi Chill by ZephiraMusic — https://pixabay.com/music/lofi-lofi-chill-612445/
+  File: assets/music/lofi-chill.mp3
+- Tribal Drumming Atmosphere by vjgalaxy — https://pixabay.com/music/world-rpgs-tribal-drumming-atmosphere-608370/
+  File: assets/music/tribal-drumming.mp3
+- Hand Drums by vjgalaxy — https://pixabay.com/music/world-rpgs-hand-drums-tribal-background-music-608348/
+  File: assets/music/hand-drums.mp3
+- Fighting Spirit by nojisuma — https://pixabay.com/music/upbeat-fighting-spirit-12550/
+  File: assets/music/fighting-spirit.mp3
+2v2 only:
+- Feel The Energy by PinLabs — https://pixabay.com/music/drum-n-bass-feel-the-energy-544801/
+  File: assets/music/feel-the-energy.mp3
+Lofi search page: https://pixabay.com/music/search/genre/lofi/
+
+ORIGINAL TO EMBERFALL
+Arena code and procedural cavern geometry.
+Eye Squaller’s voice lines (assets/voice/merchant-welcome.mp3 and
+assets/voice/merchant-come-get-your-weapons.mp3), recorded for Emberfall.

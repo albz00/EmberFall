@@ -1,0 +1,55 @@
+[
+  {
+    "file": "volcano.glb",
+    "title": "Volcano",
+    "author": "Poly by Google",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/dwSigTeSMCo",
+    "bytes": 92080,
+    "type": "volcano",
+    "changes": "Original geometry, UVs and materials retained; transforms baked; pivot and scale normalized; embedded texture size optimized if present.",
+    "floorPivot": true,
+    "width": 3.2
+  },
+  {
+    "file": "bow.glb",
+    "title": "Bow",
+    "author": "Zsky",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://poly.pizza/m/XkJVO6cACA",
+    "bytes": 27872,
+    "type": "bow",
+    "changes": "Original geometry, UVs and materials retained; transforms baked; pivot and scale normalized; embedded texture size optimized if present.",
+    "length": 1.45,
+    "gripOrigin": [
+      0,
+      0,
+      0
+    ],
+    "verticalAxis": "+Y",
+    "firingAxis": "-Z",
+    "stringPlane": "YZ",
+    "stringAtRestZ": 0.229,
+    "arrowIncluded": false,
+    "nodes": [
+      "BowStave",
+      "BowGrip",
+      "BowString"
+    ]
+  },
+  {
+    "file": "supply-crate.glb",
+    "title": "Crate",
+    "author": "Quaternius",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source": "https://poly.pizza/m/3VGWnZPXmG",
+    "bytes": 39892,
+    "type": "crate",
+    "changes": "Original geometry, UVs and materials retained; transforms baked; pivot and scale normalized; embedded texture size optimized if present.",
+    "floorPivot": true,
+    "width": 1.15
+  }
+]

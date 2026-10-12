@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kits": {
+    "vanguard": {"name": "Vanguard", "health": 300, "damageMultiplier": 1, "speed": 4.25, "tint": "#efba70", "description": "300 HP · balanced"},
+    "rogue": {"name": "Rogue", "health": 260, "damageMultiplier": 0.94, "speed": 5.05, "tint": "#9bdfc7", "description": "260 HP · fast"},
+    "sentinel": {"name": "Sentinel", "health": 390, "damageMultiplier": 1.1, "speed": 3.8, "tint": "#c1aadf", "description": "390 HP · heavy"}
+  },
+  "movement": {"sprint": 1.47, "walk": 4.25, "shop": 3, "flight": 1.6, "block": 0.48, "crouch": 0.45, "gearSpeed": 0.7},
+  "melee": {
+    "hurtWindow": 0.5,
+    "defaultReach": 3.15,
+    "comboWindow": 1.25,
+    "criticalMultiplier": 1.45,
+    "blockMultiplier": 0.42,
+    "minimumDamage": 1,
+    "hitbox": {"radius": 0.36, "height": 1.78, "crouched": 1.2},
+    "sprintHit": {"minimumSpeed": 2, "velocityRetained": 0.6}
+  },
+  "knockback": {
+    "forceScale": 1.15,
+    "sprintForceScale": 0.75,
+    "sprintBonus": 1.7,
+    "maximum": 14,
+    "guardedScale": 0.35,
+    "retained": 0.25,
+    "counterVelocity": 0.65,
+    "lift": {"normal": 4.1, "sprint": 4.9, "critical": 5.2, "guarded": 1},
+    "steering": {"maxResist": 0.78, "resistDivisor": 13, "groundBlend": 18, "airBlend": 8},
+    "decay": {"ground": 8, "air": 4.8}
+  },
+  "heavy": {
+    "windup": 0.28,
+    "minimum": 0.55,
+    "full": 1.2,
+    "minRecovery": 1.05,
+    "maxRecovery": 1.65,
+    "damage": {"base": 1.2, "perPower": 1.2},
+    "knockback": {"base": 1.15, "perPower": 0.7}
+  },
+  "bow": {"quiver": 20, "maxArrows": 30, "knockoutArrows": 5, "fullDraw": 0.8, "baseDamage": 12, "chargeDamage": 44, "refillDelay": 5, "refillInterval": 4}
+}

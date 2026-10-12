@@ -1,0 +1,46 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import * as T from '../dist/vendor/three.module.js';
+import {KITS,movementSpeed,gaitStride} from '../dist/combat.js';
+import {CHARACTERS,makeProfile,purchaseWeapon} from '../dist/progression.js';
+import {groundHeight,isLava} from '../dist/world.js';
+const V=T.Vector3,Q=T.Quaternion;
+export async function verifyPolish(t,{byId,windowEvents,storage}){
+ const reset=()=>{t.setMode('play');t.setFreecam(false,false);t.admin.god=t.admin.hunt=t.admin.flying=false;t.cancelAttack(true);t.resetPlayer();t.keys.clear();for(const f of t.fighters){f.alive=false;f.respawnAt=Infinity;}t.player.position.set(7,0,10);t.player.velocity.set(0,0,0);t.player.knock.set(0,0,0);t.player.grounded=true;t.player.health=1000;t.setAim(0,0);t.setBlock(false);};
+ Object.assign(t.profile,makeProfile({coins:10000}));reset();
+ t.keys.add('KeyW');for(let i=0;i<90;i++)t.playerTick();t.keys.clear();assert(Math.abs(t.player.velocity.length()-KITS.vanguard.speed)<.02);assert(Math.abs((10-t.player.position.z)-KITS.vanguard.speed*.95)<.1,'one second covers the configured walking distance');
+ reset();t.keys.add('KeyW');t.keys.add('ShiftLeft');for(let i=0;i<90;i++)t.playerTick();t.keys.clear();assert(Math.abs(Math.hypot(t.player.velocity.x,t.player.velocity.z)-movementSpeed(KITS.vanguard,0,true))<.03);assert(Math.abs((10-t.player.position.z)-movementSpeed(KITS.vanguard,0,true)*.95)<.1,'sprint covers the configured distance');
+ // 47 clicks keep instant attacks and fast first-person swings; the body completes its own arcs.
+ reset();const clickStart=t.clickTimes.length,sequence=t.playerAvatar.swingSequence??0;
+ for(let click=0;click<47;click++){t.swing();for(let i=0;i<7;i++){t.wait(1/9.4/7);t.updateWeapon(1/9.4/7);}}
+ const cycles=(t.playerAvatar.swingSequence??0)-sequence;assert.equal(t.clickTimes.length-clickStart,47);assert(cycles>=13&&cycles<=17,'47 clicks resolve into complete visible swings');
+ t.wait(.5);t.updateWeapon(.5);const heldDirection=new V(0,1,0).applyQuaternion(t.weaponPivot.quaternion);assert(heldDirection.x>.05&&heldDirection.z<-.05,'first-person sword rests outward and away from the shoulder');
+ let rigs=0;
+ const bladeDirection=rig=>{const wrist=rig.getObjectByName('WristR'),weapon=wrist.children.find(o=>o.userData.slot==='sword');return new V(0,1,0).applyQuaternion(weapon.getWorldQuaternion(new Q())).applyQuaternion(rig.getWorldQuaternion(new Q()).invert());};
+ for(const id of Object.keys(CHARACTERS)){
+  reset();t.profile.character=id;t.refreshEquipment();const a=t.playerAvatar;t.player.velocity.set(0,0,-KITS.vanguard.speed);
+  for(let i=0;i<45;i++){t.player.position.z-=KITS.vanguard.speed/60;t.wait(1/60);t.updatePlayerAvatar(1/60);}let d=bladeDirection(a.rig);assert(d.y>.7&&d.z>.1&&d.x<-.06,id+' blade stays outward and forward while walking');
+  t.player.velocity.set(0,0,0);t.setBlock(true);a.animUntil=t.time-1;for(let i=0;i<35;i++){t.wait(1/60);t.updatePlayerAvatar(1/60);}d=bladeDirection(a.rig);assert(d.x>.6&&d.y>.35,id+' visible blade guards across chest');
+  t.setBlock(false);t.admin.flying=true;t.player.grounded=false;t.player.position.y=5;
+  for(let i=0;i<45;i++){t.wait(1/60);t.updatePlayerAvatar(1/60);}
+  for(const side of ['L','R']){const [h,k,f]=['UpperLeg','LowerLeg','Foot'].map(n=>a.rig.getObjectByName(n+side).getWorldPosition(new V())),alignment=k.clone().sub(h).normalize().dot(f.clone().sub(k).normalize());assert(alignment>.8,id+' hovering knee is relaxed: '+alignment);}
+  const bounds=new T.Box3().setFromObject(a.rig,true).getSize(new V());assert(bounds.toArray().every(n=>Number.isFinite(n)&&n>0&&n<4),id+' posed skin stays bounded');rigs++;
+ }
+ reset();t.player.position.set(-18,0,-5);assert(isLava(-18,-5,0));assert(groundHeight(-18,-5,0)<-2,'liquid bed is recessed');
+ for(let i=0;i<180;i++)t.playerTick();assert(t.player.position.y<-.9&&!t.player.grounded&&t.player.inLava,'actor sinks into lava rather than standing on surface');assert(t.player.effects.fire,'lava ignites actor');t.updatePlayerAvatar(.1);assert(t.playerAvatar.burning.visible,'flames are attached to the actual body');assert(!t.playerAvatar.root.visible,'own burning geometry stays hidden in first person');
+ const hp=t.player.health;t.player.position.set(-21,0,-5);t.player.inLava=false;t.player.velocity.set(0,0,0);t.wait(.8);t.updateAilments(t.player,.8);assert(t.player.health<hp,'burning continues after leaving lava without an attacker');
+ t.player.position.set(-18,-1.1,-5);t.player.velocity.set(0,0,0);t.player.inLava=true;t.jumpInput();let peak=-10;for(let i=0;i<55;i++){t.actorPhysics(t.player,1/90);peak=Math.max(peak,t.player.position.y);}assert(peak>.15,'jump surfaces out of molten channel');
+ t.player.position.set(-18,-1.1,-5);t.player.velocity.set(0,0,0);t.player.grounded=false;t.keys.add('KeyC');for(let i=0;i<160;i++)t.playerTick();t.keys.clear();t.updateCamera(.1);t.updateAtmosphere(.1);assert(t.camera.position.y<0,'crouching can submerge the camera');assert(t.scene.fog.density>.5,'under-lava visibility changes');t.player.position.set(7,0,10);t.updateCamera(.1);t.updateAtmosphere(.1);assert(t.scene.fog.density<.1,'normal fog returns above surface');
+ t.player.position.set(-18,-1.85,-5);t.player.velocity.set(0,0,0);t.player.inLava=true;t.jumpInput();peak=-10;for(let i=0;i<65;i++){t.actorPhysics(t.player,1/90);peak=Math.max(peak,t.player.position.y);}assert(peak>.1,'a fully submerged player can jump out too');
+ // Geometry really has a hole below the liquid, rather than invisible floor collision only.
+ const surfaces=[];t.world.root.traverse(o=>{if(o.isMesh&&o.material.vertexColors)surfaces.push(o);});t.scene.updateMatrixWorld(true);const ray=new T.Raycaster(new V(-18,.01,-5),new V(0,-1,0),0,2.1);assert.equal(ray.intersectObjects(surfaces,false).length,0,'no rock surface hidden just beneath lava');
+ // Fire effects from weapons ignite bots too and expire cleanly.
+ const bot=t.fighters[0];bot.alive=true;bot.state='fight';bot.position.set(7,0,7);bot.hp=1000;bot.effects={};t.applyWeaponEffects(bot,t.player,{effects:[{type:'fire',level:1}]});t.updateAppearance(bot,.1);assert(bot.burning.visible);t.wait(5);t.updateAilments(bot,.1);t.updateAppearance(bot,.1);assert(!bot.burning.visible);
+ reset();t.event.phase='idle';t.player.position.set(0,8,28);bot.alive=true;bot.state='fight';bot.hp=1000;bot.position.set(-18,-1.7,-5);bot.inLava=true;bot.grounded=false;bot.velocity.set(0,0,0);bot.knock.set(0,0,0);bot.target=null;bot.effects={};bot.plan='roam';bot.goal={x:-22,y:0,z:-5};bot.planUntil=t.time+30;bot.spendAt=t.time+30;bot.aiTimer=0;bot.nextJump=t.time+30;bot.lastImpact=t.time;bot.lavaCrossing=null;bot.navigation=null;let plannedEscape=false;for(let i=0;i<270;i++){t.tick();plannedEscape||=!!bot.lavaCrossing;}assert(plannedEscape,'submerged AI plans a dry landing');assert(!isLava(bot.position.x,bot.position.z,0)&&bot.position.y>=0,'AI escapes submerged lava');
+ // Pausing or saving never extends a five-minute drop's fixed deadline.
+ reset();const paid=purchaseWeapon(t.profile,'dagger').item;t.dropInventoryItem(paid.id);const drop=t.lootDrops.at(-1),deadline=drop.expiresAt;t.saveLoot();assert.equal(JSON.parse(storage.get('emberfall.loot.v1')).find(x=>x.item.id===paid.id).expiresAt,deadline);t.wait(12);t.saveLoot();assert.equal(drop.expiresAt,deadline);const now=Date.now;try{Date.now=()=>deadline+1;t.setMode('pause');t.pruneLoot();assert(!t.lootDrops.includes(drop),'five real minutes expire loot even when game time is paused');}finally{Date.now=now;}
+ reset();t.executeCommand('/bots add '+(32-t.fighters.length));t.showScoreboard();const bodies=['score-rows','score-rows-2','score-rows-3'].map(id=>byId.get(id));assert.equal(bodies.reduce((n,b)=>n+b.children.length,0),33);assert(bodies.every(b=>b.children.length===11),'all players fit in balanced leaderboard columns');const first=bodies[0].children[0];byId.get('score-scroll').scrollTop=80;t.showScoreboard();assert.equal(bodies[0].children[0],first);assert.equal(byId.get('score-scroll').scrollTop,80);const slot=t.profile.selectedHotbar;windowEvents.wheel.forEach(fn=>fn({deltaY:120,preventDefault(){}}));assert.equal(t.profile.selectedHotbar,slot,'leaderboard scrolling does not cycle equipment');
+ const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8'),pause=html.match(/<section id="pause-modal"[\s\S]*?<\/section>/)[0];assert.equal((pause.match(/<button /g)??[]).length,6);assert(!pause.includes('Commands')&&!pause.includes('Third person'));
+ assert.equal(t.world.moon.geometry.type,'PlaneGeometry');assert(t.world.moon.material.transparent&&!t.world.moon.material.depthWrite);t.world.setView(t.camera);assert(t.world.moon.quaternion.equals(t.camera.quaternion));assert(t.world.sky.sky.material.isShaderMaterial);assert(t.world.sky.moonlight.color.r>t.world.sky.moonlight.color.g);assert(t.world.portal.runes.position.distanceTo(new V(0,5.213,-10))<.01);assert.equal(t.world.stringLights.cables.length,3);
+ console.log(JSON.stringify({v23:'passed',walkingSpeed:KITS.vanguard.speed,sprintSpeed:movementSpeed(KITS.vanguard,0,true),clicks:47,visualSwingCycles:cycles,posedRigs:rigs,thirdPersonBlocking:true,submergedLava:true,jumpOut:true,visibleFire:true,realTimeLootExpiry:true,leaderboardPlayers:33,flatMoon:true,gradientSky:true,bridgePortal:true,anchoredLightRuns:3}));
+}

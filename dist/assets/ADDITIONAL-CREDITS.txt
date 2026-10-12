@@ -1,0 +1,61 @@
+EMBERFALL ADDITIONAL 3D ART CREDITS
+
+Sword by Quaternius
+https://poly.pizza/m/ajOJ2NLz5m
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: weapon-broadsword.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Dagger by Quaternius
+https://poly.pizza/m/kSMpR711Y2
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: weapon-dagger.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Two Handed Sword by PscycoPatate
+https://poly.pizza/m/oG60CgwatX
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+File: weapon-gemblade.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+d20 mace by Robin Goldenberg
+https://poly.pizza/m/32NZ3FY4yo-
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+File: weapon-mace.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Sword Wall Mount by Quaternius
+https://poly.pizza/m/3LyJaWgoJG
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: sword-rack.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Chest by Quaternius
+https://poly.pizza/m/O72u4Drp8k
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: treasure-chest.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Armor Used by CreativeTechLab
+https://poly.pizza/m/EEtHhE4M94
+License: CC-BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+File: armor-iron.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Armor Golden by Quaternius
+https://poly.pizza/m/65ltdmlBcy
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: armor-gold.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Rocks by Quaternius
+https://poly.pizza/m/gYhoEOKItJ
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: rock-pack.glb
+Changes: Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.
+
+Sword by Quaternius
+https://poly.pizza/m/9lLmH8Et4K
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+File: weapon-classic.glb
+Changes: Transforms baked and unit length normalized; original geometry/materials preserved.

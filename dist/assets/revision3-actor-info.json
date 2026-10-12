@@ -1,0 +1,1487 @@
+[
+  {
+    "file": "avatar-robot.glb",
+    "title": "Robot",
+    "displayName": "Robot",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/ejDr8lRglP",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 453360,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.13,
+      "shoulderX": 0.1623886943948947,
+      "armSlope": -0.97,
+      "wristX": 0.6739130817388129,
+      "hipX": 0.1867054450529943,
+      "motionScale": 0.7890482544898987
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.68284,
+        0.01973
+      ],
+      "Torso": [
+        0.0,
+        0.91611,
+        0.01973
+      ],
+      "Chest": [
+        0.0,
+        1.08676,
+        0.01973
+      ],
+      "Neck": [
+        0.0,
+        1.19233,
+        0.01973
+      ],
+      "Head": [
+        0.0,
+        1.25309,
+        0.01973
+      ],
+      "ShoulderL": [
+        0.10068,
+        1.11027,
+        0.01973
+      ],
+      "UpperArmL": [
+        0.16239,
+        1.13,
+        0.01973
+      ],
+      "LowerArmL": [
+        0.38234,
+        0.91664,
+        0.01973
+      ],
+      "WristL": [
+        0.67391,
+        0.63382,
+        0.01973
+      ],
+      "ShoulderR": [
+        -0.10068,
+        1.11027,
+        0.01973
+      ],
+      "UpperArmR": [
+        -0.16239,
+        1.13,
+        0.01973
+      ],
+      "LowerArmR": [
+        -0.38234,
+        0.91664,
+        0.01973
+      ],
+      "WristR": [
+        -0.67391,
+        0.63382,
+        0.01973
+      ],
+      "UpperLegL": [
+        0.18671,
+        0.76076,
+        0.03551
+      ],
+      "LowerLegL": [
+        0.18671,
+        0.42076,
+        0.04103
+      ],
+      "FootL": [
+        0.18671,
+        0.01795,
+        0.03945
+      ],
+      "UpperLegR": [
+        -0.18671,
+        0.76076,
+        0.03551
+      ],
+      "LowerLegR": [
+        -0.18671,
+        0.42076,
+        0.04103
+      ],
+      "FootR": [
+        -0.18671,
+        0.01795,
+        0.03945
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-astronaut.glb",
+    "title": "Astronaut",
+    "displayName": "Astronaut",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/4orkFqR9c9",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 449860,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.355858543826029,
+      "shoulderX": 0.18834305952219557,
+      "armSlope": -0.6973855580470865,
+      "wristX": 0.7816236970171115,
+      "hipX": 0.1421483593359596,
+      "motionScale": 0.9467591643333435
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.81933,
+        0.02367
+      ],
+      "Torso": [
+        0.0,
+        1.09921,
+        0.02367
+      ],
+      "Chest": [
+        0.0,
+        1.30398,
+        0.02367
+      ],
+      "Neck": [
+        0.0,
+        1.43065,
+        0.02367
+      ],
+      "Head": [
+        0.0,
+        1.50355,
+        0.02367
+      ],
+      "ShoulderL": [
+        0.11677,
+        1.33219,
+        0.02367
+      ],
+      "UpperArmL": [
+        0.18834,
+        1.35586,
+        0.02367
+      ],
+      "LowerArmL": [
+        0.44345,
+        1.17795,
+        0.02367
+      ],
+      "WristL": [
+        0.78162,
+        0.94211,
+        0.02367
+      ],
+      "ShoulderR": [
+        -0.11677,
+        1.33219,
+        0.02367
+      ],
+      "UpperArmR": [
+        -0.18834,
+        1.35586,
+        0.02367
+      ],
+      "LowerArmR": [
+        -0.44345,
+        1.17795,
+        0.02367
+      ],
+      "WristR": [
+        -0.78162,
+        0.94211,
+        0.02367
+      ],
+      "UpperLegL": [
+        0.14215,
+        0.91282,
+        0.0426
+      ],
+      "LowerLegL": [
+        0.14215,
+        0.50486,
+        0.04923
+      ],
+      "FootL": [
+        0.14215,
+        0.02154,
+        0.04734
+      ],
+      "UpperLegR": [
+        -0.14215,
+        0.91282,
+        0.0426
+      ],
+      "LowerLegR": [
+        -0.14215,
+        0.50486,
+        0.04923
+      ],
+      "FootR": [
+        -0.14215,
+        0.02154,
+        0.04734
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-adventurer.glb",
+    "title": "Adventurer",
+    "displayName": "Adventurer",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/BCMT02FrVE",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 584756,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.166370727056889,
+      "shoulderX": 0.16638488969299994,
+      "armSlope": -0.7095355315595038,
+      "wristX": 0.6904972922259497,
+      "hipX": 0.12639340809389168,
+      "motionScale": 0.8144449591636658
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.70482,
+        0.02036
+      ],
+      "Torso": [
+        0.0,
+        0.94559,
+        0.02036
+      ],
+      "Chest": [
+        0.0,
+        1.12174,
+        0.02036
+      ],
+      "Neck": [
+        0.0,
+        1.23071,
+        0.02036
+      ],
+      "Head": [
+        0.0,
+        1.29342,
+        0.02036
+      ],
+      "ShoulderL": [
+        0.10316,
+        1.14601,
+        0.02036
+      ],
+      "UpperArmL": [
+        0.16638,
+        1.16637,
+        0.02036
+      ],
+      "LowerArmL": [
+        0.39175,
+        1.00646,
+        0.02036
+      ],
+      "WristL": [
+        0.6905,
+        0.79449,
+        0.02036
+      ],
+      "ShoulderR": [
+        -0.10316,
+        1.14601,
+        0.02036
+      ],
+      "UpperArmR": [
+        -0.16638,
+        1.16637,
+        0.02036
+      ],
+      "LowerArmR": [
+        -0.39175,
+        1.00646,
+        0.02036
+      ],
+      "WristR": [
+        -0.6905,
+        0.79449,
+        0.02036
+      ],
+      "UpperLegL": [
+        0.12639,
+        0.78525,
+        0.03665
+      ],
+      "LowerLegL": [
+        0.12639,
+        0.4343,
+        0.04235
+      ],
+      "FootL": [
+        0.12639,
+        0.01853,
+        0.04072
+      ],
+      "UpperLegR": [
+        -0.12639,
+        0.78525,
+        0.03665
+      ],
+      "LowerLegR": [
+        -0.12639,
+        0.4343,
+        0.04235
+      ],
+      "FootR": [
+        -0.12639,
+        0.01853,
+        0.04072
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-skeleton.glb",
+    "title": "Skeleton Costume",
+    "displayName": "Skeleton",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/6DlLXFdP3r",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 445128,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.4262952762371635,
+      "shoulderX": 0.16768739923129003,
+      "armSlope": -0.7046531340521263,
+      "wristX": 0.6959027068098536,
+      "hipX": 0.14189658620980508,
+      "motionScale": 0.9959431886672974
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.86189,
+        0.0249
+      ],
+      "Torso": [
+        0.0,
+        1.15632,
+        0.0249
+      ],
+      "Chest": [
+        0.0,
+        1.37172,
+        0.0249
+      ],
+      "Neck": [
+        0.0,
+        1.50497,
+        0.0249
+      ],
+      "Head": [
+        0.0,
+        1.58166,
+        0.0249
+      ],
+      "ShoulderL": [
+        0.10397,
+        1.4014,
+        0.0249
+      ],
+      "UpperArmL": [
+        0.16769,
+        1.4263,
+        0.0249
+      ],
+      "LowerArmL": [
+        0.39482,
+        1.26625,
+        0.0249
+      ],
+      "WristL": [
+        0.6959,
+        1.05409,
+        0.0249
+      ],
+      "ShoulderR": [
+        -0.10397,
+        1.4014,
+        0.0249
+      ],
+      "UpperArmR": [
+        -0.16769,
+        1.4263,
+        0.0249
+      ],
+      "LowerArmR": [
+        -0.39482,
+        1.26625,
+        0.0249
+      ],
+      "WristR": [
+        -0.6959,
+        1.05409,
+        0.0249
+      ],
+      "UpperLegL": [
+        0.1419,
+        0.96024,
+        0.04482
+      ],
+      "LowerLegL": [
+        0.1419,
+        0.53109,
+        0.05179
+      ],
+      "FootL": [
+        0.1419,
+        0.02266,
+        0.0498
+      ],
+      "UpperLegR": [
+        -0.1419,
+        0.96024,
+        0.04482
+      ],
+      "LowerLegR": [
+        -0.1419,
+        0.53109,
+        0.05179
+      ],
+      "FootR": [
+        -0.1419,
+        0.02266,
+        0.0498
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-mask.glb",
+    "title": "Mask Woman",
+    "displayName": "Mask",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/aEiJdtjqqc",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 387980,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.2513458056930564,
+      "shoulderX": 0.1439719513240578,
+      "armSlope": -0.700868889370464,
+      "wristX": 0.5974835979948397,
+      "hipX": 0.12375971459372312,
+      "motionScale": 0.8737806677818298
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.75617,
+        0.02184
+      ],
+      "Torso": [
+        0.0,
+        1.01448,
+        0.02184
+      ],
+      "Chest": [
+        0.0,
+        1.20346,
+        0.02184
+      ],
+      "Neck": [
+        0.0,
+        1.32037,
+        0.02184
+      ],
+      "Head": [
+        0.0,
+        1.38766,
+        0.02184
+      ],
+      "ShoulderL": [
+        0.08926,
+        1.2295,
+        0.02184
+      ],
+      "UpperArmL": [
+        0.14397,
+        1.25135,
+        0.02184
+      ],
+      "LowerArmL": [
+        0.33898,
+        1.11467,
+        0.02184
+      ],
+      "WristL": [
+        0.59748,
+        0.93349,
+        0.02184
+      ],
+      "ShoulderR": [
+        -0.08926,
+        1.2295,
+        0.02184
+      ],
+      "UpperArmR": [
+        -0.14397,
+        1.25135,
+        0.02184
+      ],
+      "LowerArmR": [
+        -0.33898,
+        1.11467,
+        0.02184
+      ],
+      "WristR": [
+        -0.59748,
+        0.93349,
+        0.02184
+      ],
+      "UpperLegL": [
+        0.12376,
+        0.84246,
+        0.03932
+      ],
+      "LowerLegL": [
+        0.12376,
+        0.46594,
+        0.04544
+      ],
+      "FootL": [
+        0.12376,
+        0.01988,
+        0.04369
+      ],
+      "UpperLegR": [
+        -0.12376,
+        0.84246,
+        0.03932
+      ],
+      "LowerLegR": [
+        -0.12376,
+        0.46594,
+        0.04544
+      ],
+      "FootR": [
+        -0.12376,
+        0.01988,
+        0.04369
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-wizard.glb",
+    "title": "Wizard",
+    "displayName": "Wizard",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/6kY9VaAfPv",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 527136,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.3789246661153707,
+      "shoulderX": 0.1800368781384436,
+      "armSlope": -0.08318185259730682,
+      "wristX": 0.7471530442745408,
+      "hipX": 0.12039310872042226,
+      "motionScale": 0.9628655314445496
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.83327,
+        0.02407
+      ],
+      "Torso": [
+        0.0,
+        1.11791,
+        0.02407
+      ],
+      "Chest": [
+        0.0,
+        1.32616,
+        0.02407
+      ],
+      "Neck": [
+        0.0,
+        1.45499,
+        0.02407
+      ],
+      "Head": [
+        0.0,
+        1.52913,
+        0.02407
+      ],
+      "ShoulderL": [
+        0.11162,
+        1.35485,
+        0.02407
+      ],
+      "UpperArmL": [
+        0.18004,
+        1.37892,
+        0.02407
+      ],
+      "LowerArmL": [
+        0.4239,
+        1.35864,
+        0.02407
+      ],
+      "WristL": [
+        0.74715,
+        1.33175,
+        0.02407
+      ],
+      "ShoulderR": [
+        -0.11162,
+        1.35485,
+        0.02407
+      ],
+      "UpperArmR": [
+        -0.18004,
+        1.37892,
+        0.02407
+      ],
+      "LowerArmR": [
+        -0.4239,
+        1.35864,
+        0.02407
+      ],
+      "WristR": [
+        -0.74715,
+        1.33175,
+        0.02407
+      ],
+      "UpperLegL": [
+        0.12039,
+        0.92835,
+        0.04333
+      ],
+      "LowerLegL": [
+        0.12039,
+        0.51345,
+        0.05007
+      ],
+      "FootL": [
+        0.12039,
+        0.02191,
+        0.04814
+      ],
+      "UpperLegR": [
+        -0.12039,
+        0.92835,
+        0.04333
+      ],
+      "LowerLegR": [
+        -0.12039,
+        0.51345,
+        0.05007
+      ],
+      "FootR": [
+        -0.12039,
+        0.02191,
+        0.04814
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-pirate.glb",
+    "title": "Pirate Woman",
+    "displayName": "Pirate",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/qRDrzfs8j9",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 590240,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.3266849494913318,
+      "shoulderX": 0.1604553488985115,
+      "armSlope": -0.6675355119669532,
+      "wristX": 0.6658896979288227,
+      "hipX": 0.13341721793045472,
+      "motionScale": 0.9263880252838135
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.8017,
+        0.02316
+      ],
+      "Torso": [
+        0.0,
+        1.07556,
+        0.02316
+      ],
+      "Chest": [
+        0.0,
+        1.27592,
+        0.02316
+      ],
+      "Neck": [
+        0.0,
+        1.39987,
+        0.02316
+      ],
+      "Head": [
+        0.0,
+        1.4712,
+        0.02316
+      ],
+      "ShoulderL": [
+        0.09948,
+        1.30353,
+        0.02316
+      ],
+      "UpperArmL": [
+        0.16046,
+        1.32668,
+        0.02316
+      ],
+      "LowerArmL": [
+        0.37779,
+        1.1816,
+        0.02316
+      ],
+      "WristL": [
+        0.66589,
+        0.98929,
+        0.02316
+      ],
+      "ShoulderR": [
+        -0.09948,
+        1.30353,
+        0.02316
+      ],
+      "UpperArmR": [
+        -0.16046,
+        1.32668,
+        0.02316
+      ],
+      "LowerArmR": [
+        -0.37779,
+        1.1816,
+        0.02316
+      ],
+      "WristR": [
+        -0.66589,
+        0.98929,
+        0.02316
+      ],
+      "UpperLegL": [
+        0.13342,
+        0.89318,
+        0.04169
+      ],
+      "LowerLegL": [
+        0.13342,
+        0.494,
+        0.04817
+      ],
+      "FootL": [
+        0.13342,
+        0.02108,
+        0.04632
+      ],
+      "UpperLegR": [
+        -0.13342,
+        0.89318,
+        0.04169
+      ],
+      "LowerLegR": [
+        -0.13342,
+        0.494,
+        0.04817
+      ],
+      "FootR": [
+        -0.13342,
+        0.02108,
+        0.04632
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "avatar-tribal.glb",
+    "title": "Tribal Man",
+    "displayName": "Tribal",
+    "author": "Polygonal Mind",
+    "source": "https://poly.pizza/m/vrdJP4oV26",
+    "license": "CC0 1.0",
+    "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "bytes": 556788,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": false,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Derived humanoid skin weights fitted to original static full-body geometry; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.454018948104883,
+      "shoulderX": 0.20753396757227788,
+      "armSlope": -0.025618450477928933,
+      "wristX": 0.8612659654249532,
+      "hipX": 0.10818963265536496,
+      "motionScale": 1.0153018236160278
+    },
+    "bindPositions": {
+      "Body": [
+        0.0,
+        0.87864,
+        0.02538
+      ],
+      "Torso": [
+        0.0,
+        1.17879,
+        0.02538
+      ],
+      "Chest": [
+        0.0,
+        1.39838,
+        0.02538
+      ],
+      "Neck": [
+        0.0,
+        1.53423,
+        0.02538
+      ],
+      "Head": [
+        0.0,
+        1.61241,
+        0.02538
+      ],
+      "ShoulderL": [
+        0.12867,
+        1.42864,
+        0.02538
+      ],
+      "UpperArmL": [
+        0.20753,
+        1.45402,
+        0.02538
+      ],
+      "LowerArmL": [
+        0.48864,
+        1.44682,
+        0.02538
+      ],
+      "WristL": [
+        0.86127,
+        1.43727,
+        0.02538
+      ],
+      "ShoulderR": [
+        -0.12867,
+        1.42864,
+        0.02538
+      ],
+      "UpperArmR": [
+        -0.20753,
+        1.45402,
+        0.02538
+      ],
+      "LowerArmR": [
+        -0.48864,
+        1.44682,
+        0.02538
+      ],
+      "WristR": [
+        -0.86127,
+        1.43727,
+        0.02538
+      ],
+      "UpperLegL": [
+        0.10819,
+        0.9789,
+        0.04569
+      ],
+      "LowerLegL": [
+        0.10819,
+        0.54141,
+        0.0528
+      ],
+      "FootL": [
+        0.10819,
+        0.0231,
+        0.05077
+      ],
+      "UpperLegR": [
+        -0.10819,
+        0.9789,
+        0.04569
+      ],
+      "LowerLegR": [
+        -0.10819,
+        0.54141,
+        0.0528
+      ],
+      "FootR": [
+        -0.10819,
+        0.0231,
+        0.05077
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  },
+  {
+    "file": "actor-knight.glb",
+    "title": "Knight",
+    "displayName": "Knight",
+    "author": "Dawid2K",
+    "source": "https://poly.pizza/m/isC73B8SKq",
+    "license": "CC-BY 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+    "bytes": 534240,
+    "heightBind": 1.85,
+    "forward": "+Z",
+    "up": "+Y",
+    "bones": [
+      "Body",
+      "Torso",
+      "Chest",
+      "Neck",
+      "Head",
+      "ShoulderL",
+      "UpperArmL",
+      "LowerArmL",
+      "WristL",
+      "ShoulderR",
+      "UpperArmR",
+      "LowerArmR",
+      "WristR",
+      "UpperLegL",
+      "LowerLegL",
+      "FootL",
+      "UpperLegR",
+      "LowerLegR",
+      "FootR"
+    ],
+    "clips": [
+      "Death",
+      "Gun_Shoot",
+      "HitRecieve",
+      "HitRecieve_2",
+      "Idle",
+      "Idle_Gun",
+      "Idle_Sword",
+      "Kick_Left",
+      "Kick_Right",
+      "Punch_Left",
+      "Punch_Right",
+      "Roll",
+      "Run",
+      "Sword_Slash",
+      "Walk",
+      "Wave"
+    ],
+    "handNodes": [
+      "WristL",
+      "WristR"
+    ],
+    "originallySkinned": true,
+    "originalAnimationCount": 0,
+    "riggingMethod": "Original Knight vertex weights remapped to fitted semantic skeleton; Quaternius Ultimate Modular Men animation world rotations retargeted to fitted joint lengths and baked at24fps. Hands and fingers retain supplied geometry; finger bones are not individually articulated.",
+    "fit": {
+      "shoulderHeight": 1.4564755662570126,
+      "shoulderX": 0.19209896848770833,
+      "armSlope": -0.23024294564970166,
+      "wristX": 0.7972107192239895,
+      "hipX": 0.13541743751273566,
+      "motionScale": 1.0170172583498738
+    },
+    "bindPositions": {
+      "Body": [
+        0.0223,
+        0.87487,
+        -0.03595
+      ],
+      "Torso": [
+        0.0223,
+        1.10362,
+        -0.03595
+      ],
+      "Chest": [
+        0.0223,
+        1.23278,
+        -0.03595
+      ],
+      "Neck": [
+        0.0223,
+        1.39534,
+        -0.03595
+      ],
+      "Head": [
+        0.0223,
+        1.5579,
+        -0.03595
+      ],
+      "ShoulderL": [
+        0.0223,
+        1.5579,
+        -0.03595
+      ],
+      "UpperArmL": [
+        0.26901,
+        1.45648,
+        -0.04889
+      ],
+      "LowerArmL": [
+        0.56895,
+        1.45349,
+        -0.05791
+      ],
+      "WristL": [
+        0.84773,
+        1.4341,
+        -0.04311
+      ],
+      "ShoulderR": [
+        0.0223,
+        1.5579,
+        -0.03595
+      ],
+      "UpperArmR": [
+        -0.2244,
+        1.45648,
+        -0.04889
+      ],
+      "LowerArmR": [
+        -0.52434,
+        1.45349,
+        -0.05791
+      ],
+      "WristR": [
+        -0.80313,
+        1.4341,
+        -0.04311
+      ],
+      "UpperLegL": [
+        0.15792,
+        0.82068,
+        -0.03595
+      ],
+      "LowerLegL": [
+        0.15792,
+        0.49815,
+        -0.01554
+      ],
+      "FootL": [
+        0.15792,
+        0.03745,
+        -0.03594
+      ],
+      "UpperLegR": [
+        -0.11331,
+        0.82068,
+        -0.03595
+      ],
+      "LowerLegR": [
+        -0.11331,
+        0.49816,
+        -0.01554
+      ],
+      "FootR": [
+        -0.11331,
+        0.03744,
+        -0.03595
+      ]
+    },
+    "changes": "Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected."
+  }
+]

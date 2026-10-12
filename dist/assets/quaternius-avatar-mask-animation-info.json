@@ -1,0 +1,945 @@
+{
+  "source": "https://quaternius.itch.io/universal-animation-library",
+  "sourceUploadId": 17958403,
+  "sourceArchive": "Universal Animation Library[Standard].zip",
+  "sourceFile": "Unreal-Godot/UAL1_Standard.glb",
+  "sourceRelease": "2026-06-17 archive (Universal Animation Library v3.0)",
+  "originalSourceSha256": "69591853d817488edaa8fd9bf8fc1d821eaeaf789f8627b3cd23b41c4ed67997",
+  "originalSourceBytes": 7618436,
+  "license": "CC0-1.0",
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "targetRigLicense": "CC0-1.0 (see CREDITS.txt and V3-CREDITS.txt)",
+  "rig": "avatar-mask.glb",
+  "animationAsset": "quaternius-avatar-mask-animations.glb",
+  "characterAnimationAssets": {
+    "fighter-adventurer.glb": "quaternius-fighter-animations.glb",
+    "actor-knight.glb": "quaternius-actor-knight-animations.glb",
+    "avatar-adventurer.glb": "quaternius-avatar-adventurer-animations.glb",
+    "avatar-astronaut.glb": "quaternius-avatar-astronaut-animations.glb",
+    "avatar-mask.glb": "quaternius-avatar-mask-animations.glb",
+    "avatar-pirate.glb": "quaternius-avatar-pirate-animations.glb",
+    "avatar-robot.glb": "quaternius-avatar-robot-animations.glb",
+    "avatar-skeleton.glb": "quaternius-avatar-skeleton-animations.glb",
+    "avatar-tribal.glb": "quaternius-avatar-tribal-animations.glb",
+    "avatar-wizard.glb": "quaternius-avatar-wizard-animations.glb",
+    "fighter-king.glb": "quaternius-fighter-animations.glb",
+    "fighter-punk.glb": "quaternius-fighter-animations.glb"
+  },
+  "sourceBytes": 3485924,
+  "targetBytes": 554012,
+  "sourceBones": [
+    "root",
+    "pelvis",
+    "spine_01",
+    "spine_02",
+    "spine_03",
+    "neck_01",
+    "Head",
+    "clavicle_l",
+    "upperarm_l",
+    "lowerarm_l",
+    "hand_l",
+    "index_01_l",
+    "index_02_l",
+    "index_03_l",
+    "index_04_leaf_l",
+    "middle_01_l",
+    "middle_02_l",
+    "middle_03_l",
+    "middle_04_leaf_l",
+    "pinky_01_l",
+    "pinky_02_l",
+    "pinky_03_l",
+    "pinky_04_leaf_l",
+    "ring_01_l",
+    "ring_02_l",
+    "ring_03_l",
+    "ring_04_leaf_l",
+    "thumb_01_l",
+    "thumb_02_l",
+    "thumb_03_l",
+    "thumb_04_leaf_l",
+    "clavicle_r",
+    "upperarm_r",
+    "lowerarm_r",
+    "hand_r",
+    "index_01_r",
+    "index_02_r",
+    "index_03_r",
+    "index_04_leaf_r",
+    "middle_01_r",
+    "middle_02_r",
+    "middle_03_r",
+    "middle_04_leaf_r",
+    "pinky_01_r",
+    "pinky_02_r",
+    "pinky_03_r",
+    "pinky_04_leaf_r",
+    "ring_01_r",
+    "ring_02_r",
+    "ring_03_r",
+    "ring_04_leaf_r",
+    "thumb_01_r",
+    "thumb_02_r",
+    "thumb_03_r",
+    "thumb_04_leaf_r",
+    "thigh_l",
+    "calf_l",
+    "foot_l",
+    "ball_l",
+    "ball_leaf_l",
+    "thigh_r",
+    "calf_r",
+    "foot_r",
+    "ball_r",
+    "ball_leaf_r"
+  ],
+  "targetBones": [
+    "Body",
+    "Torso",
+    "Chest",
+    "Neck",
+    "Head",
+    "ShoulderL",
+    "UpperArmL",
+    "LowerArmL",
+    "WristL",
+    "ShoulderR",
+    "UpperArmR",
+    "LowerArmR",
+    "WristR",
+    "UpperLegL",
+    "LowerLegL",
+    "FootL",
+    "UpperLegR",
+    "LowerLegR",
+    "FootR"
+  ],
+  "mapping": {
+    "Body": "pelvis",
+    "Torso": "spine_02",
+    "Chest": "spine_03",
+    "Neck": "neck_01",
+    "Head": "Head",
+    "ShoulderL": "clavicle_l",
+    "UpperArmL": "upperarm_l",
+    "LowerArmL": "lowerarm_l",
+    "WristL": "hand_l",
+    "UpperLegL": "thigh_l",
+    "LowerLegL": "calf_l",
+    "FootL": "foot_l",
+    "ShoulderR": "clavicle_r",
+    "UpperArmR": "upperarm_r",
+    "LowerArmR": "lowerarm_r",
+    "WristR": "hand_r",
+    "UpperLegR": "thigh_r",
+    "LowerLegR": "calf_r",
+    "FootR": "foot_r"
+  },
+  "legScale": 0.991372,
+  "armReferenceAligned": true,
+  "clips": [
+    {
+      "name": "Idle_Loop",
+      "duration": 2.5,
+      "originalTracks": 195,
+      "originalKeyframes": 14820,
+      "sourceFrames": 76,
+      "retarget": {
+        "name": "Idle_Loop",
+        "duration": 2.5,
+        "frames": 76,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.274652,
+            0.019314,
+            -0.218683
+          ],
+          "max": [
+            0.287326,
+            1.349997,
+            0.201598
+          ]
+        },
+        "footMinY": 0.019314,
+        "footMaxY": 0.027925,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.007169,
+          0.008302
+        ]
+      }
+    },
+    {
+      "name": "Walk_Loop",
+      "duration": 1.333333,
+      "originalTracks": 195,
+      "originalKeyframes": 7995,
+      "sourceFrames": 41,
+      "retarget": {
+        "name": "Walk_Loop",
+        "duration": 1.333333,
+        "frames": 41,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.295035,
+            0.019858,
+            -0.316842
+          ],
+          "max": [
+            0.301067,
+            1.385344,
+            0.348017
+          ]
+        },
+        "footMinY": 0.019858,
+        "footMaxY": 0.249087,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.010626,
+          0.011857
+        ]
+      }
+    },
+    {
+      "name": "Jog_Fwd_Loop",
+      "duration": 0.933333,
+      "originalTracks": 195,
+      "originalKeyframes": 5655,
+      "sourceFrames": 29,
+      "retarget": {
+        "name": "Jog_Fwd_Loop",
+        "duration": 0.933333,
+        "frames": 29,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.422062,
+            0.046181,
+            -0.641955
+          ],
+          "max": [
+            0.414116,
+            1.36675,
+            0.549404
+          ]
+        },
+        "footMinY": 0.046181,
+        "footMaxY": 0.384892,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.03289,
+          0.02222
+        ]
+      }
+    },
+    {
+      "name": "Sprint_Loop",
+      "duration": 0.666667,
+      "originalTracks": 195,
+      "originalKeyframes": 4095,
+      "sourceFrames": 21,
+      "retarget": {
+        "name": "Sprint_Loop",
+        "duration": 0.666667,
+        "frames": 21,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.424125,
+            0.026114,
+            -0.547843
+          ],
+          "max": [
+            0.429841,
+            1.306361,
+            0.565116
+          ]
+        },
+        "footMinY": 0.026114,
+        "footMaxY": 0.428226,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.034789,
+          0.019519
+        ]
+      }
+    },
+    {
+      "name": "Jump_Start",
+      "duration": 1.333333,
+      "originalTracks": 195,
+      "originalKeyframes": 7995,
+      "sourceFrames": 41,
+      "retarget": {
+        "name": "Jump_Start",
+        "duration": 1.333333,
+        "frames": 41,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.656194,
+            0.003664,
+            -0.270152
+          ],
+          "max": [
+            0.610562,
+            1.35003,
+            0.364117
+          ]
+        },
+        "footMinY": 0.003664,
+        "footMaxY": 0.572559,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.007096,
+          0.047252
+        ]
+      }
+    },
+    {
+      "name": "Jump_Loop",
+      "duration": 2.5,
+      "originalTracks": 195,
+      "originalKeyframes": 14820,
+      "sourceFrames": 76,
+      "retarget": {
+        "name": "Jump_Loop",
+        "duration": 2.5,
+        "frames": 76,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.656328,
+            0.007626,
+            -0.272057
+          ],
+          "max": [
+            0.621233,
+            1.329626,
+            0.245601
+          ]
+        },
+        "footMinY": 0.007626,
+        "footMaxY": 0.340904,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.012511,
+          0.020612
+        ]
+      }
+    },
+    {
+      "name": "Jump_Land",
+      "duration": 1.266667,
+      "originalTracks": 195,
+      "originalKeyframes": 7605,
+      "sourceFrames": 39,
+      "retarget": {
+        "name": "Jump_Land",
+        "duration": 1.266667,
+        "frames": 39,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.64317,
+            0.019274,
+            -0.237659
+          ],
+          "max": [
+            0.58214,
+            1.369068,
+            0.363992
+          ]
+        },
+        "footMinY": 0.019274,
+        "footMaxY": 0.086261,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.00399,
+          0.017352
+        ]
+      }
+    },
+    {
+      "name": "Sword_Idle",
+      "duration": 1.666667,
+      "originalTracks": 195,
+      "originalKeyframes": 9945,
+      "sourceFrames": 51,
+      "retarget": {
+        "name": "Sword_Idle",
+        "duration": 1.666667,
+        "frames": 51,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.353834,
+            0.019283,
+            -0.415404
+          ],
+          "max": [
+            0.305482,
+            1.207643,
+            0.373239
+          ]
+        },
+        "footMinY": 0.019283,
+        "footMaxY": 0.025079,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.024442,
+          0.026565
+        ]
+      }
+    },
+    {
+      "name": "Sword_Attack",
+      "duration": 1.533333,
+      "originalTracks": 195,
+      "originalKeyframes": 9165,
+      "sourceFrames": 47,
+      "retarget": {
+        "name": "Sword_Attack",
+        "duration": 1.533333,
+        "frames": 47,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.505429,
+            0.019285,
+            -0.691464
+          ],
+          "max": [
+            0.605287,
+            1.412644,
+            0.768056
+          ]
+        },
+        "footMinY": 0.019285,
+        "footMaxY": 0.220736,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.006575,
+          0.025347
+        ]
+      }
+    },
+    {
+      "name": "Hit_Chest",
+      "duration": 0.333333,
+      "originalTracks": 195,
+      "originalKeyframes": 2145,
+      "sourceFrames": 11,
+      "retarget": {
+        "name": "Hit_Chest",
+        "duration": 0.333333,
+        "frames": 11,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.26329,
+            0.019317,
+            -0.231596
+          ],
+          "max": [
+            0.290554,
+            1.347318,
+            0.255365
+          ]
+        },
+        "footMinY": 0.019317,
+        "footMaxY": 0.029436,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.007203,
+          0.018872
+        ]
+      }
+    },
+    {
+      "name": "Crouch_Fwd_Loop",
+      "duration": 2,
+      "originalTracks": 195,
+      "originalKeyframes": 11895,
+      "sourceFrames": 61,
+      "retarget": {
+        "name": "Crouch_Fwd_Loop",
+        "duration": 2,
+        "frames": 61,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.366147,
+            0.015121,
+            -0.513701
+          ],
+          "max": [
+            0.379053,
+            0.815895,
+            0.304925
+          ]
+        },
+        "footMinY": 0.015121,
+        "footMaxY": 0.140274,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.000746,
+          0.018592
+        ]
+      }
+    },
+    {
+      "name": "Crouch_Idle_Loop",
+      "duration": 2.933333,
+      "originalTracks": 195,
+      "originalKeyframes": 17355,
+      "sourceFrames": 89,
+      "retarget": {
+        "name": "Crouch_Idle_Loop",
+        "duration": 2.933333,
+        "frames": 89,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.322835,
+            0.019277,
+            -0.284495
+          ],
+          "max": [
+            0.382484,
+            0.745617,
+            0.296331
+          ]
+        },
+        "footMinY": 0.019277,
+        "footMaxY": 0.111259,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.010439,
+          0.012
+        ]
+      }
+    },
+    {
+      "name": "Dance_Loop",
+      "duration": 1,
+      "originalTracks": 195,
+      "originalKeyframes": 6045,
+      "sourceFrames": 31,
+      "retarget": {
+        "name": "Dance_Loop",
+        "duration": 1,
+        "frames": 31,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.333354,
+            0.019838,
+            -0.126199
+          ],
+          "max": [
+            0.344908,
+            1.370979,
+            0.387031
+          ]
+        },
+        "footMinY": 0.019838,
+        "footMaxY": 0.037781,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.002611,
+          0.012472
+        ]
+      }
+    },
+    {
+      "name": "Death01",
+      "duration": 2.4,
+      "originalTracks": 195,
+      "originalKeyframes": 14235,
+      "sourceFrames": 73,
+      "retarget": {
+        "name": "Death01",
+        "duration": 2.4,
+        "frames": 73,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.493658,
+            -0.069463,
+            -1.411033
+          ],
+          "max": [
+            0.406498,
+            1.34257,
+            0.306147
+          ]
+        },
+        "footMinY": -0.014491,
+        "footMaxY": 0.364216,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.004499,
+          0.109571
+        ]
+      }
+    },
+    {
+      "name": "Hit_Head",
+      "duration": 0.433333,
+      "originalTracks": 195,
+      "originalKeyframes": 2730,
+      "sourceFrames": 14,
+      "retarget": {
+        "name": "Hit_Head",
+        "duration": 0.433333,
+        "frames": 14,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.263123,
+            0.01932,
+            -0.219138
+          ],
+          "max": [
+            0.295799,
+            1.35068,
+            0.201507
+          ]
+        },
+        "footMinY": 0.01932,
+        "footMaxY": 0.029303,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.007203,
+          0.00777
+        ]
+      }
+    },
+    {
+      "name": "Idle_Talking_Loop",
+      "duration": 2.933333,
+      "originalTracks": 195,
+      "originalKeyframes": 17355,
+      "sourceFrames": 89,
+      "retarget": {
+        "name": "Idle_Talking_Loop",
+        "duration": 2.933333,
+        "frames": 89,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.256669,
+            0.019314,
+            -0.218468
+          ],
+          "max": [
+            0.256347,
+            1.348911,
+            0.354217
+          ]
+        },
+        "footMinY": 0.019314,
+        "footMaxY": 0.027823,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.007458,
+          0.00814
+        ]
+      }
+    },
+    {
+      "name": "Interact",
+      "duration": 2,
+      "originalTracks": 195,
+      "originalKeyframes": 11895,
+      "sourceFrames": 61,
+      "retarget": {
+        "name": "Interact",
+        "duration": 2,
+        "frames": 61,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.275824,
+            0.019316,
+            -0.218622
+          ],
+          "max": [
+            0.241713,
+            1.350832,
+            0.571388
+          ]
+        },
+        "footMinY": 0.019316,
+        "footMaxY": 0.027926,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.006574,
+          0.008175
+        ]
+      }
+    },
+    {
+      "name": "PickUp_Table",
+      "duration": 0.833333,
+      "originalTracks": 195,
+      "originalKeyframes": 5070,
+      "sourceFrames": 26,
+      "retarget": {
+        "name": "PickUp_Table",
+        "duration": 0.833333,
+        "frames": 26,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.326566,
+            0.019311,
+            -0.291522
+          ],
+          "max": [
+            0.315218,
+            1.3497,
+            0.471269
+          ]
+        },
+        "footMinY": 0.019311,
+        "footMaxY": 0.027296,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.000163,
+          0.007203
+        ]
+      }
+    },
+    {
+      "name": "Roll",
+      "duration": 1.466667,
+      "originalTracks": 195,
+      "originalKeyframes": 8775,
+      "sourceFrames": 45,
+      "retarget": {
+        "name": "Roll",
+        "duration": 1.466667,
+        "frames": 45,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.451233,
+            -0.040225,
+            -0.750299
+          ],
+          "max": [
+            0.294572,
+            1.351254,
+            0.956329
+          ]
+        },
+        "footMinY": 0.016828,
+        "footMaxY": 0.928164,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.007908,
+          0.145269
+        ]
+      }
+    },
+    {
+      "name": "Spell_Simple_Enter",
+      "duration": 0.533333,
+      "originalTracks": 195,
+      "originalKeyframes": 3315,
+      "sourceFrames": 17,
+      "retarget": {
+        "name": "Spell_Simple_Enter",
+        "duration": 0.533333,
+        "frames": 17,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.283521,
+            0.019318,
+            -0.334161
+          ],
+          "max": [
+            0.305214,
+            1.35071,
+            0.662454
+          ]
+        },
+        "footMinY": 0.019318,
+        "footMaxY": 0.027463,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.002578,
+          0.007452
+        ]
+      }
+    },
+    {
+      "name": "Spell_Simple_Exit",
+      "duration": 0.433333,
+      "originalTracks": 195,
+      "originalKeyframes": 2730,
+      "sourceFrames": 14,
+      "retarget": {
+        "name": "Spell_Simple_Exit",
+        "duration": 0.433333,
+        "frames": 14,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.283495,
+            0.019318,
+            -0.334161
+          ],
+          "max": [
+            0.306564,
+            1.35071,
+            0.66245
+          ]
+        },
+        "footMinY": 0.019318,
+        "footMaxY": 0.027463,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.002578,
+          0.007452
+        ]
+      }
+    },
+    {
+      "name": "Spell_Simple_Idle_Loop",
+      "duration": 2.1,
+      "originalTracks": 195,
+      "originalKeyframes": 12480,
+      "sourceFrames": 64,
+      "retarget": {
+        "name": "Spell_Simple_Idle_Loop",
+        "duration": 2.1,
+        "frames": 64,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.211462,
+            0.019312,
+            -0.33606
+          ],
+          "max": [
+            0.242978,
+            1.345776,
+            0.677097
+          ]
+        },
+        "footMinY": 0.019312,
+        "footMaxY": 0.020929,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.002578,
+          0.004013
+        ]
+      }
+    },
+    {
+      "name": "Spell_Simple_Shoot",
+      "duration": 0.5,
+      "originalTracks": 195,
+      "originalKeyframes": 3120,
+      "sourceFrames": 16,
+      "retarget": {
+        "name": "Spell_Simple_Shoot",
+        "duration": 0.5,
+        "frames": 16,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.219339,
+            0.019314,
+            -0.332052
+          ],
+          "max": [
+            0.242796,
+            1.346725,
+            0.666762
+          ]
+        },
+        "footMinY": 0.019314,
+        "footMaxY": 0.021084,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          0.002578,
+          0.003698
+        ]
+      }
+    },
+    {
+      "name": "Walk_Formal_Loop",
+      "duration": 1.333333,
+      "originalTracks": 195,
+      "originalKeyframes": 7995,
+      "sourceFrames": 41,
+      "retarget": {
+        "name": "Walk_Formal_Loop",
+        "duration": 1.333333,
+        "frames": 41,
+        "tracks": 57,
+        "boneBounds": {
+          "min": [
+            -0.280399,
+            0.019864,
+            -0.314655
+          ],
+          "max": [
+            0.298085,
+            1.379075,
+            0.338579
+          ]
+        },
+        "footMinY": 0.019864,
+        "footMaxY": 0.249434,
+        "maxFootSeamError": 0,
+        "maxQuaternionError": 0,
+        "bodyCorrection": [
+          -0.012006,
+          0.01226
+        ]
+      }
+    }
+  ],
+  "notes": [
+    "World bind rotations are transferred and reconstructed in each target parent space.",
+    "Where present, the extra Hips and finger metacarpal links retain target bind transforms.",
+    "FootL/FootR receive explicit position tracks derived from the shin and bind offset; this also supports the larger fighter rig with root-parented feet.",
+    "The 19-bone avatar rigs receive arm reference alignment from their individual bind poses to the source T-pose; their limb lengths and skin bind matrices are preserved.",
+    "Gameplay controls translation; these are the root-motion-disabled source clips.",
+    "Use AnimationMixer crossfades and LoopOnce for Jump_Start, Jump_Land, Sword_Attack, Hit_Chest, Hit_Head, Death01, Interact, PickUp_Table, Roll, Spell_Simple_Enter, Spell_Simple_Exit, and Spell_Simple_Shoot.",
+    "The free Standard source contains only one Sword_Attack and no directional strafe, backward locomotion, or bow clips; no such motions are claimed or synthesized here.",
+    "Existing +45-degree local wrist-Z correction and +90-degree sword mount keep the idle blade pointing upward and forward on all 12 characters."
+  ]
+}

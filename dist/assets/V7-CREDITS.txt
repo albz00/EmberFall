@@ -1,0 +1,12 @@
+Emberfall v7 asset credits
+
+pumpkin.glb: "Pumpkin" by CreativeTrio
+Source: https://poly.pizza/m/XYPzyxSw3c
+Original model download: https://static.poly.pizza/2e89a294-6231-41e3-954c-a48677ac3da2.glb
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Source page license verified: 2026-10-11
+Changes: Original geometry, topology, normals, texture coordinates, embedded PNG and materials retained. Added a root transform to scale the upright model to 0.65 m high, center it on X/Z and place its base at Y=0. No replacement or approximation.
+Normalized dimensions (X/Y/Z): 0.700048666 / 0.650000000 / 0.688466152 m
+Geometry: 1 mesh, 1 primitive, 711 triangles, 1575 vertices.
+Material: 1 original textured PBR material; embedded 128 x 128 PNG.
+Original SHA-256: 76a23eea087f7a639e99437b3262558b3c4a608d5be71379f271965db7bae399

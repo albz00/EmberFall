@@ -1,0 +1,65 @@
+Quaternius Universal Animation Library — Standard (v3.0)
+
+Creator: Quaternius
+Official source: https://quaternius.itch.io/universal-animation-library
+Creator website: https://quaternius.com/packs/universalanimationlibrary.html
+Free Standard download: Universal Animation Library[Standard].zip
+Itch upload ID: 17958403 (June 2026 release)
+Original file: Unreal-Godot/UAL1_Standard.glb
+Downloaded: 2026-10-11
+
+License: CC0 1.0 Universal (CC0 1.0), Public Domain Dedication
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Included files:
+- quaternius-source.glb: source humanoid rig, inverse bind matrices, and 24
+  selected source animation clips. Render meshes, materials, and unrelated
+  clips removed. Repeated constant keyframes compacted without removing
+  transforms needed for retargeting.
+- quaternius-fighter-animations.glb: the same 24 clips baked offline onto
+  Emberfall's existing Adventurer/Punk/King fighter skeleton at 30 fps.
+- quaternius-actor-knight-animations.glb and
+  quaternius-avatar-{adventurer,astronaut,mask,pirate,robot,skeleton,tribal,wizard}-animations.glb:
+  separate 30 fps bakes for each character's individual 19-bone bind pose.
+  A-pose arm references are aligned before motion transfer. Each character's
+  bone lengths and skin bind matrices are preserved.
+- quaternius-animation-info.json: provenance, original keyframe counts,
+  character-to-animation-asset mapping, bone mapping, clip durations, and
+  numerical retarget checks. Each of the other rigs has a matching info file.
+
+Selected clips: Idle_Loop, Walk_Loop, Jog_Fwd_Loop, Sprint_Loop, Jump_Start,
+Jump_Loop, Jump_Land, Sword_Idle, Sword_Attack, Hit_Chest, Crouch_Fwd_Loop,
+Crouch_Idle_Loop, Dance_Loop, Death01, Hit_Head, Idle_Talking_Loop, Interact,
+PickUp_Table, Roll, Spell_Simple_Enter, Spell_Simple_Exit,
+Spell_Simple_Idle_Loop, Spell_Simple_Shoot, Walk_Formal_Loop.
+
+The expanded selection uses the same official free Standard archive. It
+adds crouch, formal walking, talking, interacting, picking up a table-height
+object, dancing, rolling, head-hit reaction, death, and four spell phases.
+Standard contains only one Sword_Attack; the selection does not include
+or imply paid-pack sword variants, directional strafing, or bow animations.
+
+The original source file has root motion disabled. Retargeting transfers
+world rotations through both rigs' inverse bind matrices, preserves target
+limb lengths, reconstructs local transforms, and bakes explicit positions
+for the target's root-parented Foot.L and Foot.R deform bones. A small body
+height adjustment preserves the source support-foot height across the
+different leg proportions. No generated or replacement motion is used.
+
+Rebuild every character with: node scripts/import-quaternius.mjs --all
+
+The new retargeting implementation is provided under CC0. The original
+character rig/model licenses continue to apply; see CREDITS.txt and
+V3-CREDITS.txt. In particular, the Knight rig is adapted from Knight by
+Dawid2K, under CC BY 3.0:
+https://poly.pizza/m/isC73B8SKq
+https://creativecommons.org/licenses/by/3.0/
+Changes: source rotations retargeted onto the adapted Knight skeleton;
+animated local transforms baked at 30 fps. No Knight geometry or textures
+are duplicated in the animation-only GLB. The creator does not endorse
+this adaptation or Emberfall.
+
+The creator's OpenGameArt posting provides an older Standard release:
+https://opengameart.org/content/universal-animation-library
+It was inspected for license verification; the included motion comes from
+the newer official June 2026 itch.io release above.

@@ -1,0 +1,80 @@
+{
+  "weapons": {
+    "longitudinalAxis": "+Y",
+    "gripAtOrigin": true,
+    "normalizedTotalLength": 1.2,
+    "wristNode": "WristR",
+    "localWeaponPosition": [
+      0,
+      0.07,
+      0
+    ],
+    "localWeaponQuaternion": [
+      0,
+      0,
+      0.7071067811865475,
+      0.7071067811865476
+    ],
+    "postAnimationWristCorrectionQuaternion": [
+      0,
+      0,
+      0.3826834323650898,
+      0.9238795325112867
+    ],
+    "idleOriginalBladeDirection": [
+      0.33,
+      0.303,
+      0.894
+    ],
+    "idleCorrectedBladeDirection": [
+      0.235,
+      0.884,
+      0.405
+    ],
+    "integration": "Restore last uncorrected wrist quaternion before each mixer.update; afterward save the new uncorrected quaternion and multiply by correction once. This rotates the hand with the weapon and avoids accumulation when Three skips unchanged track writes. Update matrices before render."
+  },
+  "armor": {
+    "bone": "Chest",
+    "position": [
+      -0.0046076,
+      -0.1278487,
+      0.028659
+    ],
+    "quaternion": [
+      -0.0676475,
+      0.00223166,
+      -0.00108543,
+      0.9977062
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "frontAxis": "+Z",
+    "intendedWorldCenterInIdle": [
+      0,
+      1.21,
+      0.077
+    ],
+    "modelType": "Rigid chest armor with shoulder plates, not skinned. Neither model includes a helmet. Uses existing character rig; armor follows Chest bone."
+  },
+  "chest": {
+    "lidNode": "Chest_Top",
+    "openAxis": "X",
+    "openRadians": -1.15,
+    "notes": "Lid mesh pivot is preserved at the rear hinge; its local baseline rotation is identity."
+  },
+  "rocks": {
+    "nodes": [
+      "Rock_1",
+      "Rock_2",
+      "Rock_3",
+      "Rock_4",
+      "Rock_5"
+    ],
+    "cloneChildrenIndividually": true,
+    "allGeometryGroundCentered": true,
+    "texture": "Original 2048 source image resized to1024, embedded JPEG quality88; material and UVs preserved."
+  }
+}

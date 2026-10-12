@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "maxBots": 32,
+  "profiles": [
+    {"name": "Pebble", "cps": 2.9, "reaction": 0.36, "aimError": 0.25, "turn": 5.5, "jump": 0.27, "aggression": 0.69, "rating": 240},
+    {"name": "Wisp", "cps": 4.1, "reaction": 0.29, "aimError": 0.18, "turn": 6.8, "jump": 0.43, "aggression": 0.77, "rating": 1200},
+    {"name": "Flint", "cps": 5.6, "reaction": 0.24, "aimError": 0.12, "turn": 8, "jump": 0.59, "aggression": 0.83, "rating": 3540},
+    {"name": "Bramble", "cps": 6.5, "reaction": 0.2, "aimError": 0.085, "turn": 10, "jump": 0.67, "aggression": 0.92, "rating": 7000},
+    {"name": "Rook", "cps": 7.3, "reaction": 0.17, "aimError": 0.07, "turn": 12, "jump": 0.75, "aggression": 0.98, "rating": 10880},
+    {"name": "Cinder", "cps": 8.2, "reaction": 0.145, "aimError": 0.055, "turn": 14, "jump": 0.84, "aggression": 1.02, "rating": 13700},
+    {"name": "Moxie", "cps": 9.4, "reaction": 0.125, "aimError": 0.041, "turn": 17, "jump": 0.89, "aggression": 1.08, "rating": 18120},
+    {"name": "Onyx", "cps": 10.7, "reaction": 0.105, "aimError": 0.035, "turn": 19, "jump": 0.92, "aggression": 1.1, "rating": 22000},
+    {"name": "Vex", "cps": 12.2, "reaction": 0.09, "aimError": 0.028, "turn": 21, "jump": 0.95, "aggression": 1.13, "rating": 28920}
+  ],
+  "extraNames": ["Ash", "Copper", "Sable", "Echo", "Blitz", "Nyx", "Briar", "Ember", "Quartz", "Rune", "Havoc", "Jinx", "Ghost", "Fable", "Zephyr", "Talon", "Cobalt", "Rift", "Shade", "Nova", "Hex", "Drift", "Sparks"],
+  "generated": {
+    "cps": {"min": 2.5, "max": 12.8, "variation": 0.5},
+    "reaction": {"min": 0.08, "variation": 0.015},
+    "rating": {"min": 0, "variation": 85}
+  },
+  "clicks": {"jitterMin": 0.79, "jitterSpread": 0.42},
+  "economy": {"income": 4, "incomeInterval": 18, "shopMinimumCoins": 120},
+  "healing": {"threshold": 0.48, "cooldown": 12},
+  "targeting": {"streakCap": 12, "streakWeight": 0.14, "currentBias": 0.8}
+}

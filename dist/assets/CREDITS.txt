@@ -1,0 +1,21 @@
+3D ART CREDITS
+
+The complete attribution notice is NOTICES.txt and the in-game Credits screen.
+
+Characters: Ultimate Modular Men Pack by Quaternius.
+https://poly.pizza/bundle/Ultimate-Modular-Men-Pack-ZiH8muWqwQ
+https://quaternius.com/packs/ultimatemodularcharacters.html
+
+Sword: Sword by Quaternius.
+https://poly.pizza/m/9lLmH8Et4K
+
+The original character pack and original sword listed above are released under
+Creative Commons CC0 1.0 Universal (Public Domain).
+See ADDITIONAL-CREDITS.txt for the added assets and their CC0 / CC BY licenses.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+The fighter-*.glb character assets preserve original geometry, materials, rig and
+24 animations; the original embedded glTF has been losslessly repackaged to GLB.
+Source mirror: https://github.com/agentkaerf/FreeModels
+
+Thank you, Quaternius.

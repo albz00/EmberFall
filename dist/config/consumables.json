@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "potions": {
+    "healing": {"name": "Healing potion", "file": "potion-healing.glb", "price": 35, "color": "#f38c99", "description": "Restores 115 health.", "amount": 115},
+    "haste": {"name": "Haste potion", "file": "potion-haste.glb", "price": 55, "color": "#c1a1ff", "description": "25% faster movement for 12 seconds.", "duration": 12, "multiplier": 1.25},
+    "guard": {"name": "Guard potion", "file": "potion-guard.glb", "price": 65, "color": "#ffcf88", "description": "25% less combat damage for 10 seconds.", "duration": 10, "reduction": 0.25}
+  }
+}

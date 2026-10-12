@@ -1,0 +1,17 @@
+---
+description: Choose the Emberfall chat model from the task before editing
+alwaysApply: true
+---
+
+# Model routing
+
+Classify the request, then match the chat model before writing code.
+
+- Small UI edits, colors, settings, isolated fixes: Grok 4.7, Low–Medium effort, default context.
+- Features, animation fixes, combat changes: Opus 5.5 High, default context.
+- World editor, multiplayer, major inventory changes: Opus 5.5 High, default context. Escalate only if that pass fails.
+- A problem Opus has already failed to resolve: Fable 5.1 High. Expand context only for that pass.
+
+If this chat is on a lighter model than the row requires, stop and ask for the switch. Do not implement that work here.
+
+Stay on the current model when it already matches. Do not expand context unless the row says to.

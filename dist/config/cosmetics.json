@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "cosmetics": {
+    "none": {"name": "No effect", "price": 0, "colors": ["#baaec0", "#e7dae8"], "description": "Unequip your appearance."},
+    "ember": {"name": "Emberwake", "price": 180, "colors": ["#ff7b45", "#ffcc65"], "description": "Rising embers and molten orange rings."},
+    "glacier": {"name": "Glacier", "price": 280, "colors": ["#7ef3ff", "#748cff"], "description": "Icy shards and gliding blue orbits."},
+    "hex": {"name": "Hexfire", "price": 400, "colors": ["#9eff94", "#be7eff"], "description": "Violet orbits with spectral green wisps."},
+    "bloodmoon": {"name": "Bloodmoon", "price": 480, "colors": ["#ff4775", "#d779ff"], "description": "Crimson sparks beneath a violet halo."},
+    "starfall": {"name": "Starfall", "price": 650, "colors": ["#83b5ff", "#ff98de"], "description": "Bright drifting stars and twin pastel orbits."},
+    "prism": {"name": "Prism", "price": 900, "colors": ["#8ef7e7", "#ff87db"], "description": "Color-shifting rings and rainbow stardust."},
+    "inferno": {"name": "Inferno", "price": 750, "style": "flame", "colors": ["#ff5e24", "#ffdf7c"], "description": "Full-body flames with bright, flickering cores."},
+    "storm": {"name": "Stormbound", "price": 850, "style": "lightning", "colors": ["#6ebcff", "#e5faff"], "description": "Branching blue lightning arcs around your body."},
+    "soulfire": {"name": "Soulfire", "price": 1050, "style": "flame", "colors": ["#22dbaa", "#b6fff0"], "description": "Tall spectral flames that spiral upward."},
+    "hellfire": {"name": "Hellfire", "price": 1250, "style": "flame", "colors": ["#ff2648", "#ffa357"], "description": "Crimson fire surges with a trail of cinders."},
+    "tempest": {"name": "Tempest", "price": 1450, "style": "lightning", "colors": ["#bb70ff", "#ffd4fb"], "description": "Violet lightning coils and branching pink sparks."},
+    "eclipse": {"name": "Eclipse", "price": 1800, "style": "fusion", "colors": ["#8e63ff", "#ffac56"], "description": "Violet flames threaded with golden lightning."},
+    "pressure": {"name": "Spiritual Pressure", "price": 1000000, "style": "pressure", "power": "pressure", "colors": ["#9980ff", "#dfd0ff"], "description": "Heavy violet pressure slows nearby enemies by up to 68% within 28m. Crushing violet columns, falling particles and a darkened sky distort the arena. You stay unaffected; inactive on the ledge."},
+    "ascension": {"name": "Ascension", "price": 1000000, "style": "ascension", "power": "ascension", "colors": ["#ffbe23", "#fff3ac"], "description": "A towering golden aura with arena-wide wind pressure. Enemies take 2–3 damage each second. Inactive on the safe ledge."}
+  },
+  "nameplates": {
+    "none": {"name": "Plain", "price": 0, "description": "Your usual chat name."},
+    "ember": {"name": "Ember", "price": 180, "description": "A warm flame shimmer."},
+    "volt": {"name": "Voltage", "price": 300, "description": "Electric blue with traveling sparks."},
+    "venom": {"name": "Venom", "price": 350, "description": "A slow spectral green pulse."},
+    "aurora": {"name": "Aurora", "price": 450, "description": "Waves of cyan, violet and pink."},
+    "royal": {"name": "Sovereign", "price": 600, "description": "A gilded frame with a sweeping shine."},
+    "prism": {"name": "Prismatic", "price": 800, "description": "A flowing rainbow across your name."}
+  }
+}

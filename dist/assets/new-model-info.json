@@ -1,0 +1,726 @@
+{
+  "assets": [
+    {
+      "file": "weapon-broadsword.glb",
+      "title": "Sword",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/ajOJ2NLz5m",
+      "bytes": 54476,
+      "kind": "weapon",
+      "nodes": [
+        {
+          "name": "Sword_big",
+          "bounds": {
+            "min": [
+              -0.095033,
+              -0.162047,
+              -0.022219
+            ],
+            "max": [
+              0.095033,
+              1.037953,
+              0.022219
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 830
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.0,
+          0.21875003239204036,
+          -6.780868737343848e-08
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 0.4388169632062533
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.",
+      "totalLength": 1.2,
+      "bladeAxis": "+Y",
+      "grip": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "weapon-dagger.glb",
+      "title": "Dagger",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/kSMpR711Y2",
+      "bytes": 46604,
+      "kind": "weapon",
+      "nodes": [
+        {
+          "name": "Dagger",
+          "bounds": {
+            "min": [
+              -0.130752,
+              -0.230261,
+              -0.04791
+            ],
+            "max": [
+              0.125946,
+              0.969739,
+              0.04791
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 726
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.00039514125091955066,
+          -0.04305076848178605,
+          -4.205780557153815e-09
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 0.8638075731828235
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.",
+      "totalLength": 1.2,
+      "bladeAxis": "+Y",
+      "grip": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "weapon-gemblade.glb",
+      "title": "Two Handed Sword",
+      "author": "PscycoPatate",
+      "license": "CC-BY 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://poly.pizza/m/oG60CgwatX",
+      "bytes": 94904,
+      "kind": "weapon",
+      "nodes": [
+        {
+          "name": "BladeCenter",
+          "bounds": {
+            "min": [
+              -0.087701,
+              -0.187936,
+              -0.043828
+            ],
+            "max": [
+              0.087701,
+              1.012064,
+              0.043873
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 1122
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          2.9103830456733704e-09,
+          -1.1641531780237635e-08,
+          1.4551938196105674e-09
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 0.8770056946615328
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.",
+      "totalLength": 1.2,
+      "bladeAxis": "+Y",
+      "grip": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "weapon-mace.glb",
+      "title": "d20 mace",
+      "author": "Robin Goldenberg",
+      "license": "CC-BY 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://poly.pizza/m/32NZ3FY4yo-",
+      "bytes": 263744,
+      "kind": "mace",
+      "nodes": [
+        {
+          "name": "Mace",
+          "primitives": 3,
+          "triangles": 3314,
+          "bounds": {
+            "min": [
+              -0.13481942118068058,
+              -0.14589070793079617,
+              -0.1256500996187089
+            ],
+            "max": [
+              0.13513303225573678,
+              1.0541092920692037,
+              0.1345758481997677
+            ]
+          }
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.8815461695194244,
+          -0.3206756040453911,
+          0.2824692502617836
+        ],
+        "rotationMatrix": [
+          [
+            0.393819616895403,
+            0.8974492263978016,
+            -0.19872341428816528
+          ],
+          [
+            -0.8974492263978016,
+            0.32867234970062875,
+            -0.29420974249717724
+          ],
+          [
+            -0.19872341428816528,
+            0.29420974249717724,
+            0.9348527328052259
+          ]
+        ],
+        "scale": 0.6767424963483781
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed. Mace parts merged by their three original materials to reduce draw calls from 61 to 3 without changing appearance.",
+      "totalLength": 1.2,
+      "bladeAxis": "+Y",
+      "grip": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "sword-rack.glb",
+      "title": "Sword Wall Mount",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/3LyJaWgoJG",
+      "bytes": 149132,
+      "kind": "rack",
+      "nodes": [
+        {
+          "name": "Sword_WallMount",
+          "bounds": {
+            "min": [
+              -0.622152,
+              0.0,
+              0.0
+            ],
+            "max": [
+              0.370803,
+              1.430692,
+              0.33038
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 680
+        },
+        {
+          "name": "Sword",
+          "bounds": {
+            "min": [
+              -0.826382,
+              1.002683,
+              0.102995
+            ],
+            "max": [
+              0.621991,
+              1.282547,
+              0.284927
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 872
+        },
+        {
+          "name": "Sword_big",
+          "bounds": {
+            "min": [
+              -0.9,
+              0.694213,
+              0.122634
+            ],
+            "max": [
+              0.9,
+              0.927089,
+              0.357572
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 830
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.07510724663734439,
+          -0.40132978678007925,
+          -0.0009452628763315625
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 1.6888459933740634
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed."
+    },
+    {
+      "file": "treasure-chest.glb",
+      "title": "Chest",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/O72u4Drp8k",
+      "bytes": 105072,
+      "kind": "chest",
+      "nodes": [
+        {
+          "name": "Chest_Base",
+          "bounds": {
+            "min": [
+              -0.802464,
+              0.0,
+              -0.570904
+            ],
+            "max": [
+              0.796105,
+              0.802436,
+              0.576274
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 796
+        },
+        {
+          "name": "Chest_Top",
+          "bounds": {
+            "min": [
+              -0.825,
+              -0.0,
+              -0.052369
+            ],
+            "max": [
+              0.825,
+              0.520832,
+              1.0429
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.736267,
+            -0.523905
+          ],
+          "triangles": 880
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          -0.000608462723903358,
+          -0.0013262077843175972,
+          0.021435975754174552
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 1.399113847027633
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed."
+    },
+    {
+      "file": "armor-iron.glb",
+      "title": "Armor Used",
+      "author": "CreativeTechLab",
+      "license": "CC-BY 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://poly.pizza/m/EEtHhE4M94",
+      "bytes": 44900,
+      "kind": "armor",
+      "nodes": [
+        {
+          "name": "armor_used",
+          "bounds": {
+            "min": [
+              -0.365968,
+              -0.36,
+              -0.167056
+            ],
+            "max": [
+              0.365968,
+              0.36,
+              0.167056
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 556
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.01578996697674473,
+          -0.022248597290903893,
+          0.0341634346609488
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 1.0076089291586732
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.",
+      "armorType": "rigid breastplate with shoulder plates; no helmet or skeleton"
+    },
+    {
+      "file": "armor-gold.glb",
+      "title": "Armor Golden",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/65ltdmlBcy",
+      "bytes": 63960,
+      "kind": "armor",
+      "nodes": [
+        {
+          "name": "Armor_Golden",
+          "bounds": {
+            "min": [
+              -0.47412,
+              -0.37,
+              -0.233854
+            ],
+            "max": [
+              0.47412,
+              0.37,
+              0.233854
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 1040
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.0,
+          0.03770783463331945,
+          0.04455602746610102
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 0.6157826238974783
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.",
+      "armorType": "rigid breastplate with shoulder plates; no helmet or skeleton"
+    },
+    {
+      "file": "rock-pack.glb",
+      "title": "Rocks",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/gYhoEOKItJ",
+      "bytes": 254952,
+      "kind": "rocks",
+      "nodes": [
+        {
+          "name": "Rock_4",
+          "bounds": {
+            "min": [
+              -0.429612,
+              0.0,
+              -0.406207
+            ],
+            "max": [
+              0.429612,
+              2.152962,
+              0.406207
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 456
+        },
+        {
+          "name": "Rock_1",
+          "bounds": {
+            "min": [
+              -0.355337,
+              0.0,
+              -0.443698
+            ],
+            "max": [
+              0.355337,
+              1.082488,
+              0.443698
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 228
+        },
+        {
+          "name": "Rock_2",
+          "bounds": {
+            "min": [
+              -0.526934,
+              0.0,
+              -0.537803
+            ],
+            "max": [
+              0.526934,
+              1.124829,
+              0.537803
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 202
+        },
+        {
+          "name": "Rock_3",
+          "bounds": {
+            "min": [
+              -0.421811,
+              0.0,
+              -0.448585
+            ],
+            "max": [
+              0.421811,
+              1.31308,
+              0.448585
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 712
+        },
+        {
+          "name": "Rock_5",
+          "bounds": {
+            "min": [
+              -0.645348,
+              0.0,
+              -0.658659
+            ],
+            "max": [
+              0.645348,
+              1.694563,
+              0.658659
+            ]
+          },
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 632
+        }
+      ],
+      "normalized": {
+        "sourcePivot": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotationMatrix": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "scale": 1.0
+      },
+      "changes": "Transforms baked; geometry and materials preserved. Grip centered and longitudinal axis +Y for weapons; chest/rack anchored at floor. Armor centered for rigid chest attachment. Rock origins independently centered on ground; embedded source texture resized to 1024 and JPEG compressed.",
+      "usage": "Scene contains five ground-centered overlapping rock children. Clone child Rock_1..Rock_5 individually, not the full scene."
+    },
+    {
+      "file": "weapon-classic.glb",
+      "title": "Sword",
+      "author": "Quaternius",
+      "license": "CC0 1.0",
+      "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "source": "https://poly.pizza/m/9lLmH8Et4K",
+      "bytes": 51888,
+      "totalLength": 1.2,
+      "bladeAxis": "+Y",
+      "grip": [
+        0,
+        0,
+        0
+      ],
+      "changes": "Transforms baked and unit length normalized; original geometry/materials preserved."
+    }
+  ]
+}

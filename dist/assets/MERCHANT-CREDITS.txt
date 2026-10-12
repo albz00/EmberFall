@@ -1,0 +1,47 @@
+Emberfall merchant and exotic weapon asset credits
+Source page licenses verified: 2026-10-12
+
+npc-eye-squaller.glb: "Eye Summoner" by Polygonal Mind
+Source: https://poly.pizza/m/3DS872gR6u
+Original model download: https://static.poly.pizza/0a0ca1fb-da7c-4a03-96b5-300b7bfd273d.glb
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Original SHA-256: 5d8b01f930c61c13a72393498db32225fc03364c84fa994d06f546e171b8113d
+Changes: The static mesh was turned to face +Z, scaled to 1.85 m with feet at Y=0, and its face shape keys were removed. It was skinned to the 19-bone Emberfall rig from avatar-wizard.glb, with joints refitted to this body and bone orientations kept, so that rig's 16 clips play on it. Weights came from automatic weights on a voxel-remeshed copy, transferred to the original mesh; the arms are weighted along their length, and the helmet follows the head. quaternius-npc-eye-squaller-animations.glb holds the Universal Animation Library clips retargeted by scripts/import-quaternius.mjs. Texture and material were kept.
+
+assets/voice/merchant-welcome.mp3 and assets/voice/merchant-come-get-your-weapons.mp3: Eye Squaller's voice lines, recorded for Emberfall. Silence was trimmed from the start and end, and they were re-encoded as 128 kb/s mono MP3.
+Original SHA-256 (welcome): 95dffe89522f884e30d75b138826970aa94515da4ccf1ebc182679212c1d962d
+Original SHA-256 (come get your weapons): 4153196958f1ea684c1713a4e6608c79f09e29565a83e64fa45d02cfa8961c25
+
+The weapons below were rotated so the blade points +Y, scaled to 1.2 m, and moved so the grip sits at the origin. Geometry and materials were kept.
+
+exotic-thunderclap.glb: "Doublesided Hammer" by Quaternius
+Source: https://poly.pizza/m/UIXvQ73DS1
+Original model download: https://static.poly.pizza/97f342bf-7e3b-4155-a306-91b35e321c7b.glb
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Original SHA-256: 372b0fe8863f4f58c4bc126ff5f73bc24e035569d6954b474c3b26226afe5b16
+
+exotic-riftfang.glb: "Sword" by MiniPoly
+Source: https://poly.pizza/m/eclLAgGuob
+Original model download: https://static.poly.pizza/91109773-bf85-4171-a496-82d3fe05a85b.glb
+License: CC0 1.0 — https://creativecommons.org/publicdomain/zero/1.0/
+Original SHA-256: 0d33bda15e8bfd574f6075ea8f908bd7a126ec65b2be9600956e42c2cc8dc31f
+
+exotic-gilded-oath.glb: "A Slightly Fancy Sword" by Skie Radscale
+Source: https://poly.pizza/m/cI9Vt3az-hU
+Original model download: https://static.poly.pizza/e3c224f5-a894-4e88-9415-15363ac31208.glb
+License: CC BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Original SHA-256: ef452c146000d03edeee3ff7179de7985488d7931a21e6531667889ef44c476a
+
+exotic-voidsplitter.glb: "SCi-FI Axe" by Qubzy
+Source: https://poly.pizza/m/wpRlt3OQc2
+Original model download: https://static.poly.pizza/bc88a78d-fb64-49ba-b0ac-4a0e4ff43f4a.glb
+License: CC BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Original SHA-256: bc4b9dc048bf4d37a764ba1007ccc74ace6ad2c3dd461811f0447b48d8053fb8
+
+exotic-eclipse-edge.glb: "SCI-FI Sword" by Qubzy
+Source: https://poly.pizza/m/vH8a7TMtCt
+Original model download: https://static.poly.pizza/99c71fb0-8226-4f9f-a29e-38707c29bbf2.glb
+License: CC BY 3.0 — https://creativecommons.org/licenses/by/3.0/
+Original SHA-256: 9f86e5fc12c2c0e446630b067b529cdf5e01100afa308442ab1ca843a29bcc50
+
+The creators do not endorse Emberfall.

@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 2,
+  "id": "emberfall",
+  "name": "Emberfall",
+  "bounds": {"wallRadius": 33, "lavaRadius": 33.7},
+  "lava": {
+    "bedHeight": -2.2,
+    "surfaceClearance": 0.3,
+    "paths": [
+      {"width": 1.7, "points": [{"x": -29, "z": -27}, {"x": -20, "z": -22}, {"x": -16, "z": -14}, {"x": -18, "z": -5}, {"x": -15, "z": 2}, {"x": -21, "z": 10}, {"x": -16, "z": 18}, {"x": -8, "z": 24}]},
+      {"width": 1.55, "points": [{"x": 13, "z": -30}, {"x": 10, "z": -23}, {"x": 16, "z": -15}, {"x": 12, "z": -8}, {"x": 14, "z": 1}, {"x": 21, "z": 7}, {"x": 18, "z": 15}, {"x": 27, "z": 21}]},
+      {"width": 1.1, "points": [{"x": -32, "z": 6}, {"x": -25, "z": 3}, {"x": -19, "z": 6}, {"x": -15, "z": 2}]},
+      {"width": 1.5, "points": [{"x": 21, "z": 7}, {"x": 28, "z": 5}, {"x": 33, "z": 8}]}
+    ]
+  },
+  "regions": {
+    "safe": {"parent": "ledge", "halfWidth": 9.5, "minZ": -6.5, "minY": 7.65, "x": 0},
+    "bridgeCover": {"parent": "bridge", "halfLength": 26.5, "minZ": -1.65, "maxZ": 1.65, "minY": 0, "maxY": 2.8, "x": 0}
+  },
+  "spawns": {
+    "player": {"parent": "ledge", "x": 0, "z": 2.8},
+    "bots": {"parent": "ledge", "x": 0, "z": 1.8, "width": 8, "depth": 3}
+  },
+  "ledgeExit": {"parent": "ledge", "width": 6, "laneHalfWidth": 3.6, "laneZ": -2.8, "approachZ": -3.2, "jumpZ": -4.9, "dropZ": -10.2, "x": 0},
+  "stations": {
+    "match": {"parent": "ledge", "x": 0, "z": 4.4},
+    "weapons": {"parent": "ledge", "x": -6.5, "z": 1.3, "prefab": "station-pedestal"},
+    "chest": {"parent": "ledge", "x": 6.5, "z": 1.3, "prefab": "station-pedestal"},
+    "potions": {"parent": "ledge", "x": -5.1, "z": 4.9, "prefab": "potion-table"},
+    "merchant": {"parent": "ledge", "x": 7.6, "z": -3, "prefab": "merchant-stand"}
+  },
+  "navigation": {
+    "destinations": [
+      {"x": -8, "z": -21},
+      {"x": 7, "z": -17},
+      {"x": 21, "z": 13},
+      {"x": -23, "z": 15},
+      {"x": -11, "z": 17},
+      {"x": 12, "z": 23},
+      {"x": 0, "z": -27},
+      {"x": 20, "z": -3},
+      {"parent": "ramp-west", "x": 0, "z": -10.8, "y": 5.2},
+      {"parent": "ramp-east", "x": 0, "z": -10.8, "y": 5.2}
+    ],
+    "bridgeCover": [
+      {"parent": "bridge", "x": -21, "z": 0},
+      {"parent": "bridge", "x": -11, "z": 0},
+      {"parent": "bridge", "x": -5, "z": 0},
+      {"parent": "bridge", "x": 3, "z": 0},
+      {"parent": "bridge", "x": 7, "z": 0},
+      {"parent": "bridge", "x": 20, "z": 0}
+    ]
+  },
+  "prefabs": {
+    "ledge": {"visual": "ledge", "surfaces": [{"type": "flat", "z": 0.25, "w": 18.7, "d": 13.1, "height": 8, "stepUp": 0.5}]},
+    "bridge": {"visual": "bridge", "surfaces": [{"type": "flat", "w": 54, "d": 3.8, "height": 5.2, "stepUp": 0.48}]},
+    "ramp": {"visual": "ramp", "surfaces": [{"type": "ramp", "w": 4, "d": 21.6, "height": 5.2, "rises": "-z", "stepUp": 0.65}]},
+    "crag": {"visual": "crag", "colliders": [{"type": "circle", "r": 3.5, "minY": -1, "maxY": 15}]},
+    "boulder": {"visual": "boulder", "colliders": [{"type": "circle", "r": 0.8, "minY": -1, "maxY": 1.1}]},
+    "tower": {"visual": "tower", "colliders": [{"type": "circle", "r": 3.2, "minY": -1, "maxY": 10}]},
+    "ledge-side-rail": {"visual": "ledge-side-rail", "colliders": [{"type": "box", "w": 0.2, "d": 12.5, "minY": -0.5, "maxY": 1.2}]},
+    "ledge-back-rail": {"visual": "ledge-back-rail", "colliders": [{"type": "box", "w": 18, "d": 0.25, "minY": -0.5, "maxY": 2}]},
+    "ledge-front-rail": {"visual": "ledge-front-rail", "colliders": [{"type": "box", "w": 3.9, "d": 0.2, "minY": -0.4, "maxY": 1.2}]},
+    "portal": {"visual": "portal", "colliders": [{"type": "box", "x": -3.35, "w": 1.4, "d": 1.4, "minY": -1, "maxY": 5}, {"type": "box", "x": 3.35, "w": 1.4, "d": 1.4, "minY": -1, "maxY": 5}]},
+    "crate": {"visual": "crate", "colliders": [{"type": "box", "w": 1.2, "d": 1.2, "minY": 0, "maxY": 1.4}]},
+    "rock-cluster": {"visual": "rock-cluster", "colliders": [{"type": "circle", "r": 0.37, "minY": 0, "maxY": 0.8}]},
+    "volcano": {"visual": "volcano", "colliders": [{"type": "circle", "r": 0.36, "minY": 0, "maxY": 2.8, "scaleTop": false}]},
+    "station-pedestal": {"visual": "station", "colliders": [{"type": "circle", "r": 0.82, "minY": 0, "maxY": 2}]},
+    "potion-table": {"visual": "potion-table", "colliders": [{"type": "box", "w": 1.87, "d": 1.69, "minY": 0, "maxY": 1.5}]},
+    "merchant-stand": {"visual": "merchant", "colliders": [{"type": "circle", "r": 0.6, "minY": 0, "maxY": 2.2}]}
+  },
+  "objects": [
+    {"id": "central-crag", "prefab": "crag", "x": 0, "z": 0},
+    {"id": "boulder-northwest", "prefab": "boulder", "x": -9, "z": -15, "scale": 1.5},
+    {"id": "boulder-east", "prefab": "boulder", "x": 7, "z": 12, "scale": 1.25},
+    {"id": "boulder-west", "prefab": "boulder", "x": -9, "z": 9, "scale": 1.45},
+    {"id": "boulder-north", "prefab": "boulder", "x": 9, "z": -21, "scale": 1.3},
+    {"id": "tower-northwest", "prefab": "tower", "x": -24, "z": -22, "rotation": 0.28},
+    {"id": "tower-northeast", "prefab": "tower", "x": 24, "z": -22, "rotation": -0.28},
+    {"id": "tower-west", "prefab": "tower", "x": -28, "z": 13, "rotation": 1.2},
+    {"id": "ledge-rail-west", "prefab": "ledge-side-rail", "parent": "ledge", "x": -9.1, "y": 8, "z": 0},
+    {"id": "ledge-rail-east", "prefab": "ledge-side-rail", "parent": "ledge", "x": 9.1, "y": 8, "z": 0},
+    {"id": "ledge-rail-back", "prefab": "ledge-back-rail", "parent": "ledge", "x": 0, "y": 8, "z": 6.1},
+    {"id": "ledge-rail-front-west", "prefab": "ledge-front-rail", "parent": "ledge", "x": -7.2, "y": 8, "z": -6.2},
+    {"id": "ledge-rail-front-east", "prefab": "ledge-front-rail", "parent": "ledge", "x": 7.2, "y": 8, "z": -6.2},
+    {"id": "portal", "prefab": "portal", "x": 0, "z": -29.2},
+    {"id": "crate-1", "prefab": "crate", "x": -6, "z": -28, "rotation": 0},
+    {"id": "crate-2", "prefab": "crate", "x": 8, "z": -26, "rotation": 0.7},
+    {"id": "crate-3", "prefab": "crate", "x": 28, "z": 0, "rotation": 1.4},
+    {"id": "crate-4", "prefab": "crate", "x": -29, "z": -8, "rotation": 2.1},
+    {"id": "rocks-1", "prefab": "rock-cluster", "x": -30, "z": -17, "scale": 2.5, "rotation": 0, "variant": 1},
+    {"id": "rocks-2", "prefab": "rock-cluster", "x": -31, "z": 5, "scale": 2.1, "rotation": 1.1, "variant": 2},
+    {"id": "rocks-3", "prefab": "rock-cluster", "x": -27, "z": 20, "scale": 2.2, "rotation": 2.2, "variant": 3},
+    {"id": "rocks-4", "prefab": "rock-cluster", "x": -22, "z": 27, "scale": 2.5, "rotation": 3.3, "variant": 4},
+    {"id": "rocks-5", "prefab": "rock-cluster", "x": 20, "z": 28, "scale": 2.2, "rotation": 4.4, "variant": 5},
+    {"id": "rocks-6", "prefab": "rock-cluster", "x": 29, "z": 14, "scale": 2.1, "rotation": 5.5, "variant": 1},
+    {"id": "rocks-7", "prefab": "rock-cluster", "x": 31, "z": -4, "scale": 2.3, "rotation": 6.6, "variant": 2},
+    {"id": "rocks-8", "prefab": "rock-cluster", "x": 28, "z": -16, "scale": 2.2, "rotation": 7.7, "variant": 3},
+    {"id": "rocks-9", "prefab": "rock-cluster", "x": -18, "z": -28, "scale": 1.8, "rotation": 8.8, "variant": 4},
+    {"id": "rocks-10", "prefab": "rock-cluster", "x": 15, "z": -29, "scale": 2, "rotation": 9.9, "variant": 5},
+    {"id": "volcano-1", "prefab": "volcano", "x": -14, "z": -25, "scale": 4.1},
+    {"id": "volcano-2", "prefab": "volcano", "x": 20, "z": 20, "scale": 3.3},
+    {"id": "volcano-3", "prefab": "volcano", "x": -25, "z": -4, "scale": 3.1},
+    {"id": "bridge", "prefab": "bridge", "x": 0, "z": -10},
+    {"id": "ramp-west", "prefab": "ramp", "x": -25.1, "z": 0.8},
+    {"id": "ramp-east", "prefab": "ramp", "x": 25.1, "z": 0.8},
+    {"id": "ledge", "prefab": "ledge", "x": 0, "z": 25.2}
+  ],
+  "stringLights": [
+    {"from": "tower-northwest", "to": "tower-northeast", "sag": 2.1},
+    {"from": "tower-west", "to": "ledge-rail-west", "sag": 0.8},
+    {"from": "tower-northeast", "to": "ledge-rail-east", "sag": 1.65}
+  ],
+  "supplyDrops": [
+    {"x": -7, "z": 13},
+    {"x": 8, "z": 3},
+    {"x": 5, "z": -20},
+    {"x": -10, "z": -3}
+  ]
+}

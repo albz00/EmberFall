@@ -1,0 +1,87 @@
+EMBERFALL — REVISION 3 ASSET CREDITS
+
+All linked original models are used under their stated Creative Commons licenses.
+The original creators do not endorse Emberfall.
+
+Robot — Polygonal Mind
+https://poly.pizza/m/ejDr8lRglP
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-robot.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Astronaut — Polygonal Mind
+https://poly.pizza/m/4orkFqR9c9
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-astronaut.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Adventurer — Polygonal Mind
+https://poly.pizza/m/BCMT02FrVE
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-adventurer.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Skeleton Costume — Polygonal Mind
+https://poly.pizza/m/6DlLXFdP3r
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-skeleton.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Mask Woman — Polygonal Mind
+https://poly.pizza/m/aEiJdtjqqc
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-mask.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Wizard — Polygonal Mind
+https://poly.pizza/m/6kY9VaAfPv
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-wizard.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Pirate Woman — Polygonal Mind
+https://poly.pizza/m/qRDrzfs8j9
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-pirate.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Tribal Man — Polygonal Mind
+https://poly.pizza/m/vrdJP4oV26
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: avatar-tribal.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Knight — Dawid2K
+https://poly.pizza/m/isC73B8SKq
+License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+File: actor-knight.glb
+Changes: Original fullbody geometry and texture retained, orientation/scale normalized, fitted19joint skin and16 retargeted animations added; texture optimized and cloth metallic factor corrected.
+
+Volcano — Poly by Google
+https://poly.pizza/m/dwSigTeSMCo
+License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+File: volcano.glb
+Changes: Original geometry, UVs and materials retained; transforms baked; pivot and scale normalized; embedded texture size optimized if present.
+
+Bow — Zsky
+https://poly.pizza/m/XkJVO6cACA
+License: CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
+File: bow.glb
+Changes: Original geometry, UVs and materials retained; transforms baked; pivot and scale normalized; embedded texture size optimized if present.
+
+Crate — Quaternius
+https://poly.pizza/m/3VGWnZPXmG
+License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/)
+File: supply-crate.glb
+Changes: Original geometry, UVs and materials retained; transforms baked; pivot and scale normalized; embedded texture size optimized if present.
+
+CHARACTER MOTION
+Quaternius — Ultimate Modular Men Pack
+https://poly.pizza/bundle/Ultimate-Modular-Men-Pack-ZiH8muWqwQ
+CC0 1.0 Universal — https://creativecommons.org/publicdomain/zero/1.0/
+16 original animation clips retargeted to fitted avatar skeletons and baked at 24 fps.
+The Polygonal Mind source avatars were static full-body meshes; the usable 19-joint rigs and skin weights are adaptations for this game. Knight retains its original vertex weighting mapped to the shared bone names.
+These adaptations preserve the supplied visible geometry and textures; individual fingers are not separately articulated.
+
+See CREDITS.txt and ADDITIONAL-CREDITS.txt for earlier models and weapons.
+Arena music (arena-theme.mp3): original synthesized composition created for Emberfall. Source: scripts/render-music.py. No sampled or third-party music.
