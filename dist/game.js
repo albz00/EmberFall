@@ -15,7 +15,7 @@ import {COSMETICS,purchaseCosmetic,NAMEPLATES,purchaseNameplate,WEAPONS,ARMORS,P
 import {merchantStock,merchantCycle,buyExotic,sanitizeMerchantState,rollProc} from './merchant.js?v=53';
 import {bestItem,choosePurchase,transactBot,tacticalGoal,targetScore} from './bot-strategy.js?v=53';
 import {botReply,ambientReply} from './bot-chat.js?v=53';
-import {GAME_VERSION,CHANGELOG} from './changelog.js?v=53';
+import {GAME_VERSION,CHANGELOG} from './changelog.js?v=54';
 import {installScrollbars} from './scrollbars.js?v=28';
 import {MINI,TEAM_COLORS,inMiniArena,miniBlocked,miniGround,miniResolve,assignTeams,matchOutcome,buildMiniArena,makeMatchSign} from './duels.js?v=24';
 import {fitArmor} from './equipment.js?v=24';
@@ -31,8 +31,9 @@ import {ASCENSION,ascensionStrength,createChargeOrb,updateChargeOrb} from './asc
 import {PRESSURE,pressureStrength,pressureMultiplier} from './spiritual-pressure.js?v=24';
 import {HEAVY,chargeProgress,chargedStats,heavyRecovery} from './charged-melee.js?v=53';
 import {Ragdolls,restoreImpactPose,triggerImpact,applyImpactPose} from './impact-motion.js?v=24';
-import {CRYPT,DUNGEON,inDungeon,dungeonPoint,createDungeonRun,nextDungeonEncounter,dungeonGateClosed,dungeonBlocked,dungeonResolve,dungeonGround,markDungeonKill,rollDungeonRewards} from './dungeon.js?v=53';
-import {buildDungeon} from './dungeon-world.js?v=53';
+import {CRYPT,DUNGEON,inDungeon,dungeonPoint,createDungeonRun,nextDungeonEncounter,dungeonBlocked,dungeonResolve,dungeonGround,dungeonIsLava,dungeonLavaDistance,roomContains,seededRandom,depthMultiplier,markDungeonKill,rollDungeonRewards} from './dungeon.js?v=54';
+import {buildDungeon,createDungeonBolt,decorateDungeonEnemy} from './dungeon-world.js?v=54';
+import {planDungeonSpell,waveHitsPlayer} from './dungeon-magic.js?v=54';
 
 const $=id=>document.getElementById(id), canvas=$('game'), touch=matchMedia('(pointer: coarse)').matches;
 const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
@@ -84,9 +85,9 @@ const stations=[{type:'match',name:'2v2 · Join match',position:stationAt('match
 const touchMove={x:0,z:0};
 
 function isDueling(){return duel.phase!=='idle';}
-function groundHeight(x,z,feet=100){return inDungeon(x,z)?dungeonGround(x,z,feet):inMiniArena(x,z)?miniGround(x,z,feet):mainGroundHeight(x,z,feet);}
-function isLava(x,z,y=0){return inDungeon(x,z)||inMiniArena(x,z)?false:mainIsLava(x,z,y);}
-function lavaDistance(x,z){return inDungeon(x,z)||inMiniArena(x,z)?100:mainLavaDistance(x,z);}
+function groundHeight(x,z,feet=100){return inDungeon(x,z)?dungeonGround(x,z,feet,dungeon):inMiniArena(x,z)?miniGround(x,z,feet):mainGroundHeight(x,z,feet);}
+function isLava(x,z,y=0){return inDungeon(x,z)?dungeonIsLava(x,z,y,dungeon):inMiniArena(x,z)?false:mainIsLava(x,z,y);}
+function lavaDistance(x,z){return inDungeon(x,z)?dungeonLavaDistance(x,z,dungeon):inMiniArena(x,z)?100:mainLavaDistance(x,z);}
 function safeZone(p){return inDungeon(p.x,p.z)?false:inMiniArena(p.x,p.z)?duel.phase!=='active':mainSafeZone(p);}
 function resolveCollision(p,r=.38,h=1.7){return inDungeon(p.x,p.z)?dungeonResolve(p,r,dungeon):inMiniArena(p.x,p.z)?miniResolve(p,r):mainResolveCollision(p,r,h);}
 function blocked(x,z,y=0,padding=.6){return inDungeon(x,z)?dungeonBlocked(x,z,y,padding,dungeon):inMiniArena(x,z)?miniBlocked(x,z,y,padding):mainBlocked(x,z,y,padding);}
@@ -179,100 +180,134 @@ function updateDuelHud(){
 $('join-match').addEventListener('click',joinMatch);
 
 function arenaFighters(){return fighters.filter(f=>!f.dungeon);}
-function clearDungeon(){
- for(const f of [...fighters])if(f.dungeon){disposeCosmetic(f);f.animator.mixer.stopAllAction();f.animator.mixer.uncacheRoot(f.rig);scene.remove(f.root);f.label.material.map?.dispose();f.healthBg.geometry.dispose();f.healthFill.geometry.dispose();f.aura?.traverse(o=>o.geometry?.dispose());disposeMaterials(f.root);fighters.splice(fighters.indexOf(f),1);}
- Object.assign(dungeon,createDungeonRun());
+function clearDungeon(seed,depth=1){
+ clearDungeonShots();
+ for(const f of [...fighters])if(f.dungeon){disposeCosmetic(f);f.animator.mixer.stopAllAction();f.animator.mixer.uncacheRoot(f.rig);scene.remove(f.root);f.label.material.map?.dispose();f.healthBg.geometry.dispose();f.healthFill.geometry.dispose();f.root.traverse(o=>{if(o.userData.ownedGeometry)o.geometry?.dispose();});f.aura?.traverse(o=>o.geometry?.dispose());disposeMaterials(f.root);fighters.splice(fighters.indexOf(f),1);}
+ Object.assign(dungeon,createDungeonRun(seed,depth));
 }
 function clearDungeonShots(){for(const shot of projectiles)if(shot.owner===player||shot.owner?.dungeon)shot.life=0;}
+function placePlayerInDungeon(){
+ cancelAttack(true);setFreecam(false,false);clearDungeonShots();keys.clear();player.effects={};player.poison=null;player.slowUntil=0;player.pressureSlow=1;resetMeleeState(player);player.velocity.set(0,0,0);player.knock.set(0,0,0);player.jumps=0;player.grounded=true;player.team=null;returnAt=0;
+ const spawn=dungeon.layout.spawn;player.position.set(spawn.x,0,spawn.z);yaw=dungeon.layout.spawnYaw;pitch=-.04;dungeon.active=true;dungeon.spells.length=0;
+ for(const f of fighters)if(f.dungeon){f.root.visible=f.alive;f.effects={};f.poison=null;f.lastImpact=time;f.nextClick=time+f.skill.reaction;f.nextSpellAt=time+1.8;}
+ dungeonWorld.rebuild(dungeon.layout);dungeonWorld.update(time,.01,dungeon,player.position);world.root.visible=false;miniArena.root.visible=false;$('pause-spawn').textContent='Leave dungeon';music?.use(DUEL_TRACKS);updateHud();
+}
+function pendingDungeonRewards(){return dungeon.pendingRewards.some(id=>lootDrops.some(d=>d.item.id===id&&!lootExpired(d)));}
 function enterDungeon(){
  if(!loaded||mode!=='play'||player.health<=0||isDueling()||dungeon.active)return false;
  const portal=world.portal?.origin;if(!portal||player.position.distanceTo(portal)>DUNGEON.interactionRange)return false;
  if(time-lastCombat<5){toast('Leave combat before entering the portal');return false;}
- if(dungeon.phase==='complete'&&dungeon.claimed)clearDungeon();
- cancelAttack(true);setFreecam(false,false);clearDungeonShots();keys.clear();player.effects={};player.poison=null;player.slowUntil=0;player.pressureSlow=1;resetMeleeState(player);player.velocity.set(0,0,0);player.knock.set(0,0,0);player.jumps=0;player.grounded=true;player.team=null;returnAt=0;
- const spawn=dungeonPoint(CRYPT.spawn);player.position.set(spawn.x,0,spawn.z);yaw=0;pitch=-.04;dungeon.active=true;dungeon.cast=null;dungeon.nextAttack=time+DUNGEON.boss.attackInterval;
- for(const f of fighters)if(f.dungeon){f.root.visible=f.alive;f.effects={};f.poison=null;f.lastImpact=time;f.nextClick=time+f.skill.reaction;}
- world.root.visible=false;miniArena.root.visible=false;dungeonWorld.root.visible=true;$('pause-spawn').textContent='Leave dungeon';music?.use(DUEL_TRACKS);
- chatSystem('Entered the Ashen Crypt. Clear each chamber, defeat the Warden, and claim the relic cache. F at the blue portal returns you with your gear.');updateHud();return true;
+ if(dungeon.phase==='complete'&&dungeon.claimed&&!pendingDungeonRewards()){ragdolls.clear();clearDungeon();}
+ placePlayerInDungeon();chatSystem('Ashen Crypt · Depth '+dungeon.depth+'. Explore the branching chambers, defeat both bosses, and return with your relics.');return true;
+}
+function descendDungeon(){
+ if(!dungeon.active||mode!=='play'||dungeon.phase!=='complete'||!dungeon.claimed||player.health<=0||player.position.distanceTo(new V3(dungeon.layout.descendPoint.x,0,dungeon.layout.descendPoint.z))>DUNGEON.interactionRange)return false;
+ if(pendingDungeonRewards()){toast('Collect the relic drops beside the cache before descending');return false;}
+ const depth=dungeon.depth+1,seed=(dungeon.seed+Math.imul(depth,0x9e3779b1))>>>0;
+ ragdolls.clear();clearDungeon(seed,depth);placePlayerInDungeon();player.health=Math.min(player.maxHealth,player.health+DUNGEON.clearHealing);chatSystem('Descended to depth '+depth+'. A new floor has formed. Enemies and rewards grow stronger.');return true;
 }
 function suspendDungeon(){
- if(!dungeon.active)return;dungeon.active=false;dungeon.cast=null;clearDungeonShots();
+ if(!dungeon.active)return;dungeon.active=false;dungeon.spells.length=0;clearDungeonShots();
  for(const f of fighters)if(f.dungeon){f.root.visible=false;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.effects={};f.poison=null;}
  dungeonWorld.root.visible=false;world.root.visible=true;miniArena.root.visible=true;currentDungeonAction=null;$('dungeon-hud').classList.add('hidden');$('pause-spawn').textContent='Return to ledge';music?.use(LOFI_TRACKS);
 }
 function makeDungeonEnemy(type,at){
- const data=DUNGEON.mobs[type],f=makeFighter(1000+dungeonSerial++,data.character),item={id:'crypt-enemy-'+dungeonSerial,weapon:data.weapon,rarity:'common'};
- f.dungeon=true;f.dungeonType=type;f.boss=data.boss;f.name=data.name;f.skill={...f.skill,name:data.name,cps:data.cps,reaction:.22,aimError:.09,turn:9};f.kit={...KITS.vanguard,health:data.health,speed:data.speed,damageMultiplier:1};f.hp=data.health;f.item=item;f.stats={...weaponStats(item),damage:data.damage,reach:WEAPONS[data.weapon].kind==='staff'?WEAPONS[data.weapon].reach:data.range};f.armor=data.armor;f.helmet='none';f.account=makeProfile({name:data.name,character:data.character,inventory:[item],equipped:item.id});f.state='fight';f.role=f.stats.kind==='staff'?'ranger':'duelist';f.plan='duel';f.target=player;f.targetUntil=Infinity;f.purchase=null;f.rig.scale.setScalar(data.scale);f.position.set(at.x,0,at.z);f.velocity.set(0,0,0);f.knock.set(0,0,0);f.lastImpact=f.lastDirectHit=time-2;f.nextClick=time+.8;f.nextJump=time+DUNGEON.jumpInterval;f.rig.rotation.y=0;f.aimAngle=0;f.animator.look.bodyYaw=0;f.label.material.map.dispose();f.label.material.map=nameTexture(data.name,0);f.label.position.y=2.47*data.scale;f.healthBg.position.y=2.08*data.scale;attachGear(f.rig,item,data.armor);dungeon.enemies.push(f);return f;
+ const data=DUNGEON.mobs[type],room=dungeon.layout.encounters[dungeon.encounter],f=makeFighter(1000+dungeonSerial++,data.character),item={id:'crypt-enemy-'+dungeonSerial,weapon:data.weapon,rarity:'common'};
+ f.dungeon=true;f.dungeonType=type;f.dungeonRoom=room;f.boss=data.boss;f.finalBoss=data.boss&&room.final;f.name=data.name;f.skill={...f.skill,name:data.name,cps:data.cps,reaction:.22,aimError:.09,turn:9};f.kit={...KITS.vanguard,health:Math.round(data.health*depthMultiplier('health',dungeon.depth)),speed:data.speed,damageMultiplier:1};f.hp=f.kit.health;f.item=item;f.stats={...weaponStats(item),damage:Math.round(data.damage*depthMultiplier('damage',dungeon.depth)),reach:WEAPONS[data.weapon].kind==='staff'?WEAPONS[data.weapon].reach:data.range};f.armor=data.armor;f.helmet='none';f.account=makeProfile({name:data.name,character:data.character,inventory:[item],equipped:item.id});f.state='fight';f.role=f.stats.kind==='staff'?'ranger':'duelist';f.plan='duel';f.target=player;f.targetUntil=Infinity;f.purchase=null;f.rig.scale.setScalar(data.scale);f.position.set(at.x,0,at.z);f.velocity.set(0,0,0);f.knock.set(0,0,0);f.lastImpact=f.lastDirectHit=time-2;f.nextClick=time+.8;f.nextJump=time+DUNGEON.jumpInterval;f.nextSpellAt=time+1.8;f.spellIndex=0;f.castUntil=0;f.enraged=f.summoned=false;f.rig.rotation.y=0;f.aimAngle=0;f.animator.look.bodyYaw=0;f.label.material.map.dispose();f.label.material.map=nameTexture(data.name,0);f.label.position.y=2.47*data.scale;f.healthBg.position.y=2.08*data.scale;attachGear(f.rig,item,data.armor);if(data.spells.length||f.boss)decorateDungeonEnemy(f,data.color);dungeon.enemies.push(f);return f;
 }
 function startDungeonEncounter(index){
- const room=CRYPT.encounters[index];dungeon.encounter=index;dungeon.phase='fighting';dungeon.enemies=[];dungeon.nextAttack=time+DUNGEON.boss.attackInterval;
- for(const mob of room.mobs)makeDungeonEnemy(mob.type,dungeonPoint(mob));
+ const room=dungeon.layout.encounters[index];dungeon.encounter=index;dungeon.phase='fighting';dungeon.enemies=[];dungeon.enraged=dungeon.summoned=false;
+ for(const mob of room.mobs)makeDungeonEnemy(mob.type,mob);
  chatSystem(room.name+'.');sound('rumble');updateDungeonHud();
 }
 function defeatDungeonEnemy(f,attacker){
- if(f.boss)dungeon.cast=null;ragdolls.spawn(f,f);f.alive=false;f.hp=0;f.root.visible=false;f.effects={};f.poison=null;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.target=null;
- if(attacker===player){const coins=f.boss?DUNGEON.bossCoins:DUNGEON.mobCoins,exp=f.boss?DUNGEON.bossExp:DUNGEON.mobExp;profile.coins+=coins;profile.rating+=exp;persist();updateProfileUI();toast('+'+coins+' coins · +'+exp+' EXP',1400);sound(f.boss?'ko':'hit');}
- burst(f.position.clone().add(new V3(0,1,0)),f.boss?0xffb970:0xb7a0ef,f.boss?35:15,1.4);addKill({killer:attacker===player?profile.name:attacker?.name??'The crypt',victim:f.name});
+ dungeon.spells=dungeon.spells.filter(s=>s.owner!==f);ragdolls.spawn(f,f);f.alive=false;f.hp=0;f.root.visible=false;f.effects={};f.poison=null;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.target=null;
+ if(attacker===player){const multiplier=depthMultiplier('rewards',dungeon.depth),coins=Math.round((f.finalBoss?DUNGEON.bossCoins:f.boss?DUNGEON.eliteCoins:DUNGEON.mobCoins)*multiplier),exp=Math.round((f.finalBoss?DUNGEON.bossExp:f.boss?DUNGEON.eliteExp:DUNGEON.mobExp)*multiplier);profile.coins+=coins;profile.rating+=exp;persist();updateProfileUI();toast('+'+coins+' coins · +'+exp+' EXP',1400);sound(f.boss?'ko':'hit');}
+ burst(f.position.clone().add(new V3(0,1,0)),DUNGEON.mobs[f.dungeonType].color,f.boss?35:15,1.4);addKill({killer:attacker===player?profile.name:attacker?.name??'The crypt',victim:f.name});
  if(markDungeonKill(dungeon,f)){player.health=Math.min(player.maxHealth,player.health+DUNGEON.clearHealing);arrowCount=Math.min(BOW.maxArrows,arrowCount+BOW.knockoutArrows);healUntil=time+.3;
-  if(dungeon.phase==='complete'){chatSystem('The Cinder Warden has fallen. Open the relic cache at the far end, then return through the blue portal.','reward');sound('ko');shockwave(f.position,0xffc376);}else{chatSystem('Chamber cleared. The gate ahead is opening.');sound('chest');}
+  if(dungeon.phase==='complete'){chatSystem('Floor cleared. Claim the relic cache, then choose the blue return portal or descend through the violet rift.','reward');sound('ko');shockwave(f.position,0xffc376);}else{const room=dungeon.layout.encounters[dungeon.encounter];chatSystem(room.optional?'Reliquary cleared. Its cache is unsealed.':'Chamber cleared. The gates ahead are opening.');sound('chest');}
  }
  updateDungeonHud();
 }
+function giveDungeonRewards(items,at){
+ const dropped=[];
+ for(const [i,item]of items.entries()){const result=addInventoryItem(profile,item);if(!result.ok){spawnLoot(item,new V3(at.x+(i?1:-1),0,at.z+1.5));dropped.push(item.id);}chatSystem(itemName(item)+(result.ok?' added to your inventory.':' dropped beside the cache. Free a slot and press F to pick it up.'),'reward');}
+ persist();saveLoot();hotbarSignature='';refreshEquipment();sound('chest');return dropped;
+}
 function claimDungeonCache(){
- if(!dungeon.active||dungeon.phase!=='complete'||dungeon.claimed||player.position.distanceTo(new V3(dungeonPoint(CRYPT.cache).x,0,dungeonPoint(CRYPT.cache).z))>DUNGEON.interactionRange)return false;
- const items=rollDungeonRewards(prefix=>makeItemId(profile,prefix));
- // Create each physical copy once. A full backpack leaves it beside the cache.
- for(const [i,item]of items.entries()){const result=addInventoryItem(profile,item);if(!result.ok){const p=dungeonPoint(CRYPT.cache);spawnLoot(item,new V3(p.x+(i?1:-1),0,p.z+1.5));}chatSystem(itemName(item)+(result.ok?' added to your inventory.':' dropped beside the cache. Free a slot and press F to pick it up.'),'reward');}
- dungeon.claimed=true;persist();saveLoot();hotbarSignature='';refreshEquipment();sound('chest');updateDungeonHud();return true;
+ const at=dungeon.layout.cache;if(!dungeon.active||dungeon.phase!=='complete'||dungeon.claimed||player.position.distanceTo(new V3(at.x,0,at.z))>DUNGEON.interactionRange)return false;
+ dungeon.claimed=true;dungeon.pendingRewards=giveDungeonRewards(rollDungeonRewards(prefix=>makeItemId(profile,prefix)),at);updateDungeonHud();return true;
+}
+function claimDungeonSideCache(room){
+ if(!dungeon.active||!room?.optional||!dungeon.clearedRooms[room.id]||dungeon.sideClaimed[room.id]||player.position.distanceTo(new V3(room.sideCache.x,0,room.sideCache.z))>DUNGEON.interactionRange)return false;
+ dungeon.sideClaimed[room.id]=true;const rng=seededRandom(dungeon.seed^Math.imul(room.encounter+1,997)),weapon=DUNGEON.sideRewards[Math.floor(rng()*DUNGEON.sideRewards.length)];profile.coins+=Math.round(DUNGEON.sideCoins*depthMultiplier('rewards',dungeon.depth));giveDungeonRewards([{id:makeItemId(profile,'reliquary'),weapon,rarity:'epic'}],room.sideCache);return true;
+}
+function startDungeonSpell(f,id){
+ if(!dungeon.active||!f.alive||dungeon.spells.length>=DUNGEON.magic.maxActive)return false;
+ const spec=DUNGEON.spells[id];if(!spec)return false;
+ const cast=planDungeonSpell(dungeon,f,id,player,time,(x,z)=>blocked(x,z,0,.2)||isLava(x,z,0));dungeon.spells.push(cast);f.castUntil=cast.at;f.animUntil=cast.at;animateActor(f,'Cast',true,Math.max(.7,1/spec.windup));f.nextSpellAt=time+(f.boss&&f.enraged?DUNGEON.boss.enragedInterval:spec.cooldown);sound('magic');return true;
 }
 function updateDungeonEnemy(f,dt){
  f.root.visible=dungeon.active&&f.alive;if(!dungeon.active||!f.alive)return;
  updateAilments(f,dt);if(!f.alive)return;updateAnimator(f,dt);updateAppearance(f,dt);
- const data=DUNGEON.mobs[f.dungeonType],room=CRYPT.encounters[dungeon.encounter],alive=mode==='play'&&player.health>0&&inDungeon(player.position.x,player.position.z),delta=player.position.clone().sub(f.position),distance=Math.hypot(delta.x,delta.z),ranged=f.stats.kind==='staff';f.target=alive?player:null;f.guard=false;
+ const data=DUNGEON.mobs[f.dungeonType],room=f.dungeonRoom,alive=mode==='play'&&player.health>0&&inDungeon(player.position.x,player.position.z),delta=player.position.clone().sub(f.position),distance=Math.hypot(delta.x,delta.z),ranged=f.stats.kind==='staff';f.target=alive?player:null;f.guard=false;
+ if(f.dungeonFX){f.dungeonFX.rotation.y=time*(f.enraged?.6:.23);f.dungeonFX.scale.setScalar(f.enraged?1.2:1);}
  if(!alive||distance>DUNGEON.aggroRange){f.velocity.set(0,f.velocity.y,0);actorPhysics(f,dt);return;}
+ if(f.boss&&!f.enraged&&f.hp/f.kit.health<=DUNGEON.boss.enrageAt){f.enraged=dungeon.enraged=true;chatSystem(f.name+' is enraged.');burst(f.position.clone().add(new V3(0,1,0)),data.color,35,1.4);}
+ if(f.boss&&f.enraged&&!f.summoned){f.summoned=true;for(let i=0;i<DUNGEON.boss.summons;i++){const at={x:room.x+(i%2?-5:5),z:room.z+3};if(!blocked(at.x,at.z,0,.5))makeDungeonEnemy(DUNGEON.boss.summonType,at);}}
  f.aimAngle=turnAngle(f.aimAngle,Math.atan2(delta.x,delta.z),dt*f.skill.turn);f.aimPitch=0;
- const casting=f.boss&&!!dungeon.cast,desired=ranged?data.range:Math.max(1.4,data.range*.75),strafe=Math.sin(time*.9+f.id)*.45;
- let dx=delta.x/Math.max(.01,distance),dz=delta.z/Math.max(.01,distance),direction=distance>desired?1:distance<desired-.8?-1:0;
- let goal={x:f.position.x+(dx*direction+dz*strafe)*3,z:f.position.z+(dz*direction-dx*strafe)*3,y:0};
- goal.x=THREE.MathUtils.clamp(goal.x,CRYPT.origin.x-CRYPT.halfWidth+1,CRYPT.origin.x+CRYPT.halfWidth-1);goal.z=THREE.MathUtils.clamp(goal.z,CRYPT.origin.z+room.minZ,CRYPT.origin.z+room.maxZ);
- const steering=chooseSteer(f.position,goal,blocked,()=>false,time,f.id),speed=data.speed*(f.boss&&dungeon.enraged?DUNGEON.boss.enrageSpeed:1)*slowMultiplier(f);
+ if(data.spells.length&&time>=f.nextSpellAt&&distance<DUNGEON.spells[data.spells[f.spellIndex%data.spells.length]].range&&time>=(f.reactionUntil??0)){const id=data.spells[f.spellIndex++%data.spells.length];startDungeonSpell(f,id);}
+ const casting=time<f.castUntil,desired=ranged?data.range:Math.max(1.4,data.range*.75),strafe=Math.sin(time*.9+f.id)*.45,dx=delta.x/Math.max(.01,distance),dz=delta.z/Math.max(.01,distance),direction=distance>desired?1:distance<desired-.8?-1:0;
+ const goal={x:THREE.MathUtils.clamp(f.position.x+(dx*direction+dz*strafe)*3,room.x-room.w/2+1,room.x+room.w/2-1),z:THREE.MathUtils.clamp(f.position.z+(dz*direction-dx*strafe)*3,room.z-room.d/2+1,room.z+room.d/2-1),y:0};
+ const steering=chooseSteer(f.position,goal,blocked,isLava,time,f.id),speed=data.speed*(f.enraged?DUNGEON.boss.enrageSpeed:1)*slowMultiplier(f);
  steerMovement(f,casting?0:steering.x*speed,casting?0:steering.z*speed,dt);
  if(!casting&&f.grounded&&time>=f.nextJump&&distance<8&&!ranged){f.nextJump=time+DUNGEON.jumpInterval+(f.id%3)*.2;f.velocity.y=DUNGEON.jumpSpeed;f.grounded=false;f.jumps=1;}
  if(!casting&&time>=f.nextClick&&time>=(f.reactionUntil??0)&&!lineBlocked(f.position,player.position)){
-  f.nextClick=time+(ranged?f.stats.cooldown:1/data.cps);if(ranged&&distance<f.stats.reach)botCast(f,player);else if(distance<data.range+.4)botSwing(f,player);
+  f.nextClick=time+(ranged?f.stats.cooldown:1/data.cps);if(ranged&&!data.spells.length&&distance<f.stats.reach)botCast(f,player);else if(!ranged&&distance<data.range+.4)botSwing(f,player);
  }
  if(f.boss){f.knock.multiplyScalar(Math.exp(-DUNGEON.staggerResistance*dt*12));if(f.velocity.y>0&&time-f.lastImpact<.2)f.velocity.y=Math.min(f.velocity.y,4);}
- actorPhysics(f,dt);f.position.z=THREE.MathUtils.clamp(f.position.z,CRYPT.origin.z+room.minZ,CRYPT.origin.z+room.maxZ);
- if(time>f.animUntil&&!casting)locomotion(f,f,Math.hypot(f.velocity.x,f.velocity.z)>.7);
+ actorPhysics(f,dt);if(time>f.animUntil&&!casting)locomotion(f,f,Math.hypot(f.velocity.x,f.velocity.z)>.7);
+ if(isLava(f.position.x,f.position.z,f.position.y)&&time-(f.lastLava??0)>.48){f.lastLava=time;ignite(f);f.hp-=9;if(f.hp<=0)killFighter(f,null);}
  f.healthFill.scale.x=Math.max(0,f.hp/f.kit.health);f.healthFill.position.x=-(1-f.healthFill.scale.x)*.38;f.healthBg.quaternion.copy(camera.quaternion);f.healthBg.visible=!f.boss;f.label.visible=!f.boss&&distance<30;f.label.material.opacity=1;
 }
-function updateDungeon(dt){
- if(!dungeon.active)return;const encounter=nextDungeonEncounter(dungeon,player.position.z);if(encounter!==null)startDungeonEncounter(encounter);
- const boss=dungeon.enemies.find(f=>f.boss&&f.alive),b=DUNGEON.boss;
- if(boss&&player.health>0){
-  if(!dungeon.enraged&&boss.hp/boss.kit.health<=b.enrageAt){dungeon.enraged=true;chatSystem('The Warden is enraged.');burst(boss.position.clone().add(new V3(0,1,0)),0xff765b,35,1.4);}
-  if(dungeon.enraged&&!dungeon.summoned){dungeon.summoned=true;for(let i=0;i<b.summons;i++)makeDungeonEnemy(b.summonType,{x:CRYPT.origin.x+(i%2?-5:5),z:CRYPT.origin.z-29});}
-  if(!dungeon.cast&&time>=dungeon.nextAttack){const kind=dungeon.attacks++%2?'rupture':'slam',at=kind==='slam'?boss.position:player.position;dungeon.cast={kind,x:at.x,z:at.z,radius:b.radius,at:time+b.windup,owner:boss};dungeon.nextAttack=time+(dungeon.enraged?b.enragedInterval:b.attackInterval);animateActor(boss,'Cast',true,1);boss.animUntil=time+b.windup;toast(kind==='slam'?'Warden’s shockwave · jump or get clear':'Rift rupture · move out of the circle',b.windup*1000);sound('rumble');}
- }
- if(dungeon.cast&&time>=dungeon.cast.at){const cast=dungeon.cast;dungeon.cast=null;const point=new V3(cast.x,0,cast.z);shockwave(point,0xf4a674);burst(point.clone().add(new V3(0,.25,0)),cast.kind==='slam'?0xffa169:0xbc8aff,36,2);sound('heavy');
-  if(Math.hypot(player.position.x-cast.x,player.position.z-cast.z)<cast.radius&&(cast.kind!=='slam'||player.position.y<b.safeJumpHeight)){
-   const hit=hurtPlayer(b.damage,cast.owner,false,false,{damage:b.damage,knockback:b.knockback,effects:[],heavy:true});if(hit)shove(player,player.position.clone().sub(point),b.knockback,4);
+function hitDungeonSpell(cast,spec,point,amount=spec.damage,periodic=false){
+ if(!cast.owner.alive||!canHit(cast.owner,player)||player.health<=0||Math.hypot(player.position.x-point.x,player.position.z-point.z)>spec.radius)return false;
+ const stats={damage:amount,knockback:spec.knockback,effects:spec.effect==='none'?[]:[{type:spec.effect,level:spec.effectLevel}],heavy:!periodic};
+ return hurtPlayer(Math.round(amount*depthMultiplier('damage',dungeon.depth)),cast.owner,false,false,stats,periodic);
+}
+function updateDungeonMagic(dt){
+ for(let i=dungeon.spells.length-1;i>=0;i--){const cast=dungeon.spells[i],spec=DUNGEON.spells[cast.spell];if(!cast.owner.alive){dungeon.spells.splice(i,1);continue;}
+  if(spec.kind==='fan'&&time>=cast.at&&!cast.released){cast.released=true;const origin=cast.owner.position.clone().add(new V3(0,1.45,0)),aim=new V3(cast.aim.x,player.position.y+1,cast.aim.z).sub(origin).normalize();
+   for(let n=0;n<spec.count&&projectiles.filter(s=>s.owner?.dungeon).length<DUNGEON.magic.maxProjectiles;n++){const angle=(n/(spec.count-1||1)-.5)*spec.spread,dir=aim.clone().applyAxisAngle(new V3(0,1,0),angle),mesh=createDungeonBolt(spec.color);mesh.position.copy(origin).addScaledVector(dir,.65);scene.add(mesh);const damage=Math.round(spec.damage*depthMultiplier('damage',dungeon.depth));projectiles.push({kind:'magic',mesh,velocity:dir.multiplyScalar(spec.speed),life:spec.duration,damage,stats:{damage,color:spec.color,knockback:spec.knockback,effects:spec.effect==='none'?[]:[{type:spec.effect,level:spec.effectLevel}]},owner:cast.owner,trailAt:0});}burst(origin,spec.color,12,.7);cast.until=time+.12;
   }
+  if(spec.kind==='wave'&&waveHitsPlayer(cast,player,time)){cast.hit=true;hitDungeonSpell(cast,spec,{x:cast.x,z:cast.z});}
+  for(const target of cast.targets){
+   const age=time-target.at;
+   if(['lightning','meteor'].includes(spec.kind)&&age>=0&&!target.resolved){target.resolved=true;hitDungeonSpell(cast,spec,target);const point=new V3(target.x,.1,target.z);burst(point,spec.color,28,1.6);shockwave(point,spec.color);sound('heavy');}
+   if(spec.kind==='meteor'&&age>0&&age<spec.duration&&time>=target.nextTick){target.nextTick=time+spec.tickInterval;hitDungeonSpell(cast,spec,target,spec.tickDamage,true);}
+   if(spec.kind==='well'&&age>=0&&age<spec.duration){const dx=target.x-player.position.x,dz=target.z-player.position.z,d=Math.hypot(dx,dz);if(d<spec.radius&&!admin.god&&player.health>0&&d>.25){const force=spec.pull*(1-d/spec.radius)*dt;player.knock.x+=dx/d*force;player.knock.z+=dz/d*force;const k=Math.hypot(player.knock.x,player.knock.z);if(k>DUNGEON.magic.pullLimit){player.knock.x*=DUNGEON.magic.pullLimit/k;player.knock.z*=DUNGEON.magic.pullLimit/k;}}
+    if(time>=target.nextTick){target.nextTick=time+spec.tickInterval;hitDungeonSpell(cast,spec,target,spec.tickDamage,true);}
+   }
+  }
+  if(time>=cast.until){if(spec.kind==='well'){hitDungeonSpell(cast,spec,{x:cast.x,z:cast.z});burst(new V3(cast.x,1,cast.z),spec.color,35,1.8);shockwave(new V3(cast.x,0,cast.z),spec.color);sound('heavy');}dungeon.spells.splice(i,1);}
  }
- dungeonWorld.update(time,dt,dungeon);
+}
+function updateDungeon(dt){
+ if(!dungeon.active)return;const encounter=nextDungeonEncounter(dungeon,player.position);if(encounter!==null)startDungeonEncounter(encounter);updateDungeonMagic(dt);dungeonWorld.update(time,dt,dungeon,player.position);
 }
 function dungeonInteraction(){
  if(mode!=='play'||player.health<=0||isDueling())return null;
  const near=p=>player.position.distanceTo(new V3(p.x,p.y??0,p.z))<=DUNGEON.interactionRange;
- if(dungeon.active){if(near(dungeonPoint(CRYPT.exit)))return{type:'exit',name:'Return to the arena'};if(dungeon.phase==='complete'&&!dungeon.claimed&&near(dungeonPoint(CRYPT.cache)))return{type:'cache',name:'Claim relic cache'};}
- else if(world.portal?.origin&&near(world.portal.origin))return{type:'entry',name:'Enter Ashen Crypt'};return null;
+ if(dungeon.active){if(near(dungeon.layout.exit)||dungeon.phase==='complete'&&near(dungeon.layout.returnPoint))return{type:'exit',name:'Return to the arena'};if(dungeon.phase==='complete'&&!dungeon.claimed&&near(dungeon.layout.cache))return{type:'cache',name:'Claim relic cache'};if(dungeon.phase==='complete'&&dungeon.claimed&&near(dungeon.layout.descendPoint))return{type:'descend',name:'Descend to depth '+(dungeon.depth+1)};
+  const room=dungeon.layout.rooms.find(r=>r.optional&&dungeon.clearedRooms[r.id]&&!dungeon.sideClaimed[r.id]&&near(r.sideCache));if(room)return{type:'side-cache',name:'Open reliquary cache',room};
+ }else if(world.portal?.origin&&near(world.portal.origin))return{type:'entry',name:'Enter Ashen Crypt'};return null;
 }
-function interact(){if(currentLoot)pickUpLoot(currentLoot,player);else if(currentDungeonAction){if(currentDungeonAction.type==='entry')enterDungeon();else if(currentDungeonAction.type==='cache')claimDungeonCache();else beginReturn();}else if(currentStation)showShop(stationTab(currentStation));}
+function interact(){if(currentLoot)pickUpLoot(currentLoot,player);else if(currentDungeonAction){const a=currentDungeonAction;if(a.type==='entry')enterDungeon();else if(a.type==='cache')claimDungeonCache();else if(a.type==='side-cache')claimDungeonSideCache(a.room);else if(a.type==='descend')descendDungeon();else beginReturn();}else if(currentStation)showShop(stationTab(currentStation));}
 function updateDungeonHud(){
  const hud=$('dungeon-hud');hud.classList.toggle('hidden',!dungeon.active);if(!dungeon.active)return;
- const boss=dungeon.enemies.find(f=>f.boss&&f.alive),remaining=dungeon.enemies.filter(f=>f.alive).length;
- $('dungeon-name').textContent=boss?'Cinder Warden'+(dungeon.enraged?' · Enraged':''):CRYPT.name;
- $('dungeon-objective').textContent=dungeon.phase==='complete'?(dungeon.claimed?'Return through the blue portal with your relics':'Claim the relic cache at the far end'):dungeon.phase==='fighting'?remaining+' '+(remaining===1?'enemy':'enemies')+' remaining · Chamber '+(dungeon.encounter+1)+' / '+CRYPT.encounters.length:'Enter the next chamber · '+dungeon.cleared+' / '+CRYPT.encounters.length+' cleared';
+ const boss=dungeon.enemies.find(f=>f.boss&&f.alive),remaining=dungeon.enemies.filter(f=>f.alive).length,room=dungeon.layout.rooms.find(r=>roomContains(r,player.position.x,player.position.z));
+ $('dungeon-name').textContent=boss?boss.name+(boss.enraged?' · Enraged':''):room?.name??CRYPT.name;
+ $('dungeon-objective').textContent='Depth '+dungeon.depth+' · '+(dungeon.phase==='complete'?(dungeon.claimed?'Return with your gear or descend deeper':'Claim the relic cache'):dungeon.phase==='fighting'?remaining+' '+(remaining===1?'enemy':'enemies')+' remaining':room?.optional&&dungeon.clearedRooms[room.id]&&!dungeon.sideClaimed[room.id]?'Open the reliquary cache':'Explore the branching chambers');
  $('dungeon-boss-track').classList.toggle('hidden',!boss);if(boss)$('dungeon-boss-fill').style.width=Math.max(0,boss.hp/boss.kit.health*100)+'%';
 }
 
@@ -595,8 +630,8 @@ function resume(){initAudio();scorePinned=false;$('scoreboard').classList.add('h
 function resetPlayer(){suspendDungeon();cancelAttack(true);meleeRecoveryUntil=-1;heavySwingPower=0;player.impactReaction=null;player.pressureSlow=1;setFreecam(false,false);resetMeleeState(player);sprinting=false;sprintView=0;cameraStride=0;wasVisualSprint=false;player.jumps=0;player.inLava=false;player.effects={};player.poison=null;player.slowUntil=0;admin.flying=false;lastJumpTap=-10;crouchTouch=false;crouchBlend=0;player.crouched=false;arrowCount=BOW.quiver;bowDrawAt=-1;selectedSlot='sword';let slot=profile.hotbar.indexOf(profile.equipped);if(slot<0){slot=0;bindHotbar(profile,slot,profile.equipped);}profile.selectedHotbar=slot;lastCast=time-20;potionUsedAt=time-20;buffs.haste=buffs.guard=0;refillStarterPotions(profile);persist();Object.assign(player,{health:KITS[selectedKit].health,maxHealth:KITS[selectedKit].health,streak:0,runKills:0,potions:profile.potions.healing,grounded:true,lastDamage:time-20,lastImpact:time-20});player.position.set(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z);player.velocity.set(0,0,0);player.knock.set(0,0,0);yaw=0;pitch=-.08;swingAge=10;blockHeld=false;combo=0;lastHit=-10;lastHurt=-20;lastTonic=-20;lastCombat=-20;returnAt=0;clickTimes.length=0;$('combo').classList.add('hidden');refreshEquipment();}
 function startGame(resetMatch=true){if(!loaded)return;if(resetMatch&&isDueling())leaveMatch();suspendDungeon();scorePinned=false;$('scoreboard').classList.add('hidden');initAudio();profile.name=cleanName($('player-name').value);$('player-name').value=profile.name;persist();closeAll();mode='play';$('lobby').classList.add('hidden');$('hud').classList.remove('hidden');if(touch)$('touch-controls').classList.remove('hidden');if(resetMatch){ragdolls.clear();admin.hunt=false;pendingChats.length=0;lastChatBot=null;player.kills=0;player.deaths=0;fighters.forEach(f=>{f.kills=0;f.deaths=0;spawnFighter(f);});arenaEvent=createEventState(time);hazardMarks.forEach(h=>{scene.remove(h.ring,h.rock);});hazardMarks.length=0;clearSupplies();messages.length=0;killFeed.length=0;$('kill-feed').replaceChildren();chatSystem('T to chat · /help for commands. AI opponents and chat are simulated.');if(MAP_SOURCE==='draft')chatSystem('Playing the editor draft map.');}resetPlayer();requestLock();}
 function returnLobby(){suspendDungeon();cancelAttack(true);pressureAtmosphere=0;world.setPressure(null);ragdolls.clear();setFreecam(false,false);if(isDueling())leaveMatch();scorePinned=false;closeAll();if(chatOpen)closeChat(false);mode='lobby';keys.clear();blockHeld=false;returnAt=0;document.exitPointerLock?.();$('lobby').classList.remove('hidden');$('hud').classList.add('hidden');$('scoreboard').classList.add('hidden');$('damage-flash').style.opacity=0;setHero();}
-function saveLoot(){write('emberfall.loot.v1',lootDrops.map(d=>({item:d.item,position:d.position.toArray(),expiresAt:d.expiresAt})));}
-function spawnLoot(item,position,remaining=300){
+function saveLoot(){write('emberfall.loot.v1',lootDrops.map(d=>({item:d.item,position:d.position.toArray(),expiresAt:d.expiresAt,dungeonSeed:d.dungeonSeed??null})));}
+function spawnLoot(item,position,remaining=300,dungeonSeed=inDungeon(position.x,position.z)?dungeon.seed:null){
  const clean=sanitizeItem(item);if(!clean||clean.bound)return null;
  const point=position.clone();point.y=groundHeight(point.x,point.z,point.y)+.08;
  if(isLava(point.x,point.z,point.y)||blocked(point.x,point.z,point.y,.2)){
@@ -605,9 +640,9 @@ function spawnLoot(item,position,remaining=300){
  const file=clean.weapon?WEAPONS[clean.weapon].file:clean.armor?ARMORS[clean.armor].file:clean.potion?POTIONS[clean.potion].file:'bow.glb';
  const root=new THREE.Group(),model=clean.orb?createChargeOrb():prepareModel(models[file].scene.clone(true));const box=new THREE.Box3().setFromObject(model),size=box.getSize(new V3()),center=box.getCenter(new V3()),scale=.68/Math.max(size.x,size.y,size.z);model.scale.multiplyScalar(scale);model.position.copy(center).multiplyScalar(-scale);const spin=new THREE.Group();spin.add(model);spin.position.y=.48;root.add(spin);
  const rarity=RARITIES[clean.rarity],ring=new THREE.Mesh(new THREE.RingGeometry(.27,.32,24),new THREE.MeshBasicMaterial({color:rarity.hex,side:THREE.DoubleSide,transparent:true,opacity:.6,depthWrite:false}));ring.rotation.x=-Math.PI/2;root.add(ring);root.position.copy(point);scene.add(root);
- const drop={item:clean,position:point,root,spin,ring,expires:time+remaining,expiresAt:Date.now()+remaining*1000,availableAt:time+.75};lootDrops.push(drop);return drop;
+ const drop={item:clean,position:point,root,spin,ring,dungeonSeed,expires:time+remaining,expiresAt:Date.now()+remaining*1000,availableAt:time+.75};lootDrops.push(drop);return drop;
 }
-function restoreLoot(){const saved=read('emberfall.loot.v1',[]);if(!Array.isArray(saved))return;const owned=new Set([...profile.inventory,...profile.vault].map(i=>i.id)),seen=new Set();for(const entry of saved){const remaining=(entry?.expiresAt-Date.now())/1000;if(!(remaining>0)||!Array.isArray(entry.position)||entry.position.length!==3||!entry.position.every(Number.isFinite)||owned.has(entry.item?.id)||seen.has(entry.item?.id))continue;seen.add(entry.item.id);spawnLoot(entry.item,new V3(...entry.position),Math.min(300,remaining));}}
+function restoreLoot(){const saved=read('emberfall.loot.v1',[]);if(!Array.isArray(saved))return;const owned=new Set([...profile.inventory,...profile.vault].map(i=>i.id)),seen=new Set();for(const entry of saved){const remaining=(entry?.expiresAt-Date.now())/1000;if(!(remaining>0)||!Array.isArray(entry.position)||entry.position.length!==3||!entry.position.every(Number.isFinite)||owned.has(entry.item?.id)||seen.has(entry.item?.id))continue;seen.add(entry.item.id);spawnLoot(entry.item,new V3(...entry.position),Math.min(300,remaining),entry.dungeonSeed??null);}}
 function removeLoot(drop){scene.remove(drop.root);drop.root.traverse(o=>{if(o.userData.ownedGeometry)o.geometry?.dispose();if(o.isMesh||o.isLine)for(const m of Array.isArray(o.material)?o.material:[o.material])m.dispose();});drop.ring.geometry.dispose();const index=lootDrops.indexOf(drop);if(index>=0)lootDrops.splice(index,1);if(currentLoot===drop)currentLoot=null;}
 function dropCarriedItems(actor){
  const account=actor===player?profile:actor.account,result=takeDeathItems(account);
@@ -615,16 +650,16 @@ function dropCarriedItems(actor){
  if(actor===player){persist();hotbarSignature='';$('death-loot').textContent=result.lost.length?`${result.lost.length} carried items lost. ${result.dropped.length?result.dropped.length+' rare or better drops can be recovered for 5 minutes.':'Common gear was lost.'} Chest storage is safe.`:'Your starter kit is ready.';}
  saveLoot();return result;
 }
-function nearestLoot(actor){if(actor===player&&player.health<=0)return null;let closest=null,distance=1.8;for(const d of lootDrops){if(time<d.availableAt||lootExpired(d))continue;const range=actor.position.distanceTo(d.position);if(range<distance&&!lineBlocked(actor.position,d.position)){closest=d;distance=range;}}return closest;}
+function nearestLoot(actor){if(actor===player&&player.health<=0)return null;let closest=null,distance=1.8;for(const d of lootDrops){if(time<d.availableAt||lootExpired(d)||d.dungeonSeed!==null&&(!dungeon.active||d.dungeonSeed!==dungeon.seed))continue;const range=actor.position.distanceTo(d.position);if(range<distance&&!lineBlocked(actor.position,d.position)){closest=d;distance=range;}}return closest;}
 function pickUpLoot(drop,actor){
- if(!drop||!lootDrops.includes(drop)||time<drop.availableAt||lootExpired(drop)||actor.position.distanceTo(drop.position)>1.85||(actor===player?player.health<=0:!actor.alive))return false;
+ if(!drop||drop.dungeonSeed!==null&&(!dungeon.active||drop.dungeonSeed!==dungeon.seed)||!lootDrops.includes(drop)||time<drop.availableAt||lootExpired(drop)||actor.position.distanceTo(drop.position)>1.85||(actor===player?player.health<=0:!actor.alive))return false;
  const account=actor===player?profile:actor.account,result=addInventoryItem(account,drop.item);if(!result.ok){if(actor===player)toast(result.error);return false;}
  const name=itemName(drop.item);removeLoot(drop);if(actor===player){persist();hotbarSignature='';updateHud();sound('buy');toast('Picked up '+name);}else{account.equipped=bestItem(account,actor.role).id;if(result.item.armor)equipInventoryItem(account,result.item.id);syncBotEquipment(actor);}saveLoot();return true;
 }
 function lootExpired(drop){return time>=drop.expires||Date.now()>=drop.expiresAt;}
 function pruneLoot(){let changed=false;for(const drop of [...lootDrops])if(lootExpired(drop)){removeLoot(drop);changed=true;}if(changed)saveLoot();}
 function updateLoot(dt){
- let expired=false;for(const drop of [...lootDrops]){if(lootExpired(drop)){removeLoot(drop);expired=true;continue;}drop.spin.rotation.y+=dt*1.3;drop.spin.position.y=.48+Math.sin(time*2.3+drop.expires)*.07;drop.root.visible=drop.position.distanceTo(player.position)<75;}
+ let expired=false;for(const drop of [...lootDrops]){if(lootExpired(drop)){removeLoot(drop);expired=true;continue;}drop.spin.rotation.y+=dt*1.3;drop.spin.position.y=.48+Math.sin(time*2.3+drop.expires)*.07;drop.root.visible=drop.position.distanceTo(player.position)<75&&(drop.dungeonSeed===null||dungeon.active&&drop.dungeonSeed===dungeon.seed);}
  for(const f of fighters){if(f.dungeon||!f.alive||f.state!=='fight'||f.account.inventory.length>=CARRY_SLOTS||time<(f.lootCheckAt??0))continue;f.lootCheckAt=time+.5;const drop=nearestLoot(f);if(drop)pickUpLoot(drop,f);}
  if(expired)saveLoot();
 }
@@ -999,7 +1034,8 @@ function addPumpkins(){
  }
 }
 function generateThumbnails(){let r;try{r=new THREE.WebGLRenderer({alpha:true,antialias:true,preserveDrawingBuffer:true});r.setSize(220,220);r.setPixelRatio(1);r.toneMapping=THREE.ACESFilmicToneMapping;r.toneMappingExposure=1.3;r.outputColorSpace=THREE.SRGBColorSpace;const s=new THREE.Scene(),camera=new THREE.OrthographicCamera(-1,1,1,-1,.01,100);s.add(new THREE.HemisphereLight(0xe6f1ff,0xb59a84,3));const light=new THREE.DirectionalLight(0xffe1b3,4);light.position.set(-3,5,5);s.add(light);const entries=[...Object.entries(WEAPONS).map(([id,w])=>[id,w.file]),...Object.entries(ARMORS).filter(([,a])=>a.file).map(([id,a])=>['armor-'+id,a.file]),...Object.entries(POTIONS).map(([id,p])=>['potion-'+id,p.file]),['chest','treasure-chest.glb'],['bow','bow.glb']];for(const [id,file]of entries){const item=WEAPONS[id]?makeWeapon({weapon:id,rarity:WEAPONS[id].rarity??'common'}):prepareModel(models[file].scene.clone(true)),group=new THREE.Group();if(id==='armor-helmet')item.rotation.y=Math.PI;group.add(item);if(WEAPONS[id]){group.rotation.z=-.55;group.rotation.y=.55;}else group.rotation.y=-.35;group.updateMatrixWorld(true);const bounds=new THREE.Box3().setFromObject(group),center=bounds.getCenter(new V3()),size=bounds.getSize(new V3()),largest=Math.max(size.x,size.y,size.z);group.position.sub(center);s.add(group);const extent=Math.max(size.x,size.y)*.65;camera.left=-extent;camera.right=extent;camera.top=extent;camera.bottom=-extent;camera.position.set(0,0,largest*3+1);camera.lookAt(0,0,0);camera.updateProjectionMatrix();group.updateMatrixWorld(true);r.clear();r.render(s,camera);thumbs[id]=r.domElement.toDataURL('image/png');s.remove(group);disposeMaterials(group);}r.dispose();r.forceContextLoss();}catch(error){r?.dispose();console.warn('Equipment thumbnails unavailable',error);}}
-function cameraClearDistance(origin,direction,maxDistance){let distance=maxDistance;for(const offset of [new V3(),new V3(.14,0,0),new V3(-.14,0,0),new V3(0,.14,0)]){cameraRay.set(origin.clone().add(offset),direction);cameraRay.near=.05;cameraRay.far=maxDistance;const hit=cameraRay.intersectObjects(cameraObstacles,false)[0];if(hit)distance=Math.min(distance,Math.max(.2,hit.distance-.22));}return distance;}
+function cameraGeometry(){return dungeon.active?dungeonWorld.obstacles:cameraObstacles;}
+function cameraClearDistance(origin,direction,maxDistance){let distance=maxDistance;for(const offset of [new V3(),new V3(.14,0,0),new V3(-.14,0,0),new V3(0,.14,0)]){cameraRay.set(origin.clone().add(offset),direction);cameraRay.near=.05;cameraRay.far=maxDistance;const hit=cameraRay.intersectObjects(cameraGeometry(),false)[0];if(hit)distance=Math.min(distance,Math.max(.2,hit.distance-.22));}return distance;}
 function updateAtmosphere(dt){
  const target=player.team?.8:mode==='lobby'?.24:THREE.MathUtils.clamp(1-(player.position.y-1)/9,.2,1);
  atmosphereBlend=THREE.MathUtils.lerp(atmosphereBlend,target,1-Math.exp(-dt*1.6));
@@ -1016,7 +1052,7 @@ function updateCamera(dt){if(freecam.active){updateFreecam(dt);return;}if(player
  else{cameraDistance=0;camera.position.copy(eye);camera.rotation.set(pitch,yaw,0,'YXZ');}
  if(settings.shake&&!thirdPerson){camera.rotation.z+=Math.sin(walkTime)*.0025*cameraStride;camera.rotation.x+=Math.cos(walkTime*2)*.0015*cameraStride;}if(settings.shake&&shake>.001){camera.rotation.x+=(Math.random()-.5)*shake;camera.rotation.z+=(Math.random()-.5)*shake*.35;}shake*=Math.exp(-14*dt);camera.fov=(thirdPerson?70:76)+sprintView*(thirdPerson?5:9);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
 }
-function aimDirection(){const forward=new V3(-Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),-Math.cos(yaw)*Math.cos(pitch));if(!thirdPerson)return forward;const origin=player.position.clone().add(new V3(0,player.crouched?1.02:1.5,0)),view=camera.getWorldDirection(new V3()),aimRay=new THREE.Raycaster(camera.position,view,.15,60),targets=[...cameraObstacles,...fighters.filter(f=>f.alive).map(f=>f.rig)];scene.updateMatrixWorld(true);const hit=aimRay.intersectObjects(targets,true)[0],target=hit?hit.point:camera.position.clone().addScaledVector(view,60);return target.sub(origin).normalize();}
+function aimDirection(){const forward=new V3(-Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),-Math.cos(yaw)*Math.cos(pitch));if(!thirdPerson)return forward;const origin=player.position.clone().add(new V3(0,player.crouched?1.02:1.5,0)),view=camera.getWorldDirection(new V3()),aimRay=new THREE.Raycaster(camera.position,view,.15,60),targets=[...cameraGeometry(),...fighters.filter(f=>f.alive).map(f=>f.rig)];scene.updateMatrixWorld(true);const hit=aimRay.intersectObjects(targets,true)[0],target=hit?hit.point:camera.position.clone().addScaledVector(view,60);return target.sub(origin).normalize();}
 function updatePlayerAvatar(dt){if(!playerAvatar)return;if(player.health<=0){playerAvatar.root.visible=false;return;}const a=playerAvatar;restoreImpactPose(a);if(selectedSlot==='orb'){const orb=a.rig.getObjectByName('charge-orb');if(orb)updateChargeOrb(orb,time,orbPower(),true);}a.team=player.team;if(a.posed)a.hipPose.bone.position.copy(a.hipPose.base);for(const p of a.crouchBones)if(a.posed)p.bone.quaternion.copy(p.base);a.rig.position.set(0,0,0);a.root.position.copy(player.position);
  if(a.emoting&&(Math.hypot(player.velocity.x,player.velocity.z)>.5||!player.grounded||player.crouched)){a.animUntil=0;a.emoting=false;}
  if(time>a.animUntil){const moving=Math.hypot(player.velocity.x,player.velocity.z)>.7;if(!moving&&player.grounded&&selectedSlot==='bow')animateActor(a,'Idle_Gun');else locomotion(player,a,moving,sprinting);}updateAnimator(a,dt);a.rig.updateMatrixWorld(true);const left=a.rig.getObjectByName('FootL'),right=a.rig.getObjectByName('FootR'),footY=()=>Math.min(left?.getWorldPosition(new V3()).y??player.position.y,right?.getWorldPosition(new V3()).y??player.position.y),before=footY(),poseCrouch=['CrouchIdle','CrouchWalk'].includes(a.animator.currentAction)?0:crouchBlend;a.hipPose.base.copy(a.hipPose.bone.position);if(left?.parent?.name==='Root')a.hipPose.bone.position.y-=.35*poseCrouch;
@@ -1237,7 +1273,7 @@ function updateProjectiles(dt){
   else shot.mesh.quaternion.setFromUnitVectors(new V3(0,0,-1),shot.velocity.clone().normalize());
   const now=shot.mesh.position,segment=now.clone().sub(old),length=segment.length();let victim=null,closest=2;
   for(const f of validVictims(shot.owner)){if(safeZone(f.position))continue;const point=f.position.clone().add(new V3(0,f.crouched?.65:.95,0)),t=THREE.MathUtils.clamp(point.clone().sub(old).dot(segment)/Math.max(.001,segment.lengthSq()),0,1);if(point.distanceTo(old.clone().addScaledVector(segment,t))<(magic?.72:.6)&&t<closest){closest=t;victim=f;}}
-  const ray=new THREE.Raycaster(old,segment.clone().normalize(),.001,length),wall=ray.intersectObjects(cameraObstacles,false)[0];
+  const ray=new THREE.Raycaster(old,segment.clone().normalize(),.001,length),wall=ray.intersectObjects(cameraGeometry(),false)[0];
   const obstructed=!!wall||now.y<=groundHeight(now.x,now.z,now.y)||(inDungeon(now.x,now.z)?dungeonBlocked(now.x,now.z,now.y,.03,dungeon):inMiniArena(now.x,now.z)?Math.abs(now.x-MINI.x)>13||Math.abs(now.z)>15:Math.hypot(now.x,now.z)>34);
   if(victim&&(!obstructed||wall&&closest*length<wall.distance)){if(magic)applyMagicHit(shot,victim);else if(victim===player?hurtPlayer(shot.damage,shot.owner,false,false,{damage:shot.damage,knockback:3,effects:[]}):hurtFighter(victim,shot.owner,false,shot.damage,{damage:shot.damage,knockback:3,effects:[]})){if(shot.owner===player){hitmarkerUntil=time+.13;sound('hit');}}shot.life=0;}
   else if(obstructed){burst(wall?.point??now,magic?shot.stats.color:0xd3b690,magic?12:5,.5);shot.life=0;}
@@ -1271,5 +1307,5 @@ function updateArenaEvents(dt){const change=advanceEvent(arenaEvent,time);if(cha
 }
 function updateEventHud(){updateDuelHud();updateDungeonHud();const show=!dungeon.active&&!isDueling()&&arenaEvent.phase!=='idle';$('event-warning').classList.toggle('hidden',!show);if(!show)return;const remaining=Math.max(0,Math.ceil(arenaEvent.at-time));$('event-name').textContent=arenaEvent.type.name;$('event-countdown').textContent=remaining+'s';$('event-detail').textContent=arenaEvent.type.kind==='supply'?(arenaEvent.phase==='warning'?'Supply crates arriving':'Collect the glowing supply crates'):isUnderBridge(player.position)?'Covered by the bridge':safeZone(player.position)?'Protected on the ledge':arenaEvent.type.warning;$('event-warning').classList.toggle('protected',isUnderBridge(player.position)||safeZone(player.position));}
 
-async function load(){try{const loader=new GLTFLoader(),files=[...Object.values(CHARACTERS).map(c=>c.file),...new Set(Object.values(WEAPONS).map(w=>w.file)),...Object.values(ARMORS).map(a=>a.file).filter(Boolean),...Object.values(POTIONS).map(p=>p.file),'ledge-table.glb','sword-rack.glb','treasure-chest.glb','supply-crate.glb','rock-pack.glb','bow.glb','volcano.glb','pumpkin.glb',...new Set(Object.values(CHARACTERS).map(c=>animationAsset(c.file))),MERCHANT.file,animationAsset(MERCHANT.file)];let count=0;await Promise.all(files.map(async file=>{models[file]=await loader.loadAsync('./assets/'+file+'?v='+(file==='fighter-ember.glb'?52:file==='fighter-adventurer.glb'?51:12));count++;$('play-label').textContent='Loading '+Math.round(count/files.length*100)+'%';}));installQuaterniusAnimations();loaded=true;generateThumbnails();addImportedEnvironment();dungeonWorld.setCache(prepareModel(models['treasure-chest.glb'].scene.clone(true)));addVolcanoes();addPumpkins();scene.updateMatrixWorld(true);scene.traverse(o=>{if(o.isMesh&&o!==fxMesh&&!o.userData.noCameraCollision)cameraObstacles.push(o);});refreshEquipment();restoreLoot();for(let i=0;i<9;i++)makeFighter(i);$('play').disabled=false;$('play-label').textContent='Play';if(activeModal==='shop')renderShop();}catch(error){console.error('Emberfall asset load failed',error);fatal('A required game asset failed to load. Reload to retry. '+(error.message??''));}}
+async function load(){try{const loader=new GLTFLoader(),files=[...Object.values(CHARACTERS).map(c=>c.file),...new Set(Object.values(WEAPONS).map(w=>w.file)),...Object.values(ARMORS).map(a=>a.file).filter(Boolean),...Object.values(POTIONS).map(p=>p.file),'ledge-table.glb','sword-rack.glb','treasure-chest.glb','supply-crate.glb','rock-pack.glb','bow.glb','volcano.glb','pumpkin.glb',...new Set(Object.values(CHARACTERS).map(c=>animationAsset(c.file))),MERCHANT.file,animationAsset(MERCHANT.file)];let count=0;await Promise.all(files.map(async file=>{models[file]=await loader.loadAsync('./assets/'+file+'?v='+(file==='fighter-ember.glb'?52:file==='fighter-adventurer.glb'?51:12));count++;$('play-label').textContent='Loading '+Math.round(count/files.length*100)+'%';}));installQuaterniusAnimations();loaded=true;generateThumbnails();addImportedEnvironment();dungeonWorld.setModels(models,prepareModel);addVolcanoes();addPumpkins();scene.updateMatrixWorld(true);scene.traverse(o=>{if(o.isMesh&&o!==fxMesh&&!o.userData.noCameraCollision)cameraObstacles.push(o);});refreshEquipment();restoreLoot();for(let i=0;i<9;i++)makeFighter(i);$('play').disabled=false;$('play-label').textContent='Play';if(activeModal==='shop')renderShop();}catch(error){console.error('Emberfall asset load failed',error);fatal('A required game asset failed to load. Reload to retry. '+(error.message??''));}}
 syncViewControls();selectKit(selectedKit);updateProfileUI();updateCamera(0);requestAnimationFrame(frame);load();

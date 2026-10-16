@@ -1,32 +1,511 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "name": "Ashen Crypt",
-  "origin": {"x": -128, "z": 0},
-  "halfWidth": 13,
-  "halfDepth": 39,
-  "wallHeight": 8,
-  "doorWidth": 7,
-  "spawn": {"x": 0, "z": 33},
-  "exit": {"x": 0, "z": 35.5},
-  "cache": {"x": 0, "z": -32},
-  "dividers": [12, -12],
-  "obstacles": [
-    {"x": -9, "z": 22, "w": 1.8, "d": 1.8, "h": 6},
-    {"x": 9, "z": 22, "w": 1.8, "d": 1.8, "h": 6},
-    {"x": -7, "z": 0, "w": 1.8, "d": 1.8, "h": 6},
-    {"x": 7, "z": 0, "w": 1.8, "d": 1.8, "h": 6},
-    {"x": -9, "z": -25, "w": 2, "d": 2, "h": 6},
-    {"x": 9, "z": -25, "w": 2, "d": 2, "h": 6}
-  ],
-  "encounters": [
-    {"name": "The Gatekeepers", "triggerZ": 27, "minZ": 14, "maxZ": 31, "mobs": [
-      {"type": "guard", "x": -4, "z": 20}, {"type": "guard", "x": 4, "z": 20}, {"type": "skirmisher", "x": 0, "z": 16}
-    ]},
-    {"name": "The Hollow Choir", "triggerZ": 8, "minZ": -10, "maxZ": 10, "mobs": [
-      {"type": "guard", "x": -4, "z": -4}, {"type": "caster", "x": 5, "z": -6}, {"type": "skirmisher", "x": 2, "z": 0}
-    ]},
-    {"name": "The Cinder Warden", "triggerZ": -16, "minZ": -36, "maxZ": -14, "mobs": [
-      {"type": "warden", "x": 0, "z": -26}
-    ]}
-  ]
+  "origin": {
+    "x": -280,
+    "z": 0
+  },
+  "generation": {
+    "spacing": 52,
+    "corridorWidth": 6,
+    "sideRooms": 2
+  },
+  "templates": {
+    "entrance": {
+      "name": "The Threshold",
+      "visual": "ossuary",
+      "shape": "rect",
+      "sizes": [
+        {
+          "w": 22,
+          "d": 22
+        }
+      ],
+      "height": 9,
+      "color": "#91c9f0",
+      "props": [
+        {
+          "kind": "pillar",
+          "x": -0.7,
+          "z": -0.6,
+          "w": 1.5,
+          "d": 1.5,
+          "h": 6
+        },
+        {
+          "kind": "pillar",
+          "x": 0.7,
+          "z": -0.6,
+          "w": 1.5,
+          "d": 1.5,
+          "h": 6
+        }
+      ],
+      "packs": [],
+      "hazards": []
+    },
+    "ossuary": {
+      "name": "Hall of the Unquiet",
+      "visual": "ossuary",
+      "shape": "rect",
+      "sizes": [
+        {
+          "w": 28,
+          "d": 34
+        },
+        {
+          "w": 32,
+          "d": 36
+        }
+      ],
+      "height": 11,
+      "color": "#e9b879",
+      "props": [
+        {
+          "kind": "sarcophagus",
+          "x": -0.65,
+          "z": -0.42,
+          "w": 2.4,
+          "d": 4,
+          "h": 1.2
+        },
+        {
+          "kind": "sarcophagus",
+          "x": -0.65,
+          "z": 0.42,
+          "w": 2.4,
+          "d": 4,
+          "h": 1.2
+        },
+        {
+          "kind": "sarcophagus",
+          "x": 0.65,
+          "z": -0.42,
+          "w": 2.4,
+          "d": 4,
+          "h": 1.2
+        },
+        {
+          "kind": "sarcophagus",
+          "x": 0.65,
+          "z": 0.42,
+          "w": 2.4,
+          "d": 4,
+          "h": 1.2
+        }
+      ],
+      "packs": [
+        [
+          "guard",
+          "skirmisher",
+          "pyromancer"
+        ],
+        [
+          "guard",
+          "guard",
+          "caster"
+        ]
+      ],
+      "hazards": []
+    },
+    "library": {
+      "name": "The Unbound Archive",
+      "visual": "library",
+      "shape": "cross",
+      "sizes": [
+        {
+          "w": 34,
+          "d": 32
+        },
+        {
+          "w": 38,
+          "d": 34
+        }
+      ],
+      "height": 14,
+      "color": "#a991ff",
+      "props": [
+        {
+          "kind": "shelf",
+          "x": -0.75,
+          "z": 0,
+          "w": 2.1,
+          "d": 6,
+          "h": 4.8
+        },
+        {
+          "kind": "shelf",
+          "x": 0.75,
+          "z": 0,
+          "w": 2.1,
+          "d": 6,
+          "h": 4.8
+        },
+        {
+          "kind": "altar",
+          "x": -0.28,
+          "z": -0.25,
+          "w": 2.4,
+          "d": 1.5,
+          "h": 1.2
+        }
+      ],
+      "packs": [
+        [
+          "caster",
+          "skirmisher",
+          "stormcaller"
+        ],
+        [
+          "caster",
+          "pyromancer",
+          "guard"
+        ]
+      ],
+      "hazards": []
+    },
+    "forge": {
+      "name": "The Ember Foundry",
+      "visual": "forge",
+      "shape": "rect",
+      "sizes": [
+        {
+          "w": 32,
+          "d": 30
+        },
+        {
+          "w": 34,
+          "d": 34
+        }
+      ],
+      "height": 12,
+      "color": "#ff9357",
+      "props": [
+        {
+          "kind": "anvil",
+          "x": -0.47,
+          "z": -0.32,
+          "w": 2.5,
+          "d": 2,
+          "h": 1.4
+        },
+        {
+          "kind": "anvil",
+          "x": 0.47,
+          "z": 0.32,
+          "w": 2.5,
+          "d": 2,
+          "h": 1.4
+        }
+      ],
+      "packs": [
+        [
+          "pyromancer",
+          "guard",
+          "skirmisher"
+        ],
+        [
+          "pyromancer",
+          "pyromancer",
+          "guard"
+        ]
+      ],
+      "hazards": [
+        {
+          "x": -0.8,
+          "z": -0.45,
+          "w": 3,
+          "d": 5
+        },
+        {
+          "x": -0.8,
+          "z": 0.45,
+          "w": 3,
+          "d": 5
+        },
+        {
+          "x": 0.8,
+          "z": -0.45,
+          "w": 3,
+          "d": 5
+        },
+        {
+          "x": 0.8,
+          "z": 0.45,
+          "w": 3,
+          "d": 5
+        }
+      ]
+    },
+    "rift": {
+      "name": "The Fractured Orrery",
+      "visual": "rift",
+      "shape": "octagon",
+      "sizes": [
+        {
+          "w": 34,
+          "d": 34
+        },
+        {
+          "w": 36,
+          "d": 38
+        }
+      ],
+      "height": 15,
+      "color": "#bb86ff",
+      "props": [
+        {
+          "kind": "pillar",
+          "x": -0.62,
+          "z": -0.62,
+          "w": 1.8,
+          "d": 1.8,
+          "h": 7
+        },
+        {
+          "kind": "pillar",
+          "x": -0.62,
+          "z": 0.62,
+          "w": 1.8,
+          "d": 1.8,
+          "h": 7
+        },
+        {
+          "kind": "pillar",
+          "x": 0.62,
+          "z": -0.62,
+          "w": 1.8,
+          "d": 1.8,
+          "h": 7
+        },
+        {
+          "kind": "pillar",
+          "x": 0.62,
+          "z": 0.62,
+          "w": 1.8,
+          "d": 1.8,
+          "h": 7
+        }
+      ],
+      "packs": [
+        [
+          "riftweaver"
+        ]
+      ],
+      "hazards": []
+    },
+    "garden": {
+      "name": "The Pale Conservatory",
+      "visual": "garden",
+      "shape": "cross",
+      "sizes": [
+        {
+          "w": 34,
+          "d": 38
+        },
+        {
+          "w": 32,
+          "d": 36
+        }
+      ],
+      "height": 13,
+      "color": "#84f0b2",
+      "props": [
+        {
+          "kind": "planter",
+          "x": -0.64,
+          "z": 0,
+          "w": 3,
+          "d": 5,
+          "h": 1
+        },
+        {
+          "kind": "planter",
+          "x": 0.64,
+          "z": 0,
+          "w": 3,
+          "d": 5,
+          "h": 1
+        },
+        {
+          "kind": "altar",
+          "x": 0,
+          "z": -0.63,
+          "w": 3,
+          "d": 2,
+          "h": 1.2
+        }
+      ],
+      "packs": [
+        [
+          "witch",
+          "skirmisher",
+          "guard"
+        ],
+        [
+          "witch",
+          "caster",
+          "skirmisher"
+        ]
+      ],
+      "hazards": []
+    },
+    "vault": {
+      "name": "The Sealed Reliquary",
+      "visual": "vault",
+      "shape": "octagon",
+      "sizes": [
+        {
+          "w": 26,
+          "d": 26
+        },
+        {
+          "w": 28,
+          "d": 28
+        }
+      ],
+      "height": 11,
+      "color": "#f0d28a",
+      "props": [
+        {
+          "kind": "pillar",
+          "x": -0.6,
+          "z": -0.6,
+          "w": 1.6,
+          "d": 1.6,
+          "h": 5.8
+        },
+        {
+          "kind": "pillar",
+          "x": -0.6,
+          "z": 0.6,
+          "w": 1.6,
+          "d": 1.6,
+          "h": 5.8
+        },
+        {
+          "kind": "pillar",
+          "x": 0.6,
+          "z": -0.6,
+          "w": 1.6,
+          "d": 1.6,
+          "h": 5.8
+        },
+        {
+          "kind": "pillar",
+          "x": 0.6,
+          "z": 0.6,
+          "w": 1.6,
+          "d": 1.6,
+          "h": 5.8
+        }
+      ],
+      "packs": [
+        [
+          "guard",
+          "stormcaller",
+          "skirmisher"
+        ]
+      ],
+      "hazards": []
+    },
+    "crown": {
+      "name": "The Crown of Cinders",
+      "visual": "crown",
+      "shape": "octagon",
+      "sizes": [
+        {
+          "w": 38,
+          "d": 40
+        }
+      ],
+      "height": 17,
+      "color": "#ff8f62",
+      "props": [
+        {
+          "kind": "throne",
+          "x": 0,
+          "z": -0.72,
+          "w": 4.5,
+          "d": 2.8,
+          "h": 4.5
+        },
+        {
+          "kind": "pillar",
+          "x": -0.66,
+          "z": -0.48,
+          "w": 2.2,
+          "d": 2.2,
+          "h": 10
+        },
+        {
+          "kind": "pillar",
+          "x": 0.66,
+          "z": -0.48,
+          "w": 2.2,
+          "d": 2.2,
+          "h": 10
+        }
+      ],
+      "packs": [
+        [
+          "warden"
+        ]
+      ],
+      "hazards": []
+    },
+    "storm": {
+      "name": "The Tempest Sanctum",
+      "visual": "storm",
+      "shape": "octagon",
+      "sizes": [
+        {
+          "w": 40,
+          "d": 38
+        }
+      ],
+      "height": 18,
+      "color": "#81dcff",
+      "props": [
+        {
+          "kind": "pillar",
+          "x": -0.66,
+          "z": -0.5,
+          "w": 2,
+          "d": 2,
+          "h": 9
+        },
+        {
+          "kind": "pillar",
+          "x": -0.66,
+          "z": 0.5,
+          "w": 2,
+          "d": 2,
+          "h": 9
+        },
+        {
+          "kind": "pillar",
+          "x": 0.66,
+          "z": -0.5,
+          "w": 2,
+          "d": 2,
+          "h": 9
+        },
+        {
+          "kind": "pillar",
+          "x": 0.66,
+          "z": 0.5,
+          "w": 2,
+          "d": 2,
+          "h": 9
+        }
+      ],
+      "packs": [
+        [
+          "regent"
+        ]
+      ],
+      "hazards": []
+    }
+  }
 }

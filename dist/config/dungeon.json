@@ -1,12 +1,12 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "interactionRange": 3.3,
   "clearHealing": 65,
   "mobCoins": 18,
   "mobExp": 12,
   "bossCoins": 240,
   "bossExp": 160,
-  "aggroRange": 28,
+  "aggroRange": 42,
   "jumpSpeed": 7.2,
   "jumpInterval": 2.8,
   "staggerResistance": 0.55,
@@ -35,7 +35,9 @@
       "cps": 4.6,
       "range": 2.8,
       "scale": 1,
-      "boss": false
+      "boss": false,
+      "spells": [],
+      "color": "#d2b78c"
     },
     "skirmisher": {
       "name": "Ashbound",
@@ -48,7 +50,9 @@
       "cps": 6.2,
       "range": 2.5,
       "scale": 1,
-      "boss": false
+      "boss": false,
+      "spells": [],
+      "color": "#d2b78c"
     },
     "caster": {
       "name": "Hollow Acolyte",
@@ -61,7 +65,11 @@
       "cps": 2,
       "range": 11,
       "scale": 1,
-      "boss": false
+      "boss": false,
+      "spells": [
+        "frost-bloom"
+      ],
+      "color": "#96d6ff"
     },
     "warden": {
       "name": "Cinder Warden",
@@ -74,7 +82,103 @@
       "cps": 5.4,
       "range": 3.4,
       "scale": 1.45,
-      "boss": true
+      "boss": true,
+      "spells": [
+        "cinder-wave",
+        "meteor-fall",
+        "ember-fan"
+      ],
+      "color": "#ffac67"
+    },
+    "pyromancer": {
+      "name": "Ember Disciple",
+      "character": "punk",
+      "weapon": "venom",
+      "armor": "leather",
+      "health": 130,
+      "speed": 3.2,
+      "damage": 15,
+      "cps": 2,
+      "range": 10,
+      "scale": 1,
+      "boss": false,
+      "color": "#ff9357",
+      "spells": [
+        "ember-fan"
+      ]
+    },
+    "stormcaller": {
+      "name": "Stormcaller",
+      "character": "wizard",
+      "weapon": "arcane",
+      "armor": "none",
+      "health": 135,
+      "speed": 3.1,
+      "damage": 16,
+      "cps": 2,
+      "range": 12,
+      "scale": 1,
+      "boss": false,
+      "color": "#86ddff",
+      "spells": [
+        "storm-call"
+      ]
+    },
+    "witch": {
+      "name": "Thorn Oracle",
+      "character": "mask",
+      "weapon": "venom",
+      "armor": "none",
+      "health": 140,
+      "speed": 3.3,
+      "damage": 17,
+      "cps": 2,
+      "range": 10,
+      "scale": 1,
+      "boss": false,
+      "color": "#87f2b1",
+      "spells": [
+        "gravity-well",
+        "frost-bloom"
+      ]
+    },
+    "riftweaver": {
+      "name": "The Riftweaver",
+      "character": "ember",
+      "weapon": "arcane",
+      "armor": "metal",
+      "health": 480,
+      "speed": 3.5,
+      "damage": 17,
+      "cps": 3,
+      "range": 10,
+      "scale": 1.3,
+      "boss": true,
+      "color": "#bc8bff",
+      "spells": [
+        "gravity-well",
+        "astral-volley",
+        "storm-call"
+      ]
+    },
+    "regent": {
+      "name": "Tempest Regent",
+      "character": "astronaut",
+      "weapon": "arcane",
+      "armor": "gold",
+      "health": 1080,
+      "speed": 3.6,
+      "damage": 19,
+      "cps": 3,
+      "range": 11,
+      "scale": 1.5,
+      "boss": true,
+      "color": "#8adfff",
+      "spells": [
+        "storm-call",
+        "frost-bloom",
+        "gravity-well"
+      ]
     }
   },
   "rewards": {
@@ -92,5 +196,169 @@
       "frost",
       "bleed"
     ]
+  },
+  "eliteCoins": 110,
+  "eliteExp": 80,
+  "sideCoins": 80,
+  "depthScaling": {
+    "health": 0.14,
+    "damage": 0.07,
+    "rewards": 0.16,
+    "maximum": 4
+  },
+  "magic": {
+    "maxActive": 24,
+    "maxProjectiles": 50,
+    "minimumDistance": 3.5,
+    "pullLimit": 12,
+    "targetStagger": 0.18,
+    "prediction": 0.28
+  },
+  "sideRewards": [
+    "gemblade",
+    "arcane",
+    "mace"
+  ],
+  "spells": {
+    "ember-fan": {
+      "kind": "fan",
+      "color": "#ff934c",
+      "windup": 0.7,
+      "duration": 2.6,
+      "cooldown": 5.2,
+      "damage": 15,
+      "radius": 0,
+      "range": 22,
+      "speed": 14,
+      "count": 5,
+      "spread": 0.95,
+      "knockback": 3,
+      "effect": "fire",
+      "effectLevel": 1,
+      "pull": 0,
+      "tickDamage": 0,
+      "tickInterval": 1,
+      "jumpable": false
+    },
+    "frost-bloom": {
+      "kind": "fan",
+      "color": "#9ceaff",
+      "windup": 0.85,
+      "duration": 3,
+      "cooldown": 5.8,
+      "damage": 17,
+      "radius": 0,
+      "range": 26,
+      "speed": 15,
+      "count": 7,
+      "spread": 1.25,
+      "knockback": 2.5,
+      "effect": "frost",
+      "effectLevel": 2,
+      "pull": 0,
+      "tickDamage": 0,
+      "tickInterval": 1,
+      "jumpable": false
+    },
+    "storm-call": {
+      "kind": "lightning",
+      "color": "#8cdfff",
+      "windup": 1.2,
+      "duration": 0.5,
+      "cooldown": 6,
+      "damage": 28,
+      "radius": 2.1,
+      "range": 26,
+      "speed": 0,
+      "count": 3,
+      "spread": 5,
+      "knockback": 5,
+      "effect": "frost",
+      "effectLevel": 1,
+      "pull": 0,
+      "tickDamage": 0,
+      "tickInterval": 1,
+      "jumpable": false
+    },
+    "gravity-well": {
+      "kind": "well",
+      "color": "#bb83ff",
+      "windup": 1.1,
+      "duration": 2.8,
+      "cooldown": 7.5,
+      "damage": 26,
+      "radius": 4.7,
+      "range": 22,
+      "speed": 0,
+      "count": 1,
+      "spread": 0,
+      "knockback": 6,
+      "effect": "none",
+      "effectLevel": 1,
+      "pull": 11,
+      "tickDamage": 4,
+      "tickInterval": 0.8,
+      "jumpable": false
+    },
+    "meteor-fall": {
+      "kind": "meteor",
+      "color": "#ff9758",
+      "windup": 1.45,
+      "duration": 2.2,
+      "cooldown": 7,
+      "damage": 31,
+      "radius": 2.6,
+      "range": 30,
+      "speed": 0,
+      "count": 4,
+      "spread": 6,
+      "knockback": 7,
+      "effect": "fire",
+      "effectLevel": 2,
+      "pull": 0,
+      "tickDamage": 5,
+      "tickInterval": 0.8,
+      "jumpable": false
+    },
+    "cinder-wave": {
+      "kind": "wave",
+      "color": "#ffac67",
+      "windup": 1.15,
+      "duration": 1.1,
+      "cooldown": 6,
+      "damage": 38,
+      "radius": 10,
+      "range": 26,
+      "speed": 0,
+      "count": 1,
+      "spread": 0.65,
+      "knockback": 9,
+      "effect": "none",
+      "effectLevel": 1,
+      "pull": 0,
+      "tickDamage": 0,
+      "tickInterval": 1,
+      "jumpable": true
+    },
+    "astral-volley": {
+      "kind": "fan",
+      "color": "#cf99ff",
+      "windup": 0.9,
+      "duration": 3,
+      "cooldown": 5,
+      "damage": 18,
+      "radius": 0,
+      "range": 28,
+      "speed": 16,
+      "count": 9,
+      "spread": 1.45,
+      "knockback": 3,
+      "effect": "none",
+      "effectLevel": 1,
+      "pull": 0,
+      "tickDamage": 0,
+      "tickInterval": 1,
+      "jumpable": false
+    }
   }
 }
