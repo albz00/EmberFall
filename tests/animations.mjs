@@ -27,4 +27,4 @@ try{
   mixer.stopAllAction();mixer.uncacheRoot(template.scene);
  }
 }finally{console.warn=warn;}
-console.log(JSON.stringify({animations:'passed',characters:12,poses,bindings:true,finiteSkinning:true,groundedBounds:true,inPlace:true}));
+console.log(JSON.stringify({animations:'passed',characters:Object.keys(CHARACTERS).length,poses,bindings:true,finiteSkinning:true,groundedBounds:true,inPlace:true}));

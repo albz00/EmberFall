@@ -20,7 +20,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 Attribution is not required. It is included anyway.
 
 Quaternius — https://quaternius.com
-- Ultimate Modular Men Pack (fighter-adventurer.glb, fighter-punk.glb, fighter-king.glb, and sword.glb)
+- Ultimate Modular Men Pack (fighter-adventurer.glb, fighter-ember.glb, fighter-punk.glb, fighter-king.glb, and sword.glb). Ember is a modified Adventurer with a custom robe and portal face.
   https://poly.pizza/bundle/Ultimate-Modular-Men-Pack-ZiH8muWqwQ
   https://quaternius.com/packs/ultimatemodularcharacters.html
 - Sword (weapon-classic.glb) — https://poly.pizza/m/9lLmH8Et4K

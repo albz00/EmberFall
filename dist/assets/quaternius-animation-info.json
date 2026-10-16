@@ -9,10 +9,11 @@
   "license": "CC0-1.0",
   "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
   "targetRigLicense": "CC0-1.0 (see CREDITS.txt and V3-CREDITS.txt)",
-  "rig": "fighter-adventurer.glb / fighter-punk.glb / fighter-king.glb (identical inverse bind matrices)",
+  "rig": "fighter-adventurer.glb / fighter-ember.glb / fighter-punk.glb / fighter-king.glb (identical inverse bind matrices)",
   "animationAsset": "quaternius-fighter-animations.glb",
   "characterAnimationAssets": {
     "fighter-adventurer.glb": "quaternius-fighter-animations.glb",
+    "fighter-ember.glb": "quaternius-fighter-animations.glb",
     "actor-knight.glb": "quaternius-actor-knight-animations.glb",
     "avatar-adventurer.glb": "quaternius-avatar-adventurer-animations.glb",
     "avatar-astronaut.glb": "quaternius-avatar-astronaut-animations.glb",
@@ -935,7 +936,7 @@
         "maxFootSeamError": 0,
         "maxQuaternionError": 0,
         "bodyCorrection": [
-          -0.000001,
+          -1e-06,
           0.000948
         ]
       }

@@ -1,6 +1,6 @@
 # Emberfall
 
-A static Three.js kit arena with twelve selectable characters, instant sword input, nine named AI fighters, a usable bow, three magic staffs, consumable potions, local progression, and an equipment economy. Inventory and rank are saved in this browser; opponents and AI chat are simulated locally.
+A static Three.js kit arena with thirteen selectable characters, instant sword input, nine named AI fighters, a usable bow, three magic staffs, consumable potions, local progression, and an equipment economy. Inventory and rank are saved in this browser; opponents and AI chat are simulated locally.
 
 ## Controls
 
@@ -52,7 +52,7 @@ Eight Polygonal Mind avatars were originally static: fitted skin weights and ret
 
 `node tests/verify.mjs` checks geometry, movement, damage, health, event phases, cover, streak targeting, economy, persistence, normalized models, sustained wrist animation, and UI wiring.
 
-`node tests/runtime.mjs` exercises actual GLB and texture loading, all nine AI ledge entries, melee damage, KO rewards, respawn, return interruption, charged bow projectile hits, bridge cover plans and hazards, supply rewards, killstreak auras and targeting, persistent chat nodes, full third-person bodies, camera collision, hidden first-person body/hands, crouching, inward blocking, exact map crates, the restored ledge chest, planned lava crossings, the ten new equipment models, helmet fitting for all twelve characters, projectile cover collision, all three spell effects, potion effects and stock persistence, and the ledge table. It uses the `@napi-rs/canvas` dev dependency. Its DOM, WebGL renderer, and audio element are stubs: it does not verify browser layout, GPU output, or audible playback.
+`node tests/runtime.mjs` exercises actual GLB and texture loading, all nine AI ledge entries, melee damage, KO rewards, respawn, return interruption, charged bow projectile hits, bridge cover plans and hazards, supply rewards, killstreak auras and targeting, persistent chat nodes, full third-person bodies, camera collision, hidden first-person body/hands, crouching, inward blocking, exact map crates, the restored ledge chest, planned lava crossings, the ten new equipment models, helmet fitting for all thirteen characters, projectile cover collision, all three spell effects, potion effects and stock persistence, and the ledge table. It uses the `@napi-rs/canvas` dev dependency. Its DOM, WebGL renderer, and audio element are stubs: it does not verify browser layout, GPU output, or audible playback.
 
 `node tests/audio.mjs` checks gesture playback, blocked-start retry, looping, volume changes, the shipped MP3, environmental ducking and recovery, proximity attenuation, and stereo gust variation. The actual MP3 was decoded and verified separately; audible browser playback remains unverified.
 
