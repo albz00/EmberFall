@@ -2,35 +2,37 @@ import {updateBurning} from './burning.js?v=24';
 import {makeCharacterPose,restoreCharacterPose,applyCharacterPose} from './character-pose.js?v=24';
 import {navigationGoal} from './navigation-recovery.js?v=24';
 import {rememberMaterial,restoreMaterial} from './material-state.js?v=24';
-import {makeLocomotionLayer,restoreLocomotion,applyLocomotion} from './locomotion-layer.js?v=50';
+import {makeLocomotionLayer,restoreLocomotion,applyLocomotion} from './locomotion-layer.js?v=53';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {clone as cloneRig} from './vendor/SkeletonUtils.js';
-import {buildWorld,makeHeroStage,groundHeight as mainGroundHeight,isLava as mainIsLava,safeZone as mainSafeZone,resolveCollision as mainResolveCollision,blocked as mainBlocked,lineBlocked as mainLineBlocked,lavaDistance as mainLavaDistance} from './world.js?v=50';
+import {buildWorld,makeHeroStage,groundHeight as mainGroundHeight,isLava as mainIsLava,safeZone as mainSafeZone,resolveCollision as mainResolveCollision,blocked as mainBlocked,lineBlocked as mainLineBlocked,lavaDistance as mainLavaDistance} from './world.js?v=53';
 import {MAP,MAP_SOURCE} from './shared/map.js?v=50';
 import {placeMapProps} from './map-props.js?v=46';
 const LEDGE_EXIT=MAP.ledgeExit,PLAYER_SPAWN=MAP.spawns.player,BOT_SPAWN=MAP.spawns.bots;
-import {MOVEMENT,movementSpeed,gaitStride,KITS,BOT_PROFILES,MAX_BOTS,botProfile,HURT_WINDOW,HITBOX,hitCandidate,rayHitCandidate,resetMeleeState,releaseSprint,updateSprint,consumeSprintHit,damageReady,registerMeleeHit,breakCombo,combatKnockback,steerMovement,decayKnockback,attackDamage,clickInterval,turnAngle,chooseSteer,planLavaJump,MELEE,BOW,BOTS} from './combat.js?v=50';
-import {COSMETICS,purchaseCosmetic,NAMEPLATES,purchaseNameplate,WEAPONS,ARMORS,POTIONS,RARITIES,RANKS,CHARACTERS,CHEST_PRICE,EFFECTS,effectDescription,armorReduction,purchasePotion,consumePotion,cleanName,rankFor,LEVELS_PER_RANK,makeProfile,equippedItem,weaponStats,purchaseWeapon,purchaseArmor,openChest,sellItem,rewardKO,recordDeath,CARRY_SLOTS,HOTBAR_SLOTS,itemKind,itemName,itemArtKey,makeItemId,syncInventory,refillStarterPotions,equipInventoryItem,bindHotbar,addInventoryItem,transferItem,moveInventoryItem,expandStorage,takeDeathItems,sanitizeItem,SPELLS,MATCH_REWARDS,MERCHANT,SHOP_WEAPONS} from './progression.js?v=52';
-import {merchantStock,merchantCycle,buyExotic,sanitizeMerchantState,rollProc} from './merchant.js?v=50';
-import {bestItem,choosePurchase,transactBot,tacticalGoal,targetScore} from './bot-strategy.js?v=50';
-import {botReply,ambientReply} from './bot-chat.js?v=50';
-import {GAME_VERSION,CHANGELOG} from './changelog.js?v=52';
+import {MOVEMENT,movementSpeed,gaitStride,KITS,BOT_PROFILES,MAX_BOTS,botProfile,HURT_WINDOW,HITBOX,hitCandidate,rayHitCandidate,resetMeleeState,releaseSprint,updateSprint,consumeSprintHit,damageReady,registerMeleeHit,breakCombo,combatKnockback,steerMovement,decayKnockback,attackDamage,clickInterval,turnAngle,chooseSteer,planLavaJump,MELEE,BOW,BOTS} from './combat.js?v=53';
+import {COSMETICS,purchaseCosmetic,NAMEPLATES,purchaseNameplate,WEAPONS,ARMORS,POTIONS,RARITIES,RANKS,CHARACTERS,CHEST_PRICE,EFFECTS,effectDescription,armorReduction,purchasePotion,consumePotion,cleanName,rankFor,LEVELS_PER_RANK,makeProfile,equippedItem,weaponStats,purchaseWeapon,purchaseArmor,openChest,sellItem,rewardKO,recordDeath,CARRY_SLOTS,HOTBAR_SLOTS,itemKind,itemName,itemArtKey,makeItemId,syncInventory,refillStarterPotions,equipInventoryItem,bindHotbar,addInventoryItem,transferItem,moveInventoryItem,expandStorage,takeDeathItems,sanitizeItem,SPELLS,MATCH_REWARDS,MERCHANT,SHOP_WEAPONS} from './progression.js?v=53';
+import {merchantStock,merchantCycle,buyExotic,sanitizeMerchantState,rollProc} from './merchant.js?v=53';
+import {bestItem,choosePurchase,transactBot,tacticalGoal,targetScore} from './bot-strategy.js?v=53';
+import {botReply,ambientReply} from './bot-chat.js?v=53';
+import {GAME_VERSION,CHANGELOG} from './changelog.js?v=53';
 import {installScrollbars} from './scrollbars.js?v=28';
 import {MINI,TEAM_COLORS,inMiniArena,miniBlocked,miniGround,miniResolve,assignTeams,matchOutcome,buildMiniArena,makeMatchSign} from './duels.js?v=24';
 import {fitArmor} from './equipment.js?v=24';
-import {rankIcon,drawRankIcon} from './rank-icons.js?v=50';
-import {updateCosmetic,disposeCosmetic,cosmeticPreview} from './cosmetics.js?v=50';
-import {nameplateNode} from './nameplates.js?v=50';
+import {rankIcon,drawRankIcon} from './rank-icons.js?v=53';
+import {updateCosmetic,disposeCosmetic,cosmeticPreview} from './cosmetics.js?v=53';
+import {nameplateNode} from './nameplates.js?v=53';
 import {makeHeadLook,restoreHeadLook,bodyFacing,applyHeadLook} from './head-look.js?v=24';
 
-import {DESTINATIONS,isUnderBridge,nearestBridgeCover,streakTier,arrowDamage,createEventState,advanceEvent,EVENT_SCHEDULE,HAZARDS,SUPPLIES} from './arena-events.js?v=50';
-import {renderInventoryPanel,slotArt} from './inventory-ui.js?v=50';
+import {DESTINATIONS,isUnderBridge,nearestBridgeCover,streakTier,arrowDamage,createEventState,advanceEvent,EVENT_SCHEDULE,HAZARDS,SUPPLIES} from './arena-events.js?v=53';
+import {renderInventoryPanel,slotArt} from './inventory-ui.js?v=53';
 import {BackgroundMusic,CaveAmbience,DUEL_TRACKS,LOFI_TRACKS} from './music.js?v=48';
 import {ASCENSION,ascensionStrength,createChargeOrb,updateChargeOrb} from './ascension.js?v=24';
 import {PRESSURE,pressureStrength,pressureMultiplier} from './spiritual-pressure.js?v=24';
-import {HEAVY,chargeProgress,chargedStats,heavyRecovery} from './charged-melee.js?v=50';
+import {HEAVY,chargeProgress,chargedStats,heavyRecovery} from './charged-melee.js?v=53';
 import {Ragdolls,restoreImpactPose,triggerImpact,applyImpactPose} from './impact-motion.js?v=24';
+import {CRYPT,DUNGEON,inDungeon,dungeonPoint,createDungeonRun,nextDungeonEncounter,dungeonGateClosed,dungeonBlocked,dungeonResolve,dungeonGround,markDungeonKill,rollDungeonRewards} from './dungeon.js?v=53';
+import {buildDungeon} from './dungeon-world.js?v=53';
 
 const $=id=>document.getElementById(id), canvas=$('game'), touch=matchMedia('(pointer: coarse)').matches;
 const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
@@ -54,6 +56,7 @@ let arenaEvent=createEventState(0),lastEventTick=0;
 let lastCast=-20,potionUsedAt=-20,usedPotion='healing',potionHeld=null;
 const buffs={haste:0,guard:0},spellLinks=[];
 const duel={phase:'idle',at:0,queue:[],teams:null,winner:null};
+let dungeon=createDungeonRun(),currentDungeonAction=null,dungeonSerial=0;
 const admin={god:false,flying:false,hunt:false};let lastJumpTap=-10,lastChatReply=-10,lastChatBot=null,atmosphereBlend=.2;
 $('game-version').textContent='v'+GAME_VERSION;$('changelog-content').innerHTML=CHANGELOG.map(entry=>`<article><h3>v${entry.version}</h3><ul>${entry.changes.map(c=>`<li>${c}</li>`).join('')}</ul></article>`).join('');
 let thirdPerson=read('emberfall.thirdPerson',false),crouchBlend=0,crouchTouch=false,cameraDistance=4.4;
@@ -71,6 +74,7 @@ let renderer;try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPr
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.04;renderer.outputColorSpace=THREE.SRGBColorSpace;
 const miniArena=buildMiniArena(scene),matchSign=makeMatchSign(scene);
 const world=buildWorld(scene),heroScene=new THREE.Scene(),heroCamera=new THREE.PerspectiveCamera(33,1,.1,30);makeHeroStage(heroScene);heroCamera.position.set(2.6,1.9,5.6);heroCamera.lookAt(0,.93,0);let hero=null;
+const dungeonWorld=buildDungeon(scene);
 const weaponScene=new THREE.Scene(),weaponCamera=new THREE.PerspectiveCamera(64,innerWidth/innerHeight,.02,10),weaponPivot=new THREE.Group(),heldGroup=new THREE.Group();weaponScene.add(weaponPivot);weaponPivot.add(heldGroup);weaponScene.add(new THREE.HemisphereLight(0xffeacb,0x756073,3));const keyLight=new THREE.DirectionalLight(0xffffff,3);keyLight.position.set(-2,3,4);weaponScene.add(keyLight);
 const trail=new THREE.Mesh(new THREE.TorusGeometry(.65,.035,4,24,1.7),new THREE.MeshBasicMaterial({color:0xffdfb1,transparent:true,opacity:0,depthTest:false}));trail.position.set(.1,-.12,-1.2);trail.rotation.set(.9,.1,.4);weaponScene.add(trail);
 const ragdolls=new Ragdolls(scene,groundHeight,resolveCollision);
@@ -80,29 +84,33 @@ const stations=[{type:'match',name:'2v2 · Join match',position:stationAt('match
 const touchMove={x:0,z:0};
 
 function isDueling(){return duel.phase!=='idle';}
-function groundHeight(x,z,feet=100){return inMiniArena(x,z)?miniGround(x,z,feet):mainGroundHeight(x,z,feet);}
-function isLava(x,z,y=0){return inMiniArena(x,z)?false:mainIsLava(x,z,y);}
-function lavaDistance(x,z){return inMiniArena(x,z)?100:mainLavaDistance(x,z);}
-function safeZone(p){return inMiniArena(p.x,p.z)?duel.phase!=='active':mainSafeZone(p);}
-function resolveCollision(p,r=.38,h=1.7){return inMiniArena(p.x,p.z)?miniResolve(p,r):mainResolveCollision(p,r,h);}
-function blocked(x,z,y=0,padding=.6){return inMiniArena(x,z)?miniBlocked(x,z,y,padding):mainBlocked(x,z,y,padding);}
+function groundHeight(x,z,feet=100){return inDungeon(x,z)?dungeonGround(x,z,feet):inMiniArena(x,z)?miniGround(x,z,feet):mainGroundHeight(x,z,feet);}
+function isLava(x,z,y=0){return inDungeon(x,z)||inMiniArena(x,z)?false:mainIsLava(x,z,y);}
+function lavaDistance(x,z){return inDungeon(x,z)||inMiniArena(x,z)?100:mainLavaDistance(x,z);}
+function safeZone(p){return inDungeon(p.x,p.z)?false:inMiniArena(p.x,p.z)?duel.phase!=='active':mainSafeZone(p);}
+function resolveCollision(p,r=.38,h=1.7){return inDungeon(p.x,p.z)?dungeonResolve(p,r,dungeon):inMiniArena(p.x,p.z)?miniResolve(p,r):mainResolveCollision(p,r,h);}
+function blocked(x,z,y=0,padding=.6){return inDungeon(x,z)?dungeonBlocked(x,z,y,padding,dungeon):inMiniArena(x,z)?miniBlocked(x,z,y,padding):mainBlocked(x,z,y,padding);}
 function lineBlocked(a,b){
+ if(inDungeon(a.x,a.z)!==inDungeon(b.x,b.z))return true;
+ if(inDungeon(a.x,a.z)){const length=Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);for(let d=.2;d<length;d+=.2){const t=d/length;if(dungeonBlocked(a.x+(b.x-a.x)*t,a.z+(b.z-a.z)*t,a.y+(b.y-a.y)*t,.03,dungeon))return true;}return false;}
  if(inMiniArena(a.x,a.z)!==inMiniArena(b.x,b.z))return true;
  if(!inMiniArena(a.x,a.z))return mainLineBlocked(a,b);
  const length=a.distanceTo? a.distanceTo(b):Math.hypot(a.x-b.x,a.z-b.z);for(let d=.3;d<length;d+=.3){const t=d/length;if(miniBlocked(a.x+(b.x-a.x)*t,a.z+(b.z-a.z)*t,a.y+(b.y-a.y)*t,.05))return true;}return false;
 }
 function canHit(owner,target){
+ if(inDungeon(owner.position.x,owner.position.z)!==inDungeon(target.position.x,target.position.z))return false;
+ if(owner.dungeon||target.dungeon)return dungeon.active&&(owner===player||target===player)&&owner!==target;
  if(owner===target||inMiniArena(owner.position.x,owner.position.z)!==inMiniArena(target.position.x,target.position.z))return false;
  if(owner.team||target.team)return duel.phase==='active'&&!!owner.team&&!!target.team&&owner.team!==target.team;
  return !(admin.hunt&&owner!==player&&target!==player);
 }
 function ensureMatchQueue(){
  if(duel.queue.length===3)return;
- const start=Math.floor(time/13)%fighters.length,selected=[0,3,6].map(offset=>fighters[(start+offset)%fighters.length]);duel.queue=selected;duel.queueUntil=time+24;
+ const bots=arenaFighters(),start=Math.floor(time/13)%bots.length,selected=[0,3,6].map(offset=>bots[(start+offset)%bots.length]);duel.queue=selected;duel.queueUntil=time+24;
  selected.forEach((f,i)=>{spawnFighter(f,true);f.signup=i;f.state='signup';f.target=null;f.signupUntil=duel.queueUntil;});
 }
 function openMatches(){
- if(isDueling()){toast('Finish this match first');return;}
+ if(dungeon.active){toast('Leave the dungeon before joining a match');return;}if(isDueling()){toast('Finish this match first');return;}
  if(mode==='play'&&!mainSafeZone(player.position)){toast('Use the 2v2 sign on the ledge');return;}
  ensureMatchQueue();openModal('match');
  $('match-roster').innerHTML=[{name:profile.name,rating:profile.rating,you:true},...duel.queue].map(a=>`<div class="match-player">${rankIcon(rankFor(a.rating))}<strong>${a.name}</strong><span>${a.you?'You':a.role==='archer'?'Bow':a.role==='ranger'?'Staff':'Melee'}</span></div>`).join('');
@@ -115,7 +123,7 @@ function updateSignup(f,dt){
  actorPhysics(f,dt);f.healthBg.quaternion.copy(camera.quaternion);
 }
 function joinMatch(){
- if(isDueling())return;setFreecam(false,false);ensureMatchQueue();duel.phase='assembling';duel.at=time+4;duel.teams=assignTeams(player,duel.queue);duel.winner=null;duel.startedAt=time;admin.god=admin.flying=admin.hunt=false;keys.clear();
+ if(isDueling()||dungeon.active)return;setFreecam(false,false);ensureMatchQueue();duel.phase='assembling';duel.at=time+4;duel.teams=assignTeams(player,duel.queue);duel.winner=null;duel.startedAt=time;admin.god=admin.flying=admin.hunt=false;keys.clear();
  for(const f of duel.queue)f.signupUntil=Infinity;
  if(mode==='lobby'){startGame(false);duel.phase='assembling';duel.at=time+4;}else resume();
  chatSystem('2v2 signed up: '+duel.queue.map(f=>f.name).join(', ')+'.');music?.use(DUEL_TRACKS);updateDuelHud();
@@ -169,6 +177,104 @@ function updateDuelHud(){
  else if(player.health<=0)banner.textContent='Eliminated · watching your teammate';
 }
 $('join-match').addEventListener('click',joinMatch);
+
+function arenaFighters(){return fighters.filter(f=>!f.dungeon);}
+function clearDungeon(){
+ for(const f of [...fighters])if(f.dungeon){disposeCosmetic(f);f.animator.mixer.stopAllAction();f.animator.mixer.uncacheRoot(f.rig);scene.remove(f.root);f.label.material.map?.dispose();f.healthBg.geometry.dispose();f.healthFill.geometry.dispose();f.aura?.traverse(o=>o.geometry?.dispose());disposeMaterials(f.root);fighters.splice(fighters.indexOf(f),1);}
+ Object.assign(dungeon,createDungeonRun());
+}
+function clearDungeonShots(){for(const shot of projectiles)if(shot.owner===player||shot.owner?.dungeon)shot.life=0;}
+function enterDungeon(){
+ if(!loaded||mode!=='play'||player.health<=0||isDueling()||dungeon.active)return false;
+ const portal=world.portal?.origin;if(!portal||player.position.distanceTo(portal)>DUNGEON.interactionRange)return false;
+ if(time-lastCombat<5){toast('Leave combat before entering the portal');return false;}
+ if(dungeon.phase==='complete'&&dungeon.claimed)clearDungeon();
+ cancelAttack(true);setFreecam(false,false);clearDungeonShots();keys.clear();player.effects={};player.poison=null;player.slowUntil=0;player.pressureSlow=1;resetMeleeState(player);player.velocity.set(0,0,0);player.knock.set(0,0,0);player.jumps=0;player.grounded=true;player.team=null;returnAt=0;
+ const spawn=dungeonPoint(CRYPT.spawn);player.position.set(spawn.x,0,spawn.z);yaw=0;pitch=-.04;dungeon.active=true;dungeon.cast=null;dungeon.nextAttack=time+DUNGEON.boss.attackInterval;
+ for(const f of fighters)if(f.dungeon){f.root.visible=f.alive;f.effects={};f.poison=null;f.lastImpact=time;f.nextClick=time+f.skill.reaction;}
+ world.root.visible=false;miniArena.root.visible=false;dungeonWorld.root.visible=true;$('pause-spawn').textContent='Leave dungeon';music?.use(DUEL_TRACKS);
+ chatSystem('Entered the Ashen Crypt. Clear each chamber, defeat the Warden, and claim the relic cache. F at the blue portal returns you with your gear.');updateHud();return true;
+}
+function suspendDungeon(){
+ if(!dungeon.active)return;dungeon.active=false;dungeon.cast=null;clearDungeonShots();
+ for(const f of fighters)if(f.dungeon){f.root.visible=false;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.effects={};f.poison=null;}
+ dungeonWorld.root.visible=false;world.root.visible=true;miniArena.root.visible=true;currentDungeonAction=null;$('dungeon-hud').classList.add('hidden');$('pause-spawn').textContent='Return to ledge';music?.use(LOFI_TRACKS);
+}
+function makeDungeonEnemy(type,at){
+ const data=DUNGEON.mobs[type],f=makeFighter(1000+dungeonSerial++,data.character),item={id:'crypt-enemy-'+dungeonSerial,weapon:data.weapon,rarity:'common'};
+ f.dungeon=true;f.dungeonType=type;f.boss=data.boss;f.name=data.name;f.skill={...f.skill,name:data.name,cps:data.cps,reaction:.22,aimError:.09,turn:9};f.kit={...KITS.vanguard,health:data.health,speed:data.speed,damageMultiplier:1};f.hp=data.health;f.item=item;f.stats={...weaponStats(item),damage:data.damage,reach:WEAPONS[data.weapon].kind==='staff'?WEAPONS[data.weapon].reach:data.range};f.armor=data.armor;f.helmet='none';f.account=makeProfile({name:data.name,character:data.character,inventory:[item],equipped:item.id});f.state='fight';f.role=f.stats.kind==='staff'?'ranger':'duelist';f.plan='duel';f.target=player;f.targetUntil=Infinity;f.purchase=null;f.rig.scale.setScalar(data.scale);f.position.set(at.x,0,at.z);f.velocity.set(0,0,0);f.knock.set(0,0,0);f.lastImpact=f.lastDirectHit=time-2;f.nextClick=time+.8;f.nextJump=time+DUNGEON.jumpInterval;f.rig.rotation.y=0;f.aimAngle=0;f.animator.look.bodyYaw=0;f.label.material.map.dispose();f.label.material.map=nameTexture(data.name,0);f.label.position.y=2.47*data.scale;f.healthBg.position.y=2.08*data.scale;attachGear(f.rig,item,data.armor);dungeon.enemies.push(f);return f;
+}
+function startDungeonEncounter(index){
+ const room=CRYPT.encounters[index];dungeon.encounter=index;dungeon.phase='fighting';dungeon.enemies=[];dungeon.nextAttack=time+DUNGEON.boss.attackInterval;
+ for(const mob of room.mobs)makeDungeonEnemy(mob.type,dungeonPoint(mob));
+ chatSystem(room.name+'.');sound('rumble');updateDungeonHud();
+}
+function defeatDungeonEnemy(f,attacker){
+ if(f.boss)dungeon.cast=null;ragdolls.spawn(f,f);f.alive=false;f.hp=0;f.root.visible=false;f.effects={};f.poison=null;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.target=null;
+ if(attacker===player){const coins=f.boss?DUNGEON.bossCoins:DUNGEON.mobCoins,exp=f.boss?DUNGEON.bossExp:DUNGEON.mobExp;profile.coins+=coins;profile.rating+=exp;persist();updateProfileUI();toast('+'+coins+' coins · +'+exp+' EXP',1400);sound(f.boss?'ko':'hit');}
+ burst(f.position.clone().add(new V3(0,1,0)),f.boss?0xffb970:0xb7a0ef,f.boss?35:15,1.4);addKill({killer:attacker===player?profile.name:attacker?.name??'The crypt',victim:f.name});
+ if(markDungeonKill(dungeon,f)){player.health=Math.min(player.maxHealth,player.health+DUNGEON.clearHealing);arrowCount=Math.min(BOW.maxArrows,arrowCount+BOW.knockoutArrows);healUntil=time+.3;
+  if(dungeon.phase==='complete'){chatSystem('The Cinder Warden has fallen. Open the relic cache at the far end, then return through the blue portal.','reward');sound('ko');shockwave(f.position,0xffc376);}else{chatSystem('Chamber cleared. The gate ahead is opening.');sound('chest');}
+ }
+ updateDungeonHud();
+}
+function claimDungeonCache(){
+ if(!dungeon.active||dungeon.phase!=='complete'||dungeon.claimed||player.position.distanceTo(new V3(dungeonPoint(CRYPT.cache).x,0,dungeonPoint(CRYPT.cache).z))>DUNGEON.interactionRange)return false;
+ const items=rollDungeonRewards(prefix=>makeItemId(profile,prefix));
+ // Create each physical copy once. A full backpack leaves it beside the cache.
+ for(const [i,item]of items.entries()){const result=addInventoryItem(profile,item);if(!result.ok){const p=dungeonPoint(CRYPT.cache);spawnLoot(item,new V3(p.x+(i?1:-1),0,p.z+1.5));}chatSystem(itemName(item)+(result.ok?' added to your inventory.':' dropped beside the cache. Free a slot and press F to pick it up.'),'reward');}
+ dungeon.claimed=true;persist();saveLoot();hotbarSignature='';refreshEquipment();sound('chest');updateDungeonHud();return true;
+}
+function updateDungeonEnemy(f,dt){
+ f.root.visible=dungeon.active&&f.alive;if(!dungeon.active||!f.alive)return;
+ updateAilments(f,dt);if(!f.alive)return;updateAnimator(f,dt);updateAppearance(f,dt);
+ const data=DUNGEON.mobs[f.dungeonType],room=CRYPT.encounters[dungeon.encounter],alive=mode==='play'&&player.health>0&&inDungeon(player.position.x,player.position.z),delta=player.position.clone().sub(f.position),distance=Math.hypot(delta.x,delta.z),ranged=f.stats.kind==='staff';f.target=alive?player:null;f.guard=false;
+ if(!alive||distance>DUNGEON.aggroRange){f.velocity.set(0,f.velocity.y,0);actorPhysics(f,dt);return;}
+ f.aimAngle=turnAngle(f.aimAngle,Math.atan2(delta.x,delta.z),dt*f.skill.turn);f.aimPitch=0;
+ const casting=f.boss&&!!dungeon.cast,desired=ranged?data.range:Math.max(1.4,data.range*.75),strafe=Math.sin(time*.9+f.id)*.45;
+ let dx=delta.x/Math.max(.01,distance),dz=delta.z/Math.max(.01,distance),direction=distance>desired?1:distance<desired-.8?-1:0;
+ let goal={x:f.position.x+(dx*direction+dz*strafe)*3,z:f.position.z+(dz*direction-dx*strafe)*3,y:0};
+ goal.x=THREE.MathUtils.clamp(goal.x,CRYPT.origin.x-CRYPT.halfWidth+1,CRYPT.origin.x+CRYPT.halfWidth-1);goal.z=THREE.MathUtils.clamp(goal.z,CRYPT.origin.z+room.minZ,CRYPT.origin.z+room.maxZ);
+ const steering=chooseSteer(f.position,goal,blocked,()=>false,time,f.id),speed=data.speed*(f.boss&&dungeon.enraged?DUNGEON.boss.enrageSpeed:1)*slowMultiplier(f);
+ steerMovement(f,casting?0:steering.x*speed,casting?0:steering.z*speed,dt);
+ if(!casting&&f.grounded&&time>=f.nextJump&&distance<8&&!ranged){f.nextJump=time+DUNGEON.jumpInterval+(f.id%3)*.2;f.velocity.y=DUNGEON.jumpSpeed;f.grounded=false;f.jumps=1;}
+ if(!casting&&time>=f.nextClick&&time>=(f.reactionUntil??0)&&!lineBlocked(f.position,player.position)){
+  f.nextClick=time+(ranged?f.stats.cooldown:1/data.cps);if(ranged&&distance<f.stats.reach)botCast(f,player);else if(distance<data.range+.4)botSwing(f,player);
+ }
+ if(f.boss){f.knock.multiplyScalar(Math.exp(-DUNGEON.staggerResistance*dt*12));if(f.velocity.y>0&&time-f.lastImpact<.2)f.velocity.y=Math.min(f.velocity.y,4);}
+ actorPhysics(f,dt);f.position.z=THREE.MathUtils.clamp(f.position.z,CRYPT.origin.z+room.minZ,CRYPT.origin.z+room.maxZ);
+ if(time>f.animUntil&&!casting)locomotion(f,f,Math.hypot(f.velocity.x,f.velocity.z)>.7);
+ f.healthFill.scale.x=Math.max(0,f.hp/f.kit.health);f.healthFill.position.x=-(1-f.healthFill.scale.x)*.38;f.healthBg.quaternion.copy(camera.quaternion);f.healthBg.visible=!f.boss;f.label.visible=!f.boss&&distance<30;f.label.material.opacity=1;
+}
+function updateDungeon(dt){
+ if(!dungeon.active)return;const encounter=nextDungeonEncounter(dungeon,player.position.z);if(encounter!==null)startDungeonEncounter(encounter);
+ const boss=dungeon.enemies.find(f=>f.boss&&f.alive),b=DUNGEON.boss;
+ if(boss&&player.health>0){
+  if(!dungeon.enraged&&boss.hp/boss.kit.health<=b.enrageAt){dungeon.enraged=true;chatSystem('The Warden is enraged.');burst(boss.position.clone().add(new V3(0,1,0)),0xff765b,35,1.4);}
+  if(dungeon.enraged&&!dungeon.summoned){dungeon.summoned=true;for(let i=0;i<b.summons;i++)makeDungeonEnemy(b.summonType,{x:CRYPT.origin.x+(i%2?-5:5),z:CRYPT.origin.z-29});}
+  if(!dungeon.cast&&time>=dungeon.nextAttack){const kind=dungeon.attacks++%2?'rupture':'slam',at=kind==='slam'?boss.position:player.position;dungeon.cast={kind,x:at.x,z:at.z,radius:b.radius,at:time+b.windup,owner:boss};dungeon.nextAttack=time+(dungeon.enraged?b.enragedInterval:b.attackInterval);animateActor(boss,'Cast',true,1);boss.animUntil=time+b.windup;toast(kind==='slam'?'Warden’s shockwave · jump or get clear':'Rift rupture · move out of the circle',b.windup*1000);sound('rumble');}
+ }
+ if(dungeon.cast&&time>=dungeon.cast.at){const cast=dungeon.cast;dungeon.cast=null;const point=new V3(cast.x,0,cast.z);shockwave(point,0xf4a674);burst(point.clone().add(new V3(0,.25,0)),cast.kind==='slam'?0xffa169:0xbc8aff,36,2);sound('heavy');
+  if(Math.hypot(player.position.x-cast.x,player.position.z-cast.z)<cast.radius&&(cast.kind!=='slam'||player.position.y<b.safeJumpHeight)){
+   const hit=hurtPlayer(b.damage,cast.owner,false,false,{damage:b.damage,knockback:b.knockback,effects:[],heavy:true});if(hit)shove(player,player.position.clone().sub(point),b.knockback,4);
+  }
+ }
+ dungeonWorld.update(time,dt,dungeon);
+}
+function dungeonInteraction(){
+ if(mode!=='play'||player.health<=0||isDueling())return null;
+ const near=p=>player.position.distanceTo(new V3(p.x,p.y??0,p.z))<=DUNGEON.interactionRange;
+ if(dungeon.active){if(near(dungeonPoint(CRYPT.exit)))return{type:'exit',name:'Return to the arena'};if(dungeon.phase==='complete'&&!dungeon.claimed&&near(dungeonPoint(CRYPT.cache)))return{type:'cache',name:'Claim relic cache'};}
+ else if(world.portal?.origin&&near(world.portal.origin))return{type:'entry',name:'Enter Ashen Crypt'};return null;
+}
+function interact(){if(currentLoot)pickUpLoot(currentLoot,player);else if(currentDungeonAction){if(currentDungeonAction.type==='entry')enterDungeon();else if(currentDungeonAction.type==='cache')claimDungeonCache();else beginReturn();}else if(currentStation)showShop(stationTab(currentStation));}
+function updateDungeonHud(){
+ const hud=$('dungeon-hud');hud.classList.toggle('hidden',!dungeon.active);if(!dungeon.active)return;
+ const boss=dungeon.enemies.find(f=>f.boss&&f.alive),remaining=dungeon.enemies.filter(f=>f.alive).length;
+ $('dungeon-name').textContent=boss?'Cinder Warden'+(dungeon.enraged?' · Enraged':''):CRYPT.name;
+ $('dungeon-objective').textContent=dungeon.phase==='complete'?(dungeon.claimed?'Return through the blue portal with your relics':'Claim the relic cache at the far end'):dungeon.phase==='fighting'?remaining+' '+(remaining===1?'enemy':'enemies')+' remaining · Chamber '+(dungeon.encounter+1)+' / '+CRYPT.encounters.length:'Enter the next chamber · '+dungeon.cleared+' / '+CRYPT.encounters.length+' cleared';
+ $('dungeon-boss-track').classList.toggle('hidden',!boss);if(boss)$('dungeon-boss-fill').style.width=Math.max(0,boss.hp/boss.kit.health*100)+'%';
+}
 
 // Shared instanced particles keep impact effects inexpensive even during fast clicking.
 const fxGeometry=new THREE.TetrahedronGeometry(1),fxMaterial=new THREE.MeshBasicMaterial({color:0xffffff}),fxMesh=new THREE.InstancedMesh(fxGeometry,fxMaterial,420),fx=[];
@@ -293,7 +399,7 @@ const icon=(id)=>`<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
 const effectBadges=stats=>(stats.effects??[]).map(e=>`<span class="effect-badge" style="--effect:${EFFECTS[e.type].color}">${EFFECTS[e.type].name} ${['','I','II','III'][e.level]}</span>`).join('');
 const itemDetails=stats=>`<div class="effect-badges">${stats.forged?'<span class="forged-badge">Forged</span>':''}${effectBadges(stats)}</div><details class="item-details"><summary>Stats</summary>${stats.description?`<p>${stats.description}</p>`:''}<dl><dt>Damage</dt><dd>${stats.damage}</dd>${stats.kind==='staff'?`<dt>Cast interval</dt><dd>${stats.cooldown}s</dd>`:`<dt>Critical hit</dt><dd>${stats.absoluteDamage?stats.damage.toLocaleString():Math.round(stats.damage*MELEE.criticalMultiplier)}</dd>`}<dt>${stats.kind==='staff'?'Range':'Reach'}</dt><dd>${stats.reach.toFixed(2)}m</dd><dt>Knockback</dt><dd>${stats.knockback.toFixed(1)}</dd><dt>Speed bonus</dt><dd>${stats.speed>0?'+':''}${stats.speed.toFixed(2)}</dd>${(stats.effects??[]).map(e=>`<dt style="color:${EFFECTS[e.type].color}">${EFFECTS[e.type].name}</dt><dd>${effectDescription(e)}</dd>`).join('')}</dl></details>`;
 const itemArt=(key,fallback='sword')=>thumbs[key]?`<img src="${thumbs[key]}" alt="">`:icon(fallback);
-function atShops(){return !isDueling()&&(mode==='lobby'||safeZone(player.position));}
+function atShops(){return !dungeon.active&&!isDueling()&&(mode==='lobby'||safeZone(player.position));}
 const stationTab=station=>station.type==='chest'?'storage':station.type==='merchant'?'exotics':station.type;
 const MENU_TABS={personal:['inventory','cosmetics','nameplates','ranks'],chest:['storage'],equipment:['weapons','armor'],potions:['potions'],merchant:['exotics']};
 function showShop(tab='inventory'){
@@ -330,7 +436,7 @@ function renderShop(){updateProfileUI();$('shop-title').textContent=menuContext=
  if(shopTab==='weapons'||shopTab==='armor'){
   const armorShop=shopTab==='armor',grid=document.createElement('div');grid.className='equipment-grid';
   for(const [id,w]of armorShop?Object.entries(ARMORS):SHOP_WEAPONS.map(id=>[id,WEAPONS[id]])){
-   if(armorShop&&!w.file)continue;const starter=!armorShop&&id==='classic',count=profile.inventory.filter(i=>armorShop?i.armor===id:i.weapon===id).length,card=document.createElement('article');card.className='equipment-card'+(w.absoluteDamage?' sovereign-card':'');
+   if(armorShop&&(!w.file||w.dungeonOnly))continue;const starter=!armorShop&&id==='classic',count=profile.inventory.filter(i=>armorShop?i.armor===id:i.weapon===id).length,card=document.createElement('article');card.className='equipment-card'+(w.absoluteDamage?' sovereign-card':'');
    card.innerHTML=`<div class="equipment-art">${itemArt(armorShop?'armor-'+id:id,armorShop?'armor':'sword')}</div><h3>${w.name}</h3><p>${armorShop?Math.round(w.reduction*100)+'% damage reduction':w.damage.toLocaleString()+' damage · '+w.reach.toFixed(1)+'m '+(w.kind==='staff'?'range':'reach')}</p><p>${count} carried</p>${armorShop?'':itemDetails(w)}<button class="secondary-button" ${starter?'disabled':''}>${starter?'Starter kit':'Buy '+icon('coin')+' '+w.price.toLocaleString()}</button>`;
    card.querySelector('button').addEventListener('click',()=>{if(!atShops())return;const result=armorShop?purchaseArmor(profile,id):purchaseWeapon(profile,id);if(!result.ok){toast(result.error);return;}persist();updateHud();renderShop();sound('buy');toast(w.name+' added to inventory');});grid.append(card);
   }content.append(grid);
@@ -385,9 +491,9 @@ function closeChat(relock=true){chatOpen=false;$('chat').classList.remove('open'
 function chatContext(){return{time,match:duel.phase!=='idle',teamMate:duel.teams?.blue.find(a=>a!==player)?.name,playerName:profile.name,playerStreak:player.streak,playerKills:player.kills,hunt:admin.hunt,eventName:arenaEvent.phase!=='idle'?arenaEvent.type?.name:null};}
 function queueReply(text){
  if(time-lastChatReply<2)return;lastChatReply=time;
- const addressed=fighters.find(f=>new RegExp('\\b'+f.name+'\\b','i').test(text));
+ const addressed=arenaFighters().find(f=>new RegExp('\\b'+f.name+'\\b','i').test(text));
  const followup=/^(why|how so|really|tell me more|more|and|go on|explain|what do you mean|what about you|yes|yeah|no|nah|ok|okay|sure)[.!? ]*$/i.test(text);
- const bot=addressed??(followup&&lastChatBot&&time-lastChatBot.at<60?lastChatBot.bot:null)??[...fighters].sort((a,b)=>a.position.distanceTo(player.position)-b.position.distanceTo(player.position))[(messages.length)%Math.min(3,fighters.length)];
+ const bot=addressed??(followup&&lastChatBot&&time-lastChatBot.at<60?lastChatBot.bot:null)??arenaFighters().sort((a,b)=>a.position.distanceTo(player.position)-b.position.distanceTo(player.position))[(messages.length)%Math.min(3,arenaFighters().length)];
  if(bot){lastChatBot={bot,at:time};const message=addressed?text.replace(new RegExp('\\b'+addressed.name+'\\b[:, ]*','i'),'').trim()||'hello':text;pendingChats.push({at:time+.9+Math.random()*1.3,bot,text:botReply(bot,message,chatContext())});}
 }
 function toggleAdmin(value){admin.god=value;if(!value)admin.flying=false;player.effects={};player.poison=null;player.slowUntil=0;if(value){player.health=KITS[selectedKit].health;player.knock.set(0,0,0);lastHurt=time-20;}chatSystem('Admin '+(value?'on. Double-tap Space to fly.':'off.'));updateHud();}
@@ -437,11 +543,11 @@ function executeCommand(text){
  else if(command==='/bots'){
   const args=text.trim().split(/\s+/),count=Number(args[2]);
   if(arg!=='add'||args.length!==3||!/^\d+$/.test(args[2])||!Number.isSafeInteger(count)||count<1){chatSystem('Use /bots add <number>, for example /bots add 5.');return;}
-  const available=MAX_BOTS-fighters.length;
+  const available=MAX_BOTS-arenaFighters().length;
   if(count>available){chatSystem(available>0?'Room for '+available+' more bots ('+MAX_BOTS+' maximum).':'Bot limit reached: '+MAX_BOTS+'.');return;}
   if(!loaded){chatSystem('Wait for the characters to finish loading.');return;}
-  for(let i=0;i<count;i++)makeFighter(fighters.length);
-  chatSystem('Added '+count+' '+(count===1?'bot':'bots')+' on the ledge. '+fighters.length+' bots in this session.');
+  for(let i=0;i<count;i++)makeFighter(arenaFighters().length);
+  chatSystem('Added '+count+' '+(count===1?'bot':'bots')+' on the ledge. '+arenaFighters().length+' bots in this session.');
  }
  else if(command==='/admin')toggleAdmin(toggle(admin.god));
  else if(command==='/fly')toggleFlight(toggle(admin.flying));
@@ -486,9 +592,9 @@ function openModal(id){cancelAttack();bowDrawAt=-1;if(chatOpen)closeChat(false);
 function closeModal(){const previous=activeModal;closeAll();if(mode==='pause'){if(previous==='shop')resume();else openModal('pause');}}
 function requestLock(){if(touch)return;pointerLockFailed=false;lockRequested=true;try{const p=canvas.requestPointerLock?.();p?.catch(()=>{lockRequested=false;pointerLockFailed=true;toast('Drag to look · click to strike',3000);});if(!canvas.requestPointerLock){pointerLockFailed=true;lockRequested=false;}}catch{pointerLockFailed=true;lockRequested=false;}}
 function resume(){initAudio();scorePinned=false;$('scoreboard').classList.add('hidden');closeAll();mode='play';keys.clear();requestLock();last=performance.now();}
-function resetPlayer(){cancelAttack(true);meleeRecoveryUntil=-1;heavySwingPower=0;player.impactReaction=null;player.pressureSlow=1;setFreecam(false,false);resetMeleeState(player);sprinting=false;sprintView=0;cameraStride=0;wasVisualSprint=false;player.jumps=0;player.inLava=false;player.effects={};player.poison=null;player.slowUntil=0;admin.flying=false;lastJumpTap=-10;crouchTouch=false;crouchBlend=0;player.crouched=false;arrowCount=BOW.quiver;bowDrawAt=-1;selectedSlot='sword';let slot=profile.hotbar.indexOf(profile.equipped);if(slot<0){slot=0;bindHotbar(profile,slot,profile.equipped);}profile.selectedHotbar=slot;lastCast=time-20;potionUsedAt=time-20;buffs.haste=buffs.guard=0;refillStarterPotions(profile);persist();Object.assign(player,{health:KITS[selectedKit].health,maxHealth:KITS[selectedKit].health,streak:0,runKills:0,potions:profile.potions.healing,grounded:true,lastDamage:time-20,lastImpact:time-20});player.position.set(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z);player.velocity.set(0,0,0);player.knock.set(0,0,0);yaw=0;pitch=-.08;swingAge=10;blockHeld=false;combo=0;lastHit=-10;lastHurt=-20;lastTonic=-20;lastCombat=-20;returnAt=0;clickTimes.length=0;$('combo').classList.add('hidden');refreshEquipment();}
-function startGame(resetMatch=true){if(!loaded)return;if(resetMatch&&isDueling())leaveMatch();scorePinned=false;$('scoreboard').classList.add('hidden');initAudio();profile.name=cleanName($('player-name').value);$('player-name').value=profile.name;persist();closeAll();mode='play';$('lobby').classList.add('hidden');$('hud').classList.remove('hidden');if(touch)$('touch-controls').classList.remove('hidden');if(resetMatch){ragdolls.clear();admin.hunt=false;pendingChats.length=0;lastChatBot=null;player.kills=0;player.deaths=0;fighters.forEach(f=>{f.kills=0;f.deaths=0;spawnFighter(f);});arenaEvent=createEventState(time);hazardMarks.forEach(h=>{scene.remove(h.ring,h.rock);});hazardMarks.length=0;clearSupplies();messages.length=0;killFeed.length=0;$('kill-feed').replaceChildren();chatSystem('T to chat · /help for commands. AI opponents and chat are simulated.');if(MAP_SOURCE==='draft')chatSystem('Playing the editor draft map.');}resetPlayer();requestLock();}
-function returnLobby(){cancelAttack(true);pressureAtmosphere=0;world.setPressure(null);ragdolls.clear();setFreecam(false,false);if(isDueling())leaveMatch();scorePinned=false;closeAll();if(chatOpen)closeChat(false);mode='lobby';keys.clear();blockHeld=false;returnAt=0;document.exitPointerLock?.();$('lobby').classList.remove('hidden');$('hud').classList.add('hidden');$('scoreboard').classList.add('hidden');$('damage-flash').style.opacity=0;setHero();}
+function resetPlayer(){suspendDungeon();cancelAttack(true);meleeRecoveryUntil=-1;heavySwingPower=0;player.impactReaction=null;player.pressureSlow=1;setFreecam(false,false);resetMeleeState(player);sprinting=false;sprintView=0;cameraStride=0;wasVisualSprint=false;player.jumps=0;player.inLava=false;player.effects={};player.poison=null;player.slowUntil=0;admin.flying=false;lastJumpTap=-10;crouchTouch=false;crouchBlend=0;player.crouched=false;arrowCount=BOW.quiver;bowDrawAt=-1;selectedSlot='sword';let slot=profile.hotbar.indexOf(profile.equipped);if(slot<0){slot=0;bindHotbar(profile,slot,profile.equipped);}profile.selectedHotbar=slot;lastCast=time-20;potionUsedAt=time-20;buffs.haste=buffs.guard=0;refillStarterPotions(profile);persist();Object.assign(player,{health:KITS[selectedKit].health,maxHealth:KITS[selectedKit].health,streak:0,runKills:0,potions:profile.potions.healing,grounded:true,lastDamage:time-20,lastImpact:time-20});player.position.set(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z);player.velocity.set(0,0,0);player.knock.set(0,0,0);yaw=0;pitch=-.08;swingAge=10;blockHeld=false;combo=0;lastHit=-10;lastHurt=-20;lastTonic=-20;lastCombat=-20;returnAt=0;clickTimes.length=0;$('combo').classList.add('hidden');refreshEquipment();}
+function startGame(resetMatch=true){if(!loaded)return;if(resetMatch&&isDueling())leaveMatch();suspendDungeon();scorePinned=false;$('scoreboard').classList.add('hidden');initAudio();profile.name=cleanName($('player-name').value);$('player-name').value=profile.name;persist();closeAll();mode='play';$('lobby').classList.add('hidden');$('hud').classList.remove('hidden');if(touch)$('touch-controls').classList.remove('hidden');if(resetMatch){ragdolls.clear();admin.hunt=false;pendingChats.length=0;lastChatBot=null;player.kills=0;player.deaths=0;fighters.forEach(f=>{f.kills=0;f.deaths=0;spawnFighter(f);});arenaEvent=createEventState(time);hazardMarks.forEach(h=>{scene.remove(h.ring,h.rock);});hazardMarks.length=0;clearSupplies();messages.length=0;killFeed.length=0;$('kill-feed').replaceChildren();chatSystem('T to chat · /help for commands. AI opponents and chat are simulated.');if(MAP_SOURCE==='draft')chatSystem('Playing the editor draft map.');}resetPlayer();requestLock();}
+function returnLobby(){suspendDungeon();cancelAttack(true);pressureAtmosphere=0;world.setPressure(null);ragdolls.clear();setFreecam(false,false);if(isDueling())leaveMatch();scorePinned=false;closeAll();if(chatOpen)closeChat(false);mode='lobby';keys.clear();blockHeld=false;returnAt=0;document.exitPointerLock?.();$('lobby').classList.remove('hidden');$('hud').classList.add('hidden');$('scoreboard').classList.add('hidden');$('damage-flash').style.opacity=0;setHero();}
 function saveLoot(){write('emberfall.loot.v1',lootDrops.map(d=>({item:d.item,position:d.position.toArray(),expiresAt:d.expiresAt})));}
 function spawnLoot(item,position,remaining=300){
  const clean=sanitizeItem(item);if(!clean||clean.bound)return null;
@@ -519,13 +625,13 @@ function lootExpired(drop){return time>=drop.expires||Date.now()>=drop.expiresAt
 function pruneLoot(){let changed=false;for(const drop of [...lootDrops])if(lootExpired(drop)){removeLoot(drop);changed=true;}if(changed)saveLoot();}
 function updateLoot(dt){
  let expired=false;for(const drop of [...lootDrops]){if(lootExpired(drop)){removeLoot(drop);expired=true;continue;}drop.spin.rotation.y+=dt*1.3;drop.spin.position.y=.48+Math.sin(time*2.3+drop.expires)*.07;drop.root.visible=drop.position.distanceTo(player.position)<75;}
- for(const f of fighters){if(!f.alive||f.state!=='fight'||f.account.inventory.length>=CARRY_SLOTS||time<(f.lootCheckAt??0))continue;f.lootCheckAt=time+.5;const drop=nearestLoot(f);if(drop)pickUpLoot(drop,f);}
+ for(const f of fighters){if(f.dungeon||!f.alive||f.state!=='fight'||f.account.inventory.length>=CARRY_SLOTS||time<(f.lootCheckAt??0))continue;f.lootCheckAt=time+.5;const drop=nearestLoot(f);if(drop)pickUpLoot(drop,f);}
  if(expired)saveLoot();
 }
 window.addEventListener('beforeunload',saveLoot);
 
 function beginReturn(){if(mode!=='play')return;if(isDueling()){finishMatch('red',true);return;}if(safeZone(player.position)){toast('Already on the ledge');return;}if(time-lastCombat<5){toast('In combat · wait '+Math.ceil(5-(time-lastCombat))+'s');return;}returnAt=time+3;}
-function completeReturn(){cancelAttack(true);player.impactReaction=null;resetMeleeState(player);sprinting=false;sprintView=0;cameraStride=0;wasVisualSprint=false;returnAt=0;player.jumps=0;player.inLava=false;player.effects={};player.poison=null;player.slowUntil=0;admin.flying=false;player.position.set(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z);player.velocity.set(0,0,0);player.knock.set(0,0,0);player.health=KITS[selectedKit].health;refillStarterPotions(profile);player.potions=profile.potions.healing;persist();arrowCount=BOW.quiver;player.grounded=true;player.lastDamage=time-20;player.lastImpact=time-20;yaw=0;pitch=-.08;chatSystem('Returned to the ledge.');sound('tonic');}
+function completeReturn(){suspendDungeon();cancelAttack(true);player.impactReaction=null;resetMeleeState(player);sprinting=false;sprintView=0;cameraStride=0;wasVisualSprint=false;returnAt=0;player.jumps=0;player.inLava=false;player.effects={};player.poison=null;player.slowUntil=0;admin.flying=false;player.position.set(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z);player.velocity.set(0,0,0);player.knock.set(0,0,0);player.health=KITS[selectedKit].health;refillStarterPotions(profile);player.potions=profile.potions.healing;persist();arrowCount=BOW.quiver;player.grounded=true;player.lastDamage=time-20;player.lastImpact=time-20;yaw=0;pitch=-.08;chatSystem('Returned to the ledge.');sound('tonic');}
 $('play').addEventListener('click',()=>startGame(true));$('respawn').addEventListener('click',()=>startGame(false));$('resume').addEventListener('click',resume);$('to-lobby').addEventListener('click',returnLobby);$('death-lobby').addEventListener('click',returnLobby);$('pause-button').addEventListener('click',()=>openModal('pause'));$('pause-spawn').addEventListener('click',()=>{resume();beginReturn();});$('spawn-button').addEventListener('click',beginReturn);$('inventory-button').addEventListener('click',()=>showShop('inventory'));
 document.querySelectorAll('[data-personal]').forEach(b=>b.addEventListener('click',()=>showShop(b.dataset.personal)));
 $('personal-settings').addEventListener('click',()=>openModal('settings'));
@@ -545,18 +651,18 @@ window.addEventListener('keydown',e=>{
  if(mode!=='play')return;if(['KeyW','KeyA','KeyS','KeyD','Space','ShiftLeft','ShiftRight','Tab','KeyG','KeyQ','KeyZ','KeyR','KeyB','KeyE','KeyF','KeyT','Enter','Slash','KeyV','KeyC','ControlLeft','ControlRight'].includes(e.code)||/^Digit[1-9]$/.test(e.code))e.preventDefault();
  if(e.code==='KeyT'||e.code==='Enter'||e.code==='Slash'){openChat(e.code==='Slash'?'/':'');return;}keys.add(e.code);if(e.repeat)return;
  if(e.code==='Space')jumpInput();if(e.code==='KeyV')togglePerspective();if(e.code==='KeyG')dropInventoryItem();if(e.code==='KeyQ')drinkTonic();if(e.code==='KeyZ')cyclePotion();if(/^Digit[1-9]$/.test(e.code))selectHotbarSlot(Number(e.code.slice(5))-1);if(e.code==='KeyR')beginReturn();if(e.code==='KeyB'||e.code==='KeyE')showShop('inventory');
- if(e.code==='KeyF'){if(currentLoot)pickUpLoot(currentLoot,player);else if(currentStation)showShop(stationTab(currentStation));}if(e.code==='Tab')showScoreboard();
+ if(e.code==='KeyF')interact();if(e.code==='Tab')showScoreboard();
 });
 window.addEventListener('keyup',e=>{keys.delete(e.code);if(['KeyW','ShiftLeft','ShiftRight'].includes(e.code))releaseSprint(player);if(e.code==='Tab'&&!scorePinned)$('scoreboard').classList.add('hidden');});window.addEventListener('blur',()=>{keys.clear();crouchTouch=false;blockHeld=false;dragLook=false;touchMove.x=touchMove.z=0;if(mode==='play')openModal('pause');});document.addEventListener('visibilitychange',()=>{if(document.hidden){music?.pause();if(mode==='play')openModal('pause');}});
-if(touch){let stickId=null,touchLook=null;const joystick=$('joystick'),knob=joystick.querySelector('i');const moveStick=e=>{const b=joystick.getBoundingClientRect(),x=(e.clientX-b.left-b.width/2)/38,z=(e.clientY-b.top-b.height/2)/38,l=Math.max(1,Math.hypot(x,z));touchMove.x=x/l;touchMove.z=z/l;knob.style.transform=`translate(${touchMove.x*32}px,${touchMove.z*32}px)`;};joystick.addEventListener('pointerdown',e=>{stickId=e.pointerId;joystick.setPointerCapture(e.pointerId);moveStick(e);});joystick.addEventListener('pointermove',e=>{if(e.pointerId===stickId)moveStick(e);});const endStick=()=>{stickId=null;touchMove.x=touchMove.z=0;knob.style.transform='none';};joystick.addEventListener('pointerup',endStick);joystick.addEventListener('pointercancel',endStick);canvas.addEventListener('pointerdown',e=>{if(mode==='play'&&!chatOpen){touchLook={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);}});canvas.addEventListener('pointermove',e=>{if(touchLook?.id===e.pointerId){look((e.clientX-touchLook.x)*1.5,(e.clientY-touchLook.y)*1.5);touchLook.x=e.clientX;touchLook.y=e.clientY;}});canvas.addEventListener('pointerup',()=>touchLook=null);canvas.addEventListener('pointercancel',()=>touchLook=null);$('touch-strike').addEventListener('pointerdown',e=>{e.preventDefault();beginAttack();$('touch-strike').setPointerCapture(e.pointerId);});$('touch-strike').addEventListener('pointerup',releaseAttack);$('touch-strike').addEventListener('pointercancel',()=>cancelAttack());$('touch-jump').addEventListener('pointerdown',e=>{e.preventDefault();keys.add('Space');jumpInput();$('touch-jump').setPointerCapture(e.pointerId);});for(const event of ['pointerup','pointercancel'])$('touch-jump').addEventListener(event,()=>keys.delete('Space'));$('touch-guard').addEventListener('pointerdown',e=>{e.preventDefault();if(!freecam.active){cancelAttack();blockHeld=true;}$('touch-guard').setPointerCapture(e.pointerId);});for(const event of ['pointerup','pointercancel'])$('touch-guard').addEventListener(event,()=>blockHeld=false);$('interact-prompt').style.pointerEvents='auto';$('interact-prompt').addEventListener('click',()=>{if(currentLoot)pickUpLoot(currentLoot,player);else if(currentStation)showShop(stationTab(currentStation));});}
+if(touch){let stickId=null,touchLook=null;const joystick=$('joystick'),knob=joystick.querySelector('i');const moveStick=e=>{const b=joystick.getBoundingClientRect(),x=(e.clientX-b.left-b.width/2)/38,z=(e.clientY-b.top-b.height/2)/38,l=Math.max(1,Math.hypot(x,z));touchMove.x=x/l;touchMove.z=z/l;knob.style.transform=`translate(${touchMove.x*32}px,${touchMove.z*32}px)`;};joystick.addEventListener('pointerdown',e=>{stickId=e.pointerId;joystick.setPointerCapture(e.pointerId);moveStick(e);});joystick.addEventListener('pointermove',e=>{if(e.pointerId===stickId)moveStick(e);});const endStick=()=>{stickId=null;touchMove.x=touchMove.z=0;knob.style.transform='none';};joystick.addEventListener('pointerup',endStick);joystick.addEventListener('pointercancel',endStick);canvas.addEventListener('pointerdown',e=>{if(mode==='play'&&!chatOpen){touchLook={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);}});canvas.addEventListener('pointermove',e=>{if(touchLook?.id===e.pointerId){look((e.clientX-touchLook.x)*1.5,(e.clientY-touchLook.y)*1.5);touchLook.x=e.clientX;touchLook.y=e.clientY;}});canvas.addEventListener('pointerup',()=>touchLook=null);canvas.addEventListener('pointercancel',()=>touchLook=null);$('touch-strike').addEventListener('pointerdown',e=>{e.preventDefault();beginAttack();$('touch-strike').setPointerCapture(e.pointerId);});$('touch-strike').addEventListener('pointerup',releaseAttack);$('touch-strike').addEventListener('pointercancel',()=>cancelAttack());$('touch-jump').addEventListener('pointerdown',e=>{e.preventDefault();keys.add('Space');jumpInput();$('touch-jump').setPointerCapture(e.pointerId);});for(const event of ['pointerup','pointercancel'])$('touch-jump').addEventListener(event,()=>keys.delete('Space'));$('touch-guard').addEventListener('pointerdown',e=>{e.preventDefault();if(!freecam.active){cancelAttack();blockHeld=true;}$('touch-guard').setPointerCapture(e.pointerId);});for(const event of ['pointerup','pointercancel'])$('touch-guard').addEventListener(event,()=>blockHeld=false);$('interact-prompt').style.pointerEvents='auto';$('interact-prompt').addEventListener('click',interact);}
 
 function nameTexture(name,rating){const c=document.createElement('canvas');c.width=360;c.height=100;const ctx=c.getContext('2d'),rank=rankFor(rating),title=rank.name+' · Lv '+rank.level;ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineWidth=7;ctx.strokeStyle='#211b28';ctx.font='900 22px Nunito, sans-serif';if(ctx.measureText(title).width>280)ctx.font='900 16px Nunito, sans-serif';drawRankIcon(ctx,rank,24,2,40);ctx.strokeText(title,198,24);ctx.fillStyle=rank.color;ctx.fillText(title,198,24);ctx.font='1000 39px Nunito, sans-serif';ctx.strokeText(name,180,66);ctx.fillStyle='#fff3df';ctx.fillText(name,180,66);const texture=new THREE.CanvasTexture(c);texture.colorSpace=THREE.SRGBColorSpace;return texture;}
-function makeFighter(id){const skill=botProfile(id),seed=id%BOT_PROFILES.length,kitName=['vanguard','rogue','sentinel'][id%3],character=Object.keys(CHARACTERS)[id%Object.keys(CHARACTERS).length],template=models[CHARACTERS[character].file],rig=prepareModel(cloneRig(template.scene)),root=new THREE.Group();root.add(rig);scene.add(root);const item={id:'initial-'+id+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),weapon:['classic','dagger','classic','broadsword','dagger','frost','broadsword','mace','venom'][seed],rarity:seed===7?'rare':'common'},armor=seed>6?'iron':'none';attachGear(rig,item,armor);
+function makeFighter(id,characterOverride=null){const skill=botProfile(id),seed=id%BOT_PROFILES.length,kitName=['vanguard','rogue','sentinel'][id%3],character=characterOverride??Object.keys(CHARACTERS)[id%Object.keys(CHARACTERS).length],template=models[CHARACTERS[character].file],rig=prepareModel(cloneRig(template.scene)),root=new THREE.Group();root.add(rig);scene.add(root);const item={id:'initial-'+id+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),weapon:['classic','dagger','classic','broadsword','dagger','frost','broadsword','mace','venom'][seed],rarity:seed===7?'rare':'common'},armor=seed>6?'iron':'none';attachGear(rig,item,armor);
  const label=new THREE.Sprite(new THREE.SpriteMaterial({map:nameTexture(skill.name,skill.rating),transparent:true,depthTest:true,opacity:1}));label.position.y=2.47;label.scale.set(2,.625,1);root.add(label);const healthBg=new THREE.Mesh(new THREE.PlaneGeometry(.82,.075),new THREE.MeshBasicMaterial({color:0x29202e,side:THREE.DoubleSide}));healthBg.position.set(0,2.08,0);root.add(healthBg);const healthFill=new THREE.Mesh(new THREE.PlaneGeometry(.76,.045),new THREE.MeshBasicMaterial({color:KITS[kitName].tint,side:THREE.DoubleSide}));healthFill.position.z=.005;healthBg.add(healthFill);
  const role=[1,6].includes(seed)?'archer':id%3===2?'ranger':id%3===1?'flanker':'duelist',account=makeProfile({name:skill.name,character,coins:80+seed*28,rating:skill.rating,inventory:[item],equipped:item.id,armor,ownedArmor:['none',armor]});
  const f={account,role,combatMode:'melee',arrowStock:BOW.quiver,bowDrawAt:-1,nextArrow:0,helmet:'none',effects:{},jumps:0,returnAt:0,spendAt:0,incomeAt:time+18,shopComplete:false,purchase:null,potionAt:0,buffGuardUntil:0,id,name:skill.name,skill,rating:skill.rating,kitName,kit:KITS[kitName],item,stats:weaponStats(item),armor,root,rig,animator:makeAnimator(rig,template.animations),label,healthBg,healthFill,position:root.position,velocity:new V3(),knock:new V3(),direction:new V3(),alive:true,hp:KITS[kitName].health,kills:0,deaths:0,streak:0,plan:'roam',planUntil:0,goal:null,lastPlanAt:0,healAt:0,hitFlashUntil:0,state:'spawn',spawnUntil:0,respawnAt:0,target:null,targetUntil:0,reactionUntil:0,nextClick:0,nextJump:0,aimAngle:Math.PI,aimPitch:0,lastImpact:-20,lastSwing:-20,animUntil:0,lastSeen:0,aiTimer:0,grounded:true,guard:false,strafe:1,strafeUntil:0,exitX:0};fighters.push(f);syncBotEquipment(f);spawnFighter(f);return f;
 }
-function spawnFighter(f,keepStreak=false){f.navigation=null;f.inLava=false;f.lastLava=-20;f.exitStage=false;restoreImpactPose(f);f.impactReaction=null;f.pressureSlow=1;f.rig.visible=true;resetMeleeState(f);f.sprintReleaseAt=f.sprintReleaseUntil=0;f.wTapping=false;const oldStreak=f.streak;f.arrowStock=BOW.quiver;f.bowDrawAt=-1;f.nextArrow=time+.5;f.effects={};f.jumps=0;f.rollUntil=0;f.nextRoll=time+3+(f.id%9)*.4;f.returnAt=0;f.shopComplete=false;f.purchase=choosePurchase(f.account,f.role,.2+(f.id%9)*.085);f.shopStarted=time;f.purchaseAt=0;refillStarterPotions(f.account);syncBotEquipment(f);f.position.set(BOT_SPAWN.x+(Math.random()-.5)*BOT_SPAWN.width,LEDGE_HEIGHT,BOT_SPAWN.z+Math.random()*BOT_SPAWN.depth);f.velocity.set(0,0,0);f.knock.set(0,0,0);f.hp=f.kit.health;f.slowUntil=0;f.poison=null;f.lavaCrossing=null;f.alive=true;f.root.visible=true;f.label.visible=true;f.healthBg.visible=true;f.rig.position.y=0;f.aimAngle=Math.PI;f.rig.rotation.y=Math.PI;f.animator.look.bodyYaw=Math.PI;f.animator.look.yaw=f.animator.look.pitch=0;f.target=null;f.targetUntil=0;f.lastImpact=time-20;f.lastSwing=time-20;f.state='spawn';f.spawnUntil=time+.5+Math.random()*2.1;f.nextClick=time+1;f.nextJump=time+1;f.lastCast=time-10;f.grounded=true;f.guard=false;f.streak=keepStreak?oldStreak:0;f.plan='roam';f.planUntil=0;f.goal=null;f.healthFill.scale.x=1;f.healthFill.position.x=0;f.healthBg.quaternion.copy(camera.quaternion);f.exitX=LEDGE_EXIT.x+(Math.random()-.5)*LEDGE_EXIT.width;animateActor(f,'Idle_Sword');}
+function spawnFighter(f,keepStreak=false){if(f.dungeon)return;f.navigation=null;f.inLava=false;f.lastLava=-20;f.exitStage=false;restoreImpactPose(f);f.impactReaction=null;f.pressureSlow=1;f.rig.visible=true;resetMeleeState(f);f.sprintReleaseAt=f.sprintReleaseUntil=0;f.wTapping=false;const oldStreak=f.streak;f.arrowStock=BOW.quiver;f.bowDrawAt=-1;f.nextArrow=time+.5;f.effects={};f.jumps=0;f.rollUntil=0;f.nextRoll=time+3+(f.id%9)*.4;f.returnAt=0;f.shopComplete=false;f.purchase=choosePurchase(f.account,f.role,.2+(f.id%9)*.085);f.shopStarted=time;f.purchaseAt=0;refillStarterPotions(f.account);syncBotEquipment(f);f.position.set(BOT_SPAWN.x+(Math.random()-.5)*BOT_SPAWN.width,LEDGE_HEIGHT,BOT_SPAWN.z+Math.random()*BOT_SPAWN.depth);f.velocity.set(0,0,0);f.knock.set(0,0,0);f.hp=f.kit.health;f.slowUntil=0;f.poison=null;f.lavaCrossing=null;f.alive=true;f.root.visible=true;f.label.visible=true;f.healthBg.visible=true;f.rig.position.y=0;f.aimAngle=Math.PI;f.rig.rotation.y=Math.PI;f.animator.look.bodyYaw=Math.PI;f.animator.look.yaw=f.animator.look.pitch=0;f.target=null;f.targetUntil=0;f.lastImpact=time-20;f.lastSwing=time-20;f.state='spawn';f.spawnUntil=time+.5+Math.random()*2.1;f.nextClick=time+1;f.nextJump=time+1;f.lastCast=time-10;f.grounded=true;f.guard=false;f.streak=keepStreak?oldStreak:0;f.plan='roam';f.planUntil=0;f.goal=null;f.healthFill.scale.x=1;f.healthFill.position.x=0;f.healthBg.quaternion.copy(camera.quaternion);f.exitX=LEDGE_EXIT.x+(Math.random()-.5)*LEDGE_EXIT.width;animateActor(f,'Idle_Sword');}
 function actorPhysics(actor,dt){
  const oldY=actor.position.y,liquid=isLava(actor.position.x,actor.position.z,actor.position.y)&&actor.position.y<.025;
  const drag=liquid?.64:1;actor.position.x+=(actor.velocity.x+actor.knock.x)*dt*drag;actor.position.z+=(actor.velocity.z+actor.knock.z)*dt*drag;
@@ -664,7 +770,7 @@ function botCast(f,target){
  const mesh=magicMesh(f.stats.color);mesh.position.copy(origin).addScaledVector(direction,.5);scene.add(mesh);projectiles.push({kind:'magic',mesh,velocity:direction.multiplyScalar(f.stats.projectileSpeed),life:f.stats.reach/f.stats.projectileSpeed,damage:f.stats.damage,stats:{...f.stats},owner:f,trailAt:0});if(f.position.distanceTo(player.position)<18)sound('magic');
 }
 
-function updateFighters(dt){for(const f of fighters){updateAilments(f,dt);updateAnimator(f,dt);updateAppearance(f,dt);if(!f.alive){if(!f.team&&time>=f.respawnAt)spawnFighter(f);continue;}
+function updateFighters(dt){for(const f of fighters){if(f.dungeon){updateDungeonEnemy(f,dt);continue;}updateAilments(f,dt);updateAnimator(f,dt);updateAppearance(f,dt);if(!f.alive){if(!f.team&&time>=f.respawnAt)spawnFighter(f);continue;}
  if(f.team&&duel.phase!=='active'){f.velocity.set(0,0,0);continue;}
  if(f.state==='signup'){updateSignup(f,dt);continue;}
  if(f.state==='spawn'||f.state==='shopping'){updateBotSpawn(f,dt);continue;}
@@ -754,11 +860,11 @@ function hurtFighter(f,attacker,critical=false,overrideDamage=null,attackStats=n
  return true;
 }
 function rewardBot(bot,opponentRating){
- bot.kills++;bot.streak++;rewardKO(bot.account,opponentRating,bot.streak);bot.rating=bot.account.rating;
+ if(bot.dungeon)return;bot.kills++;bot.streak++;rewardKO(bot.account,opponentRating,bot.streak);bot.rating=bot.account.rating;
  bot.label.material.map.dispose();bot.label.material.map=nameTexture(bot.name,bot.rating);bot.hp=Math.min(bot.kit.health,bot.hp+45);
 }
 function killFighter(f,attacker,cause=null){
- if(!f.alive)return;ragdolls.spawn(f,f);f.root.visible=false;if(!cause||cause!=='Command')dropCarriedItems(f);f.alive=false;f.hp=0;f.streak=0;f.deaths++;f.respawnAt=time+2.7;f.target=null;f.returnAt=0;f.effects={};f.poison=null;f.slowUntil=0;f.label.visible=false;f.healthBg.visible=false;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.lastDefeatBy=attacker===player?profile.name:attacker?.name??cause??'the arena';
+ if(!f.alive)return;if(f.dungeon){defeatDungeonEnemy(f,attacker);return;}ragdolls.spawn(f,f);f.root.visible=false;if(!cause||cause!=='Command')dropCarriedItems(f);f.alive=false;f.hp=0;f.streak=0;f.deaths++;f.respawnAt=time+2.7;f.target=null;f.returnAt=0;f.effects={};f.poison=null;f.slowUntil=0;f.label.visible=false;f.healthBg.visible=false;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.lastDefeatBy=attacker===player?profile.name:attacker?.name??cause??'the arena';
  if(!cause){recordDeath(f.account,attacker===player?profile.rating:attacker?.rating??0);f.rating=f.account.rating;}
  let extra='';
  if(attacker===player){player.kills++;player.runKills++;player.streak++;const beforeLevel=rankFor(profile.rating).level;const reward=rewardKO(profile,f.rating,player.streak);persist();player.health=Math.min(KITS[selectedKit].health,player.health+56);refillStarterPotions(profile,Math.min(3,profile.inventory.find(i=>i.id==='starter-healing').count+1));player.potions=profile.potions.healing;persist();arrowCount=Math.min(BOW.maxArrows,arrowCount+BOW.knockoutArrows);extra=`${reward.rank.level>beforeLevel?'Level '+reward.rank.level+' · ':''}+${reward.coins} coins · +${reward.points} EXP`;toast(reward.rankUp?reward.rank.name+' rank · '+extra:extra,1800);sound('ko');burst(f.position.clone().add(new V3(0,1,0)),0xffcf77,30,1.6);shockwave(f.position,0xffce8d);healUntil=time+.25;updateProfileUI();if(Math.random()<.42)pendingChats.push({at:time+1.8+Math.random()*2,bot:f,text:botReply(f,'good fight',chatContext())});}
@@ -816,7 +922,7 @@ function updatePotionVisual(){const age=time-potionUsedAt,drinking=age>=0&&age<.
 
 let scoreSignature='';
 function showScoreboard(){
- const list=[{name:profile.name,rating:profile.rating,kills:player.kills,deaths:player.deaths,streak:player.streak,you:true},...fighters.map(f=>({name:f.name,rating:f.rating,kills:f.kills,deaths:f.deaths,streak:f.streak}))].sort((a,b)=>b.kills-a.kills||a.deaths-b.deaths);
+ const list=[{name:profile.name,rating:profile.rating,kills:player.kills,deaths:player.deaths,streak:player.streak,you:true},...arenaFighters().map(f=>({name:f.name,rating:f.rating,kills:f.kills,deaths:f.deaths,streak:f.streak}))].sort((a,b)=>b.kills-a.kills||a.deaths-b.deaths);
  $('career-stats').textContent='Career: '+profile.kills+' KOs · '+profile.rating.toLocaleString()+' EXP · best streak '+profile.best;$('scoreboard').classList.remove('hidden');
  const signature=JSON.stringify(list);if(signature===scoreSignature)return;scoreSignature=signature;
  const scroll=$('score-scroll'),top=scroll.scrollTop,columns=Math.min(3,Math.ceil(list.length/12)),perColumn=Math.ceil(list.length/columns),bodies=[$('score-rows'),$('score-rows-2'),$('score-rows-3')];
@@ -825,7 +931,7 @@ function showScoreboard(){
 }
 
 function updateHud(){const kit=KITS[selectedKit],item=equippedItem(profile),gear=weaponStats(item),safe=safeZone(player.position);$('health').textContent=Math.ceil(player.health);$('max-health').textContent=kit.health;$('health-fill').style.width=Math.max(0,player.health/kit.health*100)+'%';updateItemHud();$('kills').textContent=player.kills;const held=profile.inventory.find(i=>i.id===profile.hotbar[profile.selectedHotbar]);$('equipped-name').textContent=held?itemName(held):'Empty slot';$('equipped-name').style.color=RARITIES[item.rarity].color;$('armor-value').textContent=Math.round(armorReduction(profile)*100)+'%';$('armor-track').classList.toggle('hidden',profile.armor==='none'&&profile.helmet==='none');while(clickTimes.length&&time-clickTimes[0]>5)clickTimes.shift();$('cps').textContent=clickTimes.filter(t=>time-t<1).length.toFixed(1);
- currentStation=null;if(safe&&!isDueling()){let nearest=3.3;for(const station of stations){const delta=new V3().subVectors(station.position,player.position);if(delta.length()<nearest&&(delta.x*-Math.sin(yaw)+delta.z*-Math.cos(yaw)>-.1)){currentStation=station;nearest=delta.length();}}}currentLoot=nearestLoot(player);$('interact-prompt').classList.toggle('hidden',!currentStation&&!currentLoot);if(currentLoot)$('interact-prompt').querySelector('span').textContent='Pick up '+itemName(currentLoot.item);else if(currentStation)$('interact-prompt').querySelector('span').textContent=currentStation.name;$('spawn-progress').classList.toggle('hidden',!returnAt);if(returnAt){$('spawn-progress').querySelector('b').textContent=Math.max(0,returnAt-time).toFixed(1);$('spawn-progress').querySelector('i').style.transform='scaleX('+Math.max(0,Math.min(1,(3-(returnAt-time))/3))+')';}if(keys.has('Tab')||scorePinned)showScoreboard();$('streak-label').classList.toggle('hidden',player.streak<3);$('streak-label').textContent=player.streak+' kill streak';renderChat();updateKillFeed();updateEventHud();}
+ currentStation=null;if(safe&&!isDueling()){let nearest=3.3;for(const station of stations){const delta=new V3().subVectors(station.position,player.position);if(delta.length()<nearest&&(delta.x*-Math.sin(yaw)+delta.z*-Math.cos(yaw)>-.1)){currentStation=station;nearest=delta.length();}}}currentLoot=nearestLoot(player);currentDungeonAction=dungeonInteraction();$('interact-prompt').classList.toggle('hidden',!currentStation&&!currentLoot&&!currentDungeonAction);if(currentLoot)$('interact-prompt').querySelector('span').textContent='Pick up '+itemName(currentLoot.item);else if(currentDungeonAction)$('interact-prompt').querySelector('span').textContent=currentDungeonAction.name;else if(currentStation)$('interact-prompt').querySelector('span').textContent=currentStation.name;$('spawn-progress').classList.toggle('hidden',!returnAt);if(returnAt){$('spawn-progress').querySelector('b').textContent=Math.max(0,returnAt-time).toFixed(1);$('spawn-progress').querySelector('i').style.transform='scaleX('+Math.max(0,Math.min(1,(3-(returnAt-time))/3))+')';}if(keys.has('Tab')||scorePinned)showScoreboard();$('streak-label').classList.toggle('hidden',player.streak<3);$('streak-label').textContent=player.streak+' kill streak';renderChat();updateKillFeed();updateEventHud();}
 
 function addAlchemyTable(station){
  const table=prepareModel(models['ledge-table.glb'].scene.clone(true));table.scale.setScalar(.72);table.position.copy(station.position);table.userData.asset='ledge-table.glb';scene.add(table);station.model=table;station.displays=[];
@@ -898,7 +1004,7 @@ function updateAtmosphere(dt){
  const target=player.team?.8:mode==='lobby'?.24:THREE.MathUtils.clamp(1-(player.position.y-1)/9,.2,1);
  atmosphereBlend=THREE.MathUtils.lerp(atmosphereBlend,target,1-Math.exp(-dt*1.6));
  scene.fog.color.copy(calmFog).lerp(bloodFog,atmosphereBlend);scene.fog.color.lerp(new THREE.Color(0x241731),pressureAtmosphere*.8);scene.background.copy(scene.fog.color);scene.fog.density=.014+atmosphereBlend*.008+pressureAtmosphere*.006;
- world.setAtmosphere(atmosphereBlend,pressureAtmosphere);const submerged=isLava(camera.position.x,camera.position.z,camera.position.y)&&camera.position.y<.035;if(submerged){scene.fog.color.setHex(0xa32b07);scene.fog.density=.62;}renderer.toneMappingExposure=1.04-atmosphereBlend*.035-pressureAtmosphere*.13;$('pressure-static').style.opacity=(mode==='play'?pressureAtmosphere*.2:0).toFixed(3);$('pressure-static').classList.toggle('still',!settings.shake);
+ world.setAtmosphere(atmosphereBlend,pressureAtmosphere);const submerged=isLava(camera.position.x,camera.position.z,camera.position.y)&&camera.position.y<.035;if(submerged){scene.fog.color.setHex(0xa32b07);scene.fog.density=.62;}renderer.toneMappingExposure=1.04-atmosphereBlend*.035-pressureAtmosphere*.13;$('pressure-static').style.opacity=(mode==='play'?pressureAtmosphere*.2:0).toFixed(3);$('pressure-static').classList.toggle('still',!settings.shake);if(dungeon.active){scene.fog.color.setHex(0x1c192c);scene.background.copy(scene.fog.color);scene.fog.density=.028;renderer.toneMappingExposure=1.13-pressureAtmosphere*.12;}
 }
 function updateCamera(dt){if(freecam.active){updateFreecam(dt);return;}if(player.team&&player.health<=0){const ally=duel.teams.blue.find(a=>a!==player&&a.alive),focus=ally?.position??new V3(MINI.x,0,0);camera.position.copy(focus).add(new V3(6,9,8));camera.lookAt(focus.clone().add(new V3(0,1,0)));camera.updateMatrixWorld(true);return;}if(mode==='lobby'){camera.position.set(22+Math.sin(time*.05)*2,17.4,29);camera.lookAt(-2,4.6,-9);camera.fov=64;camera.updateProjectionMatrix();return;}if(mode==='dead')return;
  const speed=Math.hypot(player.velocity.x,player.velocity.z),moving=speed>1&&player.grounded&&!admin.flying,visualSprint=sprinting&&speed>2;
@@ -927,8 +1033,8 @@ function updateWeapon(dt){if(profile.cosmetic!=='none'){const effect=COSMETICS[p
  const meter=selectedSlot==='orb'?orbPower():meleeCharge.at>=0?chargeProgress(time-meleeCharge.at):charge;$('bow-charge').querySelector('i').style.transform='scaleX('+meter+')';$('bow-charge').classList.toggle('hidden',selectedSlot!=='bow'&&selectedSlot!=='orb'&&!(meleeCharge.at>=0&&time-meleeCharge.at>HEAVY.windup));$('bow-charge').classList.toggle('orb-charge',selectedSlot==='orb');$('crosshair').classList.toggle('bow',selectedSlot==='bow');$('bow-charge').classList.toggle('charged',meter>=1);updatePlayerAvatar(dt);updatePotionVisual();
 }
 function render(){renderer.setViewport(0,0,innerWidth,innerHeight);renderer.autoClear=true;renderer.render(scene,camera);if(mode==='lobby'&&hero){renderer.autoClear=false;renderer.clearDepth();const w=innerWidth<650?innerWidth*.66:innerWidth*.5,h=innerHeight*.76,x=innerWidth<650?innerWidth*.46:innerWidth*.47,y=innerHeight*.24;renderer.setViewport(x,y,w,h);heroCamera.aspect=w/h;heroCamera.updateProjectionMatrix();renderer.render(heroScene,heroCamera);renderer.setViewport(0,0,innerWidth,innerHeight);}else if(!thirdPerson&&!freecam.active&&player.health>0&&(mode==='play'||mode==='pause')){renderer.autoClear=false;renderer.clearDepth();renderer.render(weaponScene,weaponCamera);}renderer.autoClear=true;}
-function updateBotChat(){for(let i=pendingChats.length-1;i>=0;i--){const msg=pendingChats[i];if(time>=msg.at){msg.bot.talkUntil=time+2.2;addChat({name:msg.bot.name,rating:msg.bot.rating,ai:true,text:msg.text});pendingChats.splice(i,1);}}if(mode==='play'&&time>botChatAt){botChatAt=time+22+Math.random()*17;const bot=fighters[Math.floor(Math.random()*fighters.length)];if(bot){bot.talkUntil=time+2.2;addChat({name:bot.name,rating:bot.rating,ai:true,text:ambientReply(bot,chatContext())});}}}
-function frame(now){requestAnimationFrame(frame);pruneLoot();const elapsed=Math.min((now-last)/1000,.05);last=now;if(mode==='play'||mode==='lobby'){time+=elapsed;world.update(time);updateMerchant(elapsed);if(mode==='play'){updateDuel(elapsed);if(isDueling()){arenaEvent.at+=elapsed;arenaEvent.nextPulse+=elapsed;for(const h of hazardMarks)h.at+=elapsed;}else updateArenaEvents(elapsed);}if(hero){if(time>hero.gestureAt){hero.gestureAt=time+7+Math.random()*5;animateActor(hero,['Idle_Sword','StanceAlt','Wave','Talk'][Math.floor(time/7)%4],false,.9);}updateAnimator(hero,elapsed);updateCosmetic(hero,profile.cosmetic,time);}accumulator+=elapsed;while(accumulator>=1/90){if(mode==='play'){validateChargeOrb();updatePressureFields();updateAscensionFields(1/90);updatePlayer(1/90);}if(loaded){updateProjectiles(1/90);updateFighters(1/90);}updateFX(1/90);if(mode==='play')updateLoot(1/90);accumulator-=1/90;}updateCamera(elapsed);world.setView(camera);updateAtmosphere(elapsed);updateWeapon(elapsed);updateBotChat();if(ambience)ambience.update(Math.hypot(Math.max(0,lavaDistance(player.position.x,player.position.z)),Math.max(0,player.position.y)));uiTimer+=elapsed;if(uiTimer>.1){if(mode==='play')updateHud();uiTimer=0;}}else accumulator=0;
+function updateBotChat(){for(let i=pendingChats.length-1;i>=0;i--){const msg=pendingChats[i];if(time>=msg.at){msg.bot.talkUntil=time+2.2;addChat({name:msg.bot.name,rating:msg.bot.rating,ai:true,text:msg.text});pendingChats.splice(i,1);}}if(mode==='play'&&time>botChatAt){botChatAt=time+22+Math.random()*17;const bots=arenaFighters(),bot=bots[Math.floor(Math.random()*bots.length)];if(bot){bot.talkUntil=time+2.2;addChat({name:bot.name,rating:bot.rating,ai:true,text:ambientReply(bot,chatContext())});}}}
+function frame(now){requestAnimationFrame(frame);pruneLoot();const elapsed=Math.min((now-last)/1000,.05);last=now;if(mode==='play'||mode==='lobby'){time+=elapsed;world.update(time);updateMerchant(elapsed);if(mode==='play'){updateDuel(elapsed);if(isDueling()||dungeon.active){arenaEvent.at+=elapsed;arenaEvent.nextPulse+=elapsed;for(const h of hazardMarks)h.at+=elapsed;}else updateArenaEvents(elapsed);}if(hero){if(time>hero.gestureAt){hero.gestureAt=time+7+Math.random()*5;animateActor(hero,['Idle_Sword','StanceAlt','Wave','Talk'][Math.floor(time/7)%4],false,.9);}updateAnimator(hero,elapsed);updateCosmetic(hero,profile.cosmetic,time);}accumulator+=elapsed;while(accumulator>=1/90){if(mode==='play'){validateChargeOrb();updatePressureFields();updateAscensionFields(1/90);updatePlayer(1/90);updateDungeon(1/90);}if(loaded){updateProjectiles(1/90);updateFighters(1/90);}updateFX(1/90);if(mode==='play')updateLoot(1/90);accumulator-=1/90;}updateCamera(elapsed);world.setView(camera);updateAtmosphere(elapsed);updateWeapon(elapsed);updateBotChat();if(ambience)ambience.update(Math.hypot(Math.max(0,lavaDistance(player.position.x,player.position.z)),Math.max(0,player.position.y)));uiTimer+=elapsed;if(uiTimer>.1){if(mode==='play')updateHud();uiTimer=0;}}else accumulator=0;
  if(mode==='play'||mode==='lobby'||mode==='dead')ragdolls.update(elapsed);
  music?.update();if(chestLid)chestLid.rotation.x=THREE.MathUtils.lerp(chestLid.rotation.x,chestBaseRotation+(time<chestLidUntil?-1.15:0),.08);$('hitmarker').style.opacity=time<hitmarkerUntil?1:0;$('damage-flash').style.opacity=mode==='play'&&!freecam.active?Math.max(0,.34-(time-lastHurt)*1.3):0;$('fire-flash').style.opacity=mode==='play'&&!freecam.active&&!thirdPerson&&time<(player.effects?.fire?.until??0)?.22+Math.sin(time*11)*.035:0;$('heal-flash').style.opacity=mode==='play'&&!freecam.active?Math.max(0,(healUntil-time)*.33):0;if(time-lastHit>1.5)$('combo').classList.add('hidden');render();}
 window.addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;weaponCamera.aspect=camera.aspect;camera.updateProjectionMatrix();weaponCamera.updateProjectionMatrix();});
@@ -1132,7 +1238,7 @@ function updateProjectiles(dt){
   const now=shot.mesh.position,segment=now.clone().sub(old),length=segment.length();let victim=null,closest=2;
   for(const f of validVictims(shot.owner)){if(safeZone(f.position))continue;const point=f.position.clone().add(new V3(0,f.crouched?.65:.95,0)),t=THREE.MathUtils.clamp(point.clone().sub(old).dot(segment)/Math.max(.001,segment.lengthSq()),0,1);if(point.distanceTo(old.clone().addScaledVector(segment,t))<(magic?.72:.6)&&t<closest){closest=t;victim=f;}}
   const ray=new THREE.Raycaster(old,segment.clone().normalize(),.001,length),wall=ray.intersectObjects(cameraObstacles,false)[0];
-  const obstructed=!!wall||now.y<=groundHeight(now.x,now.z,now.y)||(inMiniArena(now.x,now.z)?Math.abs(now.x-MINI.x)>13||Math.abs(now.z)>15:Math.hypot(now.x,now.z)>34);
+  const obstructed=!!wall||now.y<=groundHeight(now.x,now.z,now.y)||(inDungeon(now.x,now.z)?dungeonBlocked(now.x,now.z,now.y,.03,dungeon):inMiniArena(now.x,now.z)?Math.abs(now.x-MINI.x)>13||Math.abs(now.z)>15:Math.hypot(now.x,now.z)>34);
   if(victim&&(!obstructed||wall&&closest*length<wall.distance)){if(magic)applyMagicHit(shot,victim);else if(victim===player?hurtPlayer(shot.damage,shot.owner,false,false,{damage:shot.damage,knockback:3,effects:[]}):hurtFighter(victim,shot.owner,false,shot.damage,{damage:shot.damage,knockback:3,effects:[]})){if(shot.owner===player){hitmarkerUntil=time+.13;sound('hit');}}shot.life=0;}
   else if(obstructed){burst(wall?.point??now,magic?shot.stats.color:0xd3b690,magic?12:5,.5);shot.life=0;}
   if(shot.life<=0){scene.remove(shot.mesh);shot.mesh.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();}});projectiles.splice(i,1);}
@@ -1163,7 +1269,7 @@ function updateArenaEvents(dt){const change=advanceEvent(arenaEvent,time);if(cha
  for(let i=hazardMarks.length-1;i>=0;i--){const h=hazardMarks[i],remaining=h.at-time;h.rock.position.y=Math.max(.35,remaining*14);h.rock.rotation.x+=dt*3;h.rock.rotation.z+=dt*2;h.ring.material.opacity=.55+Math.sin(time*20)*.3;if(remaining<=0){const p=h.ring.position;burst(p.clone().add(new V3(0,.4,0)),0xf6b87c,20,2);shockwave(p,0xffa05d);for(const a of[player,...fighters]){if(a!==player&&!a.alive||safeZone(a.position)||isUnderBridge(a.position))continue;if(Math.hypot(a.position.x-p.x,a.position.z-p.z)<HAZARDS.radius&&a.position.y<HAZARDS.maxHeight){if(h.fire)ignite(a);if(a===player){const damaged=hurtPlayer(h.damage,null,true);const direction=a.position.clone().sub(p);direction.y=0;if(damaged&&direction.lengthSq())a.knock.addScaledVector(direction.normalize(),HAZARDS.knockback);}else{a.hp-=h.damage;a.hitFlashUntil=time+.2;a.lastImpact=time;if(a.hp<=0)killFighter(a,null);}}}if(p.distanceTo(player.position)<12)shake=Math.max(shake,.05);scene.remove(h.ring,h.rock);h.ring.geometry.dispose();h.ring.material.dispose();h.rock.geometry.dispose();h.rock.material.dispose();hazardMarks.splice(i,1);}}
  for(const drop of supplyDrops){if(drop.collected)continue;drop.mesh.position.y=Math.max(.12,drop.mesh.position.y-dt*5);drop.ring.rotation.z=time*.7;if(drop.mesh.position.y<=.2){for(const a of[player,...fighters])if((a===player||a.alive)&&a.position.distanceTo(drop.position)<SUPPLIES.pickupRadius){collectSupply(drop,a);break;}}}
 }
-function updateEventHud(){updateDuelHud();const show=!isDueling()&&arenaEvent.phase!=='idle';$('event-warning').classList.toggle('hidden',!show);if(!show)return;const remaining=Math.max(0,Math.ceil(arenaEvent.at-time));$('event-name').textContent=arenaEvent.type.name;$('event-countdown').textContent=remaining+'s';$('event-detail').textContent=arenaEvent.type.kind==='supply'?(arenaEvent.phase==='warning'?'Supply crates arriving':'Collect the glowing supply crates'):isUnderBridge(player.position)?'Covered by the bridge':safeZone(player.position)?'Protected on the ledge':arenaEvent.type.warning;$('event-warning').classList.toggle('protected',isUnderBridge(player.position)||safeZone(player.position));}
+function updateEventHud(){updateDuelHud();updateDungeonHud();const show=!dungeon.active&&!isDueling()&&arenaEvent.phase!=='idle';$('event-warning').classList.toggle('hidden',!show);if(!show)return;const remaining=Math.max(0,Math.ceil(arenaEvent.at-time));$('event-name').textContent=arenaEvent.type.name;$('event-countdown').textContent=remaining+'s';$('event-detail').textContent=arenaEvent.type.kind==='supply'?(arenaEvent.phase==='warning'?'Supply crates arriving':'Collect the glowing supply crates'):isUnderBridge(player.position)?'Covered by the bridge':safeZone(player.position)?'Protected on the ledge':arenaEvent.type.warning;$('event-warning').classList.toggle('protected',isUnderBridge(player.position)||safeZone(player.position));}
 
-async function load(){try{const loader=new GLTFLoader(),files=[...Object.values(CHARACTERS).map(c=>c.file),...new Set(Object.values(WEAPONS).map(w=>w.file)),...Object.values(ARMORS).map(a=>a.file).filter(Boolean),...Object.values(POTIONS).map(p=>p.file),'ledge-table.glb','sword-rack.glb','treasure-chest.glb','supply-crate.glb','rock-pack.glb','bow.glb','volcano.glb','pumpkin.glb',...new Set(Object.values(CHARACTERS).map(c=>animationAsset(c.file))),MERCHANT.file,animationAsset(MERCHANT.file)];let count=0;await Promise.all(files.map(async file=>{models[file]=await loader.loadAsync('./assets/'+file+'?v='+(file==='fighter-ember.glb'?52:file==='fighter-adventurer.glb'?51:12));count++;$('play-label').textContent='Loading '+Math.round(count/files.length*100)+'%';}));installQuaterniusAnimations();loaded=true;generateThumbnails();addImportedEnvironment();addVolcanoes();addPumpkins();scene.updateMatrixWorld(true);scene.traverse(o=>{if(o.isMesh&&o!==fxMesh&&!o.userData.noCameraCollision)cameraObstacles.push(o);});refreshEquipment();restoreLoot();for(let i=0;i<9;i++)makeFighter(i);$('play').disabled=false;$('play-label').textContent='Play';if(activeModal==='shop')renderShop();}catch(error){console.error('Emberfall asset load failed',error);fatal('A required game asset failed to load. Reload to retry. '+(error.message??''));}}
+async function load(){try{const loader=new GLTFLoader(),files=[...Object.values(CHARACTERS).map(c=>c.file),...new Set(Object.values(WEAPONS).map(w=>w.file)),...Object.values(ARMORS).map(a=>a.file).filter(Boolean),...Object.values(POTIONS).map(p=>p.file),'ledge-table.glb','sword-rack.glb','treasure-chest.glb','supply-crate.glb','rock-pack.glb','bow.glb','volcano.glb','pumpkin.glb',...new Set(Object.values(CHARACTERS).map(c=>animationAsset(c.file))),MERCHANT.file,animationAsset(MERCHANT.file)];let count=0;await Promise.all(files.map(async file=>{models[file]=await loader.loadAsync('./assets/'+file+'?v='+(file==='fighter-ember.glb'?52:file==='fighter-adventurer.glb'?51:12));count++;$('play-label').textContent='Loading '+Math.round(count/files.length*100)+'%';}));installQuaterniusAnimations();loaded=true;generateThumbnails();addImportedEnvironment();dungeonWorld.setCache(prepareModel(models['treasure-chest.glb'].scene.clone(true)));addVolcanoes();addPumpkins();scene.updateMatrixWorld(true);scene.traverse(o=>{if(o.isMesh&&o!==fxMesh&&!o.userData.noCameraCollision)cameraObstacles.push(o);});refreshEquipment();restoreLoot();for(let i=0;i<9;i++)makeFighter(i);$('play').disabled=false;$('play-label').textContent='Play';if(activeModal==='shop')renderShop();}catch(error){console.error('Emberfall asset load failed',error);fatal('A required game asset failed to load. Reload to retry. '+(error.message??''));}}
 syncViewControls();selectKit(selectedKit);updateProfileUI();updateCamera(0);requestAnimationFrame(frame);load();

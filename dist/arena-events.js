@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=50';
+import {CONFIG} from './shared/config.js?v=53';
 import {MAP,isUnderBridge} from './shared/map.js?v=50';
 const BOW=CONFIG.combat.bow,TARGETING=CONFIG.bots.targeting,{schedule:SCHEDULE,killstreaks:KILLSTREAKS}=CONFIG.events;
 export const EVENT_SCHEDULE=SCHEDULE,HAZARDS=CONFIG.events.hazards,SUPPLIES=CONFIG.events.supplies;

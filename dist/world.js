@@ -1,6 +1,6 @@
 import {addRockRunes} from './rock-runes.js?v=24';
 import {buildSky} from './arena-sky.js?v=46';
-import {buildPortal,addStringLights} from './portal.js?v=45';
+import {buildPortal,addStringLights} from './portal.js?v=53';
 import * as THREE from './vendor/three.module.js';
 import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=50';
 import {mapColliders,createCollision,createMapQueries,objectSurfaces,rampSurfaceHeight} from './shared/map-queries.js?v=45';

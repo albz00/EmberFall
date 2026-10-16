@@ -3,7 +3,7 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import bundled from './maps/emberfall.json?v=50' with {type:'json'};
-import {buildWorld} from './world.js?v=50';
+import {buildWorld} from './world.js?v=53';
 import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects} from './shared/map-queries.js?v=45';
 import {inspectMap} from './shared/map-schema.js?v=47';
 import {DRAFT_KEY} from './shared/map.js?v=50';

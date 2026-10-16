@@ -6,6 +6,7 @@
     "gold": {"name": "Golden cuirass", "file": "armor-gold.glb", "price": 680, "reduction": 0.23},
     "leather": {"name": "Leather armor", "file": "armor-leather.glb", "price": 120, "reduction": 0.08, "fit": "torso"},
     "metal": {"name": "Metal armor", "file": "armor-metal.glb", "price": 440, "reduction": 0.18, "fit": "torso"},
-    "helmet": {"name": "Knight helmet", "file": "armor-helmet.glb", "price": 180, "reduction": 0.08, "slot": "head", "fit": "head"}
+    "helmet": {"name": "Knight helmet", "file": "armor-helmet.glb", "price": 180, "reduction": 0.08, "slot": "head", "fit": "head"},
+    "cryptguard": {"name": "Cryptguard Cuirass", "file": "armor-metal.glb", "price": 1800, "reduction": 0.32, "fit": "torso", "dungeonOnly": true}
   }
 }

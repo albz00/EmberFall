@@ -38,6 +38,7 @@ expectIssue(c=>{c.cosmetics.cosmetics['Gold Aura']={name:'Gold',price:1,colors:[
 expectIssue(c=>{c.combat.heavy.windup=1.5;},'heavy.windup must be shorter than heavy.full');
 expectIssue(c=>{c.weapons.statusEffects.frost.slowPercentPerLevel=40;},'statusEffects.frost would stop movement entirely');
 expectIssue(c=>{c.progression.chest.weapons.push('god');},'must not include absolute-damage weapon "god"');
+expectIssue(c=>{c.progression.chest.weapons.push('cinderfang');},'must not include dungeon-only weapon "cinderfang"');
 expectIssue(c=>{c.events.types=c.events.types.slice(0,1);},'events.json → types: must have at least 2 entries');
 expectIssue(c=>{c.events.types[2].id='cavein';},'types[2]: duplicates "cavein"');
 expectIssue(c=>{delete c.events.types[1].damage;},'types[1].damage: is required');

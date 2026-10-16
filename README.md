@@ -1,6 +1,6 @@
 # Emberfall
 
-A static Three.js kit arena with thirteen selectable characters, instant sword input, nine named AI fighters, a usable bow, three magic staffs, consumable potions, local progression, and an equipment economy. Inventory and rank are saved in this browser; opponents and AI chat are simulated locally.
+A static Three.js kit arena with thirteen selectable characters, instant sword input, nine named AI fighters, a usable bow, three magic staffs, consumable potions, local progression, an equipment economy, and a portal dungeon with mobs, a boss, and physical relic rewards. Inventory and rank are saved in this browser; opponents and AI chat are simulated locally.
 
 ## Controls
 
@@ -57,3 +57,9 @@ Eight Polygonal Mind avatars were originally static: fitted skin weights and ret
 `node tests/audio.mjs` checks gesture playback, blocked-start retry, looping, volume changes, the shipped MP3, environmental ducking and recovery, proximity attenuation, and stereo gust variation. The actual MP3 was decoded and verified separately; audible browser playback remains unverified.
 
 The nine new actors were also checked through the production GLTFLoader and sampled across their animation clips for finite, stable skin deformation. Browser visual playtesting was unavailable in this session.
+
+## Ashen Crypt
+
+Walk to the active portal at the far end of the bridge and press **F**. Clear three chambers using your carried equipment. The Cinder Warden telegraphs a shockwave you can jump over and a rift circle you must leave; below half health he summons reinforcements. The relic cache awards one exclusive weapon and a Cryptguard cuirass. A full backpack leaves the copies beside the cache. Return through the blue portal or use the normal return channel to bring loot back to the ledge. Rare or better gear still drops on death and expires after five minutes; an unfinished dungeon can be re-entered during the same session. Runs reset on page reload.
+
+Dungeon geometry and placements are in `dist/maps/ashen-crypt.json`; enemy stats, boss timings, rewards and interactions are in `dist/config/dungeon.json`. `shared/dungeon-data.js` validates both. Dungeon relic definitions remain in the shared weapon and armor catalogs, with `dungeonOnly` preventing shop purchases. `tests/dungeon.mjs` checks validation, gates and physical loot rules; `tests/v53-gameplay.mjs` runs actual mobs, combat, boss phases, death recovery and extraction through the game runtime harness.

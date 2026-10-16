@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "interactionRange": 3.3,
+  "clearHealing": 65,
+  "mobCoins": 18,
+  "mobExp": 12,
+  "bossCoins": 240,
+  "bossExp": 160,
+  "aggroRange": 28,
+  "jumpSpeed": 7.2,
+  "jumpInterval": 2.8,
+  "staggerResistance": 0.55,
+  "boss": {
+    "enrageAt": 0.5,
+    "enrageSpeed": 1.2,
+    "attackInterval": 6.5,
+    "enragedInterval": 4.4,
+    "windup": 1.25,
+    "damage": 48,
+    "radius": 5.6,
+    "knockback": 10,
+    "safeJumpHeight": 0.9,
+    "summons": 2,
+    "summonType": "skirmisher"
+  },
+  "mobs": {
+    "guard": {
+      "name": "Crypt Guard",
+      "character": "knight",
+      "weapon": "broadsword",
+      "armor": "iron",
+      "health": 145,
+      "speed": 3.5,
+      "damage": 13,
+      "cps": 4.6,
+      "range": 2.8,
+      "scale": 1,
+      "boss": false
+    },
+    "skirmisher": {
+      "name": "Ashbound",
+      "character": "skeleton",
+      "weapon": "dagger",
+      "armor": "none",
+      "health": 105,
+      "speed": 4.6,
+      "damage": 10,
+      "cps": 6.2,
+      "range": 2.5,
+      "scale": 1,
+      "boss": false
+    },
+    "caster": {
+      "name": "Hollow Acolyte",
+      "character": "ember",
+      "weapon": "frost",
+      "armor": "none",
+      "health": 125,
+      "speed": 3,
+      "damage": 19,
+      "cps": 2,
+      "range": 11,
+      "scale": 1,
+      "boss": false
+    },
+    "warden": {
+      "name": "Cinder Warden",
+      "character": "king",
+      "weapon": "mace",
+      "armor": "gold",
+      "health": 1050,
+      "speed": 3.7,
+      "damage": 21,
+      "cps": 5.4,
+      "range": 3.4,
+      "scale": 1.45,
+      "boss": true
+    }
+  },
+  "rewards": {
+    "weapons": [
+      "cinderfang",
+      "hollow-scepter",
+      "warden-cleaver"
+    ],
+    "armor": "cryptguard",
+    "weaponCount": 1,
+    "armorCount": 1,
+    "effectLevel": 2,
+    "effects": [
+      "fire",
+      "frost",
+      "bleed"
+    ]
+  }
+}

@@ -1,9 +1,9 @@
-import {CONFIG} from './shared/config.js?v=50';
+import {CONFIG} from './shared/config.js?v=53';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;
 export const MERCHANT=CONFIG.progression.merchant;
-export const SHOP_WEAPONS=Object.keys(WEAPONS).filter(id=>!MERCHANT.weapons.includes(id));
+export const SHOP_WEAPONS=Object.keys(WEAPONS).filter(id=>!MERCHANT.weapons.includes(id)&&!WEAPONS[id].dungeonOnly);
 export const SPELLS=CONFIG.weapons.spells;
 export const ARMORS=CONFIG.armor.armor;
 export const POTIONS=CONFIG.consumables.potions;
@@ -146,8 +146,8 @@ export function takeDeathItems(p){
  const lost=p.inventory.filter(i=>!i.bound),dropped=lost.filter(i=>i.rarity!=='common');p.inventory=p.inventory.filter(i=>i.bound);p.equipped='starter';p.armorItem=p.helmetItem=null;syncInventory(p);p.selectedHotbar=Math.max(0,p.hotbar.indexOf('starter'));return{lost,dropped};
 }
 export function weaponStats(item){const clean=sanitizeItem(item),base=WEAPONS[clean.weapon],rarity=RARITIES[clean.rarity];return {...base,name:clean.forged?clean.title+' '+base.name.toLowerCase():base.name,damage:base.absoluteDamage?base.damage:base.damage+rarity.damage+(clean.rolls?.damage??0),reach:base.reach+(clean.rolls?.reach??0)*(base.kind==='staff'?CHEST.staffReachMultiplier:1),speed:base.speed+(clean.rolls?.speed??0),effects:clean.effects??[],forged:!!clean.forged,rarity:clean.rarity,rarityColor:rarity.color,weapon:clean.weapon};}
-export function purchaseWeapon(p,id){const weapon=WEAPONS[id];if(MERCHANT.weapons.includes(id))return{ok:false,error:`${weapon.name} is sold only by ${MERCHANT.name}`};if(!weapon||id===STARTER.weapon)return{ok:false,error:`${WEAPONS[STARTER.weapon].name} is in your starter kit`};if(p.coins<weapon.price)return{ok:false,error:`Need ${weapon.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'weapon'),weapon:id,rarity:weapon.rarity??'common'});if(result.ok)p.coins-=weapon.price;return result;}
-export function purchaseArmor(p,id){const armor=ARMORS[id];if(!armor?.file)return{ok:false,error:'Choose a chestplate or helmet'};if(p.coins<armor.price)return{ok:false,error:`Need ${armor.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'armor'),armor:id,rarity:'common'});if(result.ok)p.coins-=armor.price;return result;}
+export function purchaseWeapon(p,id){const weapon=WEAPONS[id];if(weapon?.dungeonOnly)return{ok:false,error:weapon.name+' is found only in the Ashen Crypt'};if(MERCHANT.weapons.includes(id))return{ok:false,error:`${weapon.name} is sold only by ${MERCHANT.name}`};if(!weapon||id===STARTER.weapon)return{ok:false,error:`${WEAPONS[STARTER.weapon].name} is in your starter kit`};if(p.coins<weapon.price)return{ok:false,error:`Need ${weapon.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'weapon'),weapon:id,rarity:weapon.rarity??'common'});if(result.ok)p.coins-=weapon.price;return result;}
+export function purchaseArmor(p,id){const armor=ARMORS[id];if(armor?.dungeonOnly)return{ok:false,error:armor.name+' is found only in the Ashen Crypt'};if(!armor?.file)return{ok:false,error:'Choose a chestplate or helmet'};if(p.coins<armor.price)return{ok:false,error:`Need ${armor.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'armor'),armor:id,rarity:'common'});if(result.ok)p.coins-=armor.price;return result;}
 export function purchasePotion(p,id){const potion=POTIONS[id];if(!potion)return{ok:false,error:'Unknown potion'};if(p.coins<potion.price)return{ok:false,error:`Need ${potion.price-p.coins} more coins`};const stack=p.inventory.find(i=>i.potion===id&&!i.bound&&i.count<INVENTORY.stackLimit);if(stack){stack.count++;p.coins-=potion.price;syncInventory(p);return{ok:true,item:stack};}const result=addInventoryItem(p,{id:makeItemId(p,'potion'),potion:id,rarity:'common',count:1});if(result.ok)p.coins-=potion.price;return result;}
 export function consumePotion(p,id,preferred=null){const item=p.inventory.find(i=>i.id===preferred&&i.potion===id&&i.count>0)??p.inventory.find(i=>i.potion===id&&i.count>0);if(!item)return false;item.count--;if(!item.count&&!item.bound)p.inventory.splice(p.inventory.indexOf(item),1);syncInventory(p);return true;}
 export function openChest(p,random=Math.random){

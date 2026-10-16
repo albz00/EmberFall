@@ -9,8 +9,8 @@ export const CONFIG_FILES=['combat','weapons','armor','consumables','cosmetics',
 // text is safe; removing an id would silently strip owned items from saves.
 export const PERSISTED_IDS={
  kits:['vanguard','rogue','sentinel'],
- weapons:['classic','dagger','broadsword','mace','gemblade','frost','venom','arcane','god','riftfang','gilded-oath','thunderclap','voidsplitter','eclipse-edge'],
- armor:['none','iron','gold','leather','metal','helmet'],
+ weapons:['classic','dagger','broadsword','mace','gemblade','frost','venom','arcane','god','riftfang','gilded-oath','thunderclap','voidsplitter','eclipse-edge','cinderfang','warden-cleaver','hollow-scepter'],
+ armor:['none','iron','gold','leather','metal','helmet','cryptguard'],
  potions:['healing','haste','guard'],
  cosmetics:['none','ember','glacier','hex','bloodmoon','starfall','prism','inferno','storm','soulfire','hellfire','tempest','eclipse','pressure','ascension'],
  nameplates:['none','ember','volt','venom','aurora','royal','prism'],
@@ -65,7 +65,7 @@ const procSchema=variant('kind',{
 const weaponsSchema=object({
  schemaVersion:header,
  weapons:record(object({
-  name:label(),file:asset(),kind:optional(oneOf(['staff'])),price:coins(),damage:hp({above:0}),absoluteDamage:optional(boolean()),rarity:optional(ref('rarities')),
+  name:label(),file:asset(),kind:optional(oneOf(['staff'])),price:coins(),damage:hp({above:0}),absoluteDamage:optional(boolean()),dungeonOnly:optional(boolean({description:'Earned in dungeons; unavailable to shop and chest purchases'})),rarity:optional(ref('rarities')),
   reach:meters({above:0}),knockback:speed(),speed:number({unit:'swing bonus',min:-5,max:5}),icon:oneOf(['sword','dagger','mace','staff']),
   spell:optional(ref('spells')),cooldown:optional(seconds({above:0,max:60})),projectileSpeed:optional(speed({above:0,max:500})),color:optional(hexColor()),description:optional(text()),
   proc:optional(procSchema),
@@ -83,7 +83,7 @@ const weaponsSchema=object({
 
 const armorSchema=object({
  schemaVersion:header,
- armor:record(object({name:label(),file:nullable(asset()),price:coins(),reduction:number({unit:'×',min:0,max:.95}),slot:optional(oneOf(['head'])),fit:optional(oneOf(['torso','head']))}),{required:['none']}),
+ armor:record(object({name:label(),file:nullable(asset()),price:coins(),reduction:number({unit:'×',min:0,max:.95}),dungeonOnly:optional(boolean({description:'Earned in dungeons; unavailable to equipment purchases'})),slot:optional(oneOf(['head'])),fit:optional(oneOf(['torso','head']))}),{required:['none']}),
 });
 
 const potionBase={name:label(),file:asset(),price:coins(),color:hexColor(),description:text()};
@@ -205,6 +205,7 @@ function crossCheck(c,issue){
  if(bots?.profiles&&bots.extraNames){const names=new Set(bots.profiles.map(p=>p?.name));for(const name of bots.extraNames)if(names.has(name))issue('bots.json',`extraNames repeats profile name ${JSON.stringify(name)}`);}
  const tiers=events?.killstreaks?.tiers;if(Array.isArray(tiers))for(let i=1;i<tiers.length;i++)if(!(tiers[i]>tiers[i-1]))issue('events.json',`killstreaks.tiers[${i}] must be greater than killstreaks.tiers[${i-1}]`);
  if(progression?.chest?.weapons&&weapons?.weapons)for(const id of progression.chest.weapons)if(weapons.weapons[id]?.absoluteDamage)issue('progression.json',`chest.weapons must not include absolute-damage weapon ${JSON.stringify(id)}`);
+ if(progression?.chest?.weapons&&weapons?.weapons)for(const id of progression.chest.weapons)if(weapons.weapons[id]?.dungeonOnly)issue('progression.json',`chest.weapons must not include dungeon-only weapon ${JSON.stringify(id)}`);
  const merchant=progression?.merchant;
  if(merchant?.weapons&&weapons?.weapons&&progression.rarities){
   if(merchant.offered>merchant.weapons.length)issue('progression.json','merchant.offered must not exceed the number of merchant.weapons');

@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {CRYPT,DUNGEON,createDungeonRun,dungeonBlocked,dungeonPoint,dungeonResolve,nextDungeonEncounter,markDungeonKill,rollDungeonRewards} from '../dist/dungeon.js';
+import {parseDungeonData} from '../dist/shared/dungeon-data.js';
+import {WEAPONS,ARMORS,SHOP_WEAPONS,CHEST_PRICE,makeProfile,weaponStats,purchaseWeapon,purchaseArmor,addInventoryItem,takeDeathItems,transferItem,equipInventoryItem} from '../dist/progression.js';
+const rawMap=JSON.parse(await readFile(new URL('../dist/maps/ashen-crypt.json',import.meta.url))),rawTuning=JSON.parse(await readFile(new URL('../dist/config/dungeon.json',import.meta.url)));
+const invalid=(change,fragment)=>{const m=structuredClone(rawMap),t=structuredClone(rawTuning);change(m,t);assert.throws(()=>parseDungeonData(m,t),e=>e.name==='ConfigError'&&e.message.includes(fragment));};
+invalid((m)=>m.spawn.x=100,'spawn');invalid((m)=>m.origin.x=0,'origin');invalid((m)=>m.encounters[1].mobs[0].type='missing','invalid mob');invalid((m,t)=>t.boss.summonType='warden','summonType');invalid((m,t)=>t.rewards.weapons=['classic'],'dungeon-only');invalid((m,t)=>t.boss.windup=0,'windup');
+const run=createDungeonRun();run.active=true;assert.equal(nextDungeonEncounter(run,CRYPT.spawn.z),null);assert.equal(nextDungeonEncounter(run,26),0);
+const door=dungeonPoint({x:0,z:12});assert(dungeonBlocked(door.x,door.z,0,.38,run));run.cleared=1;assert(!dungeonBlocked(door.x,door.z,0,.38,run));assert(dungeonBlocked(door.x+5,door.z,0,.38,run),'side walls remain after opening');
+const p=dungeonPoint({x:0,z:12});run.cleared=0;dungeonResolve(p,.38,run);assert(!dungeonBlocked(p.x,p.z,0,.379,run),'collision resolves a closed gate');
+run.phase='fighting';run.enemies=[{alive:false},{alive:true}];assert(!markDungeonKill(run,run.enemies[0]));assert.equal(run.cleared,0);run.enemies[1].alive=false;assert(markDungeonKill(run,run.enemies[1]));assert.equal(run.cleared,1);assert(!markDungeonKill(run,run.enemies[1]),'one death cannot clear twice');
+let serial=0;const items=rollDungeonRewards(prefix=>prefix+'-'+serial++,()=>0),profile=makeProfile({coins:1e6});
+assert.equal(items.length,2);assert.equal(items[0].effects[0].level,DUNGEON.rewards.effectLevel);assert(WEAPONS[items[0].weapon].dungeonOnly);assert(ARMORS[items[1].armor].reduction>ARMORS.gold.reduction);
+const chestMax=weaponStats({weapon:'gemblade',rarity:'legendary',forged:true,title:'Ruinbound',rolls:{damage:7}}).damage;
+for(const id of DUNGEON.rewards.weapons){assert(!SHOP_WEAPONS.includes(id));assert(!purchaseWeapon(profile,id).ok);assert(weaponStats({weapon:id,rarity:'legendary'}).damage>chestMax,'crypt relic outperforms arena chest damage');}
+assert(!purchaseArmor(profile,DUNGEON.rewards.armor).ok);
+for(const item of items)assert(addInventoryItem(profile,item).ok);assert(equipInventoryItem(profile,items[1].id).ok);assert.equal(profile.armor,'cryptguard');
+assert(transferItem(profile,items[0].id,true).ok);const death=takeDeathItems(profile);assert(death.dropped.some(i=>i.id===items[1].id),'relic armor drops on death');assert(profile.vault.some(i=>i.id===items[0].id),'stored relic survives death');
+console.log(JSON.stringify({dungeon:'passed',dataValidation:true,closedAndOpenGates:true,oneClearPerWave:true,exclusiveLoot:true,betterThanChest:true,physicalRelics:true,deathDrops:true,storageSurvives:true}));

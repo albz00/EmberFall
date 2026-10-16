@@ -1,5 +1,5 @@
-import {HURT_WINDOW} from './combat.js?v=50';
-import {WEAPONS,SHOP_WEAPONS,ARMORS,CHEST_PRICE,weaponStats,equippedItem,armorReduction,purchaseWeapon,purchaseArmor,purchasePotion,openChest,sellItem,equipInventoryItem} from './progression.js?v=52';
+import {HURT_WINDOW} from './combat.js?v=53';
+import {WEAPONS,SHOP_WEAPONS,ARMORS,CHEST_PRICE,weaponStats,equippedItem,armorReduction,purchaseWeapon,purchaseArmor,purchasePotion,openChest,sellItem,equipInventoryItem} from './progression.js?v=53';
 
 export function itemScore(item,role='duelist'){
  const s=weaponStats(item),ranged=s.kind==='staff';
@@ -11,7 +11,7 @@ export function bestItem(account,role){return account.inventory.filter(i=>i.weap
 // upgrade wins while equipment is weak; the chest becomes worthwhile later.
 export function choosePurchase(account,role='duelist',risk=.5){
  const current=bestItem(account,role),score=itemScore(current,role),coins=account.coins;
- const armor=Object.entries(ARMORS).filter(([id,a])=>a.file&&!account.ownedArmor.includes(id)&&a.price<=coins&&a.reduction>(a.slot==='head'?(ARMORS[account.helmet]?.reduction??0):(ARMORS[account.armor]?.reduction??0))).sort((a,b)=>a[1].price-b[1].price);
+ const armor=Object.entries(ARMORS).filter(([id,a])=>a.file&&!a.dungeonOnly&&!account.ownedArmor.includes(id)&&a.price<=coins&&a.reduction>(a.slot==='head'?(ARMORS[account.helmet]?.reduction??0):(ARMORS[account.armor]?.reduction??0))).sort((a,b)=>a[1].price-b[1].price);
  if(armor.length&&armorReduction(account)<.15)return{kind:'armor',id:armor[0][0],station:'weapons'};
  const weapons=SHOP_WEAPONS.filter(id=>WEAPONS[id].price<=coins&&!account.inventory.some(i=>i.weapon===id)&&itemScore({weapon:id,rarity:'common'},role)>score+7).sort((a,b)=>itemScore({weapon:b,rarity:'common'},role)-itemScore({weapon:a,rarity:'common'},role));
  if(weapons.length&&(score<56||coins<CHEST_PRICE*2||risk<.4))return{kind:'weapon',id:weapons[0],station:'weapons'};

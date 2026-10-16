@@ -215,3 +215,9 @@ Editor round two, chosen from what the first editor cannot reach yet. Each item 
 - Draft matches should not award progress, or should say that they do.
 
 Keep the bundled map's output identical: the same grid, collision and mesh snapshots.
+
+## Portal dungeon (v0.53)
+
+The Ashen Crypt is a separate local PvE instance west of the arena. `shared/dungeon-data.js` validates `maps/ashen-crypt.json` and `config/dungeon.json` with units and limits, using the existing schema primitives. `dungeon.js` owns the browser-free run state, collision, room progression and loot rolls; `dungeon-world.js` renders it. Combat uses the same actors, hit immunity, equipment, projectiles and status effects as the arena, with dungeon membership preventing friendly fire and cross-map hits. Dungeon actors never join the arena queue, shops, leaderboard or respawn loop.
+
+A run pauses when the player returns, respawns or opens the main menu and can be resumed in the same browser session. It resets when re-entering after claiming the final cache. Physical rewards use normal inventory ids, storage and death-drop persistence, never unlock flags. Both dungeon map/tuning and enemy state are local; run progress is not persisted across page reloads. The cache can be claimed once per run. Reloading starts another run, while already earned items and unexpired world drops remain saved.

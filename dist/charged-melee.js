@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=50';
+import {CONFIG} from './shared/config.js?v=53';
 export const HEAVY=CONFIG.combat.heavy;
 export const chargeProgress=elapsed=>elapsed>=HEAVY.full-1e-6?1:Math.max(0,Math.min(1,(elapsed-HEAVY.windup)/(HEAVY.full-HEAVY.windup)));
 export function chargedStats(stats,power){

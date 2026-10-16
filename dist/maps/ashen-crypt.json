@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "name": "Ashen Crypt",
+  "origin": {"x": -128, "z": 0},
+  "halfWidth": 13,
+  "halfDepth": 39,
+  "wallHeight": 8,
+  "doorWidth": 7,
+  "spawn": {"x": 0, "z": 33},
+  "exit": {"x": 0, "z": 35.5},
+  "cache": {"x": 0, "z": -32},
+  "dividers": [12, -12],
+  "obstacles": [
+    {"x": -9, "z": 22, "w": 1.8, "d": 1.8, "h": 6},
+    {"x": 9, "z": 22, "w": 1.8, "d": 1.8, "h": 6},
+    {"x": -7, "z": 0, "w": 1.8, "d": 1.8, "h": 6},
+    {"x": 7, "z": 0, "w": 1.8, "d": 1.8, "h": 6},
+    {"x": -9, "z": -25, "w": 2, "d": 2, "h": 6},
+    {"x": 9, "z": -25, "w": 2, "d": 2, "h": 6}
+  ],
+  "encounters": [
+    {"name": "The Gatekeepers", "triggerZ": 27, "minZ": 14, "maxZ": 31, "mobs": [
+      {"type": "guard", "x": -4, "z": 20}, {"type": "guard", "x": 4, "z": 20}, {"type": "skirmisher", "x": 0, "z": 16}
+    ]},
+    {"name": "The Hollow Choir", "triggerZ": 8, "minZ": -10, "maxZ": 10, "mobs": [
+      {"type": "guard", "x": -4, "z": -4}, {"type": "caster", "x": 5, "z": -6}, {"type": "skirmisher", "x": 2, "z": 0}
+    ]},
+    {"name": "The Cinder Warden", "triggerZ": -16, "minZ": -36, "maxZ": -14, "mobs": [
+      {"type": "warden", "x": 0, "z": -26}
+    ]}
+  ]
+}
