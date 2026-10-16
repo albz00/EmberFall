@@ -4,11 +4,11 @@
   "packSource": "https://poly.pizza/bundle/Ultimate-Modular-Men-Pack-ZiH8muWqwQ",
   "officialPackSource": "https://quaternius.com/packs/ultimatemodularcharacters.html",
   "swordSource": "https://poly.pizza/m/9lLmH8Et4K",
-  "notes": "All art is real downloaded CC0 Quaternius models. fighter-*.glb are original glTF pack assets repackaged losslessly as GLB, sourced through a public mirror. These have simpler unit-scale armatures than the FBX-converted Poly Pizza files.",
+  "notes": "The fighter King and Punk are original Quaternius glTF pack assets repackaged losslessly as GLB. The Adventurer is a customized variant with its original rig preserved.",
   "characters": [
     {
       "file": "fighter-adventurer.glb",
-      "bytes": 2069236,
+      "bytes": 2135540,
       "forward": "+Z",
       "up": "+Y",
       "bindBounds": {
@@ -54,7 +54,8 @@
         "Wave"
       ],
       "source": "https://github.com/agentkaerf/FreeModels/tree/main/Ultimate%20Modular%20Men-%20Feb%202022",
-      "sha256": "175498543cd5800c15906fb510869a8cd6d6c09addc1c1206125f9ae2e17349b"
+      "sha256": "522a09a2545b0e27553c1a06404820cb07973a2e3ff5e58f2b4957cc7a0a5e3c",
+      "adaptations": "Backpack, facial hair and cargo pockets removed; shirt, trousers, shoes and skinned stitches recolored or added. Original bone hierarchy and skin weights retained."
     },
     {
       "file": "fighter-king.glb",

@@ -1,5 +1,6 @@
-export const GAME_VERSION='0.50';
+export const GAME_VERSION='0.51';
 export const CHANGELOG=[
+ {version:'0.51',changes:['Replaced the Adventurer character with the clean-shaven blue-shirt variant: matching blue sleeves, dark brown stitched trousers, light gray shoes, and neckline stitching. The original 62-bone rig and animations remain compatible.']},
  {version:'0.50',changes:['Eye Squaller now uses the Eye Summoner model and has a voice. He says “Welcome… ehhhh” when you walk up, at most once every 25 seconds, and calls out “Come get your weapons” every 40 to 80 seconds while you are in earshot and after each restock. His voice fades out by 24 m, and the music dips while he talks. His label now reads (Merchant) under his name.']},
  {version:'0.49',changes:['The arena playlist now also includes Tribal Drumming Atmosphere and Hand Drums by vjgalaxy, and Fighting Spirit by nojisuma. All three are royalty-free Pixabay tracks under the Pixabay Content License.']},
  {version:'0.48',changes:['2v2 plays Feel The Energy by PinLabs, a royalty-free Pixabay drum and bass track, for the whole match. The arena playlist returns when the match ends.']},
