@@ -24,8 +24,17 @@ export function makeWindCloth(){
    transformed.z+=freeHem*freeHem*strength*(.13+gust*.14+fold*.12+sin(uv.y*17.+uv.x*6.-localTime*5.+phase)*.025);
    transformed.x+=freeHem*freeHem*sin(localTime*1.4+uv.y*5.+phase)*(.02+seed*.018);
    transformed.y+=freeHem*freeHem*(.018+sin(localTime*2.+uv.x*5.+phase)*.018);`);
-  shader.fragmentShader='varying vec2 clothUv;\n'+shader.fragmentShader;shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
-   float diamond=abs(clothUv.x-.5)*3.6+abs(clothUv.y-.57)*5.;float mark=1.-smoothstep(.28,.31,diamond);diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.72,.39,.12),mark);`);
- };material.customProgramCacheKey=()=> 'emberfall-wind-cloth-v2';
+  shader.fragmentShader=`varying vec2 clothUv;
+ float crestSegment(vec2 p,vec2 a,vec2 b,float width){vec2 v=b-a;float t=clamp(dot(p-a,v)/dot(v,v),0.,1.);return 1.-smoothstep(width,width+.008,length(p-a-v*t));}
+ `+shader.fragmentShader;shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
+   vec2 p=clothUv-vec2(.5,.56);float crestMask=0.;
+   // A pointed blade, crossguard, three swept wing feathers and shield edge.
+   float blade=(1.-smoothstep(.018,.026,abs(p.x)))*step(-.095,p.y)*step(p.y,.16);
+   float point=(1.-smoothstep(.0,.008,abs(p.x)-(.22-p.y)*.38))*step(.16,p.y)*step(p.y,.22);
+   crestMask=max(blade,point);crestMask=max(crestMask,crestSegment(p,vec2(-.09,-.10),vec2(.09,-.10),.012));crestMask=max(crestMask,crestSegment(p,vec2(0.,-.10),vec2(0.,-.19),.015));
+   for(int i=0;i<3;i++){float f=float(i),side=abs(p.x);crestMask=max(crestMask,crestSegment(vec2(side,p.y),vec2(.055,.03-f*.045),vec2(.21-f*.018,.14-f*.063),.012));}
+   vec2 q=vec2(abs(p.x),p.y);float shield=max(crestSegment(q,vec2(.245,.21),vec2(.22,-.16),.007),crestSegment(q,vec2(.22,-.16),vec2(0.,-.31),.007));crestMask=max(crestMask,shield);
+   vec3 gold=mix(vec3(.65,.32,.08),vec3(1.,.80,.37),clamp(clothUv.y,0.,1.));diffuseColor.rgb=mix(diffuseColor.rgb,gold,crestMask);`);
+ };material.customProgramCacheKey=()=> 'emberfall-wind-cloth-v3';
  return{geometry,material,time,create(parent,width,height){const flag=new THREE.Mesh(geometry,material);flag.scale.set(width,height,1);flag.visible=false;flag.userData.noCameraCollision=true;flag.userData.cloth=true;parent.add(flag);return flag;},batch(parent,flags){parent.updateMatrixWorld(true);const batch=new THREE.InstancedMesh(geometry,material,flags.length);flags.forEach((f,i)=>batch.setMatrixAt(i,f.matrixWorld));batch.instanceMatrix.needsUpdate=true;batch.computeBoundingSphere();batch.boundingSphere.radius+=.7;batch.userData.noCameraCollision=true;batch.name='wind-cloth';parent.add(batch);return batch;}};
 }

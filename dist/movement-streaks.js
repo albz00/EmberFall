@@ -24,9 +24,9 @@ export class MovementStreaks{
    const seed=(i*.61803398875)%1,phase=(t*(kind==='sprint'?1.9:kind==='strafe'?1.5:3.2)+seed)%1;let x,y,ex,ey;
    if(side){const sign=Math.sign(active.x)||1;x=width*(sign<0?.18-phase*.2:.82+phase*.2);y=height*(.13+((i*.171)% .72));const length=width*(kind==='dodge'?.075:.045)*(1+seed*.5);ex=x+sign*length;ey=y+(kind==='dodge'?(i%2?1:-1)*height*.012:0);}
    else{const angle=i/count*Math.PI*2+.13*Math.sin(i*2.1),r=.82+phase*.32,cx=width*(.5-active.x*.11),cy=height*.49;x=cx+Math.cos(angle)*width*.53*r;y=cy+Math.sin(angle)*height*.56*r;const stretch=kind==='roll'?.16:.11;ex=cx+Math.cos(angle)*width*.53*(r+stretch);ey=cy+Math.sin(angle)*height*.56*(r+stretch);}
-   const fade=Math.sin(Math.PI*phase),gradient=c.createLinearGradient(x,y,ex,ey);gradient.addColorStop(0,`rgba(${color},0)`);gradient.addColorStop(.7,`rgba(${color},${this.alpha*fade*(kind==='dodge'?.5:.34)})`);gradient.addColorStop(1,`rgba(${color},0)`);c.strokeStyle=gradient;c.lineWidth=kind==='dodge'?1.6:1.15;c.beginPath();c.moveTo(x,y);c.lineTo(ex,ey);c.stroke();
+   const fade=Math.sin(Math.PI*phase),gradient=c.createLinearGradient(x,y,ex,ey);gradient.addColorStop(0,`rgba(${color},0)`);gradient.addColorStop(.7,`rgba(${color},${this.alpha*fade*(kind==='dodge'?.64:.48)})`);gradient.addColorStop(1,`rgba(${color},0)`);c.strokeStyle=gradient;c.lineWidth=kind==='dodge'?2:1.5;c.beginPath();c.moveTo(x,y);c.lineTo(ex,ey);c.stroke();
   }
-  if(kind==='roll'){c.strokeStyle=`rgba(255,218,163,${this.alpha*.24})`;c.lineWidth=1.4;for(const sign of [-1,1]){c.beginPath();c.ellipse(width*(sign<0?.03:.97),height*.78,width*.15,height*.29,sign*(.25+active.progress*.45),sign<0?-.9:Math.PI-.9,sign<0?.7:Math.PI+.7);c.stroke();}}
+  if(kind==='roll'){c.strokeStyle=`rgba(255,218,163,${this.alpha*.32})`;c.lineWidth=1.4;for(const sign of [-1,1]){c.beginPath();c.ellipse(width*(sign<0?.03:.97),height*.78,width*.15,height*.29,sign*(.25+active.progress*.45),sign<0?-.9:Math.PI-.9,sign<0?.7:Math.PI+.7);c.stroke();}}
   return cue;
  }
 }

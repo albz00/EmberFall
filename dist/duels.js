@@ -1,4 +1,4 @@
-import {MAP,groundHeight} from './shared/map.js?v=65';
+import {MAP,groundHeight} from './shared/map.js?v=67';
 import * as THREE from './vendor/three.module.js';
 
 export const MINI={x:96,z:0,halfWidth:11.5,halfDepth:13.5,duration:100};
@@ -60,6 +60,6 @@ export function makeMatchSign(scene){
  const wood=new THREE.MeshStandardMaterial({color:0x634637,roughness:1}),frame=new THREE.MeshStandardMaterial({color:0xd2a66b,roughness:.7});
  const add=(w,h,d,x,y,z,material)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.castShadow=true;root.add(m);};
  add(.18,2.5,.18,-1.35,1.25,0,wood);add(.18,2.5,.18,1.35,1.25,0,wood);add(3.1,1.42,.22,0,2.05,0,frame);
- const c=document.createElement('canvas');c.width=768;c.height=320;const ctx=c.getContext('2d');ctx.fillStyle='#302538';ctx.fillRect(0,0,768,320);ctx.textAlign='center';ctx.fillStyle='#ffe3b0';ctx.font='900 124px Nunito, sans-serif';ctx.fillText('2v2',384,146);ctx.fillStyle='#d8c6cd';ctx.font='700 44px Nunito, sans-serif';ctx.fillText('Join a match',384,241);
+ const c=document.createElement('canvas');c.width=768;c.height=320;const ctx=c.getContext('2d');ctx.fillStyle='#302538';ctx.fillRect(0,0,768,320);ctx.textAlign='center';ctx.fillStyle='#ffe3b0';ctx.font='900 124px Nunito, sans-serif';ctx.fillText('2v2',384,146);ctx.fillStyle='#59402d';ctx.fillRect(105,183,558,91);ctx.strokeStyle='#cf9d4d';ctx.lineWidth=3;ctx.strokeRect(105,183,558,91);ctx.fillStyle='#ffda83';ctx.font='900 44px Nunito, sans-serif';ctx.fillText('[Join a match]',384,243);
  const texture=new THREE.CanvasTexture(c);texture.colorSpace=THREE.SRGBColorSpace;const face=new THREE.Mesh(new THREE.PlaneGeometry(2.95,1.28),new THREE.MeshBasicMaterial({map:texture}));face.rotation.y=Math.PI;face.position.set(0,2.05,-.125);root.add(face);return root;
 }

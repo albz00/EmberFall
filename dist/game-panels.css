@@ -294,7 +294,6 @@
 #combat-dock #player-health{filter:drop-shadow(0 2px 3px #110b22);}
 #combat-dock .health-track{height:24px;border-color:#eec1de9c;border-radius:9px 18px 9px 18px;box-shadow:inset 0 1px 4px #160d28,0 0 0 2px #33223a,0 0 0 3px #c8a36e77,0 0 16px #e55c8d40;}
 #combat-dock .health-track:before{content:'';position:absolute;inset:3px;border:1px solid #ffe8cf42;border-radius:6px 14px;pointer-events:none;z-index:3;}
-#combat-dock .health-track:after{content:'◇';position:absolute;right:10px;top:0;line-height:21px;color:#fff1c4b3;font-size:15px;z-index:3;text-shadow:0 0 6px #ffcfdc;}
 #health-fill{background:radial-gradient(ellipse at 30% 15%,#ffdbef77,transparent 58%),linear-gradient(0deg,#812d68,#de4f90 40%,#ff9eb4 78%,#ffe1da);box-shadow:0 0 18px #fa5d9e,inset 0 2px 3px #ffe8de99;}
 #health-fill:before,#stamina-fill:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 12% 55%,#fff6d9 0 1px,transparent 2px),radial-gradient(circle at 48% 25%,#ffeebc 0 1px,transparent 2px),radial-gradient(circle at 78% 65%,#fff3d6 0 1px,transparent 2px);background-size:83px 100%;opacity:.6;animation:vital-flow 9s linear infinite;}
 .stamina-track{height:9px;border-color:#9bf3d49c;border-radius:3px 9px;box-shadow:0 0 0 1px #42374e,0 0 11px #61e1c940,inset 0 1px 3px #080e1e;}
@@ -320,14 +319,14 @@
 #movement-fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;z-index:0;}
 /* The combat belt is a row of items with quiet selection marks, not boxed slots. */
 #combat-dock #quickbar{gap:7px;padding:0 3px;margin-top:7px;background:none;border:0;box-shadow:none;}
-#combat-dock .hotbar-slot{height:49px;min-width:0;padding:3px 4px 8px;border:0;border-radius:0;background:transparent;box-shadow:none;transition:transform .12s ease,opacity .12s ease;}
+#combat-dock .hotbar-slot{height:57px;min-width:0;padding:3px 4px 8px;border:0;border-radius:0;background:transparent;box-shadow:none;transition:transform .12s ease,opacity .12s ease;}
 #combat-dock .hotbar-slot:after{content:'';position:absolute;left:9%;right:9%;bottom:1px;height:2px;border-radius:4px;background:#c8bdab54;box-shadow:none;}
 #combat-dock .hotbar-slot:before{content:'';position:absolute;left:0;right:0;bottom:0;height:20px;background:radial-gradient(ellipse at bottom,#ffd28c36,transparent 72%);opacity:0;}
 #combat-dock .hotbar-slot.active{border:0;background:transparent;box-shadow:none;transform:translateY(-2px);}
 #combat-dock .hotbar-slot.active:after{background:#ffe4a3;height:3px;box-shadow:0 0 7px #eac17e88;}
 #combat-dock .hotbar-slot.active:before{opacity:1;}
-#combat-dock .hotbar-slot>img{inset:0 3px 7px;width:calc(100% - 6px);height:calc(100% - 7px);opacity:.72;filter:drop-shadow(0 2px 2px #17111fcc);}
-#combat-dock .hotbar-slot>svg{opacity:.65;max-height:34px;}
+#combat-dock .hotbar-slot>img{inset:-2px 0 7px;width:100%;height:calc(100% - 5px);opacity:.96;filter:drop-shadow(0 3px 2px #17111fcc);}
+#combat-dock .hotbar-slot>svg{opacity:.92;max-height:40px;}
 #combat-dock .hotbar-slot.active>img,#combat-dock .hotbar-slot.active>svg,#combat-dock .hotbar-slot:hover>img,#combat-dock .hotbar-slot:hover>svg{opacity:1;}
 #combat-dock .hotbar-slot kbd{font-size:8px;left:1px;top:0;color:#d1c7b5b0;font-weight:700;text-shadow:0 1px 2px #100c16;}
 #combat-dock .hotbar-slot>b{bottom:7px;right:1px;font-size:10px;}
@@ -347,3 +346,29 @@
 .emblem-save{grid-column:1/-1;display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:10px;padding-top:14px;border-top:1px solid #a98c6536;}.emblem-save .text-button{margin-right:auto;font-size:11px;}.emblem-save .secondary-button,.emblem-save .primary-button{width:auto;min-width:95px;min-height:39px;font-size:13px;padding:8px 15px;}
 @media(max-width:650px){#combat-dock #quickbar{gap:4px;}#combat-dock .hotbar-slot{height:44px;}#combat-dock .hotbar-slot>svg{max-height:28px;}#combat-dock .combat-readout{font-size:9px;}.score-emblem{width:23px;height:23px;margin-right:4px;}.emblem-editor{grid-template-columns:1fr;gap:15px;}.emblem-stage{width:min(100%,220px);}.emblem-base{max-width:320px;margin:auto;}.emblem-hint{text-align:center;}.emblem-transform{grid-template-columns:repeat(3,minmax(0,1fr));}.emblem-layers{max-height:112px;}.emblem-save{gap:8px;}.emblem-save .text-button{flex:1 1 100%;margin:0;text-align:left;}}
 @media(prefers-reduced-motion:reduce){#movement-fx{display:none;}#combat-dock .hotbar-slot{transition:none;}}
+
+/* Clear player identities: the crest leads, name and rank share one text column. */
+.scoreboard-card{position:relative;width:min(1180px,calc(100vw - 28px));}
+#scoreboard[data-columns="1"] .scoreboard-card{max-width:660px;}
+.player-list-key{position:absolute;right:26px;top:25px;padding:5px 8px;border:1px solid #d7b77a55;border-radius:5px;color:#d9c8ac;font-size:10px;}
+#score-tables td{padding:8px 5px;}
+#score-tables th:first-child{width:60%;}
+.player-identity{display:flex;align-items:center;gap:10px;min-width:0;text-align:left;}
+.score-emblem,.score-crest{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;margin:0;filter:drop-shadow(0 2px 3px #100c1b);}
+.score-crest{border-radius:11px;background:linear-gradient(145deg,#ffe4bb0c,#0c081930);border:1px solid #dfbc7924;}
+.score-crest svg{width:32px;height:32px;}
+.player-identity-text{min-width:0;flex:1;}
+.player-list-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;line-height:20px;}
+#score-tables .table-rank{font-size:10px;line-height:16px;overflow:hidden;text-overflow:ellipsis;}
+.player-list-name .ai-label{font-size:8px;opacity:.55;margin-left:6px;}
+/* Keep the existing carved frame and buttons, with a single primary action. */
+#pause-modal{width:min(520px,calc(100vw - 32px));padding:27px 30px 30px;}
+#pause-modal h2{margin-bottom:23px;}
+#pause-modal #resume{min-height:58px;font-size:21px;}
+.pause-actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:21px;padding-top:19px;border-top:1px solid #d1ad6d33;}
+.pause-actions .secondary-button{width:100%;margin:0;min-height:49px;font-size:14px;}
+/* Reserve an actual lane for the custom scrollbar, outside slot outlines. */
+.vault-panel .vault-grid{padding:4px 21px 10px 4px;box-sizing:border-box;min-width:0;scroll-padding-block:5px;}
+#interact-prompt.match-prompt{color:#ffda83;border-color:#c49a55;box-shadow:0 0 14px #eaba4730;}
+@media(max-width:650px){.score-emblem,.score-crest{flex-basis:39px;width:39px;height:39px;}.player-identity{gap:9px;}.score-crest svg{width:29px;height:29px;}#combat-dock .hotbar-slot{height:49px;}#combat-dock .hotbar-slot>svg{max-height:34px;}#pause-modal{padding:23px 17px;}.pause-actions{gap:12px;}.pause-actions .secondary-button{font-size:12px;padding:10px 6px;}}
+@media(max-height:540px){#pause-modal{padding-block:13px;}#pause-modal h2{margin:0 0 12px;font-size:26px;}#pause-modal #resume{min-height:43px;}.pause-actions{margin-top:13px;padding-top:13px;gap:10px;}.pause-actions .secondary-button{min-height:39px;}}
