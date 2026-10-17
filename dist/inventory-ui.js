@@ -1,4 +1,4 @@
-import {CARRY_SLOTS,HOTBAR_SLOTS,VAULT_STEP,RARITIES,ARMORS,POTIONS,itemKind,itemName,itemArtKey,weaponStats,salvageValue,storagePrice} from './progression.js?v=53';
+import {CARRY_SLOTS,HOTBAR_SLOTS,VAULT_STEP,RARITIES,ARMORS,POTIONS,itemKind,itemName,itemArtKey,weaponStats,salvageValue,storagePrice} from './progression.js?v=55';
 const icon=id=>`<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
 export function slotArt(item,thumbs){
  if(!item)return '';
@@ -17,7 +17,7 @@ export function renderInventoryPanel({root,profile:p,thumbs,storage=false,canTra
   }else b.title='Empty '+(stored?'chest':index<HOTBAR_SLOTS?'hotbar':'backpack')+' slot';
   b.setAttribute('aria-label',b.title+' '+(index+1));b.setAttribute('aria-pressed',String(item===selected&&!!item));
   if(!stored&&index<HOTBAR_SLOTS){const key=document.createElement('kbd');key.textContent=String(index+1);b.append(key);}
-  b.addEventListener('click',e=>{if(e?.shiftKey&&item&&storage){onTransfer(item.id,!stored);return;}if(selected&&selected!==item)onMove(selected.id,!!selection.stored,stored,index);else onSelect(item===selected?null:item?.id??null,stored);});
+  b.addEventListener('click',e=>{if(e?.shiftKey&&item&&storage){onTransfer(item.id,!stored);return;}onSelect(item===selected?null:item?.id??null,stored);});
   b.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';b.classList.add('drop-target');});
   b.addEventListener('dragleave',()=>b.classList.remove('drop-target'));
   b.addEventListener('drop',e=>{e.preventDefault();b.classList.remove('drop-target');try{const data=JSON.parse(e.dataTransfer.getData('application/x-emberfall-item'));if(typeof data.id==='string')onMove(data.id,!!data.stored,stored,index);}catch{}});
@@ -41,7 +41,7 @@ export function renderInventoryPanel({root,profile:p,thumbs,storage=false,canTra
   if(storage&&!selected.bound)action(selection.stored?'Take':'Store',()=>onTransfer(selected.id,!selection.stored));
   if(!selection.stored&&!selected.bound)action('Drop item',()=>onDrop(selected.id));
   if(canTrade&&!selected.bound)action('Sell · '+salvageValue(selected)+' coins',()=>onSell(selected.id,selection.stored));detail.append(actions);
- }else detail.innerHTML='<div class="inventory-empty-art">'+icon(storage?'crate':'bag')+'</div><p>Drag to move or swap. You can also select an item, then its destination.</p>';
+ }else detail.innerHTML='<div class="inventory-empty-art">'+icon(storage?'crate':'bag')+'</div><p>Drag items to move or swap them. Click an item to inspect it.</p>';
  layout.append(detail);root.append(layout);
- const note=document.createElement('p');note.className='inventory-rule';note.textContent=storage?'Shift-click to transfer. Stored items survive death.':'20 slots, including your hotbar. Drag to rearrange · 1–9 moves the selected item · G drops · E closes.';root.append(note);
+ const note=document.createElement('p');note.className='inventory-rule';note.textContent=storage?'Drag to rearrange · Shift-click to transfer · I closes. Stored items survive death.':'20 slots, including your hotbar. Drag to rearrange · 1–9 moves the selected item · G drops · I closes.';root.append(note);
 }

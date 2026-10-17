@@ -225,3 +225,15 @@ Keep the bundled map's output identical: the same grid, collision and mesh snaps
 `dungeon-magic.js` plans seeded targets and warning/active/finished timing with no DOM or THREE dependency. `game.js` applies spell physics and shared combat rules: physical fans, delayed multi-target lightning/meteors, gravity pulling and damage, and jumpable expanding waves. A caster's death cancels its remaining ground spells. Player powers, inventory and the arena's classic click/input rules remain shared.
 
 Each floor has a miniboss, a variable final boss and optional epic-item caches. The final cache remains a one-time grant of physical dungeon relics. Descending generates another seed/depth, removes old enemies and spell effects, retains carried inventory and scales enemies/rewards up to configured caps. Returning or respawning pauses the current instance for re-entry. The run resets on page reload; carried inventory/vault persist as before. Ground drops keep their five-minute lifetime and a `dungeonSeed` field; another generated floor cannot show or collect them. Overflow boss relics block descent until collected or expired. No multiplayer/server state has been added.
+
+## Arena repairs and controls (v0.55)
+
+The dungeon implementation is retained, but the arena portal returns `active: false`, has no animated veil/light, and its threshold contains a fallen block with a map-owned collider. Both the interaction prompt and `enterDungeon()` require an active portal. Existing carried relics and vault items are preserved.
+
+The event schema now accepts supply giveaways only. The scheduler supports a single repeating event type; destructive hazard rendering/damage and the bots’ shelter plan were removed. Bots may still use the bridge as ordinary terrain.
+
+Q/E and A/D strafe, I toggles inventory, X uses potions. Inventory slots only inspect on click; drag/drop moves or swaps, shift-click transfers and number keys move the selected carried item into the actual hotbar slot. A second Space press in the air initiates a physical directional roll without adding vertical velocity; Alt rolls directly. Duration, cooldown, speed, minimum clearance and camera dip live in validated combat JSON. Rolls have normal damage and collision, use the imported Roll clip, and do not change admin flight. Desktop attacks use `mousedown`/`mouseup` to support mouse-button chording. Melee-only aim padding is capped at 0.1 m by the schema and never extends reach or changes damage immunity.
+
+## Popup presentation (v0.56)
+
+`game-panels.css` is loaded after the existing HUD stylesheet. A repository-owned SVG border (`assets/ui/panel-frame.svg`) uses nine-slice scaling for sculpted transparent corners and a consistent gold/wood rim across pause, settings, equipment, match signup and leaderboard. Buttons, tabs, inventory trays and lightweight notices share the palette. The treatment does not add menu actions or explanatory labels. Small-screen and short-screen rules retain scrollable content; panel entry motion respects reduced-motion settings.

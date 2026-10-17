@@ -105,10 +105,10 @@ try{
  assert(E.isUnderBridge({x:0,y:3,z:-10}),'bridge cover height follows the map file');
  // Moving an object in the map moves its collider and its mesh together.
  const T=await load('vendor/three.module.js'),scene=new T.Scene(),built=W.buildWorld(scene);
- assert.equal(W.colliders.length,36,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
+ assert.equal(W.colliders.length,37,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
  assert(W.blocked(15,-25)&&!W.blocked(9,-21),'blocking follows the moved boulder');
  assert.deepEqual(W.colliders.slice(13,15).map(c=>[c.x,c.z]),[[-3.35,-27],[3.35,-27]]);
- assert.deepEqual(W.colliders[15],{type:'box',x:1,z:-20,w:1.2,d:1.2,minY:0,maxY:1.4},'crate colliders follow their object');
+ assert.deepEqual(W.colliders[16],{type:'box',x:1,z:-20,w:1.2,d:1.2,minY:0,maxY:1.4},'crate colliders follow their object');
  assert.deepEqual(W.colliders.at(-3),{type:'circle',x:5,z:27,r:.82,minY:8,maxY:10},'station furniture collides at the station');
  assert.deepEqual(W.colliders.at(-1),{type:'circle',x:7.6,z:22.2,r:.6,minY:8,maxY:10.2},'the merchant stand collides on the ledge');
  assert(W.colliders.some(c=>c.type==='circle'&&c.r===4.1*.36&&c.maxY===2.8),'volcano tops stay fixed while their radius scales');

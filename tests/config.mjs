@@ -39,10 +39,12 @@ expectIssue(c=>{c.combat.heavy.windup=1.5;},'heavy.windup must be shorter than h
 expectIssue(c=>{c.weapons.statusEffects.frost.slowPercentPerLevel=40;},'statusEffects.frost would stop movement entirely');
 expectIssue(c=>{c.progression.chest.weapons.push('god');},'must not include absolute-damage weapon "god"');
 expectIssue(c=>{c.progression.chest.weapons.push('cinderfang');},'must not include dungeon-only weapon "cinderfang"');
-expectIssue(c=>{c.events.types=c.events.types.slice(0,1);},'events.json → types: must have at least 2 entries');
-expectIssue(c=>{c.events.types[2].id='cavein';},'types[2]: duplicates "cavein"');
-expectIssue(c=>{delete c.events.types[1].damage;},'types[1].damage: is required');
-expectIssue(c=>{c.events.types[0].kind='flood';},'types[0]: kind must be one of "hazard", "supply"');
+expectIssue(c=>{c.events.types=[];},'events.json → types: must have at least 1 entries');
+expectIssue(c=>{c.events.types.push({...c.events.types[0]});},'types[1]: duplicates "rush"');
+expectIssue(c=>{delete c.events.types[0].duration;},'types[0].duration: is required');
+expectIssue(c=>{c.events.types[0].kind='hazard';},'types[0].kind: must be "supply"');
+expectIssue(c=>{c.combat.melee.aimPadding=.5;},'aimPadding: must be at most 0.1 m');
+expectIssue(c=>{c.combat.roll.cooldown=-1;},'roll.cooldown: must be at least 0 s');
 expectIssue(c=>{c.events.killstreaks.tiers=[3,10,5];},'killstreaks.tiers[2] must be greater than killstreaks.tiers[1]');
 expectIssue(c=>{c.bots.generated.cps.min=13;},'generated.cps.min must not exceed generated.cps.max');
 expectIssue(c=>{c.bots.extraNames.push('Vex');},'extraNames repeats profile name "Vex"');

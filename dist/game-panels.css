@@ -1,0 +1,185 @@
+/* Sculpted game panels. The SVG border stays shaped at every menu size. */
+:root {
+ --panel-frame: url('./assets/ui/panel-frame.svg?v=56');
+ --game-ink: #241927;
+ --game-gold: #edbf79;
+}
+#modal-backdrop {
+ background: radial-gradient(ellipse at 50% 40%,#39243970,#110e19db);
+ backdrop-filter: blur(5px);
+ padding: 18px 0 26px;
+}
+.modal,.scoreboard-card {
+ border: 18px solid transparent;
+ border-image: var(--panel-frame) 32 fill / 18px stretch;
+ border-radius: 0;
+ background: none;
+ box-shadow: none;
+ filter: drop-shadow(0 7px 0 #17111f) drop-shadow(0 18px 24px #08050c88);
+ color: #f9e9d1;
+}
+.modal {
+ padding: 23px 22px 25px;
+ max-height: calc(100dvh - 54px);
+ animation: game-panel-enter .18s cubic-bezier(.22,.9,.35,1.15) both;
+}
+.modal h2,.shop-heading h2,.scoreboard-card h2 {
+ color: #ffe3a8;
+ font-weight: 1000;
+ letter-spacing: -.7px;
+ text-shadow: 0 3px 0 #37202c,1px 0 #37202c,-1px 0 #37202c;
+}
+.modal>h2 {
+ margin-bottom: 25px;
+ padding-bottom: 17px;
+ background: linear-gradient(90deg,transparent,#edbf7970,transparent) center bottom / 78% 2px no-repeat;
+}
+.shop-modal,.inventory-modal {padding: 20px 19px 23px;}
+.shop-heading {padding-right: 35px;}
+.modal-close,.scoreboard-card .score-close {
+ top: 5px;
+ right: 5px;
+ width: 34px;
+ height: 34px;
+ border: 2px solid #e9af79;
+ border-top-color: #ffe4af;
+ border-radius: 11px 8px 12px 8px;
+ background: linear-gradient(#b66659,#773b48);
+ box-shadow: 0 3px 0 #3c2432,inset 0 2px 0 #ffcf9d55;
+ font-size: 25px;
+ color: #fff0cf;
+ text-shadow: 0 2px #5a2936;
+ display: grid;
+ place-items: center;
+ padding: 0;
+ z-index: 2;
+}
+.modal .primary-button,.modal .secondary-button,.scoreboard-card .secondary-button {
+ border-width: 2px;
+ border-radius: 16px 10px 18px 11px;
+ font-weight: 1000;
+ transition: transform .1s,box-shadow .1s,filter .12s;
+}
+.modal .primary-button {
+ background: linear-gradient(#ffdf94 0%,#f8c56b 48%,#eaa145 100%);
+ border-color: #ffc976;
+ border-top-color: #fff1c1;
+ border-bottom-color: #9b5a30;
+ color: #50302a;
+ box-shadow: inset 0 3px 0 #fff4c477,inset 0 -3px 0 #b9733533,0 5px 0 #88472c,0 7px 0 #211526;
+ text-shadow: 0 1px #ffedbc99;
+}
+.modal .secondary-button,.scoreboard-card .secondary-button {
+ background: linear-gradient(#8b665c,#70504f 48%,#523c47);
+ border-color: #bd8f68;
+ border-top-color: #ebbf8b;
+ border-bottom-color: #694337;
+ color: #fff0d2;
+ box-shadow: inset 0 2px 0 #ffe2b033,inset 0 -3px 0 #2d1e2c44,0 4px 0 #2a1b2b;
+ text-shadow: 0 2px #3b2631;
+}
+.modal .primary-button:active:not(:disabled),.modal .secondary-button:active:not(:disabled) {
+ transform: translateY(3px);
+ box-shadow: inset 0 2px 0 #fff1bf22,0 1px 0 #291b2b;
+}
+.modal .text-button {color: #ebc793;text-decoration-color: #ebc79355;}
+.modal button:focus-visible,.modal input:focus-visible,.modal select:focus-visible {
+ outline: 3px solid #ffe6a6;
+ outline-offset: 3px;
+}
+.shop-tabs {
+ gap: 8px;
+ padding: 12px 2px 15px;
+ border-bottom: 2px solid #1d1527aa;
+}
+.shop-tabs button {
+ border: 2px solid #a97d5a;
+ border-top-color: #d2ac80;
+ border-radius: 12px 7px 12px 7px;
+ background: linear-gradient(#6b4c49,#45323d);
+ color: #e5cab0;
+ box-shadow: inset 0 2px #ffe2ae22,0 3px #251929;
+}
+.shop-tabs button.selected {
+ border-color: #ffdfa0;
+ border-bottom-color: #b57940;
+ background: linear-gradient(#ffdf96,#eeb666);
+ color: #4c2f29;
+ box-shadow: inset 0 2px #fff5c666,0 3px #81472e;
+}
+.equipment-card,.nameplate-card,.rank-card {
+ border-radius: 20px 11px 22px 12px;
+ border: 2px solid #aa805f;
+ border-top-color: #dfb581;
+ background: radial-gradient(ellipse at 50% 0,#a87a4d29,transparent 65%),linear-gradient(#513b45,#302634);
+ box-shadow: inset 0 2px #ffe2a825,inset 0 -4px #19132344,0 5px #221727;
+}
+.equipment-card.sovereign-card {border-color: #f1cb79;}
+.equipment-card.exotic-card {border-color: #dc8bbf;}
+.inventory-panel,.inventory-detail,#match-roster>div,.personal-links {
+ border: 2px solid #291d2b;
+ border-top-color: #211723;
+ border-bottom-color: #ae7d5a;
+ border-radius: 18px 11px 20px 12px;
+ background: linear-gradient(145deg,#281d2cbb,#4b3440aa);
+ box-shadow: inset 0 3px 5px #130f1e66,0 1px #efc78c22;
+}
+.personal-links {padding: 12px;gap: 10px;}
+.inventory-heading {padding-bottom: 11px;}
+.inventory-heading strong {color: #f3ce94;text-shadow: 0 2px #231727;}
+.inventory-detail {padding: 15px;}
+.inventory-rule,.help-note,.match-rules {color: #d9c2b4;}
+.help-grid kbd,.modal kbd {
+ background: linear-gradient(#6c5153,#3c2c3b);
+ border: 1px solid #c89c72;
+ border-bottom-width: 3px;
+ border-radius: 7px;
+ color: #ffdfaa;
+ padding: 4px 7px;
+ white-space: normal;
+ text-align: center;
+}
+.scoreboard-card {padding: 17px 19px 21px;max-height: calc(100dvh - 48px);}
+.scoreboard-card h2 {font-size: 32px;}
+#score-tables table {border-radius: 14px;overflow: hidden;background: #271d2b66;}
+#score-tables th {color: #e8c594;background: #9f704333;}
+#score-tables tr.me {background: #c9924a30;}
+#event-warning,#interact-prompt,#toast {
+ border: 2px solid #bc895d;
+ border-top-color: #ffe2a4;
+ border-bottom-color: #764a38;
+ border-radius: 17px 9px 18px 9px;
+ background: linear-gradient(145deg,#775147f5,#392939f5);
+ box-shadow: inset 0 2px #ffe6b133,0 4px 0 #211626;
+ color: #ffe9c7;
+}
+#event-warning {max-width: min(440px,calc(100vw - 32px));min-width: 250px;}
+#event-warning strong {color: #ffdf96;}
+#interact-prompt {padding: 10px 16px;}
+#interact-prompt kbd {background: #eec17c;border: 1px solid #ffedb9;border-bottom: 3px solid #9a603b;border-radius: 6px;color: #4c2d29;text-shadow: none;}
+#toast {white-space: normal;text-align: center;max-width: min(520px,calc(100vw - 40px));line-height: 1.45;}
+.death-stats {padding: 15px;border-radius: 17px;background: #24192970;border: 1px solid #ca9d6944;}
+.command-list dt,.changelog-modal h3 {color: #f3cb87;}
+@keyframes game-panel-enter {from {opacity: 0;transform: translateY(10px) scale(.97);}to {opacity: 1;transform: translateY(0) scale(1);}}
+@media(max-width:650px) {
+ .modal,.scoreboard-card {border-width: 14px;border-image-width: 14px;}
+ .modal {padding: 18px 14px 20px;width: calc(100vw - 24px);}
+ .shop-modal,.inventory-modal {padding: 17px 11px;}
+ .modal>h2 {font-size: 28px;padding-bottom: 13px;margin-bottom: 20px;}
+ .modal-close,.scoreboard-card .score-close {right: 1px;top: 1px;width: 31px;height: 31px;}
+ .shop-heading h2 {font-size: 26px;}
+ .scoreboard-card {padding: 14px 8px;}
+ .help-grid {gap: 10px;font-size: 12px;}
+ .help-grid kbd {font-size: 9px;}
+ .personal-links {padding: 9px;}
+ #event-warning {min-width: 230px;padding: 10px 14px;}
+}
+@media(max-height:590px) {
+ #modal-backdrop {padding: 12px 0 18px;}
+ .modal {max-height: calc(100dvh - 32px);padding-top: 14px;padding-bottom: 16px;}
+ .modal>h2 {margin-bottom: 17px;padding-bottom: 10px;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .modal {animation: none;}
+ .modal button {transition: none;}
+}

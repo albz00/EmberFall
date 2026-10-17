@@ -7,21 +7,20 @@ export function buildPortal(root,scene,origin,runeAt){
  for(let i=0;i<13;i++){if(i===3||i===4)continue;const a=i/12*Math.PI,x=Math.cos(a)*3.35,y=3.2+Math.sin(a)*3.8;add(new THREE.BoxGeometry(1.15,1.05,1.05),stone,[ox+x,oy+y,oz],a-Math.PI/2);}
  for(const x of [-3.35,3.35]){add(new THREE.BoxGeometry(1.3,3.2,1.3),stone,[ox+x,oy+1.6,oz]);add(new THREE.BoxGeometry(1.85,.38,1.8),gold,[ox+x,oy+.19,oz]);}
  add(new THREE.BoxGeometry(1.2,1.05,1.2),stone,[ox+4.7,oy+.6,oz+1.4],.53);add(new THREE.BoxGeometry(1.05,.9,1.05),stone,[ox+5.9,oy+.48,oz+.5],-.35);
- // The broken stone arch now holds a restored rift into the Ashen Crypt.
- const fx=new THREE.Group();fx.name='active-bridge-rune';scene.add(fx);
+ // The fallen crown blocks the threshold again. Its collider belongs to the portal prefab.
+ const fallen=add(new THREE.BoxGeometry(3.4,2.5,2.2),stone,[ox,oy+1.45,oz+.45],.22);fallen.rotation.x=.08;fallen.rotation.y=.18;fallen.name='portal-fallen-block';
+ // The gateway is broken and inert: stone and weathered inlay, with no veil or beam.
+ const fx=new THREE.Group();fx.name='dormant-bridge-rune';scene.add(fx);
  const center=new THREE.Vector3(...runeAt),plinth=add(new THREE.CylinderGeometry(1.03,1.08,.075,16),stone,[center.x,center.y-.0275,center.z]);plinth.name='bridge-rune-plinth';
  const runes=new THREE.Group();runes.position.copy(center).add(new THREE.Vector3(0,.013,0));fx.add(runes);
- const inlay=new THREE.MeshStandardMaterial({color:0xbfa2f4,emissive:0x8a55df,emissiveIntensity:1.4,metalness:.3,roughness:.5,side:THREE.DoubleSide});
+ const inlay=new THREE.MeshStandardMaterial({color:0xa08c72,metalness:.3,roughness:.8,side:THREE.DoubleSide});
  for(const r of [.55,.88]){const ring=new THREE.Mesh(new THREE.RingGeometry(r-.018,r+.018,64),inlay);ring.rotation.x=-Math.PI/2;runes.add(ring);}
  for(let i=0;i<12;i++){const a=i/12*Math.PI*2,glyph=new THREE.Mesh(new THREE.BoxGeometry(.047,.009,.15),inlay);glyph.position.set(Math.sin(a)*.715,.003,Math.cos(a)*.715);glyph.rotation.y=a+(i%2?.6:0);runes.add(glyph);}
  const diamond=new THREE.Mesh(new THREE.RingGeometry(.15,.19,4),inlay);diamond.rotation.x=-Math.PI/2;diamond.rotation.z=Math.PI/4;runes.add(diamond);
  // Hairline fractures interrupt the device's rings, making its dormant state visible.
  const crackMaterial=new THREE.MeshStandardMaterial({color:0x211c29,roughness:1});
  for(const [x,z,angle,length]of [[.38,.04,.2,.84],[-.45,-.28,-.55,.78],[.08,.53,.7,.35]]){const crack=new THREE.Mesh(new THREE.BoxGeometry(.027,.011,length),crackMaterial);crack.position.set(x,.006,z);crack.rotation.y=angle;runes.add(crack);}
- const veilMaterial=new THREE.ShaderMaterial({uniforms:{time:{value:0}},transparent:true,side:THREE.DoubleSide,depthWrite:false,vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,fragmentShader:`uniform float time;varying vec2 vUv;void main(){vec2 p=(vUv-.5)*2.;float r=length(p),a=atan(p.y,p.x),swirl=sin(a*5.-r*11.+time*2.);float edge=smoothstep(.5,1.,r);vec3 c=mix(vec3(.08,.035,.18),vec3(.5,.28,.9),edge);c+=vec3(.13,.26,.4)*pow(max(0.,swirl),6.)*(.3+edge);gl_FragColor=vec4(c,smoothstep(1.,.93,r)*(.72+edge*.2));}`});
- const veil=new THREE.Mesh(new THREE.PlaneGeometry(5.9,6.7),veilMaterial);veil.position.set(ox,oy+3.4,oz+.04);veil.userData.noCameraCollision=true;root.add(veil);
- const light=new THREE.PointLight(0x9670ff,35,13,2);light.position.set(ox,oy+3,oz+2);root.add(light);
- fx.traverse(o=>o.userData.noCameraCollision=true);return{fx,runes,veil,active:true,center,origin:new THREE.Vector3(ox,oy,oz),update(time){veilMaterial.uniforms.time.value=time;inlay.emissiveIntensity=1.25+Math.sin(time*2)*.25;light.intensity=32+Math.sin(time*1.7)*3;}};
+ fx.traverse(o=>o.userData.noCameraCollision=true);return{fx,runes,veil:null,active:false,center,origin:new THREE.Vector3(ox,oy,oz),update(){}};
 }
 
 export function addStringLights(root,spans,posts){

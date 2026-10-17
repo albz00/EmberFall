@@ -6,8 +6,10 @@
     "sentinel": {"name": "Sentinel", "health": 390, "damageMultiplier": 1.1, "speed": 3.8, "tint": "#c1aadf", "description": "390 HP · heavy"}
   },
   "movement": {"sprint": 1.47, "walk": 4.25, "shop": 3, "flight": 1.6, "block": 0.48, "crouch": 0.45, "gearSpeed": 0.7},
+  "roll": {"duration": 0.62, "cooldown": 1.15, "speed": 8.5, "minimumClearance": 0.6, "cameraDip": 0.38},
   "melee": {
     "hurtWindow": 0.5,
+    "aimPadding": 0.055,
     "defaultReach": 3.15,
     "comboWindow": 1.25,
     "criticalMultiplier": 1.45,

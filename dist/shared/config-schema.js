@@ -34,8 +34,9 @@ const combatSchema=object({
  schemaVersion:header,
  kits:record(object({name:label(24),health:integer({unit:'hp',min:1,max:1e5}),damageMultiplier:multiplier({above:0}),speed:speed({above:0,max:50}),tint:hexColor(),description:label(80)}),{min:1}),
  movement:object({walk:speed({above:0,max:50,description:'Bot travel pace and camera stride reference'}),shop:speed({above:0,max:50}),sprint:multiplier({above:0}),flight:multiplier({above:0}),block:factor({above:0}),crouch:factor({above:0}),gearSpeed:multiplier({description:'Movement added per point of gear speed'})}),
+ roll:object({duration:seconds({above:0,max:3}),cooldown:seconds({above:0,max:10}),speed:speed({above:0,max:20}),minimumClearance:meters({above:0,max:3}),cameraDip:meters({max:0.6})}),
  melee:object({
-  hurtWindow:seconds({max:10,description:'Shared direct-hit immunity'}),defaultReach:meters({above:0,max:60}),comboWindow:seconds({max:30}),
+  hurtWindow:seconds({max:10,description:'Shared direct-hit immunity'}),aimPadding:meters({max:0.1,description:'Small melee-only horizontal edge allowance; never extends weapon reach'}),defaultReach:meters({above:0,max:60}),comboWindow:seconds({max:30}),
   criticalMultiplier:multiplier({min:1}),blockMultiplier:factor(),minimumDamage:integer({unit:'hp',min:0,max:1000}),
   hitbox:object({radius:meters({above:0,max:5}),height:meters({above:0,max:10}),crouched:meters({above:0,max:10})}),
   sprintHit:object({minimumSpeed:speed({max:50}),velocityRetained:factor()}),
@@ -157,11 +158,7 @@ const eventBase={id:string({pattern:/^[a-z][a-z0-9-]*$/,patternLabel:'a lowercas
 const eventsSchema=object({
  schemaVersion:header,
  schedule:object({firstDelay:seconds(),warning:seconds({above:0,max:60}),idleMin:seconds(),idleSpread:seconds()}),
- types:array(variant('kind',{
-  hazard:object({...eventBase,damage:hp({max:1e4}),fire:boolean(),ambientDamage:hp({max:1e4})}),
-  supply:object(eventBase),
- }),{min:2,unique:'id'}),
- hazards:object({pulseInterval:seconds({above:0,max:60}),perPulse:integer({min:0,max:50}),scatter:meters({max:20}),fallTime:seconds({above:0,max:10}),radius:meters({above:0,max:20}),maxHeight:meters({above:0,max:20}),knockback:speed({max:50}),ambientInterval:seconds({above:0,max:60})}),
+ types:array(object({...eventBase,kind:literal('supply')}),{min:1,unique:'id'}),
  supplies:object({pickupRadius:meters({above:0,max:10}),player:object({coins:coins(),arrows:integer({unit:'arrows',min:0,max:999}),health:hp({max:1e5})}),bot:object({coins:coins(),health:hp({max:1e5})})}),
  killstreaks:object({tiers:array(integer({unit:'KOs',min:1,max:1000}),{min:1})}),
 });

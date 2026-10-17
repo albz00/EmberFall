@@ -30,7 +30,7 @@ export async function verifyRepairs(t,{byId,isolate,target}){
  const worldScene=new T.Scene(),w=buildWorld(worldScene);worldScene.updateMatrixWorld(true);const ray=new T.Raycaster(),solids=[];w.root.traverse(o=>{if(o.isMesh)solids.push(o);});
  for(const x of [-25.1,25.1])for(const y of [5.65,6.15]){ray.set(new T.Vector3(x,y,-7),new T.Vector3(0,0,-1));ray.far=2.3;assert.equal(ray.intersectObjects(solids,false).length,0,'ramp-to-bridge opening clear at body and rail height');}
  for(const x of [-22,-12,12,22]){ray.set(new T.Vector3(x,7,-10),new T.Vector3(0,-1,0));ray.far=3;const hit=ray.intersectObjects(solids,false)[0];assert(hit&&hit.point.y<5.21,'support never projects through planks');}
- ray.set(new T.Vector3(0,11.75,24),new T.Vector3(0,0,1));ray.far=5;assert.equal(ray.intersectObjects(solids,false).length,0,'floating log above spawn removed');assert(w.moon.position.y>40);assert.equal(w.banners.length,10);
+ ray.set(new T.Vector3(0,11.75,24),new T.Vector3(0,0,1));ray.far=5;assert.equal(ray.intersectObjects(solids,false).length,0,'floating log above spawn removed');assert(w.moon.position.y>40);assert.equal(w.banners.length,35);
  // Actual navigation escapes the old physical-radius/path-radius mismatch.
  const f=t.fighters[0];t.profile.cosmetic='none';t.setMode('play');t.resetPlayer();isolate();t.player.position.set(0,8,28);
  for(const x of [-33,33]){target(f,x,0);f.position.y=0;f.grounded=true;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.plan='roam';f.planUntil=t.time+20;f.goal={x:x<0?-25:25,z:0,y:0};f.target=null;f.navigation=null;f.aiTimer=0;

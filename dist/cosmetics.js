@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import {COSMETICS} from './progression.js?v=53';
+import {COSMETICS} from './progression.js?v=55';
 import {createAscension,updateAscension} from './ascension.js?v=24';
 
 import {createPressure,updatePressureVisual} from './spiritual-pressure.js?v=24';

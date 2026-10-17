@@ -1,13 +1,13 @@
 # Emberfall
 
-A static Three.js kit arena with thirteen selectable characters, instant sword input, nine named AI fighters, a usable bow, three magic staffs, consumable potions, local progression, an equipment economy, and a portal dungeon with mobs, a boss, and physical relic rewards. Inventory and rank are saved in this browser; opponents and AI chat are simulated locally.
+A static Three.js kit arena with thirteen selectable characters, instant sword input, nine named AI fighters, a usable bow, three magic staffs, consumable potions, local progression, an equipment economy, and supply-crate giveaways. The dungeon entrance is closed. Inventory and rank are saved in this browser; opponents and AI chat are simulated locally.
 
 ## Controls
 
-- WASD move; Shift sprint; Space jump; hold C or Ctrl to crouch. V toggles first and third person. Touch has crouch and camera controls.
+- WASD move; Shift sprint; Space jump; press Space again in the air for a diving roll, or Alt for a ground roll; Q/E strafe left/right; hold C or Ctrl to crouch. V toggles first and third person. Touch has crouch and camera controls.
 - 1 selects the equipped sword or staff; left click strikes immediately or casts the staff spell; right click guards.
 - 2 selects the bow; hold left click to draw, release to fire. Full draw takes 0.8 seconds. Arrow flight has gravity and collision. KOs and returning to the ledge refill arrows.
-- Q drinks the selected potion; Z or the small cycle button changes potion. B opens inventory on the ledge; E interacts with equipment, the alchemy table, or crates.
+- I opens and closes inventory; drag items to move or swap them. F interacts with stations and dropped items. X drinks the selected potion; Z changes potion.
 - R or `/spawn` channels a return to the ledge for three seconds. Combat blocks and interrupts it.
 - T opens ranked local chat; Tab shows the leaderboard; Escape pauses. The leaderboard is also available from the pause menu.
 - Touch controls and drag-look fallback are included.
@@ -22,9 +22,9 @@ KOs award coins and rank points; deaths reduce rank points. Earned coins buy wea
 
 Frost staffs deal 30 base damage and slow movement 35% for two seconds. Venom staffs deal 28, then four 6-damage poison ticks. Arcane staffs deal 40 and chain to up to two nearby targets for 18 each. Actual projectiles collide with arena geometry and use 0.65–0.9 second cast intervals. Existing sword input remains immediate.
 
-Healing potions restore 115 health; haste grants 25% movement speed for 12 seconds; guard reduces combat damage 25% for 10 seconds. Q consumes one saved bottle, Z cycles type, and the exact supplied bottle appears during drinking. Active buffs show their remaining time and expire on death. Healing stock refills to a minimum of three on respawn or return; purchased extra stock is retained. The supplied wizard table stands on the ledge with all three supplied potion models displayed. The original equipment chest stays in place.
+Healing potions restore 115 health; haste grants 25% movement speed for 12 seconds; guard reduces combat damage 25% for 10 seconds. X consumes one saved bottle, Z cycles type, and the exact supplied bottle appears during drinking. Active buffs show their remaining time and expire on death. Healing stock refills to a minimum of three on respawn or return; purchased extra stock is retained. The supplied wizard table stands on the ledge with all three supplied potion models displayed. The original equipment chest stays in place.
 
-Cave-ins and volcanic eruptions have eight-second live warnings before falling hazards. Eruptions also deal ambient damage outside cover. The existing bridge is the cover area. There are no separate shelter structures; bots on the bridge step off to get underneath it. Gold rushes drop collectible crates with coins, healing, and arrows.
+Supply giveaways drop four actual supplied crate models. Pickups grant coins, arrows and health. Cave-ins and eruptions are disabled, and bots no longer seek event shelter.
 
 The player health bar sits beneath the bottom-center hotbar, with one overhead bar per opponent. The duplicate target panel was removed. Bottom-left chat retains its DOM nodes between updates. Kills appear in a separate, subtle top-left feed with at most four entries, fading after six seconds. Item previews use padded orthographic framing. First person renders only the weapon, with no body or hand meshes. Blocking angles the blade inward to the left. Third person shows the full selected character with equipment and a collision-aware chase camera. Crouching lowers the camera, slows movement, changes the sword target height, and visibly bends/lowers the character.
 
@@ -52,15 +52,17 @@ Eight Polygonal Mind avatars were originally static: fitted skin weights and ret
 
 `node tests/verify.mjs` checks geometry, movement, damage, health, event phases, cover, streak targeting, economy, persistence, normalized models, sustained wrist animation, and UI wiring.
 
-`node tests/runtime.mjs` exercises actual GLB and texture loading, all nine AI ledge entries, melee damage, KO rewards, respawn, return interruption, charged bow projectile hits, bridge cover plans and hazards, supply rewards, killstreak auras and targeting, persistent chat nodes, full third-person bodies, camera collision, hidden first-person body/hands, crouching, inward blocking, exact map crates, the restored ledge chest, planned lava crossings, the ten new equipment models, helmet fitting for all thirteen characters, projectile cover collision, all three spell effects, potion effects and stock persistence, and the ledge table. It uses the `@napi-rs/canvas` dev dependency. Its DOM, WebGL renderer, and audio element are stubs: it does not verify browser layout, GPU output, or audible playback.
+`node tests/runtime.mjs` exercises actual GLB and texture loading, all nine AI ledge entries, melee damage, KO rewards, respawn, return interruption, charged bow projectile hits, supply-only scheduling and rewards, killstreak auras and targeting, persistent chat nodes, full third-person bodies, camera collision, hidden first-person body/hands, crouching, inward blocking, exact map crates, the restored ledge chest, planned lava crossings, the ten new equipment models, helmet fitting for all thirteen characters, projectile cover collision, all three spell effects, potion effects and stock persistence, and the ledge table. It uses the `@napi-rs/canvas` dev dependency. Its DOM, WebGL renderer, and audio element are stubs: it does not verify browser layout, GPU output, or audible playback.
 
 `node tests/audio.mjs` checks gesture playback, blocked-start retry, looping, volume changes, the shipped MP3, environmental ducking and recovery, proximity attenuation, and stereo gust variation. The actual MP3 was decoded and verified separately; audible browser playback remains unverified.
 
 The nine new actors were also checked through the production GLTFLoader and sampled across their animation clips for finite, stable skin deformation. Browser visual playtesting was unavailable in this session.
 
-## Ashen Crypt
+## Ashen Crypt (closed)
 
-Press **F** at the active portal beyond the bridge. Every run generates an eight- or nine-room floor with branching routes, two optional reliquaries, a Riftweaver miniboss and either the Cinder Warden or Tempest Regent. Templates supply distinct rectangular, cross-shaped and octagonal spaces: ossuary, archive, forge, conservatory, observatory, vault and final sanctums. The seed reproduces geometry, routes and enemy packs; returning after death resumes that floor during the same session.
+The portal is blocked and inactive as of v0.55. The implementation below is retained for future work; there is no entry prompt or playable dungeon access. Existing carried or stored relics remain valid.
+
+The retained generator works as follows. Every run generates an eight- or nine-room floor with branching routes, two optional reliquaries, a Riftweaver miniboss and either the Cinder Warden or Tempest Regent. Templates supply distinct rectangular, cross-shaped and octagonal spaces: ossuary, archive, forge, conservatory, observatory, vault and final sanctums. The seed reproduces geometry, routes and enemy packs; returning after death resumes that floor during the same session.
 
 Enemy magic has real warning and impact phases: dodge lightning and meteors, escape gravity wells, avoid fire and frost volleys, and jump over expanding shockwaves. Forge pools use the same submerged-lava behavior as the arena. Bosses summon reinforcements below half health. Clear the floor and claim the physical relic cache, then choose the blue return portal or violet descent rift. Deeper floors generate new layouts and increase enemy strength and coin/EXP rewards. Collect any overflow relic drops before descending. Optional caches grant one epic weapon and coins, once per floor.
 
@@ -68,4 +70,6 @@ Carried inventory, chest storage and death drops keep their ordinary rules. Grou
 
 `dist/maps/ashen-crypt.json` holds the generator constraints and room templates; `dist/config/dungeon.json` holds enemies, spells, depth scaling and rewards. `shared/dungeon-data.js` validates both; `dungeon.js` generates layouts and provides pure geometry/progression queries; `dungeon-magic.js` plans deterministic spell targets; `dungeon-world.js` draws and batches architecture and animates environmental and spell effects. The current map editor still edits the main arena, not the generated dungeon templates.
 
-`tests/dungeon.mjs` checks 256 seeds, room/door clearance, safe spawns, flood-filled navigation, spell timing, physical loot rules and finite batched geometry. `tests/v54-gameplay.mjs` uses real imported rigs, projectiles, damage, death recovery, two bosses, optional caches, overflow loot and depth transitions. WebGL output and real browser performance require a browser playtest.
+`tests/dungeon.mjs` checks 256 seeds, room/door clearance, safe spawns, flood-filled navigation, spell timing, physical loot rules and finite batched geometry. `tests/v54-gameplay.mjs` retains the previous integration scenarios for future dungeon work and is not invoked while the entrance is closed. `tests/v55-gameplay.mjs` instead verifies disabled entry, supply-only scheduling, Q/E and I controls, physical rolls, mouse-button chording, inventory interactions and repaired roof geometry. WebGL output and real browser performance require a browser playtest.
+
+`dist/game-panels.css` and `dist/assets/ui/panel-frame.svg` provide sculpted menu frames, beveled controls and cartoon overlay styling.

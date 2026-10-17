@@ -8,7 +8,7 @@ import {createAscension,updateAscension,createChargeOrb,updateChargeOrb} from '.
 import {createPressure,updatePressureVisual,pressureMultiplier,pressureStrength} from '../dist/spiritual-pressure.js';
 
 export async function verifyNewCombat(t,{byId,windowEvents,isolate,target}){
- const down=()=>byId.get('game').events.pointerdown.forEach(fn=>fn({button:0})),up=()=>windowEvents.pointerup.forEach(fn=>fn({button:0}));
+ const down=()=>byId.get('game').events.mousedown.forEach(fn=>fn({button:0})),up=()=>windowEvents.mouseup.forEach(fn=>fn({button:0}));
  const f=t.fighters[0];t.setMode('play');t.profile.equipped='starter';t.resetPlayer();isolate();t.admin.god=false;t.profile.cosmetic='none';t.player.grounded=true;
  target(f,7,7);f.helmet=f.armor='none';f.guard=false;f.effects={};f.root.visible=true;
  const start=f.hp;down();assert.equal(start-f.hp,12,'light sword hit happens on mouse down');up();assert.equal(start-f.hp,12,'quick release does not add damage');

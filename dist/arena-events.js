@@ -1,8 +1,8 @@
-import {CONFIG} from './shared/config.js?v=53';
-import {MAP,isUnderBridge} from './shared/map.js?v=50';
+import {CONFIG} from './shared/config.js?v=55';
+import {MAP,isUnderBridge} from './shared/map.js?v=55';
 const BOW=CONFIG.combat.bow,TARGETING=CONFIG.bots.targeting,{schedule:SCHEDULE,killstreaks:KILLSTREAKS}=CONFIG.events;
-export const EVENT_SCHEDULE=SCHEDULE,HAZARDS=CONFIG.events.hazards,SUPPLIES=CONFIG.events.supplies;
-// The existing timber bridge is the only event cover in the pit.
+export const EVENT_SCHEDULE=SCHEDULE,SUPPLIES=CONFIG.events.supplies;
+// Retained arena navigation helpers; scheduled events are supply giveaways only.
 export const BRIDGE_COVER_POINTS=MAP.navigation.bridgeCover.map(p=>({x:p.x,y:0,z:p.z}));
 export const DESTINATIONS=MAP.navigation.destinations.map(({x,z,y})=>y===undefined?{x,z}:{x,z,y});
 export const EVENT_TYPES=CONFIG.events.types;
@@ -14,7 +14,7 @@ export function arrowDamage(charge){return Math.round(BOW.baseDamage+Math.max(0,
 export function createEventState(now=0){return{phase:'idle',type:null,at:now+SCHEDULE.firstDelay,nextPulse:0,serial:0};}
 export function advanceEvent(state,now,random=Math.random){
  if(now<state.at)return null;
- if(state.phase==='idle'){state.phase='warning';const options=EVENT_TYPES.filter(t=>t.id!==state.type?.id);state.type=options[Math.floor(random()*options.length)];state.at=now+SCHEDULE.warning;state.serial++;return'warning';}
+ if(state.phase==='idle'){state.phase='warning';const alternatives=EVENT_TYPES.filter(t=>t.id!==state.type?.id),options=alternatives.length?alternatives:EVENT_TYPES;state.type=options[Math.floor(random()*options.length)];state.at=now+SCHEDULE.warning;state.serial++;return'warning';}
  if(state.phase==='warning'){state.phase='active';state.at=now+state.type.duration;state.nextPulse=now;return'start';}
  state.phase='idle';state.at=now+SCHEDULE.idleMin+random()*SCHEDULE.idleSpread;return'end';
 }

@@ -2,11 +2,8 @@
   "schemaVersion": 1,
   "schedule": {"firstDelay": 40, "warning": 8, "idleMin": 48, "idleSpread": 28},
   "types": [
-    {"id": "cavein", "name": "Cave-in", "warning": "Get under the bridge", "duration": 16, "color": "#ffc37c", "kind": "hazard", "damage": 60, "fire": false, "ambientDamage": 0},
-    {"id": "eruption", "name": "Volcanic eruption", "warning": "Take cover under the bridge", "duration": 19, "color": "#ff7850", "kind": "hazard", "damage": 76, "fire": true, "ambientDamage": 12},
     {"id": "rush", "name": "Gold rush", "warning": "Supply crates are landing in the arena", "duration": 22, "color": "#ffd977", "kind": "supply"}
   ],
-  "hazards": {"pulseInterval": 0.72, "perPulse": 3, "scatter": 2, "fallTime": 1.35, "radius": 2.15, "maxHeight": 3, "knockback": 5, "ambientInterval": 2},
   "supplies": {
     "pickupRadius": 1.55,
     "player": {"coins": 40, "arrows": 8, "health": 60},

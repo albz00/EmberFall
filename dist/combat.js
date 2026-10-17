@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=53';
+import {CONFIG} from './shared/config.js?v=55';
 const {kits,movement,melee,knockback:KNOCK,bow}=CONFIG.combat;
 export const KITS=kits;
 export const BOTS=CONFIG.bots;
@@ -14,11 +14,14 @@ export function botProfile(id){
 export const HURT_WINDOW=melee.hurtWindow;
 export const HITBOX=melee.hitbox;
 export const MELEE=melee;
+export const ROLL=CONFIG.combat.roll;
 export const BOW=bow;
-export function rayHitCandidate(origin,direction,target,reach=melee.defaultReach,height=HITBOX.height){
+export function rayHitCandidate(origin,direction,target,reach=melee.defaultReach,height=HITBOX.height,padding=0){
+ // The aim allowance cannot make a body outside the weapon's reach hittable.
+ if(padding>0){let distanceSq=0;for(const key of ['x','y','z']){const low=target[key]-(key==='y'?0:HITBOX.radius),high=target[key]+(key==='y'?height:HITBOX.radius),delta=Math.max(low-origin[key],origin[key]-high,0);distanceSq+=delta*delta;}if(distanceSq>reach*reach)return null;}
  let near=0,far=reach;
  for(const key of ['x','y','z']){
-  const low=target[key]-(key==='y'?0:HITBOX.radius),high=target[key]+(key==='y'?height:HITBOX.radius),d=direction[key];
+  const radius=HITBOX.radius+padding,low=target[key]-(key==='y'?0:radius),high=target[key]+(key==='y'?height:radius),d=direction[key];
   if(Math.abs(d)<1e-8){if(origin[key]<low||origin[key]>high)return null;continue;}
   let a=(low-origin[key])/d,b=(high-origin[key])/d;if(a>b)[a,b]=[b,a];near=Math.max(near,a);far=Math.min(far,b);if(near>far)return null;
  }
