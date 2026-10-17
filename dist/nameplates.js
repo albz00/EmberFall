@@ -1,4 +1,4 @@
-import {NAMEPLATES} from './progression.js?v=65';
+import {NAMEPLATES} from './progression.js?v=66';
 
 // Both shop previews and chat use the same live CSS treatment. Names stay text.
 export function nameplateNode(name,id='none'){

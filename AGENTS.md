@@ -1,7 +1,7 @@
 # Emberfall update conventions
 
 - Continue this project in place and preserve its audience and existing assets. It is a static site served from `dist/` (no build step); run it locally with `python3 -m http.server 8080 --directory dist`.
-- Each new game-update request, including a new user message adding scope during an update, advances `GAME_VERSION` in `dist/changelog.js` by exactly 0.01 and prepends a factual changelog entry. Do not bump for status, pricing, or other non-update questions, or multiple implementation passes for the same request. Multiple new requests can be published together while retaining their separate changelog entries. Current version: 0.65.
+- Each new game-update request, including a new user message adding scope during an update, advances `GAME_VERSION` in `dist/changelog.js` by exactly 0.01 and prepends a factual changelog entry. Do not bump for status, pricing, or other non-update questions, or multiple implementation passes for the same request. Multiple new requests can be published together while retaining their separate changelog entries. Current version: 0.66.
 - Keep version query strings for changed modules and assets synchronized so published updates replace cached files.
 - Preserve the user's clean cartoon UI: no marketing quips, mini headers, redundant location labels, or duplicate health bars.
 - Bots and their chat are local simulations. Do not claim online multiplayer or LLM conversation without implementing those services.
@@ -16,3 +16,5 @@
 - Restore material color caches through `material-state.js`; THREE material clones serialize Color userData as numbers. Lower-body distance-driven motion must continue during attacks on all character rigs.
 
 - First-person sword animation restarts on every accepted click. Third-person body swing timing is separate and never gates damage or input. Preserve authored arm motion outside explicit blocking poses; only correct the blade at the wrist.
+
+- Custom emblems save validated vector layers in the existing profile. Keep badge and shape ids in `emblems.js` stable so older designs survive. Draft edits stay separate until Save; never store arbitrary SVG, URLs or HTML as an emblem.

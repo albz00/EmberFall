@@ -1,7 +1,7 @@
 import map from '../maps/ashen-crypt.json?v=54' with {type:'json'};
 import tuning from '../config/dungeon.json?v=54' with {type:'json'};
 import {CONFIG} from './config.js?v=65';
-import {CHARACTERS} from '../progression.js?v=65';
+import {CHARACTERS} from '../progression.js?v=66';
 import {ConfigError,parse,deepFreeze,object,array,record,number,integer,string,boolean,literal,oneOf,hexColor} from './schema.js?v=26';
 
 const meters=(min=0,max=500)=>number({unit:'m',min,max});

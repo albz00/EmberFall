@@ -316,3 +316,34 @@
 
 /* Strong, immediate red impact with a clear central aim area. No motion blur. */
 #damage-flash{background:radial-gradient(ellipse at center,#e2091912 12%,#d508285e 48%,#cf001ec9 76%,#900015f5 100%);box-shadow:inset 0 0 10vh 3vh #dd0729aa;transition:none;backdrop-filter:none;}
+
+#movement-fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;z-index:0;}
+/* The combat belt is a row of items with quiet selection marks, not boxed slots. */
+#combat-dock #quickbar{gap:7px;padding:0 3px;margin-top:7px;background:none;border:0;box-shadow:none;}
+#combat-dock .hotbar-slot{height:49px;min-width:0;padding:3px 4px 8px;border:0;border-radius:0;background:transparent;box-shadow:none;transition:transform .12s ease,opacity .12s ease;}
+#combat-dock .hotbar-slot:after{content:'';position:absolute;left:9%;right:9%;bottom:1px;height:2px;border-radius:4px;background:#c8bdab54;box-shadow:none;}
+#combat-dock .hotbar-slot:before{content:'';position:absolute;left:0;right:0;bottom:0;height:20px;background:radial-gradient(ellipse at bottom,#ffd28c36,transparent 72%);opacity:0;}
+#combat-dock .hotbar-slot.active{border:0;background:transparent;box-shadow:none;transform:translateY(-2px);}
+#combat-dock .hotbar-slot.active:after{background:#ffe4a3;height:3px;box-shadow:0 0 7px #eac17e88;}
+#combat-dock .hotbar-slot.active:before{opacity:1;}
+#combat-dock .hotbar-slot>img{inset:0 3px 7px;width:calc(100% - 6px);height:calc(100% - 7px);opacity:.72;filter:drop-shadow(0 2px 2px #17111fcc);}
+#combat-dock .hotbar-slot>svg{opacity:.65;max-height:34px;}
+#combat-dock .hotbar-slot.active>img,#combat-dock .hotbar-slot.active>svg,#combat-dock .hotbar-slot:hover>img,#combat-dock .hotbar-slot:hover>svg{opacity:1;}
+#combat-dock .hotbar-slot kbd{font-size:8px;left:1px;top:0;color:#d1c7b5b0;font-weight:700;text-shadow:0 1px 2px #100c16;}
+#combat-dock .hotbar-slot>b{bottom:7px;right:1px;font-size:10px;}
+#combat-dock .hotbar-cooldown{inset:auto 1px 5px auto;padding:0;background:none;border:0;border-radius:0;box-shadow:none;color:#ffd7a6;font-size:10px;text-shadow:0 1px 3px #1d1124;}
+#combat-dock .combat-readout{font-size:10px;font-weight:700;color:#e3d4bdab;margin-bottom:2px;gap:20px;}
+#combat-dock .combat-readout b{font-weight:700;color:#dfd0b5b3;}
+.score-emblem{width:28px;height:28px;object-fit:contain;vertical-align:middle;margin:-4px 7px -4px 0;filter:drop-shadow(0 1px 2px #100c1b);}
+.emblem-editor{display:grid;grid-template-columns:minmax(190px,1fr) minmax(220px,.95fr);gap:20px;min-width:0;}
+.emblem-editor>div{min-width:0;}.emblem-stage{width:min(100%,310px);aspect-ratio:1;margin:auto;position:relative;overflow:hidden;border:1px solid #d7b57b66;border-radius:18px;background-color:#201b29;background-image:linear-gradient(#cbb18d09 1px,transparent 1px),linear-gradient(90deg,#cbb18d09 1px,transparent 1px);background-size:24px 24px;box-shadow:inset 0 2px 12px #09071199,0 3px #17121f;touch-action:none;cursor:grab;}
+.emblem-stage:active{cursor:grabbing;}.emblem-stage:focus-visible{outline:2px solid #ffe1a0;outline-offset:3px;}.emblem-stage>svg{width:100%;height:100%;display:block;}
+.emblem-history{display:flex;justify-content:center;gap:8px;margin:12px 0;}.emblem-history button,.emblem-layer-actions button,.emblem-shapes button,.emblem-layer{border:1px solid #aa8b676b;border-top-color:#d4b2858c;border-radius:8px;background:linear-gradient(#514345,#362c38);color:#f0dcc0;box-shadow:inset 0 1px #ffe4b512,0 2px #1c1626;cursor:pointer;}
+.emblem-history button{font-size:11px;padding:7px 12px;}.emblem-editor button:disabled{opacity:.35;cursor:default;}.emblem-base{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:9px;align-items:end;}
+.emblem-editor label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:#dbcbb5;min-width:0;}.emblem-editor select{width:100%;min-width:0;padding:7px;font-size:12px;}.emblem-editor input[type=color]{width:100%;height:33px;padding:3px;background:#29212f;border:1px solid #b5996a88;border-radius:7px;cursor:pointer;}
+.emblem-hint{font-size:11px;color:#bdb0a0;line-height:1.5;margin:14px 2px 0;}.emblem-shapes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:0 0 12px;}.emblem-shapes button{aspect-ratio:1;min-width:0;padding:7px;}.emblem-shapes svg{display:block;width:100%;height:100%;max-height:27px;}
+.emblem-layers{display:flex;flex-direction:column;gap:5px;max-height:144px;overflow:auto;scrollbar-width:thin;scrollbar-color:#a4835e #241d2d;padding:2px 4px 5px 0;}.emblem-layer{display:flex;align-items:center;gap:9px;padding:7px 9px;text-align:left;font-size:12px;flex:none;min-width:0;}.emblem-layer i{width:12px;height:12px;border-radius:3px;box-shadow:inset 0 0 0 1px #fff4;}.emblem-layer span{flex:1;}.emblem-layer small{color:#a7998c;font-size:10px;}.emblem-layer.selected{border-color:#f0cb83;background:linear-gradient(#6a5145,#453242);}
+.emblem-transform{display:grid;grid-template-columns:1fr 1fr;gap:10px 15px;margin-top:13px;}.emblem-transform input[type=range]{min-width:0;width:100%;margin:3px 0 0;}.emblem-layer-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;}.emblem-layer-actions button{padding:7px 10px;font-size:11px;}
+.emblem-save{grid-column:1/-1;display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:10px;padding-top:14px;border-top:1px solid #a98c6536;}.emblem-save .text-button{margin-right:auto;font-size:11px;}.emblem-save .secondary-button,.emblem-save .primary-button{width:auto;min-width:95px;min-height:39px;font-size:13px;padding:8px 15px;}
+@media(max-width:650px){#combat-dock #quickbar{gap:4px;}#combat-dock .hotbar-slot{height:44px;}#combat-dock .hotbar-slot>svg{max-height:28px;}#combat-dock .combat-readout{font-size:9px;}.score-emblem{width:23px;height:23px;margin-right:4px;}.emblem-editor{grid-template-columns:1fr;gap:15px;}.emblem-stage{width:min(100%,220px);}.emblem-base{max-width:320px;margin:auto;}.emblem-hint{text-align:center;}.emblem-transform{grid-template-columns:repeat(3,minmax(0,1fr));}.emblem-layers{max-height:112px;}.emblem-save{gap:8px;}.emblem-save .text-button{flex:1 1 100%;margin:0;text-align:left;}}
+@media(prefers-reduced-motion:reduce){#movement-fx{display:none;}#combat-dock .hotbar-slot{transition:none;}}
