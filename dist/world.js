@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=65';
+import {CONFIG} from './shared/config.js?v=68';
 const SHADERS=CONFIG.combat.presentation.shaders;
 import {batchFlames} from './flame-batch.js?v=67';
 import {makeWindCloth} from './wind-cloth.js?v=67';
@@ -6,9 +6,9 @@ import {addRockRunes} from './rock-runes.js?v=24';
 import {buildSky} from './arena-sky.js?v=46';
 import {buildPortal,addStringLights} from './portal.js?v=59';
 import * as THREE from './vendor/three.module.js';
-import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=67';
+import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=68';
 import {mapColliders,createCollision,createMapQueries,objectSurfaces,rampSurfaceHeight,surfaceWorld} from './shared/map-queries.js?v=65';
-import {PREFAB_VISUALS} from './shared/map-schema.js?v=65';
+import {PREFAB_VISUALS} from './shared/map-schema.js?v=68';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
 
 // Every collider in the arena comes from the map: world meshes, model props and station furniture.

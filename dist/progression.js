@@ -1,6 +1,7 @@
+import {sanitizeSkills,skillBonuses,purchaseAccess} from './skills.js?v=68';
 import {sanitizeEmblem} from './emblems.js?v=66';
-import {sanitizeBounties} from './bounties.js?v=65';
-import {CONFIG} from './shared/config.js?v=65';
+import {sanitizeBounties} from './bounties.js?v=68';
+import {CONFIG} from './shared/config.js?v=68';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;
@@ -9,7 +10,7 @@ export const SHOP_WEAPONS=Object.keys(WEAPONS).filter(id=>!MERCHANT.weapons.incl
 export const SPELLS=CONFIG.weapons.spells;
 export const ARMORS=CONFIG.armor.armor;
 export const POTIONS=CONFIG.consumables.potions;
-export function armorReduction(p){return 1-(1-(ARMORS[p.armor]?.reduction??0))*(1-(ARMORS[p.helmet]?.reduction??0));}
+export function armorReduction(p){return 1-(1-(ARMORS[p.armor]?.reduction??0))*(1-(ARMORS[p.helmet]?.reduction??0))*(1-skillBonuses(p.account??p).protection);}
 export const COSMETICS=CONFIG.cosmetics.cosmetics;
 export function purchaseCosmetic(p,id){
  const item=Object.hasOwn(COSMETICS,id)?COSMETICS[id]:null;if(!item)return{ok:false,error:'Unknown effect'};
@@ -27,12 +28,8 @@ export function purchaseNameplate(p,id){
  p.coins-=plate.price;p.ownedNameplates.push(id);p.nameplate=id;return{ok:true};
 }
 export const RARITIES=deepFreeze(Object.fromEntries(Object.entries(CONFIG.progression.rarities).map(([id,{name,color,...rest}])=>[id,{name,color,hex:parseInt(color.slice(1),16),...rest}])));
-const LEVELING=CONFIG.progression.leveling;
-export const LEVELS_PER_RANK=LEVELING.levelsPerRank;
-const stepExp=level=>REWARDS.knockout.points*Math.round(LEVELING.stepBase+LEVELING.stepGrowth*Math.pow(level-1,LEVELING.stepExponent));
-const MAX_LEVEL=CONFIG.progression.ranks.length*LEVELS_PER_RANK,expAtLevel=[0,0];
-for(let level=1;level<MAX_LEVEL;level++)expAtLevel[level+1]=expAtLevel[level]+stepExp(level);
-export const RANKS=CONFIG.progression.ranks.map((rank,index)=>({...rank,min:expAtLevel[index*LEVELS_PER_RANK+1]}));
+import {rankFor,RANKS,LEVELS_PER_RANK} from './leveling.js?v=68';
+export {rankFor,RANKS,LEVELS_PER_RANK};
 export const CHEST_PRICE=CHEST.price;
 export const MATCH_REWARDS=REWARDS.match;
 export const MATCH_RULES=CONFIG.progression.match;
@@ -61,7 +58,7 @@ export const CHARACTERS={
  adventurer:{name:'Adventurer',file:'fighter-adventurer.glb'},ember:{name:'Ember',file:'fighter-ember.glb'},knight:{name:'Knight',file:'actor-knight.glb'},punk:{name:'Punk',file:'fighter-punk.glb'},robot:{name:'Robot',file:'avatar-robot.glb'},astronaut:{name:'Astronaut',file:'avatar-astronaut.glb'},pirate:{name:'Pirate',file:'avatar-pirate.glb'},wizard:{name:'Wizard',file:'avatar-wizard.glb'},mask:{name:'Masked fighter',file:'avatar-mask.glb'},king:{name:'King',file:'fighter-king.glb'},skeleton:{name:'Skeleton',file:'avatar-skeleton.glb'},explorer:{name:'Explorer',file:'avatar-adventurer.glb'},tribal:{name:'Tribal fighter',file:'avatar-tribal.glb'},
 };
 export function cleanName(value){return String(value??'').replace(/[^a-zA-Z0-9_ ]/g,'').trim().slice(0,16)||'Player';}
-export function rankFor(points){const exp=Math.max(0,points);let lo=1,hi=MAX_LEVEL;while(lo<hi){const mid=(lo+hi+1)>>1;if(expAtLevel[mid]<=exp)lo=mid;else hi=mid-1;}const level=lo,index=Math.floor((level-1)/LEVELS_PER_RANK),rank=RANKS[index],next=RANKS[index+1]??null,start=expAtLevel[level],end=level<MAX_LEVEL?expAtLevel[level+1]:start,rankEnd=next?next.min:expAtLevel[MAX_LEVEL];return {...rank,index,next,progress:rankEnd>rank.min?Math.max(0,Math.min(1,(exp-rank.min)/(rankEnd-rank.min))):1,level,levelInRank:level-index*LEVELS_PER_RANK,levelProgress:level>=MAX_LEVEL?1:(exp-start)/(end-start),maxLevel:MAX_LEVEL};}
+
 export const CARRY_SLOTS=INVENTORY.carrySlots,HOTBAR_SLOTS=INVENTORY.hotbarSlots,VAULT_INITIAL=STORAGE.initialSlots,VAULT_STEP=STORAGE.stepSlots;
 export function itemKind(i){return i?.orb?'orb':i?.weapon?'weapon':i?.armor?'armor':i?.potion?'potion':i?.bow?'bow':null;}
 export function itemName(i){return i?.orb?'Charge orb':i?.weapon?weaponStats(i).name:i?.armor?ARMORS[i.armor].name:i?.potion?POTIONS[i.potion].name:i?.bow?'Bow':'Empty';}
@@ -102,7 +99,7 @@ export function makeProfile(saved={},legacy={}){
  p.ownedNameplates=[...new Set(['none',...(Array.isArray(saved.ownedNameplates)?saved.ownedNameplates.filter(id=>Object.hasOwn(NAMEPLATES,id)):[])])];
  p.nameplate=p.ownedNameplates.includes(saved.nameplate)?saved.nameplate:'none';p.cosmetic=p.ownedCosmetics.includes(saved.cosmetic)?saved.cosmetic:'none';
  p.duels={};for(const key of ['played','wins','losses'])p.duels[key]=Number.isFinite(saved.duels?.[key])?Math.max(0,Math.floor(saved.duels[key])):0;
- p.bounties=sanitizeBounties(saved.bounties);p.emblem=sanitizeEmblem(saved.emblem);
+ p.skills=sanitizeSkills(saved.skills);p.bounties=sanitizeBounties(saved.bounties);p.emblem=sanitizeEmblem(saved.emblem);
  syncInventory(p);return p;
 }
 export function equippedItem(p){return p.inventory.find(i=>i.id===p.equipped&&i.weapon)??p.inventory.find(i=>i.weapon);}
@@ -150,9 +147,9 @@ export function takeDeathItems(p){
  const lost=p.inventory.filter(i=>!i.bound),dropped=lost.filter(i=>i.rarity!=='common');p.inventory=p.inventory.filter(i=>i.bound);p.equipped='starter';p.armorItem=p.helmetItem=null;syncInventory(p);p.selectedHotbar=Math.max(0,p.hotbar.indexOf('starter'));return{lost,dropped};
 }
 export function weaponStats(item){const clean=sanitizeItem(item),base=WEAPONS[clean.weapon],rarity=RARITIES[clean.rarity];return {...base,name:clean.forged?clean.title+' '+base.name.toLowerCase():base.name,damage:base.absoluteDamage?base.damage:base.damage+rarity.damage+(clean.rolls?.damage??0),reach:base.reach+(clean.rolls?.reach??0)*(base.kind==='staff'?CHEST.staffReachMultiplier:1),speed:base.speed+(clean.rolls?.speed??0),effects:clean.effects??[],forged:!!clean.forged,rarity:clean.rarity,rarityColor:rarity.color,weapon:clean.weapon};}
-export function purchaseWeapon(p,id){const weapon=WEAPONS[id];if(weapon?.dungeonOnly)return{ok:false,error:weapon.name+' is found only in the Ashen Crypt'};if(MERCHANT.weapons.includes(id))return{ok:false,error:`${weapon.name} is sold only by ${MERCHANT.name}`};if(!weapon||id===STARTER.weapon)return{ok:false,error:`${WEAPONS[STARTER.weapon].name} is in your starter kit`};if(p.coins<weapon.price)return{ok:false,error:`Need ${weapon.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'weapon'),weapon:id,rarity:weapon.rarity??'common'});if(result.ok)p.coins-=weapon.price;return result;}
-export function purchaseArmor(p,id){const armor=ARMORS[id];if(armor?.dungeonOnly)return{ok:false,error:armor.name+' is found only in the Ashen Crypt'};if(!armor?.file)return{ok:false,error:'Choose a chestplate or helmet'};if(p.coins<armor.price)return{ok:false,error:`Need ${armor.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'armor'),armor:id,rarity:'common'});if(result.ok)p.coins-=armor.price;return result;}
-export function purchasePotion(p,id){const potion=POTIONS[id];if(!potion)return{ok:false,error:'Unknown potion'};if(p.coins<potion.price)return{ok:false,error:`Need ${potion.price-p.coins} more coins`};const stack=p.inventory.find(i=>i.potion===id&&!i.bound&&i.count<INVENTORY.stackLimit);if(stack){stack.count++;p.coins-=potion.price;syncInventory(p);return{ok:true,item:stack};}const result=addInventoryItem(p,{id:makeItemId(p,'potion'),potion:id,rarity:'common',count:1});if(result.ok)p.coins-=potion.price;return result;}
+export function purchaseWeapon(p,id){const access=purchaseAccess(p,'weapons',id);if(!access.ok)return access;const weapon=WEAPONS[id];if(weapon?.dungeonOnly)return{ok:false,error:weapon.name+' is found only in the Ashen Crypt'};if(MERCHANT.weapons.includes(id))return{ok:false,error:`${weapon.name} is sold only by ${MERCHANT.name}`};if(!weapon||id===STARTER.weapon)return{ok:false,error:`${WEAPONS[STARTER.weapon].name} is in your starter kit`};if(p.coins<weapon.price)return{ok:false,error:`Need ${weapon.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'weapon'),weapon:id,rarity:weapon.rarity??'common'});if(result.ok)p.coins-=weapon.price;return result;}
+export function purchaseArmor(p,id){const access=purchaseAccess(p,'armor',id);if(!access.ok)return access;const armor=ARMORS[id];if(armor?.dungeonOnly)return{ok:false,error:armor.name+' is found only in the Ashen Crypt'};if(!armor?.file)return{ok:false,error:'Choose a chestplate or helmet'};if(p.coins<armor.price)return{ok:false,error:`Need ${armor.price-p.coins} more coins`};const result=addInventoryItem(p,{id:makeItemId(p,'armor'),armor:id,rarity:'common'});if(result.ok)p.coins-=armor.price;return result;}
+export function purchasePotion(p,id){const access=purchaseAccess(p,'potions',id);if(!access.ok)return access;const potion=POTIONS[id];if(!potion)return{ok:false,error:'Unknown potion'};if(p.coins<potion.price)return{ok:false,error:`Need ${potion.price-p.coins} more coins`};const stack=p.inventory.find(i=>i.potion===id&&!i.bound&&i.count<INVENTORY.stackLimit);if(stack){stack.count++;p.coins-=potion.price;syncInventory(p);return{ok:true,item:stack};}const result=addInventoryItem(p,{id:makeItemId(p,'potion'),potion:id,rarity:'common',count:1});if(result.ok)p.coins-=potion.price;return result;}
 export function consumePotion(p,id,preferred=null){const item=p.inventory.find(i=>i.id===preferred&&i.potion===id&&i.count>0)??p.inventory.find(i=>i.potion===id&&i.count>0);if(!item)return false;item.count--;if(!item.count&&!item.bound)p.inventory.splice(p.inventory.indexOf(item),1);syncInventory(p);return true;}
 export function openChest(p,random=Math.random){
  if(p.inventory.length>=CARRY_SLOTS)return{ok:false,error:'Inventory full · store or sell an item before opening'};

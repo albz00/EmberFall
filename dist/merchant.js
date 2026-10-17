@@ -1,4 +1,5 @@
-import {MERCHANT,WEAPONS,addInventoryItem,makeItemId} from './progression.js?v=66';
+import {purchaseAccess} from './skills.js?v=68';
+import {MERCHANT,WEAPONS,addInventoryItem,makeItemId} from './progression.js?v=68';
 
 // Stock follows real time: each restock cycle draws its weapons and sell-out times from the cycle number,
 // so only the player's own purchases are saved.
@@ -17,7 +18,7 @@ export function merchantStock(state,now=Date.now()){
 export function sanitizeMerchantState(raw){return{cycle:Number.isInteger(raw?.cycle)?raw.cycle:-1,bought:Array.isArray(raw?.bought)?raw.bought.filter(id=>MERCHANT.weapons.includes(id)):[]};}
 
 export function buyExotic(p,state,id,now=Date.now()){
- const stock=merchantStock(state,now),entry=stock.items.find(i=>i.weapon===id);
+ const access=purchaseAccess(p,'weapons',id);if(!access.ok)return access;const stock=merchantStock(state,now),entry=stock.items.find(i=>i.weapon===id);
  if(!entry)return{ok:false,error:`${MERCHANT.name} is not selling that this restock`};
  if(entry.status!=='available')return{ok:false,error:`${WEAPONS[id].name} is sold out`};
  if(p.coins<entry.price)return{ok:false,error:`Need ${(entry.price-p.coins).toLocaleString()} more coins`};

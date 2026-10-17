@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {CONFIG} from '../dist/shared/config.js';
+import {parseConfig,CONFIG_FILES} from '../dist/shared/config-schema.js';
+import {parseDuelMap} from '../dist/shared/map-schema.js';
+import {makeProfile,purchaseWeapon,purchaseArmor,purchasePotion,armorReduction,addInventoryItem,equipInventoryItem,takeDeathItems} from '../dist/progression.js';
+import {rankFor,experienceForLevel} from '../dist/leveling.js';
+import {SKILLS,SKILL_CAPS,buySkill,skillBonuses,purchaseAccess} from '../dist/skills.js';
+import {KITS,movementSpeed,attackDamage,combatKnockback} from '../dist/combat.js';
+import {resetStamina,updateStamina,staminaMaximum} from '../dist/stamina.js';
+import {MINI,MINI_COVER,miniGround,miniBlocked,miniResolve,terraceHeight} from '../dist/duels.js';
+assert.equal(Object.keys(SKILLS).length,60);assert.equal(CONFIG.progression.match.winBy,3);assert(!('rounds' in CONFIG.progression.match));
+const p=makeProfile({coins:1e7}),slots=[...p.carrySlots];assert(!buySkill(p,'mobility-1').ok);assert.equal(p.coins,1e7);assert(!purchaseWeapon(p,'gemblade').ok);assert(!purchaseArmor(p,'gold').ok);assert(!purchasePotion(p,'haste').ok);assert.equal(p.inventory.length,3);assert.equal(p.coins,1e7);
+p.rating=experienceForLevel(2);assert.equal(rankFor(p.rating).level,2);assert(buySkill(p,'mobility-1').ok);assert.equal(p.coins,1e7-SKILLS['mobility-1'].price);const balance=p.coins;assert(!buySkill(p,'mobility-1').ok);assert(!buySkill(p,'mobility-3').ok);assert.equal(p.coins,balance);assert(movementSpeed(KITS.vanguard,0,true,skillBonuses(p))>movementSpeed(KITS.vanguard,0,true));assert.equal(movementSpeed(KITS.vanguard,0,false,skillBonuses(p)),KITS.vanguard.speed);
+p.rating=experienceForLevel(16);assert(purchaseAccess(p,'weapons','gemblade').ok);assert(purchaseWeapon(p,'gemblade').ok);assert(purchaseArmor(p,'gold').ok);assert(purchasePotion(p,'haste').ok);
+// Purchase locks never delete or prevent equipping a found/existing physical item.
+const low=makeProfile();assert(addInventoryItem(low,{id:'found',weapon:'gemblade',rarity:'legendary'}).ok);assert(equipInventoryItem(low,'found').ok);assert.equal(low.equipped,'found');
+p.rating=experienceForLevel(496);for(const id of Object.keys(SKILLS))if(!p.skills.includes(id))assert(buySkill(p,id).ok,id);const bonuses=skillBonuses(p);for(const [key,n]of Object.entries(bonuses)){assert(n>0,key+' has real nodes');assert(n<=SKILL_CAPS[key]+1e-9,key+' is capped');}assert(armorReduction(p)>0);assert(attackDamage(100,KITS.vanguard,false,true,0,bonuses.blockStrength)<attackDamage(100,KITS.vanguard,false,true));
+const actor={account:p,stamina:0};resetStamina(actor);assert(staminaMaximum(actor)>CONFIG.combat.stamina.maximum);assert.equal(actor.stamina,staminaMaximum(actor));const start=actor.stamina;updateStamina(actor,1,1,true);assert(start-actor.stamina<CONFIG.combat.stamina.sprintDrain);actor.stamina=0;actor.staminaReadyAt=0;updateStamina(actor,1,10);assert(actor.stamina>CONFIG.combat.stamina.regenRate);
+const saved=makeProfile(JSON.parse(JSON.stringify(p)));assert.deepEqual(saved.skills,p.skills);const inventory=JSON.stringify(saved.inventory);saved.skills.push('__proto__','fake','mobility-1');const sanitized=makeProfile(saved);assert.equal(sanitized.skills.length,60);assert.equal(JSON.stringify(sanitized.inventory),inventory);takeDeathItems(sanitized);assert.equal(sanitized.skills.length,60);assert.deepEqual(makeProfile({skills:['mobility-10','fake']}).skills,[]);
+const raw={};for(const file of CONFIG_FILES)raw[file]=JSON.parse(await readFile(new URL('../dist/config/'+file+'.json',import.meta.url),'utf8'));const bad=structuredClone(raw);bad.progression.skills.branches[0].nodes[0].requires=['mobility-10'];assert.throws(()=>parseConfig(bad),/cycles/);const unknown=structuredClone(raw);unknown.progression.skills.branches[0].nodes[0].bonuses.infinitePower=1;assert.throws(()=>parseConfig(unknown),/unknown field/);
+assert(MINI.halfDepth>=24);assert(MINI.spawnZ>17);let samples=0;for(const t of MINI.terraces)for(let i=1;i<40;i++){const x=t.x,z=t.z-t.d/2+t.d*i/40,y=terraceHeight(t,x,z);assert(Math.abs(miniGround(x,z,y)-y)<1e-8);assert(!miniBlocked(x,z,y,.2));const p={x,y,z};miniResolve(p);assert(Math.abs(p.x-x)<1e-7&&Math.abs(p.z-z)<1e-7);samples++;}
+assert(miniBlocked(86,0,0,.1),'raised flank has solid sides');assert.equal(miniGround(86,0,1.4),1.4);const badMap=JSON.parse(await readFile(new URL('../dist/maps/duel-courtyard.json',import.meta.url),'utf8'));badMap.spawnZ=badMap.halfDepth;assert.throws(()=>parseDuelMap(badMap),/spawnZ/);
+console.log(JSON.stringify({skills:'passed',nodes:60,levelAndCoinAndPrerequisiteGates:true,noDuplicateCharges:true,allBonusesCapped:true,sharedLevelCurve:true,staminaAndGuardApplied:true,foundGearUsable:true,savesAndDeathPreserveSkills:true,invalidConfigRejected:true,terrainSamples:samples,longerCourtyard:true}));

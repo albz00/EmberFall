@@ -346,8 +346,8 @@
     }
   ],
   "match": {
-    "rounds": 3,
-    "betweenRounds": 4
+    "betweenRounds": 4,
+    "winBy": 3
   },
   "bounties": {
     "activeLimit": 3,
@@ -567,6 +567,821 @@
         "target": 80,
         "coins": 1400,
         "points": 280
+      }
+    ]
+  },
+  "purchaseLevels": {
+    "weapons": {
+      "classic": 1,
+      "dagger": 1,
+      "broadsword": 3,
+      "mace": 8,
+      "gemblade": 16,
+      "frost": 5,
+      "venom": 10,
+      "arcane": 18,
+      "god": 80,
+      "riftfang": 25,
+      "gilded-oath": 30,
+      "thunderclap": 35,
+      "voidsplitter": 42,
+      "eclipse-edge": 50,
+      "cinderfang": 20,
+      "warden-cleaver": 25,
+      "hollow-scepter": 25
+    },
+    "armor": {
+      "none": 1,
+      "leather": 1,
+      "helmet": 3,
+      "iron": 5,
+      "metal": 10,
+      "gold": 16,
+      "cryptguard": 25
+    },
+    "potions": {
+      "healing": 1,
+      "haste": 3,
+      "guard": 5
+    }
+  },
+  "skills": {
+    "caps": {
+      "sprintSpeed": 0.12,
+      "dodgeCost": 0.25,
+      "rollCost": 0.25,
+      "staminaMax": 0.3,
+      "staminaRegen": 0.3,
+      "sprintDrain": 0.25,
+      "protection": 0.12,
+      "knockResistance": 0.2,
+      "blockStrength": 0.18,
+      "bleedResistance": 0.3,
+      "healing": 0.25,
+      "fireResistance": 0.3,
+      "magicDamage": 0.12,
+      "arrowDamage": 0.12,
+      "frostResistance": 0.25
+    },
+    "branches": [
+      {
+        "id": "mobility",
+        "name": "Mobility",
+        "color": "#87e5c8",
+        "icon": "sprint",
+        "nodes": [
+          {
+            "id": "mobility-1",
+            "name": "Fleetfoot",
+            "level": 2,
+            "price": 150,
+            "requires": [],
+            "bonuses": {
+              "sprintSpeed": 0.024
+            }
+          },
+          {
+            "id": "mobility-2",
+            "name": "Sidestep",
+            "level": 4,
+            "price": 300,
+            "requires": [
+              "mobility-1"
+            ],
+            "bonuses": {
+              "dodgeCost": 0.065
+            }
+          },
+          {
+            "id": "mobility-3",
+            "name": "Tumbling",
+            "level": 7,
+            "price": 550,
+            "requires": [
+              "mobility-2"
+            ],
+            "bonuses": {
+              "rollCost": 0.065
+            }
+          },
+          {
+            "id": "mobility-4",
+            "name": "Pursuit",
+            "level": 11,
+            "price": 900,
+            "requires": [
+              "mobility-3"
+            ],
+            "bonuses": {
+              "sprintSpeed": 0.024
+            }
+          },
+          {
+            "id": "mobility-5",
+            "name": "Feint",
+            "level": 17,
+            "price": 1500,
+            "requires": [
+              "mobility-4"
+            ],
+            "bonuses": {
+              "dodgeCost": 0.065
+            }
+          },
+          {
+            "id": "mobility-6",
+            "name": "Momentum",
+            "level": 25,
+            "price": 2500,
+            "requires": [
+              "mobility-5"
+            ],
+            "bonuses": {
+              "rollCost": 0.065
+            }
+          },
+          {
+            "id": "mobility-7",
+            "name": "Windstride",
+            "level": 36,
+            "price": 4000,
+            "requires": [
+              "mobility-6"
+            ],
+            "bonuses": {
+              "sprintSpeed": 0.024
+            }
+          },
+          {
+            "id": "mobility-8",
+            "name": "Footwork",
+            "level": 50,
+            "price": 6500,
+            "requires": [
+              "mobility-7"
+            ],
+            "bonuses": {
+              "dodgeCost": 0.065
+            }
+          },
+          {
+            "id": "mobility-9",
+            "name": "Acrobat",
+            "level": 70,
+            "price": 10000,
+            "requires": [
+              "mobility-8"
+            ],
+            "bonuses": {
+              "rollCost": 0.065
+            }
+          },
+          {
+            "id": "mobility-10",
+            "name": "Gale runner",
+            "level": 95,
+            "price": 16000,
+            "requires": [
+              "mobility-9"
+            ],
+            "bonuses": {
+              "sprintSpeed": 0.024,
+              "dodgeCost": 0.065
+            }
+          }
+        ]
+      },
+      {
+        "id": "endurance",
+        "name": "Endurance",
+        "color": "#8bcbff",
+        "icon": "shield",
+        "nodes": [
+          {
+            "id": "endurance-1",
+            "name": "Deep breath",
+            "level": 2,
+            "price": 150,
+            "requires": [],
+            "bonuses": {
+              "staminaMax": 0.06
+            }
+          },
+          {
+            "id": "endurance-2",
+            "name": "Second wind",
+            "level": 4,
+            "price": 300,
+            "requires": [
+              "endurance-1"
+            ],
+            "bonuses": {
+              "staminaRegen": 0.07
+            }
+          },
+          {
+            "id": "endurance-3",
+            "name": "Steady pace",
+            "level": 7,
+            "price": 550,
+            "requires": [
+              "endurance-2"
+            ],
+            "bonuses": {
+              "sprintDrain": 0.06
+            }
+          },
+          {
+            "id": "endurance-4",
+            "name": "Conditioning",
+            "level": 11,
+            "price": 900,
+            "requires": [
+              "endurance-3"
+            ],
+            "bonuses": {
+              "staminaMax": 0.06
+            }
+          },
+          {
+            "id": "endurance-5",
+            "name": "Recovery",
+            "level": 17,
+            "price": 1500,
+            "requires": [
+              "endurance-4"
+            ],
+            "bonuses": {
+              "staminaRegen": 0.07
+            }
+          },
+          {
+            "id": "endurance-6",
+            "name": "Long run",
+            "level": 25,
+            "price": 2500,
+            "requires": [
+              "endurance-5"
+            ],
+            "bonuses": {
+              "sprintDrain": 0.06
+            }
+          },
+          {
+            "id": "endurance-7",
+            "name": "Iron lungs",
+            "level": 36,
+            "price": 4000,
+            "requires": [
+              "endurance-6"
+            ],
+            "bonuses": {
+              "staminaMax": 0.06
+            }
+          },
+          {
+            "id": "endurance-8",
+            "name": "Renewal",
+            "level": 50,
+            "price": 6500,
+            "requires": [
+              "endurance-7"
+            ],
+            "bonuses": {
+              "staminaRegen": 0.07
+            }
+          },
+          {
+            "id": "endurance-9",
+            "name": "Marathon",
+            "level": 70,
+            "price": 10000,
+            "requires": [
+              "endurance-8"
+            ],
+            "bonuses": {
+              "sprintDrain": 0.06
+            }
+          },
+          {
+            "id": "endurance-10",
+            "name": "Untiring",
+            "level": 95,
+            "price": 16000,
+            "requires": [
+              "endurance-9"
+            ],
+            "bonuses": {
+              "staminaMax": 0.06,
+              "staminaRegen": 0.07
+            }
+          }
+        ]
+      },
+      {
+        "id": "protection",
+        "name": "Protection",
+        "color": "#d9b3ff",
+        "icon": "armor",
+        "nodes": [
+          {
+            "id": "protection-1",
+            "name": "Stone skin",
+            "level": 2,
+            "price": 150,
+            "requires": [],
+            "bonuses": {
+              "protection": 0.024
+            }
+          },
+          {
+            "id": "protection-2",
+            "name": "Rooted",
+            "level": 4,
+            "price": 300,
+            "requires": [
+              "protection-1"
+            ],
+            "bonuses": {
+              "knockResistance": 0.04
+            }
+          },
+          {
+            "id": "protection-3",
+            "name": "Tempered",
+            "level": 7,
+            "price": 550,
+            "requires": [
+              "protection-2"
+            ],
+            "bonuses": {
+              "protection": 0.024
+            }
+          },
+          {
+            "id": "protection-4",
+            "name": "Unbroken",
+            "level": 11,
+            "price": 900,
+            "requires": [
+              "protection-3"
+            ],
+            "bonuses": {
+              "knockResistance": 0.04
+            }
+          },
+          {
+            "id": "protection-5",
+            "name": "Ironbound",
+            "level": 17,
+            "price": 1500,
+            "requires": [
+              "protection-4"
+            ],
+            "bonuses": {
+              "protection": 0.024
+            }
+          },
+          {
+            "id": "protection-6",
+            "name": "Sure footing",
+            "level": 25,
+            "price": 2500,
+            "requires": [
+              "protection-5"
+            ],
+            "bonuses": {
+              "knockResistance": 0.04
+            }
+          },
+          {
+            "id": "protection-7",
+            "name": "Bulwark",
+            "level": 36,
+            "price": 4000,
+            "requires": [
+              "protection-6"
+            ],
+            "bonuses": {
+              "protection": 0.024
+            }
+          },
+          {
+            "id": "protection-8",
+            "name": "Bedrock",
+            "level": 50,
+            "price": 6500,
+            "requires": [
+              "protection-7"
+            ],
+            "bonuses": {
+              "knockResistance": 0.04
+            }
+          },
+          {
+            "id": "protection-9",
+            "name": "Adamant",
+            "level": 70,
+            "price": 10000,
+            "requires": [
+              "protection-8"
+            ],
+            "bonuses": {
+              "protection": 0.024
+            }
+          },
+          {
+            "id": "protection-10",
+            "name": "Fortress",
+            "level": 95,
+            "price": 16000,
+            "requires": [
+              "protection-9"
+            ],
+            "bonuses": {
+              "knockResistance": 0.04
+            }
+          }
+        ]
+      },
+      {
+        "id": "battlecraft",
+        "name": "Battlecraft",
+        "color": "#f2a7b1",
+        "icon": "sword",
+        "nodes": [
+          {
+            "id": "battlecraft-1",
+            "name": "Crossguard",
+            "level": 2,
+            "price": 150,
+            "requires": [],
+            "bonuses": {
+              "blockStrength": 0.035
+            }
+          },
+          {
+            "id": "battlecraft-2",
+            "name": "Coagulate",
+            "level": 4,
+            "price": 300,
+            "requires": [
+              "battlecraft-1"
+            ],
+            "bonuses": {
+              "bleedResistance": 0.06
+            }
+          },
+          {
+            "id": "battlecraft-3",
+            "name": "Parry",
+            "level": 7,
+            "price": 550,
+            "requires": [
+              "battlecraft-2"
+            ],
+            "bonuses": {
+              "blockStrength": 0.035
+            }
+          },
+          {
+            "id": "battlecraft-4",
+            "name": "Battle scars",
+            "level": 11,
+            "price": 900,
+            "requires": [
+              "battlecraft-3"
+            ],
+            "bonuses": {
+              "bleedResistance": 0.06
+            }
+          },
+          {
+            "id": "battlecraft-5",
+            "name": "Deflection",
+            "level": 17,
+            "price": 1500,
+            "requires": [
+              "battlecraft-4"
+            ],
+            "bonuses": {
+              "blockStrength": 0.035
+            }
+          },
+          {
+            "id": "battlecraft-6",
+            "name": "Resilience",
+            "level": 25,
+            "price": 2500,
+            "requires": [
+              "battlecraft-5"
+            ],
+            "bonuses": {
+              "bleedResistance": 0.06
+            }
+          },
+          {
+            "id": "battlecraft-7",
+            "name": "Strong guard",
+            "level": 36,
+            "price": 4000,
+            "requires": [
+              "battlecraft-6"
+            ],
+            "bonuses": {
+              "blockStrength": 0.035
+            }
+          },
+          {
+            "id": "battlecraft-8",
+            "name": "Endure",
+            "level": 50,
+            "price": 6500,
+            "requires": [
+              "battlecraft-7"
+            ],
+            "bonuses": {
+              "bleedResistance": 0.06
+            }
+          },
+          {
+            "id": "battlecraft-9",
+            "name": "Aegis",
+            "level": 70,
+            "price": 10000,
+            "requires": [
+              "battlecraft-8"
+            ],
+            "bonuses": {
+              "blockStrength": 0.035
+            }
+          },
+          {
+            "id": "battlecraft-10",
+            "name": "Unyielding",
+            "level": 95,
+            "price": 16000,
+            "requires": [
+              "battlecraft-9"
+            ],
+            "bonuses": {
+              "bleedResistance": 0.06
+            }
+          }
+        ]
+      },
+      {
+        "id": "alchemy",
+        "name": "Alchemy",
+        "color": "#ffc389",
+        "icon": "potion",
+        "nodes": [
+          {
+            "id": "alchemy-1",
+            "name": "Herbalist",
+            "level": 2,
+            "price": 150,
+            "requires": [],
+            "bonuses": {
+              "healing": 0.05
+            }
+          },
+          {
+            "id": "alchemy-2",
+            "name": "Ember skin",
+            "level": 4,
+            "price": 300,
+            "requires": [
+              "alchemy-1"
+            ],
+            "bonuses": {
+              "fireResistance": 0.06
+            }
+          },
+          {
+            "id": "alchemy-3",
+            "name": "Restoration",
+            "level": 7,
+            "price": 550,
+            "requires": [
+              "alchemy-2"
+            ],
+            "bonuses": {
+              "healing": 0.05
+            }
+          },
+          {
+            "id": "alchemy-4",
+            "name": "Firewalker",
+            "level": 11,
+            "price": 900,
+            "requires": [
+              "alchemy-3"
+            ],
+            "bonuses": {
+              "fireResistance": 0.06
+            }
+          },
+          {
+            "id": "alchemy-5",
+            "name": "Apothecary",
+            "level": 17,
+            "price": 1500,
+            "requires": [
+              "alchemy-4"
+            ],
+            "bonuses": {
+              "healing": 0.05
+            }
+          },
+          {
+            "id": "alchemy-6",
+            "name": "Heat ward",
+            "level": 25,
+            "price": 2500,
+            "requires": [
+              "alchemy-5"
+            ],
+            "bonuses": {
+              "fireResistance": 0.06
+            }
+          },
+          {
+            "id": "alchemy-7",
+            "name": "Renewing draught",
+            "level": 36,
+            "price": 4000,
+            "requires": [
+              "alchemy-6"
+            ],
+            "bonuses": {
+              "healing": 0.05
+            }
+          },
+          {
+            "id": "alchemy-8",
+            "name": "Cinderborn",
+            "level": 50,
+            "price": 6500,
+            "requires": [
+              "alchemy-7"
+            ],
+            "bonuses": {
+              "fireResistance": 0.06
+            }
+          },
+          {
+            "id": "alchemy-9",
+            "name": "Elixir master",
+            "level": 70,
+            "price": 10000,
+            "requires": [
+              "alchemy-8"
+            ],
+            "bonuses": {
+              "healing": 0.05
+            }
+          },
+          {
+            "id": "alchemy-10",
+            "name": "Phoenix pact",
+            "level": 95,
+            "price": 16000,
+            "requires": [
+              "alchemy-9"
+            ],
+            "bonuses": {
+              "fireResistance": 0.06
+            }
+          }
+        ]
+      },
+      {
+        "id": "arcana",
+        "name": "Arcana",
+        "color": "#b4adff",
+        "icon": "orb",
+        "nodes": [
+          {
+            "id": "arcana-1",
+            "name": "Attunement",
+            "level": 2,
+            "price": 150,
+            "requires": [],
+            "bonuses": {
+              "magicDamage": 0.024
+            }
+          },
+          {
+            "id": "arcana-2",
+            "name": "Trueflight",
+            "level": 4,
+            "price": 300,
+            "requires": [
+              "arcana-1"
+            ],
+            "bonuses": {
+              "arrowDamage": 0.03
+            }
+          },
+          {
+            "id": "arcana-3",
+            "name": "Winter ward",
+            "level": 7,
+            "price": 550,
+            "requires": [
+              "arcana-2"
+            ],
+            "bonuses": {
+              "frostResistance": 0.06
+            }
+          },
+          {
+            "id": "arcana-4",
+            "name": "Conduit",
+            "level": 11,
+            "price": 900,
+            "requires": [
+              "arcana-3"
+            ],
+            "bonuses": {
+              "magicDamage": 0.024
+            }
+          },
+          {
+            "id": "arcana-5",
+            "name": "Deadeye",
+            "level": 17,
+            "price": 1500,
+            "requires": [
+              "arcana-4"
+            ],
+            "bonuses": {
+              "arrowDamage": 0.03
+            }
+          },
+          {
+            "id": "arcana-6",
+            "name": "Thaw",
+            "level": 25,
+            "price": 2500,
+            "requires": [
+              "arcana-5"
+            ],
+            "bonuses": {
+              "frostResistance": 0.06
+            }
+          },
+          {
+            "id": "arcana-7",
+            "name": "Spellweaver",
+            "level": 36,
+            "price": 4000,
+            "requires": [
+              "arcana-6"
+            ],
+            "bonuses": {
+              "magicDamage": 0.024
+            }
+          },
+          {
+            "id": "arcana-8",
+            "name": "Hawkeye",
+            "level": 50,
+            "price": 6500,
+            "requires": [
+              "arcana-7"
+            ],
+            "bonuses": {
+              "arrowDamage": 0.03
+            }
+          },
+          {
+            "id": "arcana-9",
+            "name": "Glacial resolve",
+            "level": 70,
+            "price": 10000,
+            "requires": [
+              "arcana-8"
+            ],
+            "bonuses": {
+              "frostResistance": 0.06
+            }
+          },
+          {
+            "id": "arcana-10",
+            "name": "Astral mastery",
+            "level": 95,
+            "price": 16000,
+            "requires": [
+              "arcana-9"
+            ],
+            "bonuses": {
+              "magicDamage": 0.024,
+              "arrowDamage": 0.03
+            }
+          }
+        ]
       }
     ]
   }

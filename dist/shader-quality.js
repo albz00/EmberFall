@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import {CONFIG} from './shared/config.js?v=65';
+import {CONFIG} from './shared/config.js?v=68';
 // HDR glow is extracted and blurred on its own. Scene color stays sharp; no history,
 // velocity buffer, temporal accumulation, depth-of-field or motion blur is used.
 const vertex=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`;

@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=65';
+import {CONFIG} from './shared/config.js?v=68';
 export const BOUNTIES=CONFIG.progression.bounties.contracts;
 export const BOUNTY_LIMIT=CONFIG.progression.bounties.activeLimit;
 const catalog=new Map(BOUNTIES.map(b=>[b.id,b]));

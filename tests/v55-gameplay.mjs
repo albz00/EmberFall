@@ -9,7 +9,7 @@ export async function verifyV55(t,{byId,windowEvents,storage}){
  const descendants=n=>[...n.children,...n.children.flatMap(descendants)];
  const key=(type,code)=>windowEvents[type].forEach(fn=>fn({code,repeat:false,preventDefault(){}}));
  const mouse=(type,button)=>{const listeners=type==='mousedown'?byId.get('game').events.mousedown:windowEvents.mouseup;listeners.forEach(fn=>fn({button}));};
- const reset=()=>{t.closeAll();t.setMode('play');t.admin.god=t.admin.flying=false;t.setFreecam(false,false);t.suspendDungeon();t.keys.clear();Object.assign(t.profile,makeProfile({coins:20000}));t.resetPlayer();t.player.position.set(7,0,10);t.setAim(0,0);for(const f of t.fighters){f.alive=false;f.respawnAt=Infinity;}};
+ const reset=()=>{t.closeAll();t.setMode('play');t.admin.god=t.admin.flying=false;t.setFreecam(false,false);t.suspendDungeon();t.keys.clear();Object.assign(t.profile,makeProfile({coins:20000,rating:1000000}));t.resetPlayer();t.player.position.set(7,0,10);t.setAim(0,0);for(const f of t.fighters){f.alive=false;f.respawnAt=Infinity;}};
  reset();
  // Closing the entrance disables both the prompt and entry function, with a real collider.
  assert.equal(t.world.portal.active,true);assert.equal(t.world.portal.dungeonEnabled,false);assert(t.world.portal.veil);

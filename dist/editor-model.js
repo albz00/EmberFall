@@ -1,5 +1,5 @@
 // Edits raw map JSON, where parented positions stay relative to their parent. No THREE or DOM, so tests drive it directly.
-import {PREFAB_VISUALS,PLACED_FIELDS} from './shared/map-schema.js?v=65';
+import {PREFAB_VISUALS,PLACED_FIELDS} from './shared/map-schema.js?v=68';
 import {createMapQueries} from './shared/map-queries.js?v=65';
 
 export const GRID=.1;

@@ -59,7 +59,7 @@ export async function verifyV58(t){
 export async function verifyV59(t,{byId,windowEvents}){
  const key=(code,repeat=false)=>windowEvents.keydown.forEach(fn=>fn({code,repeat,preventDefault(){}}));
  const all=n=>[n,...(n.children??[]).flatMap(all)];
- t.setMode('play');t.keys.clear();t.admin.god=t.admin.flying=false;Object.assign(t.profile,makeProfile({coins:10000}));t.resetPlayer();t.completeReturn();
+ t.setMode('play');t.keys.clear();t.admin.god=t.admin.flying=false;Object.assign(t.profile,makeProfile({coins:10000,rating:1000000}));t.resetPlayer();t.completeReturn();
  const ledge=t.groundHeight(MAP.spawns.player.x,MAP.spawns.player.z);assert.equal(ledge,20);assert.equal(t.player.position.y,ledge);
  for(const s of t.stations)assert.equal(s.position.y,ledge,'all trading stations follow the taller platform');
  const sign=t.matchSign;assert.equal(sign.position.y,ledge,'2v2 sign follows the ledge');

@@ -1,52 +1,55 @@
+import {InventoryPreview} from './inventory-preview.js?v=68';
+import {createSkillTree} from './skill-tree.js?v=68';
+import {skillBonuses,buySkill,purchaseAccess} from './skills.js?v=68';
 import {MovementStreaks} from './movement-streaks.js?v=67';
 import {createEmblemEditor,emblemDataURL} from './emblems.js?v=66';
-import {AdvancedShaders} from './shader-quality.js?v=65';
-import {BOUNTIES,BOUNTY_LIMIT,acceptBounty,advanceBounties,claimBounty,abandonBounty} from './bounties.js?v=65';
+import {AdvancedShaders} from './shader-quality.js?v=68';
+import {BOUNTIES,BOUNTY_LIMIT,acceptBounty,advanceBounties,claimBounty,abandonBounty} from './bounties.js?v=68';
 import {warmRenderer} from './render-warmup.js?v=64';
 import {rigMaterials,invalidateMaterials,freezeStatic,visualInterval} from './render-work.js?v=62';
 import {createElevationRouter} from './elevation-route.js?v=65';
-import {STAMINA,resetStamina,canSprint,spendStamina,updateStamina} from './stamina.js?v=65';
+import {STAMINA,staminaMaximum,resetStamina,canSprint,spendStamina,updateStamina} from './stamina.js?v=68';
 import {createSceneryIndex} from './scenery-index.js?v=60';
 import {updateBurning} from './burning.js?v=67';
-import {makeCharacterPose,restoreCharacterPose,applyCharacterPose} from './character-pose.js?v=65';
+import {makeCharacterPose,restoreCharacterPose,applyCharacterPose} from './character-pose.js?v=68';
 import {navigationGoal} from './navigation-recovery.js?v=24';
 import {rememberMaterial,restoreMaterial} from './material-state.js?v=24';
-import {makeLocomotionLayer,restoreLocomotion,applyLocomotion} from './locomotion-layer.js?v=65';
+import {makeLocomotionLayer,restoreLocomotion,applyLocomotion} from './locomotion-layer.js?v=68';
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import {clone as cloneRig} from './vendor/SkeletonUtils.js';
-import {buildWorld,makeHeroStage,groundHeight as mainGroundHeight,isLava as mainIsLava,safeZone as mainSafeZone,resolveCollision as mainResolveCollision,blocked as mainBlocked,lineBlocked as mainLineBlocked,lavaDistance as mainLavaDistance} from './world.js?v=67';
-import {MAP,MAP_SOURCE} from './shared/map.js?v=67';
+import {buildWorld,makeHeroStage,groundHeight as mainGroundHeight,isLava as mainIsLava,safeZone as mainSafeZone,resolveCollision as mainResolveCollision,blocked as mainBlocked,lineBlocked as mainLineBlocked,lavaDistance as mainLavaDistance} from './world.js?v=68';
+import {MAP,MAP_SOURCE} from './shared/map.js?v=68';
 import {placeMapProps} from './map-props.js?v=46';
 const routeElevation=createElevationRouter(MAP);
 const LEDGE_EXIT=MAP.ledgeExit,PLAYER_SPAWN=MAP.spawns.player,BOT_SPAWN=MAP.spawns.bots;
-import {MOVEMENT,movementSpeed,gaitStride,KITS,BOT_PROFILES,MAX_BOTS,botProfile,HURT_WINDOW,HITBOX,hitCandidate,rayHitCandidate,resetMeleeState,releaseSprint,updateSprint,consumeSprintHit,damageReady,registerMeleeHit,breakCombo,combatKnockback,steerMovement,decayKnockback,attackDamage,clickInterval,turnAngle,chooseSteer,planLavaJump,MELEE,ROLL,DODGE,GUARD,BOW,BOTS,PRESENTATION} from './combat.js?v=65';
-import {COSMETICS,purchaseCosmetic,NAMEPLATES,purchaseNameplate,WEAPONS,ARMORS,POTIONS,RARITIES,RANKS,CHARACTERS,CHEST_PRICE,EFFECTS,effectDescription,armorReduction,purchasePotion,consumePotion,cleanName,rankFor,LEVELS_PER_RANK,makeProfile,equippedItem,weaponStats,purchaseWeapon,purchaseArmor,openChest,sellItem,rewardKO,recordDeath,CARRY_SLOTS,HOTBAR_SLOTS,itemKind,itemName,itemArtKey,makeItemId,syncInventory,refillStarterPotions,equipInventoryItem,bindHotbar,addInventoryItem,transferItem,moveInventoryItem,expandStorage,takeDeathItems,sanitizeItem,SPELLS,MATCH_REWARDS,MATCH_RULES,MERCHANT,SHOP_WEAPONS} from './progression.js?v=66';
-import {merchantStock,merchantCycle,buyExotic,sanitizeMerchantState,rollProc} from './merchant.js?v=66';
-import {bestItem,choosePurchase,transactBot,tacticalGoal,targetScore} from './bot-strategy.js?v=66';
-import {botReply,ambientReply} from './bot-chat.js?v=66';
+import {MOVEMENT,movementSpeed,gaitStride,KITS,BOT_PROFILES,MAX_BOTS,botProfile,HURT_WINDOW,HITBOX,hitCandidate,rayHitCandidate,resetMeleeState,releaseSprint,updateSprint,consumeSprintHit,damageReady,registerMeleeHit,breakCombo,combatKnockback,steerMovement,decayKnockback,attackDamage,clickInterval,turnAngle,chooseSteer,planLavaJump,MELEE,ROLL,DODGE,GUARD,BOW,BOTS,PRESENTATION} from './combat.js?v=68';
+import {COSMETICS,purchaseCosmetic,NAMEPLATES,purchaseNameplate,WEAPONS,ARMORS,POTIONS,RARITIES,RANKS,CHARACTERS,CHEST_PRICE,EFFECTS,effectDescription,armorReduction,purchasePotion,consumePotion,cleanName,rankFor,LEVELS_PER_RANK,makeProfile,equippedItem,weaponStats,purchaseWeapon,purchaseArmor,openChest,sellItem,rewardKO,recordDeath,CARRY_SLOTS,HOTBAR_SLOTS,itemKind,itemName,itemArtKey,makeItemId,syncInventory,refillStarterPotions,equipInventoryItem,bindHotbar,addInventoryItem,transferItem,moveInventoryItem,expandStorage,takeDeathItems,sanitizeItem,SPELLS,MATCH_REWARDS,MATCH_RULES,MERCHANT,SHOP_WEAPONS} from './progression.js?v=68';
+import {merchantStock,merchantCycle,buyExotic,sanitizeMerchantState,rollProc} from './merchant.js?v=68';
+import {bestItem,choosePurchase,transactBot,tacticalGoal,targetScore} from './bot-strategy.js?v=68';
+import {botReply,ambientReply} from './bot-chat.js?v=68';
 import {makeArrow} from './arrow-model.js?v=67';
-import {GAME_VERSION,CHANGELOG} from './changelog.js?v=67';
+import {GAME_VERSION,CHANGELOG} from './changelog.js?v=68';
 import {installScrollbars} from './scrollbars.js?v=62';
-import {MINI,TEAM_COLORS,inMiniArena,miniBlocked,miniGround,miniResolve,assignTeams,matchOutcome,buildMiniArena,makeMatchSign} from './duels.js?v=67';
+import {MINI,TEAM_COLORS,inMiniArena,miniBlocked,miniGround,miniResolve,assignTeams,matchOutcome,buildMiniArena,makeMatchSign} from './duels.js?v=68';
 import {fitArmor} from './equipment.js?v=24';
-import {rankIcon,drawRankIcon} from './rank-icons.js?v=66';
-import {updateCosmetic,disposeCosmetic,cosmeticPreview} from './cosmetics.js?v=66';
-import {nameplateNode} from './nameplates.js?v=66';
+import {rankIcon,drawRankIcon} from './rank-icons.js?v=68';
+import {updateCosmetic,disposeCosmetic,cosmeticPreview} from './cosmetics.js?v=68';
+import {nameplateNode} from './nameplates.js?v=68';
 import {makeHeadLook,restoreHeadLook,bodyFacing,applyHeadLook} from './head-look.js?v=24';
 
-import {DESTINATIONS,isUnderBridge,streakTier,arrowDamage,createEventState,advanceEvent,EVENT_SCHEDULE,SUPPLIES} from './arena-events.js?v=67';
-import {renderInventoryPanel,slotArt} from './inventory-ui.js?v=66';
+import {DESTINATIONS,isUnderBridge,streakTier,arrowDamage,createEventState,advanceEvent,EVENT_SCHEDULE,SUPPLIES} from './arena-events.js?v=68';
+import {renderInventoryPanel,slotArt} from './inventory-ui.js?v=68';
 import {BackgroundMusic,CaveAmbience,DUEL_TRACKS,LOFI_TRACKS} from './music.js?v=48';
 import {ASCENSION,ascensionStrength,createChargeOrb,updateChargeOrb} from './ascension.js?v=24';
 import {PRESSURE,pressureStrength,pressureMultiplier} from './spiritual-pressure.js?v=24';
-import {HEAVY,chargeProgress,chargedStats,heavyRecovery} from './charged-melee.js?v=65';
+import {HEAVY,chargeProgress,chargedStats,heavyRecovery} from './charged-melee.js?v=68';
 import {Ragdolls,restoreImpactPose,triggerImpact,applyImpactPose} from './impact-motion.js?v=24';
-import {CRYPT,DUNGEON,inDungeon,dungeonPoint,createDungeonRun,nextDungeonEncounter,dungeonBlocked,dungeonResolve,dungeonGround,dungeonIsLava,dungeonLavaDistance,roomContains,seededRandom,depthMultiplier,markDungeonKill,rollDungeonRewards} from './dungeon.js?v=66';
-import {buildDungeon,createDungeonBolt,decorateDungeonEnemy} from './dungeon-world.js?v=66';
-import {planDungeonSpell,waveHitsPlayer} from './dungeon-magic.js?v=66';
+import {CRYPT,DUNGEON,inDungeon,dungeonPoint,createDungeonRun,nextDungeonEncounter,dungeonBlocked,dungeonResolve,dungeonGround,dungeonIsLava,dungeonLavaDistance,roomContains,seededRandom,depthMultiplier,markDungeonKill,rollDungeonRewards} from './dungeon.js?v=68';
+import {buildDungeon,createDungeonBolt,decorateDungeonEnemy} from './dungeon-world.js?v=68';
+import {planDungeonSpell,waveHitsPlayer} from './dungeon-magic.js?v=68';
 
-import {findAimFocus} from './aim-focus.js?v=65';
+import {findAimFocus} from './aim-focus.js?v=68';
 const $=id=>document.getElementById(id), canvas=$('game'), touch=matchMedia('(pointer: coarse)').matches;
 const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}};
 const write=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch{}};
@@ -68,7 +71,7 @@ const actorFrustum=new THREE.Frustum(),actorViewMatrix=new THREE.Matrix4(),actor
 let koUntil=0,koSequence=0;let mainSceneryIndex=null;const dungeonSceneryCache=new WeakMap();
 let firstPersonSwingSequence=0;let aimTarget=null,aimTargetReachable=false;
 let chatOpen=false,pointerLockFailed=false,lockRequested=false,dragLook=false,returnAt=0,lastCombat=-20,lastFootstep=0,lavaTick=-10,healUntil=0,botChatAt=18;
-let inventorySelection=null,inventoryView=null,currentLoot=null,hotbarSignature='',equipmentSignature='';const lootDrops=[];
+let inventoryPreview=null,inventorySelection=null,inventoryView=null,currentLoot=null,hotbarSignature='',equipmentSignature='';const lootDrops=[];
 let selectedSlot='sword',bowDrawAt=-1,arrowCount=BOW.quiver,arrowRefillAt=0,scorePinned=false,playerAvatar=null,nockedArrow=null,bowString=null;
 let arenaEvent=createEventState(0);
 let lastCast=-20,potionUsedAt=-20,usedPotion='healing',potionHeld=null;
@@ -83,7 +86,7 @@ const pumpkins=[],projectiles=[],supplyDrops=[],volcanoes=[],cameraObstacles=[],
 const V3=THREE.Vector3,keys=new Set(),models={},thumbs={},fighters=[],messages=[],clickTimes=[],pendingChats=[],rings=[];
 // Bots, the ledge exit and returns share the surface height under the player spawn, as the map validator requires.
 const LEDGE_HEIGHT=mainGroundHeight(PLAYER_SPAWN.x,PLAYER_SPAWN.z);
-const player={position:new V3(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z),velocity:new V3(),knock:new V3(),grounded:true,crouched:false,health:KITS[selectedKit].health,maxHealth:KITS[selectedKit].health,kills:0,deaths:0,streak:0,runKills:0,potions:3,lastDamage:-20,lastImpact:-20,jumps:0,effects:{},slowUntil:0};
+const player={account:profile,position:new V3(PLAYER_SPAWN.x,LEDGE_HEIGHT,PLAYER_SPAWN.z),velocity:new V3(),knock:new V3(),grounded:true,crouched:false,health:KITS[selectedKit].health,maxHealth:KITS[selectedKit].health,kills:0,deaths:0,streak:0,runKills:0,potions:3,lastDamage:-20,lastImpact:-20,jumps:0,effects:{},slowUntil:0};
 const freecam={active:false,position:new V3(),yaw:0,pitch:0};
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x514954);scene.fog=new THREE.FogExp2(0x514954,.014);
 const calmFog=new THREE.Color(0x514954),bloodFog=new THREE.Color(0x5c303d);
@@ -152,7 +155,7 @@ function teleportMatch(){
  clearDuelShots();ragdolls.clear();resetPlayer();const teams=duel.teams;duel.phase='countdown';duel.at=time+3;
  for(const [team,actors]of Object.entries(teams))for(const [i,a]of actors.entries()){
   if(a!==player){spawnFighter(a);a.signup=null;a.state='fight';a.purchase=null;a.shopComplete=true;a.target=null;a.planUntil=0;}
-  resetMeleeState(a);a.team=team;a.position.set(MINI.x+(i?2:-2),0,team==='blue'?9.5:-9.5);a.velocity.set(0,0,0);a.knock.set(0,0,0);a.grounded=true;a.jumps=0;a.effects={};a.poison=null;a.slowUntil=0;
+  resetMeleeState(a);a.team=team;a.position.set(MINI.x+(i?2:-2),0,team==='blue'?MINI.spawnZ:-MINI.spawnZ);a.velocity.set(0,0,0);a.knock.set(0,0,0);a.grounded=true;a.jumps=0;a.effects={};a.poison=null;a.slowUntil=0;
   if(a!==player){a.aimAngle=team==='blue'?Math.PI:0;a.rig.rotation.y=a.aimAngle;a.animator.look.bodyYaw=a.aimAngle;animateActor(a,a.stats.kind==='staff'?'CastIdle':'Idle_Sword');}
  }
  yaw=0;pitch=-.04;player.maxHealth=KITS[selectedKit].health;arrowCount=BOW.quiver;lastCombat=time-20;returnAt=0;$('pause-spawn').textContent='Leave match';
@@ -161,7 +164,7 @@ function teleportMatch(){
 function finishRound(winner){
  if(duel.phase!=='active')return;duel.roundWinner=winner;if(winner!=='draw')duel.scores[winner]++;
  clearDuelShots();keys.clear();blockHeld=false;for(const a of [player,...duel.queue]){a.effects={};a.poison=null;a.velocity.set(0,0,0);a.knock.set(0,0,0);}
- if(duel.round>=MATCH_RULES.rounds){finishMatch(duel.scores.blue===duel.scores.red?'draw':duel.scores.blue>duel.scores.red?'blue':'red');return;}
+ if(Math.abs(duel.scores.blue-duel.scores.red)>=MATCH_RULES.winBy){finishMatch(duel.scores.blue>duel.scores.red?'blue':'red');return;}
  duel.phase='round-result';duel.at=time+MATCH_RULES.betweenRounds;chatSystem('Round '+duel.round+' · '+(winner==='draw'?'Draw':winner==='blue'?'Blue wins':'Red wins')+' · '+duel.scores.blue+'–'+duel.scores.red);updateDuelHud();
 }
 function finishMatch(winner,forfeit=false){
@@ -184,7 +187,7 @@ function leaveMatch(){
  if(mode==='play'||mode==='pause'){mode='play';closeAll();completeReturn();player.health=KITS[selectedKit].health;updateHud();}music?.use(LOFI_TRACKS);
 }
 function updateDuel(dt){
- miniArena.root.visible=isDueling();if(duel.phase==='idle')return;
+ miniArena.root.visible=isDueling();miniArena.update(time);if(duel.phase==='idle')return;
  if(duel.phase==='assembling'&&time>=duel.at)teleportMatch();
  else if(duel.phase==='countdown'&&time>=duel.at){duel.phase='active';duel.at=time+MINI.duration;duel.startedAt=time;for(const f of duel.queue){f.lastImpact=time;f.nextClick=time+f.skill.reaction;f.nextArrow=time+.4;f.nextJump=time+.3;}chatSystem('2v2 started. Friendly fire is off.');}
  else if(duel.phase==='active'){const result=matchOutcome(duel.teams,player,time>=duel.at);if(result)finishRound(result);}
@@ -195,7 +198,7 @@ function updateDuel(dt){
 function updateDuelHud(){
  const active=isDueling();$('duel-hud').classList.toggle('hidden',!active);if(!active){$('duel-banner').classList.add('hidden');return;}
  const names=team=>duel.teams[team].map(a=>(a===player?profile.name:a.name)+((a===player?a.health>0:a.alive)?'':' ×')).join(' · ');
- $('duel-blue').textContent=names('blue');$('duel-red').textContent=names('red');const seconds=Math.max(0,Math.ceil(duel.at-time));$('duel-clock').textContent=duel.scores.blue+'–'+duel.scores.red+' · '+duel.round+'/'+MATCH_RULES.rounds+' · '+(duel.phase==='active'?Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0'):'2v2');
+ $('duel-blue').textContent=names('blue');$('duel-red').textContent=names('red');const seconds=Math.max(0,Math.ceil(duel.at-time));$('duel-clock').textContent=duel.scores.blue+'–'+duel.scores.red+' · '+'Round '+duel.round+' · lead by '+MATCH_RULES.winBy+' · '+(duel.phase==='active'?Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0'):'2v2');
  const banner=$('duel-banner');banner.classList.toggle('hidden',duel.phase==='active'&&player.health>0);
  if(duel.phase==='assembling')banner.textContent='Match starts in '+seconds;
  else if(duel.phase==='countdown')banner.textContent=seconds||'Fight';
@@ -293,7 +296,7 @@ function updateDungeonEnemy(f,dt){
  }
  if(f.boss){f.knock.multiplyScalar(Math.exp(-DUNGEON.staggerResistance*dt*12));if(f.velocity.y>0&&time-f.lastImpact<.2)f.velocity.y=Math.min(f.velocity.y,4);}
  actorPhysics(f,dt);if(time>f.animUntil&&!casting)locomotion(f,f,Math.hypot(f.velocity.x,f.velocity.z)>.7);
- if(isLava(f.position.x,f.position.z,f.position.y)&&time-(f.lastLava??0)>.48){f.lastLava=time;ignite(f);f.hp-=9;if(f.hp<=0)killFighter(f,null);}
+ if(isLava(f.position.x,f.position.z,f.position.y)&&time-(f.lastLava??0)>.48){f.lastLava=time;ignite(f);f.hp-=9*(1-skillBonuses(f.account).fireResistance);if(f.hp<=0)killFighter(f,null);}
  f.healthFill.scale.x=Math.max(0,f.hp/f.kit.health);f.healthFill.position.x=-(1-f.healthFill.scale.x)*.38;f.healthBg.quaternion.copy(camera.quaternion);f.healthBg.visible=!f.boss;f.label.visible=!f.boss&&distance<30;f.label.material.opacity=1;
 }
 function hitDungeonSpell(cast,spec,point,amount=spec.damage,periodic=false){
@@ -484,7 +487,7 @@ function drawBounties(content){
   if(entry)card.querySelector('.bounty-abandon').addEventListener('click',()=>{if(!atShops())return;abandonBounty(profile,b.id);persist();bountySignature='';updateHud();renderShop();});grid.append(card);
  }content.append(grid);
 }
-const MENU_TABS={personal:['inventory','cosmetics','nameplates','emblem','ranks'],chest:['storage'],equipment:['weapons','armor'],potions:['potions'],merchant:['exotics','bounties']};
+const MENU_TABS={personal:['inventory','skills','cosmetics','nameplates','emblem','ranks'],chest:['storage'],equipment:['weapons','armor'],potions:['potions'],merchant:['exotics','bounties']};
 function showShop(tab='inventory'){
  if(tab==='match'){openMatches();return;}
  const context=['storage','chest'].includes(tab)?'chest':['weapons','armor'].includes(tab)?'equipment':tab==='potions'?'potions':['exotics','bounties'].includes(tab)?'merchant':'personal';
@@ -507,9 +510,13 @@ function dropInventoryItem(id=profile.hotbar[profile.selectedHotbar]){
  const at=player.position.clone().add(new V3(-Math.sin(yaw)*1.2,0,-Math.cos(yaw)*1.2));
  if(!spawnLoot(item,at))return;profile.inventory.splice(profile.inventory.indexOf(item),1);syncInventory(profile);inventorySelection=null;saveLoot();inventoryChanged({ok:true});toast('Dropped '+itemName(item));updateHud();
 }
+function mountInventoryPreview(host){
+ if(!loaded)return;if(!inventoryPreview)inventoryPreview=new InventoryPreview({createRenderer:()=>new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'}),createActor:()=>{const template=models[CHARACTERS[profile.character].file],rig=prepareModel(cloneRig(template.scene)),root=new THREE.Group();root.add(rig);attachGear(rig,equippedItem(profile),profile.armor,profile.helmet);const mixer=new THREE.AnimationMixer(rig),clip=THREE.AnimationClip.findByName(template.animations,'Idle')??THREE.AnimationClip.findByName(template.animations,'Idle_Sword');if(clip)mixer.clipAction(clip).play();return{root,mixer,dispose(){mixer.stopAllAction();mixer.uncacheRoot(rig);disposeMaterials(rig);}};}});
+ inventoryPreview.mount(host,JSON.stringify([profile.character,profile.equipped,profile.armorItem,profile.helmetItem]));
+}
 function renderCarriedInventory(storage=false){
 
- inventoryView=renderInventoryPanel({root:$('shop-content'),profile,thumbs,storage,canTrade:atShops()&&!storage,selection:inventorySelection,details:itemDetails,
+ inventoryView=renderInventoryPanel({root:$('shop-content'),profile,thumbs,storage,canTrade:atShops()&&!storage,selection:inventorySelection,details:itemDetails,mountPreview:mountInventoryPreview,hidePreview:()=>inventoryPreview?.hide(),
   onSelect:(id,stored)=>{inventorySelection=id?{id,stored}:null;inventoryView?.select(id,stored);},onEquip:selectInventoryItem,
   onTransfer:(id,toVault)=>{if(!atShops())return;inventorySelection=null;inventoryChanged(transferItem(profile,id,toVault));},
   onSell:(id,stored)=>{if(!atShops())return;const result=sellItem(profile,id,stored);if(result.ok){inventorySelection=null;sound('buy');toast('+'+result.coins+' coins');}inventoryChanged(result);},
@@ -517,28 +524,29 @@ function renderCarriedInventory(storage=false){
   onMove:(id,from,to,index)=>{if((from||to)&&!atShops())return;const result=moveInventoryItem(profile,id,from,to,index);if(result.ok)inventorySelection=null;inventoryChanged(result);},onDrop:dropInventoryItem,onRoll:rollStorageChest});
 }
 function renderShop(){const panel=$('shop-modal'),top=panel.scrollTop,left=$('shop-tabs').scrollLeft;drawShop();panel.scrollTop=top;$('shop-tabs').scrollLeft=left;}
-function drawShop(){inventoryView=null;updateProfileUI();$('shop-title').textContent=menuContext==='personal'?'Your character':menuContext==='chest'?'Chest':menuContext==='potions'?'Potions':menuContext==='merchant'?MERCHANT.name:'Weapons & armor';$('shop-modal').classList.toggle('inventory-modal',shopTab==='inventory'||shopTab==='storage');const allowed=MENU_TABS[menuContext];document.querySelectorAll('[data-tab]').forEach(b=>{b.hidden=!allowed.includes(b.dataset.tab);b.classList.toggle('selected',b.dataset.tab===shopTab);});$('shop-tabs').hidden=allowed.length===1;$('personal-settings').hidden=menuContext!=='personal';const content=$('shop-content');content.replaceChildren();
+function drawShop(){inventoryView?.destroy();inventoryView=null;updateProfileUI();$('shop-title').textContent=menuContext==='personal'?'Your character':menuContext==='chest'?'Chest':menuContext==='potions'?'Potions':menuContext==='merchant'?MERCHANT.name:'Weapons & armor';$('shop-modal').classList.toggle('inventory-modal',shopTab==='inventory'||shopTab==='storage');$('shop-modal').classList.toggle('skills-modal',shopTab==='skills');const allowed=MENU_TABS[menuContext];document.querySelectorAll('[data-tab]').forEach(b=>{b.hidden=!allowed.includes(b.dataset.tab);b.classList.toggle('selected',b.dataset.tab===shopTab);});$('shop-tabs').hidden=allowed.length===1;$('personal-settings').hidden=menuContext!=='personal';const content=$('shop-content');content.replaceChildren();
  if(shopTab==='weapons'||shopTab==='armor'){
   const armorShop=shopTab==='armor',grid=document.createElement('div');grid.className='equipment-grid';
   for(const [id,w]of armorShop?Object.entries(ARMORS):SHOP_WEAPONS.map(id=>[id,WEAPONS[id]])){
-   if(armorShop&&(!w.file||w.dungeonOnly))continue;const starter=!armorShop&&id==='classic',count=profile.inventory.filter(i=>armorShop?i.armor===id:i.weapon===id).length,card=document.createElement('article');card.className='equipment-card'+(w.absoluteDamage?' sovereign-card':'');
-   card.innerHTML=`<div class="equipment-art">${itemArt(armorShop?'armor-'+id:id,armorShop?'armor':'sword')}</div><h3>${w.name}</h3><p>${armorShop?Math.round(w.reduction*100)+'% damage reduction':w.damage.toLocaleString()+' damage · '+w.reach.toFixed(1)+'m '+(w.kind==='staff'?'range':'reach')}</p><p>${count} carried</p>${armorShop?'':itemDetails(w)}<button class="secondary-button" ${starter?'disabled':''}>${starter?'Starter kit':'Buy '+icon('coin')+' '+w.price.toLocaleString()}</button>`;
+   if(armorShop&&(!w.file||w.dungeonOnly))continue;const access=purchaseAccess(profile,armorShop?'armor':'weapons',id),starter=!armorShop&&id==='classic',count=profile.inventory.filter(i=>armorShop?i.armor===id:i.weapon===id).length,card=document.createElement('article');card.className='equipment-card'+(w.absoluteDamage?' sovereign-card':'');
+   card.innerHTML=`<div class="equipment-art">${itemArt(armorShop?'armor-'+id:id,armorShop?'armor':'sword')}</div><h3>${w.name}</h3><p>${armorShop?Math.round(w.reduction*100)+'% damage reduction':w.damage.toLocaleString()+' damage · '+w.reach.toFixed(1)+'m '+(w.kind==='staff'?'range':'reach')}</p><p>${count} carried · Buy at level ${access.level}</p>${armorShop?'':itemDetails(w)}<button class="secondary-button" ${starter||!access.ok?'disabled':''}>${starter?'Starter kit':!access.ok?'Level '+access.level+' required':'Buy '+icon('coin')+' '+w.price.toLocaleString()}</button>`;
    card.querySelector('button').addEventListener('click',()=>{if(!atShops())return;const result=armorShop?purchaseArmor(profile,id):purchaseWeapon(profile,id);if(!result.ok){toast(result.error,1800,'error');return;}persist();updateHud();renderShop();sound('buy');toast(w.name+' added to inventory');});grid.append(card);
   }content.append(grid);
  }
+ else if(shopTab==='skills'){createSkillTree(content,{profile,onBuy:id=>{const result=buySkill(profile,id);if(!result.ok){toast(result.error,1800,'error');return;}persist();updateHud();renderShop();sound('buy');}});}
  else if(shopTab==='bounties'){drawBounties(content);}
  else if(shopTab==='exotics'){
   const stock=merchantStock(merchantState),bar=document.createElement('div');bar.className='cosmetics-summary';bar.innerHTML=`<span class="merchant-restock">Restocks in ${restockClock(stock)}</span>`;content.append(bar);
   const grid=document.createElement('div');grid.className='equipment-grid';
-  for(const entry of stock.items){const id=entry.weapon,w=WEAPONS[id],stats=weaponStats({weapon:id,rarity:w.rarity}),open=entry.status==='available',card=document.createElement('article');card.className='equipment-card exotic-card'+(open?'':' sold-out');
-   card.innerHTML=`<div class="equipment-art">${itemArt(id,w.icon)}</div><h3>${w.name}</h3><p>${stats.damage} damage · ${stats.reach.toFixed(1)}m reach</p><p class="exotic-stock ${open?'':'unavailable'}">${open?'1 left':entry.status==='bought'?'Bought':'Sold out'}</p>${itemDetails(stats)}<button class="secondary-button" ${open?'':'disabled'}>${open?'Buy '+icon('coin')+' '+entry.price.toLocaleString():'Sold out'}</button>`;
+  for(const entry of stock.items){const id=entry.weapon,w=WEAPONS[id],access=purchaseAccess(profile,'weapons',id),stats=weaponStats({weapon:id,rarity:w.rarity}),open=entry.status==='available',card=document.createElement('article');card.className='equipment-card exotic-card'+(open?'':' sold-out');
+   card.innerHTML=`<div class="equipment-art">${itemArt(id,w.icon)}</div><h3>${w.name}</h3><p>${stats.damage} damage · ${stats.reach.toFixed(1)}m reach</p><p class="exotic-stock ${open?'':'unavailable'}">${open?'1 left':entry.status==='bought'?'Bought':'Sold out'}</p>${itemDetails(stats)}<button class="secondary-button" ${open&&access.ok?'':'disabled'}>${open&&!access.ok?'Level '+access.level+' required':open?'Buy '+icon('coin')+' '+entry.price.toLocaleString():'Sold out'}</button>`;
    card.querySelector('button').addEventListener('click',()=>{if(!atShops())return;const result=buyExotic(profile,merchantState,id);if(!result.ok){toast(result.error,1800,'error');renderShop();return;}write('emberfall.merchant.v1',merchantState);persist();updateHud();renderShop();syncMerchantDisplays();sound('buy');toast(w.name+' added to inventory');if(merchant)playMerchant('Wave');});grid.append(card);
   }content.append(grid);merchantShopSignature=stockSignature(stock);
  }
  else if(shopTab==='potions'){
   const grid=document.createElement('div');grid.className='equipment-grid';
-  for(const [id,p]of Object.entries(POTIONS)){const active=profile.selectedPotion===id,card=document.createElement('article');card.className='equipment-card'+(active?' equipped':'');
-   card.innerHTML=`<div class="equipment-art">${itemArt('potion-'+id,'potion')}</div><h3>${p.name}</h3><p>${p.description}</p><div class="potion-stock">${profile.potions[id]} owned</div><div class="item-actions"><button class="secondary-button select-potion">${active?'Selected':'Select'}</button><button class="secondary-button buy-potion">${icon('coin')} ${p.price}</button></div>`;
+  for(const [id,p]of Object.entries(POTIONS)){const access=purchaseAccess(profile,'potions',id),active=profile.selectedPotion===id,card=document.createElement('article');card.className='equipment-card'+(active?' equipped':'');
+   card.innerHTML=`<div class="equipment-art">${itemArt('potion-'+id,'potion')}</div><h3>${p.name}</h3><p>${p.description}</p><div class="potion-stock">${profile.potions[id]} owned</div><div class="item-actions"><button class="secondary-button select-potion">${active?'Selected':'Select'}</button><button class="secondary-button buy-potion" ${access.ok?'':'disabled'}>${access.ok?icon('coin')+' '+p.price:'Level '+access.level+' required'}</button></div>`;
    card.querySelector('.select-potion').disabled=active;card.querySelector('.select-potion').addEventListener('click',()=>{profile.selectedPotion=id;persist();updatePotionArt();updateHud();renderShop();});card.querySelector('.buy-potion').setAttribute('aria-label','Buy '+p.name+' for '+p.price+' coins');card.querySelector('.buy-potion').addEventListener('click',()=>{const result=purchasePotion(profile,id);if(!result.ok){toast(result.error,1800,'error');return;}profile.selectedPotion=id;player.potions=profile.potions.healing;persist();updatePotionArt();updateHud();renderShop();sound('buy');});grid.append(card);
   }content.append(grid);const note=document.createElement('p');note.className='potion-help';note.textContent='X drinks · Z changes potion. Healing potions refill to 3 on the ledge; extra stock is saved.';content.append(note);
  }
@@ -599,7 +607,7 @@ function stepInput(side){
  if(mode!=='play'||chatOpen||freecam.active||admin.flying||player.health<=0||!player.grounded||player.crouched||player.inLava||time<(player.nextRoll??0)||isDueling()&&duel.phase!=='active')return false;
  const direction=new V3(Math.cos(yaw)*side,0,-Math.sin(yaw)*side);
  if(blocked(player.position.x+direction.x*DODGE.minimumClearance,player.position.z+direction.z*DODGE.minimumClearance,player.position.y,.38))return false;
- if(!spendStamina(player,STAMINA.dodgeCost,time,admin.god))return false;releaseSprint(player);player.stepDirection=direction;player.stepSide=side;player.stepStarted=time;player.stepUntil=time+DODGE.duration;player.nextRoll=time+DODGE.cooldown;returnAt=0;sound('sprint');return true;
+ if(!spendStamina(player,STAMINA.dodgeCost*(1-skillBonuses(profile).dodgeCost),time,admin.god))return false;releaseSprint(player);player.stepDirection=direction;player.stepSide=side;player.stepStarted=time;player.stepUntil=time+DODGE.duration;player.nextRoll=time+DODGE.cooldown;returnAt=0;sound('sprint');return true;
 }
 function rollInput(){
  if(mode!=='play'||chatOpen||freecam.active||admin.flying||player.health<=0||player.crouched||player.inLava||time<(player.nextRoll??0)||time<(player.rollUntil??0)||!player.grounded&&player.rollUsed||isDueling()&&duel.phase!=='active')return false;
@@ -607,7 +615,7 @@ function rollInput(){
  if(Math.hypot(x,z)<.1){x=0;z=-1;}const length=Math.hypot(x,z);x/=length;z/=length;
  const direction=new V3(x*Math.cos(yaw)+z*Math.sin(yaw),0,-x*Math.sin(yaw)+z*Math.cos(yaw));
  if(blocked(player.position.x+direction.x*ROLL.minimumClearance,player.position.z+direction.z*ROLL.minimumClearance,player.position.y,.38))return false;
- if(!spendStamina(player,STAMINA.rollCost,time,admin.god))return false;cancelPotionVisual();cancelAttack(true);releaseSprint(player);blockHeld=false;returnAt=0;player.rollDirection=direction;player.rollStarted=time;player.rollUntil=time+ROLL.duration;player.nextRoll=time+ROLL.cooldown;player.rollUsed=true;
+ if(!spendStamina(player,STAMINA.rollCost*(1-skillBonuses(profile).rollCost),time,admin.god))return false;cancelPotionVisual();cancelAttack(true);releaseSprint(player);blockHeld=false;returnAt=0;player.rollDirection=direction;player.rollStarted=time;player.rollUntil=time+ROLL.duration;player.nextRoll=time+ROLL.cooldown;player.rollUsed=true;
  if(playerAvatar){playerAvatar.emoting=false;playerAvatar.animUntil=player.rollUntil;playerAvatar.rig.rotation.y=Math.atan2(direction.x,direction.z);animateActor(playerAvatar,'Roll',true,(playerAvatar.animator.actions.Roll?.getClip().duration??1.46)/ROLL.duration);}sound('sprint');return true;
 }
 function syncViewControls(){
@@ -689,7 +697,7 @@ function executeCommand(text){
 }
 $('chat-open').addEventListener('click',()=>openChat());$('chat-form').addEventListener('submit',e=>{e.preventDefault();const text=$('chat-input').value.trim().slice(0,140);if(text){if(text.startsWith('/'))executeCommand(text);else{addChat({name:profile.name,rating:profile.rating,text});queueReply(text);}}if(chatOpen)closeChat(mode==='play');else if(mode==='play')requestLock();});
 
-function closeAll(){inventoryView=null;inventorySelection=null;document.querySelectorAll('.modal').forEach(e=>e.classList.add('hidden'));$('modal-backdrop').classList.add('hidden');activeModal=null;}
+function closeAll(){inventoryView?.destroy();inventoryView=null;inventorySelection=null;document.querySelectorAll('.modal').forEach(e=>e.classList.add('hidden'));$('modal-backdrop').classList.add('hidden');activeModal=null;}
 function openModal(id){blockRequested=false;cancelPotionVisual();aimTarget=null;aimTargetReachable=false;aimFocus.visible=false;$('crosshair').classList.remove('target-hover','target-ready');cancelAttack();bowDrawAt=-1;if(chatOpen)closeChat(false);if(mode==='play'){mode='pause';keys.clear();blockHeld=false;document.exitPointerLock?.();}document.querySelectorAll('.modal').forEach(e=>e.classList.add('hidden'));$(id+'-modal').classList.remove('hidden');$('modal-backdrop').classList.remove('hidden');activeModal=id;if(id==='pause')setTimeout(()=>$('resume').focus(),20);}
 function closeModal(){const previous=activeModal;closeAll();if(mode==='pause'){if(previous==='shop')resume();else openModal('pause');}}
 function requestLock(){if(touch)return;pointerLockFailed=false;lockRequested=true;try{const p=canvas.requestPointerLock?.();p?.catch(()=>{lockRequested=false;pointerLockFailed=true;toast('Drag to look · click to strike',3000);});if(!canvas.requestPointerLock){pointerLockFailed=true;lockRequested=false;}}catch{pointerLockFailed=true;lockRequested=false;}}
@@ -781,7 +789,7 @@ function ignite(actor,owner=null,duration=4){
  actor.effects??={};const previous=actor.effects.fire;
  actor.effects.fire={type:'fire',level:previous?.level??0,owner:previous?.owner??owner,until:Math.max(previous?.until??0,time+duration),next:previous?.next??time+.75,interval:.75,ticks:Math.max(previous?.ticks??0,Math.ceil(duration/.75)),damage:previous?.damage??4};
 }
-function updatePlayer(dt){updateGuard();const strideStart=player.position.clone();if(isDueling()&&(duel.phase!=='active'||player.health<=0)){player.velocity.set(0,0,0);return;}updateAilments(player,dt);if(player.health<=0)return;if(!freecam.active)player.crouched=!admin.flying&&time>=(player.rollUntil??0)&&!chatOpen&&(crouchTouch||keys.has('KeyC')||keys.has('ControlLeft')||keys.has('ControlRight'));crouchBlend=THREE.MathUtils.lerp(crouchBlend,player.crouched?1:0,1-Math.exp(-18*dt));const kit=KITS[selectedKit],gear=weaponStats(equippedItem(profile));let ix=chatOpen||freecam.active?0:(keys.has('KeyD')?1:0)-(keys.has('KeyA')?1:0)+touchMove.x,iz=chatOpen||freecam.active?0:(keys.has('KeyS')?1:0)-(keys.has('KeyW')?1:0)+touchMove.z;const length=Math.hypot(ix,iz);if(length>1){ix/=length;iz/=length;}sprinting=updateSprint(player,canSprint(player)&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touch&&length>.8))&&iz<-.1&&!blockHeld&&!player.crouched&&!admin.flying);updateStamina(player,dt,time,sprinting,admin.god||safeZone(player.position));if(!canSprint(player))sprinting=false;const speed=movementSpeed(kit,gear.speed,sprinting)*(blockHeld?MOVEMENT.block:1)*(player.crouched?MOVEMENT.crouch:1)*(time<buffs.haste?POTIONS.haste.multiplier:1)*slowMultiplier(player)*(admin.flying?MOVEMENT.flight:1),vx=(ix*Math.cos(yaw)+iz*Math.sin(yaw))*speed,vz=(-ix*Math.sin(yaw)+iz*Math.cos(yaw))*speed;steerMovement(player,vx,vz,dt);if(time<(player.stepUntil??0)){sprinting=false;player.velocity.x=player.stepDirection.x*DODGE.speed*slowMultiplier(player);player.velocity.z=player.stepDirection.z*DODGE.speed*slowMultiplier(player);}if(time<(player.rollUntil??0)){sprinting=false;const rollSpeed=ROLL.speed*slowMultiplier(player);player.velocity.x=player.rollDirection.x*rollSpeed;player.velocity.z=player.rollDirection.z*rollSpeed;}if(admin.flying){const down=keys.has('KeyC')||keys.has('ControlLeft')||keys.has('ControlRight')||crouchTouch;player.velocity.y=chatOpen||freecam.active?0:((keys.has('Space')?1:0)-(down?1:0))*8;player.position.addScaledVector(player.velocity,dt);resolveCollision(player.position,.38,1.7);player.position.y=THREE.MathUtils.clamp(player.position.y,groundHeight(player.position.x,player.position.z,player.position.y),Math.max(24,LEDGE_HEIGHT+24));player.grounded=false;player.knock.set(0,0,0);}else actorPhysics(player,dt);const distance=Math.hypot(player.position.x-strideStart.x,player.position.z-strideStart.z);player.motionSpeed=distance/dt;if(player.grounded&&!admin.flying&&distance>0&&distance<1){const stride=gaitStride(playerAvatar?.animator.gait.leg??.8,distance/dt,player.crouched),previous=Math.floor(walkTime/Math.PI);walkTime+=distance/stride*Math.PI*2;if(Math.floor(walkTime/Math.PI)!==previous&&time-lastFootstep>.09){sound('step');lastFootstep=time;}}if(isLava(player.position.x,player.position.z,player.position.y)&&time-lavaTick>.46){ignite(player);hurtPlayer(9,null,true);lavaTick=time;}if(player.health>0&&time-player.lastDamage>6&&player.health<kit.health)player.health=Math.min(kit.health,player.health+9*dt);if(returnAt&&time>=returnAt)completeReturn();}
+function updatePlayer(dt){updateGuard();const strideStart=player.position.clone();if(isDueling()&&(duel.phase!=='active'||player.health<=0)){player.velocity.set(0,0,0);return;}updateAilments(player,dt);if(player.health<=0)return;if(!freecam.active)player.crouched=!admin.flying&&time>=(player.rollUntil??0)&&!chatOpen&&(crouchTouch||keys.has('KeyC')||keys.has('ControlLeft')||keys.has('ControlRight'));crouchBlend=THREE.MathUtils.lerp(crouchBlend,player.crouched?1:0,1-Math.exp(-18*dt));const kit=KITS[selectedKit],gear=weaponStats(equippedItem(profile));let ix=chatOpen||freecam.active?0:(keys.has('KeyD')?1:0)-(keys.has('KeyA')?1:0)+touchMove.x,iz=chatOpen||freecam.active?0:(keys.has('KeyS')?1:0)-(keys.has('KeyW')?1:0)+touchMove.z;const length=Math.hypot(ix,iz);if(length>1){ix/=length;iz/=length;}sprinting=updateSprint(player,canSprint(player)&&(keys.has('ShiftLeft')||keys.has('ShiftRight')||(touch&&length>.8))&&iz<-.1&&!blockHeld&&!player.crouched&&!admin.flying);updateStamina(player,dt,time,sprinting,admin.god||safeZone(player.position));if(!canSprint(player))sprinting=false;const speed=movementSpeed(kit,gear.speed,sprinting,skillBonuses(profile))*(blockHeld?MOVEMENT.block:1)*(player.crouched?MOVEMENT.crouch:1)*(time<buffs.haste?POTIONS.haste.multiplier:1)*slowMultiplier(player)*(admin.flying?MOVEMENT.flight:1),vx=(ix*Math.cos(yaw)+iz*Math.sin(yaw))*speed,vz=(-ix*Math.sin(yaw)+iz*Math.cos(yaw))*speed;steerMovement(player,vx,vz,dt);if(time<(player.stepUntil??0)){sprinting=false;player.velocity.x=player.stepDirection.x*DODGE.speed*slowMultiplier(player);player.velocity.z=player.stepDirection.z*DODGE.speed*slowMultiplier(player);}if(time<(player.rollUntil??0)){sprinting=false;const rollSpeed=ROLL.speed*slowMultiplier(player);player.velocity.x=player.rollDirection.x*rollSpeed;player.velocity.z=player.rollDirection.z*rollSpeed;}if(admin.flying){const down=keys.has('KeyC')||keys.has('ControlLeft')||keys.has('ControlRight')||crouchTouch;player.velocity.y=chatOpen||freecam.active?0:((keys.has('Space')?1:0)-(down?1:0))*8;player.position.addScaledVector(player.velocity,dt);resolveCollision(player.position,.38,1.7);player.position.y=THREE.MathUtils.clamp(player.position.y,groundHeight(player.position.x,player.position.z,player.position.y),Math.max(24,LEDGE_HEIGHT+24));player.grounded=false;player.knock.set(0,0,0);}else actorPhysics(player,dt);const distance=Math.hypot(player.position.x-strideStart.x,player.position.z-strideStart.z);player.motionSpeed=distance/dt;if(player.grounded&&!admin.flying&&distance>0&&distance<1){const stride=gaitStride(playerAvatar?.animator.gait.leg??.8,distance/dt,player.crouched),previous=Math.floor(walkTime/Math.PI);walkTime+=distance/stride*Math.PI*2;if(Math.floor(walkTime/Math.PI)!==previous&&time-lastFootstep>.09){sound('step');lastFootstep=time;}}if(isLava(player.position.x,player.position.z,player.position.y)&&time-lavaTick>.46){ignite(player);hurtPlayer(9,null,true);lavaTick=time;}if(player.health>0&&time-player.lastDamage>6&&player.health<kit.health)player.health=Math.min(kit.health,player.health+9*dt);if(returnAt&&time>=returnAt)completeReturn();}
 function chooseTarget(f){
  if(admin.hunt){const target=mode==='play'&&player.health>0&&!safeZone(player.position)?player:null;if(target!==f.target)f.reactionUntil=time+f.skill.reaction;f.target=target;f.targetUntil=time+.6;return;}
  const candidates=fighters.filter(o=>o!==f&&o.alive&&o.state==='fight'&&!safeZone(o.position)&&canHit(f,o));
@@ -790,7 +798,7 @@ function chooseTarget(f){
  if(target!==f.target)f.reactionUntil=time+f.skill.reaction;f.target=target;f.targetUntil=time+.7+f.skill.reaction*2;
 }
 function planFighter(f){
- if(f.team){f.plan=f.hp<f.kit.health*.28&&time>f.healAt?'retreat':'duel';f.goal=f.plan==='retreat'?{x:MINI.x+(f.position.x<MINI.x?-8:8),y:0,z:f.position.z<0?8:-8}:f.target?tacticalGoal(f,f.target):f.position.clone();f.goal.x=THREE.MathUtils.clamp(f.goal.x,MINI.x-9.8,MINI.x+9.8);f.goal.z=THREE.MathUtils.clamp(f.goal.z,-11.7,11.7);f.planUntil=time+1.5;return;}
+ if(f.team){f.plan=f.hp<f.kit.health*.28&&time>f.healAt?'retreat':'duel';f.goal=f.plan==='retreat'?{x:MINI.x+(f.position.x<MINI.x?-8:8),y:0,z:f.position.z<0?MINI.spawnZ-2:-MINI.spawnZ+2}:f.target?tacticalGoal(f,f.target):f.position.clone();f.goal.x=THREE.MathUtils.clamp(f.goal.x,MINI.x-MINI.halfWidth+1.5,MINI.x+MINI.halfWidth-1.5);f.goal.z=THREE.MathUtils.clamp(f.goal.z,MINI.z-MINI.halfDepth+1.5,MINI.z+MINI.halfDepth-1.5);f.planUntil=time+1.5;return;}
 
  if(f.hp<f.kit.health*.32&&time>f.healAt){f.plan='retreat';const away=f.target?f.position.clone().sub(f.target.position):new V3(Math.sin(f.id),0,Math.cos(f.id));away.y=0;away.normalize();f.goal=DESTINATIONS.filter(p=>!isUnderBridge(p)).reduce((best,p)=>{const score=q=>Math.hypot(q.x-f.position.x,q.z-f.position.z)-((q.x-f.position.x)*away.x+(q.z-f.position.z)*away.z);return score(p)<score(best)?p:best;});f.planUntil=time+5.5;return;}
  if(admin.hunt&&f.target){f.plan='duel';f.goal=tacticalGoal(f,f.target,true);f.planUntil=time+1;return;}
@@ -803,7 +811,7 @@ function planFighter(f){
 function updateBotEconomy(f,dt){
  // A small survival stipend also lets weaker opponents eventually upgrade.
  if(mode==='play'&&time>=f.incomeAt){f.account.coins+=BOTS.economy.income;f.incomeAt=time+BOTS.economy.incomeInterval;}
- if(f.hp<f.kit.health*BOTS.healing.threshold&&time>f.potionAt&&f.account.potions.healing>0){consumePotion(f.account,'healing');f.hp=Math.min(f.kit.health,f.hp+POTIONS.healing.amount);f.potionAt=time+BOTS.healing.cooldown;burst(f.position.clone().add(new V3(0,.9,0)),0xf38c99,14,.5);}
+ if(f.hp<f.kit.health*BOTS.healing.threshold&&time>f.potionAt&&f.account.potions.healing>0){consumePotion(f.account,'healing');f.hp=Math.min(f.kit.health,f.hp+POTIONS.healing.amount*(1+skillBonuses(f.account).healing));f.potionAt=time+BOTS.healing.cooldown;burst(f.position.clone().add(new V3(0,.9,0)),0xf38c99,14,.5);}
  if(f.team)return false;
  if(f.returnAt){
   const unsafe=admin.hunt||time-f.lastImpact<5||f.target&&f.position.distanceTo(f.target.position)<8;
@@ -883,9 +891,9 @@ function updateFighters(dt,visuals=true){for(const f of fighters){if(f.dungeon){
  if(time>f.planUntil||!f.goal||f.plan==='cover'||f.goal&&Math.hypot(f.goal.x-f.position.x,f.goal.z-f.position.z)<1.2&&['roam','flank'].includes(f.plan))planFighter(f);
  let target=f.target,dist=target?f.position.distanceTo(target.position):Infinity;
  if(f.plan==='roam'&&dist<3.8){f.plan='duel';f.planUntil=time+3;}
- let goal=f.plan==='duel'&&target?tacticalGoal(f,target,admin.hunt):f.goal??f.position;if(f.team){goal={...goal,x:THREE.MathUtils.clamp(goal.x,MINI.x-9.8,MINI.x+9.8),z:THREE.MathUtils.clamp(goal.z,-11.7,11.7)};}
+ let goal=f.plan==='duel'&&target?tacticalGoal(f,target,admin.hunt):f.goal??f.position;if(f.team){goal={...goal,x:THREE.MathUtils.clamp(goal.x,MINI.x-MINI.halfWidth+1.5,MINI.x+MINI.halfWidth-1.5),z:THREE.MathUtils.clamp(goal.z,MINI.z-MINI.halfDepth+1.5,MINI.z+MINI.halfDepth-1.5)};}
  if(!f.team)goal=navigationGoal(f,goal,time,blocked,isLava);
- if(f.plan==='retreat'&&time>f.healAt&&Math.hypot(goal.x-f.position.x,goal.z-f.position.z)<1.8){if(f.account.potions.healing>0){consumePotion(f.account,'healing');f.hp=Math.min(f.kit.health,f.hp+POTIONS.healing.amount);}else if(time-f.lastImpact>6)f.hp=Math.min(f.kit.health,f.hp+50);f.healAt=time+22;f.planUntil=time+.7;burst(f.position.clone().add(new V3(0,.8,0)),0x98e9bd,12,.6);}
+ if(f.plan==='retreat'&&time>f.healAt&&Math.hypot(goal.x-f.position.x,goal.z-f.position.z)<1.8){if(f.account.potions.healing>0){consumePotion(f.account,'healing');f.hp=Math.min(f.kit.health,f.hp+POTIONS.healing.amount*(1+skillBonuses(f.account).healing));}else if(time-f.lastImpact>6)f.hp=Math.min(f.kit.health,f.hp+50);f.healAt=time+22;f.planUntil=time+.7;burst(f.position.clone().add(new V3(0,.8,0)),0x98e9bd,12,.6);}
  const closeDuel=target&&dist<(f.combatMode==='bow'?30:f.stats.kind==='staff'?f.stats.reach:8)&&f.plan!=='retreat',lookAt=closeDuel?target.position:goal,delta=new V3(lookAt.x-f.position.x,(lookAt.y??0)-f.position.y,lookAt.z-f.position.z),flat=Math.hypot(delta.x,delta.z),error=f.skill.aimError*(Math.sin(time*5.3+f.id*17)+Math.sin(time*2.7+f.id)*.35);
  if(flat>.1)f.aimAngle=turnAngle(f.aimAngle,Math.atan2(delta.x,delta.z)+(closeDuel?error:0),dt*f.skill.turn);f.aimPitch=THREE.MathUtils.lerp(f.aimPitch,Math.atan2(delta.y-(target?.crouched?.87:.54),Math.max(.1,flat))+error*.4,Math.min(1,dt*f.skill.turn));
  if(time>f.strafeUntil){f.strafeUntil=time+.22+Math.random()*.6;f.strafe=Math.random()<.5?-1:1;}const incoming=target===player?swingAge<.23:target&&time-target.lastSwing<.25;f.guard=f.combatMode!=='bow'&&f.stats.kind!=='staff'&&!!closeDuel&&dist<3.6&&!!incoming&&f.skill.cps>5&&Math.sin(time*4+f.id)>-.35;
@@ -905,18 +913,18 @@ function updateFighters(dt,visuals=true){for(const f of fighters){if(f.dungeon){
   if(closeDuel&&dist<1.5&&f.plan==='duel')f.direction.set(-Math.sin(f.aimAngle)*.4+Math.cos(f.aimAngle)*f.strafe,0,-Math.cos(f.aimAngle)*.4-Math.sin(f.aimAngle)*f.strafe);
   f.direction.normalize();if(blocked(f.position.x+f.direction.x*.8,f.position.z+f.direction.z*.8,f.position.y)||isLava(f.position.x+f.direction.x*.9,f.position.z+f.direction.z*.9,f.position.y))f.direction.set(direction.x,0,direction.z);
  }
- const moveSpeed=settled?0:movementSpeed(f.kit,f.stats.speed,f.sprinting)*Math.min(1,f.skill.aggression)*(f.guard?.48:1)*(f.plan==='retreat'?1.25:1)*slowMultiplier(f);
+ const moveSpeed=settled?0:movementSpeed(f.kit,f.stats.speed,f.sprinting,skillBonuses(f.account))*Math.min(1,f.skill.aggression)*(f.guard?.48:1)*(f.plan==='retreat'?1.25:1)*slowMultiplier(f);
  let mx=f.direction.x*moveSpeed,mz=f.direction.z*moveSpeed;
  if(f.wTapping){const forward=Math.max(0,mx*Math.sin(f.aimAngle)+mz*Math.cos(f.aimAngle));mx-=Math.sin(f.aimAngle)*forward;mz-=Math.cos(f.aimAngle)*forward;}
  steerMovement(f,mx,mz,dt);
  if(f.grounded&&!settled&&!f.lavaCrossing&&time>(f.nextRoll??0)&&time-f.lastImpact>.5&&f.skill.cps>=6.5&&(f.plan==='retreat'||incoming)&&dist>3.4&&Math.hypot(f.velocity.x,f.velocity.z)>2){
   const direction=new V3(f.velocity.x,0,f.velocity.z).normalize();let clear=true;
   for(let d=.4;d<=3;d+=.4)if(blocked(f.position.x+direction.x*d,f.position.z+direction.z*d,f.position.y)||isLava(f.position.x+direction.x*d,f.position.z+direction.z*d,f.position.y))clear=false;
-  if(clear&&spendStamina(f,STAMINA.rollCost,time)){f.rollDirection=direction;f.rollUntil=time+.5;f.nextRoll=time+6+(f.id%9)*.25;f.animUntil=f.rollUntil;animateActor(f,'Roll',true,(f.animator.actions.Roll?.getClip().duration??1.46)/.5);}
+  if(clear&&spendStamina(f,STAMINA.rollCost*(1-skillBonuses(f.account).rollCost),time)){f.rollDirection=direction;f.rollUntil=time+.5;f.nextRoll=time+6+(f.id%9)*.25;f.animUntil=f.rollUntil;animateActor(f,'Roll',true,(f.animator.actions.Roll?.getClip().duration??1.46)/.5);}
  }
  if(time<(f.rollUntil??0)){f.guard=false;f.velocity.x=f.rollDirection.x*6;f.velocity.z=f.rollDirection.z*6;f.rig.rotation.y=Math.atan2(f.rollDirection.x,f.rollDirection.z);}
  for(const other of fighters){if(other===f||!other.alive||Math.abs(other.position.y-f.position.y)>1.3)continue;const dx=f.position.x-other.position.x,dz=f.position.z-other.position.z,d=Math.hypot(dx,dz);if(d>.001&&d<.82){f.velocity.x+=dx/d*(.82-d)*14*dt;f.velocity.z+=dz/d*(.82-d)*14*dt;}}
- if(f.lavaCrossing){f.velocity.x=f.lavaCrossing.x*f.lavaCrossing.speed;f.velocity.z=f.lavaCrossing.z*f.lavaCrossing.speed;}actorPhysics(f,dt);if(f.lavaCrossing&&(f.grounded||time>f.lavaCrossing.until))f.lavaCrossing=null;if(time-f.lastImpact>6)f.hp=Math.min(f.kit.health,f.hp+9*dt);if(time>f.animUntil)locomotion(f,f,Math.hypot(f.velocity.x,f.velocity.z)>.7,f.plan==='retreat');if(isLava(f.position.x,f.position.z,f.position.y)&&time-(f.lastLava??-20)>.48){ignite(f);f.lastLava=f.lastImpact=time;f.hp-=9;if(f.hp<=0)killFighter(f,null);}
+ if(f.lavaCrossing){f.velocity.x=f.lavaCrossing.x*f.lavaCrossing.speed;f.velocity.z=f.lavaCrossing.z*f.lavaCrossing.speed;}actorPhysics(f,dt);if(f.lavaCrossing&&(f.grounded||time>f.lavaCrossing.until))f.lavaCrossing=null;if(time-f.lastImpact>6)f.hp=Math.min(f.kit.health,f.hp+9*dt);if(time>f.animUntil)locomotion(f,f,Math.hypot(f.velocity.x,f.velocity.z)>.7,f.plan==='retreat');if(isLava(f.position.x,f.position.z,f.position.y)&&time-(f.lastLava??-20)>.48){ignite(f);f.lastLava=f.lastImpact=time;f.hp-=9*(1-skillBonuses(f.account).fireResistance);if(f.hp<=0)killFighter(f,null);}
  f.healthFill.scale.x=Math.max(0,f.hp/f.kit.health);f.healthFill.position.x=-(1-f.healthFill.scale.x)*.38;f.healthBg.quaternion.copy(camera.quaternion);const visibleDistance=camera.position.distanceTo(f.position);f.label.visible=visibleDistance<34;f.healthBg.visible=visibleDistance<18;f.label.material.opacity=Math.min(1,Math.max(0,(39-visibleDistance)/8));}}
 
 const critEffects=[];
@@ -953,7 +961,7 @@ function hurtFighter(f,attacker,critical=false,overrideDamage=null,attackStats=n
  const yours=attacker===player,stats=attackStats??(yours?weaponStats(equippedItem(profile)):attacker.stats),kit=yours?KITS[selectedKit]:attacker.kit,point=f.position.clone().add(new V3(0,1.05,0));
  if(yours||f.position.distanceTo(player.position)<16)burst(point,yours?RARITIES[equippedItem(profile).rarity].hex:0xffd8a5,!damageReady(f,time)?3:9,critical?1.35:.85);
  if(!damageReady(f,time))return false;
- const dx=attacker.position.x-f.position.x,dz=attacker.position.z-f.position.z,guarded=f.guard&&(dx*Math.sin(f.aimAngle)+dz*Math.cos(f.aimAngle)>0),amount=stats.absoluteDamage&&overrideDamage===null?stats.damage:attackDamage(overrideDamage??stats.damage,kit,critical,guarded,armorReduction(f));
+ const dx=attacker.position.x-f.position.x,dz=attacker.position.z-f.position.z,guarded=f.guard&&(dx*Math.sin(f.aimAngle)+dz*Math.cos(f.aimAngle)>0),incoming=(overrideDamage??stats.damage)*(1+(stats.kind==='staff'?skillBonuses(attacker.account??attacker).magicDamage:stats.kind==='bow'?skillBonuses(attacker.account??attacker).arrowDamage:0)),amount=stats.absoluteDamage&&overrideDamage===null?stats.damage:attackDamage(incoming,kit,critical,guarded,armorReduction(f),skillBonuses(f.account).blockStrength);
  if(!guarded&&!stats.kind&&overrideDamage===null){bleedBurst(f);f.woundUntil=time+.8;}if(critical)criticalImpact(point);f.hp-=amount;f.lastImpact=f.lastDirectHit=time;breakCombo(f);f.returnAt=0;f.hitFlashUntil=time+.2;f.target=admin.hunt?player:attacker;f.targetUntil=time+1.5;
  if(f.plan!=='retreat'){f.plan='duel';f.planUntil=time+3.5;}f.reactionUntil=Math.min(f.reactionUntil,time+f.skill.reaction);applyKnock(f,attacker,stats.knockback,critical,guarded,(attackStats===null||stats.melee)&&overrideDamage===null);
  if(!guarded&&(stats.heavy||critical||amount>=f.kit.health*.18))triggerImpact(f,attacker,time,stats.heavy?1.4:1);
@@ -992,7 +1000,7 @@ function hurtPlayer(base,attacker=null,lava=false,critical=false,attackStats=nul
  if(mode!=='play'||admin.god||attacker&&!canHit(attacker,player)||safeZone(player.position)||player.health<=0||(!lava&&!periodic&&!damageReady(player,time)))return false;
  const stats=attackStats??attacker?.stats;let guarded=false;
  if(blockHeld&&attacker&&!periodic){const dx=attacker.position.x-player.position.x,dz=attacker.position.z-player.position.z;guarded=dx*-Math.sin(yaw)+dz*-Math.cos(yaw)>0;}
- const amount=lava||attackStats?.aura?base:stats?.absoluteDamage&&!periodic&&(attackStats===null||stats.melee)?stats.damage:attackDamage(base,attacker?.kit??KITS.vanguard,critical,guarded,1-(1-armorReduction(profile))*(time<buffs.guard?1-POTIONS.guard.reduction:1));
+ const incoming=base*(1+(stats?.kind==='staff'&&!periodic?skillBonuses(attacker?.account??attacker).magicDamage:stats?.kind==='bow'?skillBonuses(attacker?.account??attacker).arrowDamage:0));const amount=lava?Math.max(1,base*(1-skillBonuses(profile).fireResistance)):attackStats?.aura?base:stats?.absoluteDamage&&!periodic&&(attackStats===null||stats.melee)?stats.damage:attackDamage(incoming,attacker?.kit??KITS.vanguard,critical,guarded,1-(1-armorReduction(profile))*(time<buffs.guard?1-POTIONS.guard.reduction:1),skillBonuses(profile).blockStrength);
  if(attacker&&!periodic&&!lava&&!guarded&&!stats?.kind&&!stats?.aura){bleedBurst(player);player.woundUntil=time+.8;}player.health=Math.max(0,player.health-amount);player.lastDamage=time;if(!periodic){if(critical&&(thirdPerson||freecam.active))criticalImpact(player.position.clone().add(new V3(0,1,0)));player.lastImpact=time;if(!lava)player.lastDirectHit=time;breakCombo(player);combo=0;$('combo').classList.add('hidden');}lastCombat=time;lastHurt=time;damageFlashStrength=periodic||attackStats?.aura?PRESENTATION.damageFlash.peak*.55:guarded?PRESENTATION.damageFlash.peak*.7:PRESENTATION.damageFlash.peak;updateDamageFlash();
  if(guarded&&!periodic&&!lava)bountyEvent('blocks');if(guarded){guardFlashUntil=time+.22;burst(player.position.clone().add(new V3(-Math.sin(yaw)*.7,1.2,-Math.cos(yaw)*.7)),0xc6e9ff,7,.45,player);updateGuard();}if(returnAt){returnAt=0;toast('Return interrupted');}if(attacker&&!periodic)applyKnock(player,attacker,stats.knockback,critical,guarded,(attackStats===null||stats.melee)&&!lava);if(attacker&&!periodic&&!lava&&!guarded&&(stats.heavy||critical||amount>=player.maxHealth*.18))triggerImpact(player,attacker,time,stats.heavy?1.4:1);shake=attackStats?.aura?.004:periodic?.015:guarded?.016:.07;if(!attackStats?.aura)sound(lava?'lava':guarded?'block':'hurt');
  if(player.health<=0)defeatPlayer(attacker,lava?(arenaEvent.phase==='active'?arenaEvent.type.name:'Lava'):'Arena');
@@ -1007,7 +1015,7 @@ function drinkTonic(){if(player.health<=0)return;
  if(id!=='healing'&&buffs[id]>time){toast(p.name+' is still active');return;}
  if(!consumePotion(profile,id,selectedSlot==='potion'?profile.hotbar[profile.selectedHotbar]:null)){toast('No '+p.name.toLowerCase()+'s · buy more on the ledge');return;}
  cancelAttack();bountyEvent('potions');lastTonic=time;potionUsedAt=time;usedPotion=id;blockHeld=false;bowDrawAt=-1;
- if(id==='healing'){player.health=Math.min(KITS[selectedKit].health,player.health+p.amount);healUntil=time+.7;}else buffs[id]=time+p.duration;
+ if(id==='healing'){player.health=Math.min(KITS[selectedKit].health,player.health+p.amount*(1+skillBonuses(profile).healing));healUntil=time+.7;}else buffs[id]=time+p.duration;
  player.potions=profile.potions.healing;if(selectedSlot==='potion'&&!profile.inventory.some(i=>i.id===profile.hotbar[profile.selectedHotbar]))setSlot('empty');persist();showPotionBottle(id);$('player-health').querySelector('.health-track').classList.remove('healing');$('player-health').querySelector('.health-track').classList.add('healing');sound('tonic');burst(player.position.clone().add(new V3(0,.8,0)),p.color,24,.7,player);shockwave(player.position,p.color,player);updateHud();
 }
 function cyclePotion(){const ids=Object.keys(POTIONS);profile.selectedPotion=ids[(ids.indexOf(profile.selectedPotion)+1)%ids.length];persist();updatePotionArt();updateHud();toast(POTIONS[profile.selectedPotion].name,1100);}
@@ -1047,7 +1055,7 @@ function showScoreboard(){
  });scroll.scrollTop=top;
 }
 
-function updateHud(){updateBountyTracker();if(bountyDirty&&time-bountySavedAt>=1){persist();bountyDirty=false;bountySavedAt=time;}const kit=KITS[selectedKit],item=equippedItem(profile),gear=weaponStats(item),safe=safeZone(player.position);$('health').textContent=Math.ceil(player.health);$('max-health').textContent=kit.health;$('health-fill').style.width=Math.max(0,player.health/kit.health*100)+'%';$('health-trail').style.width=$('health-fill').style.width;$('stamina-fill').style.width=Math.max(0,(player.stamina??STAMINA.maximum)/STAMINA.maximum*100)+'%';$('player-stamina').setAttribute('aria-valuenow',String(Math.round(player.stamina??STAMINA.maximum)));$('player-stamina').setAttribute('aria-valuemax',String(STAMINA.maximum));$('player-stamina').classList.toggle('exhausted',!!player.exhausted);$('ko-celebration').classList.toggle('hidden',time>=koUntil);updateItemHud();$('kills').textContent=player.kills;const held=profile.inventory.find(i=>i.id===profile.hotbar[profile.selectedHotbar]);$('equipped-name').textContent=held?itemName(held):'Empty slot';$('equipped-name').style.color=RARITIES[item.rarity].color;$('armor-value').textContent=Math.round(armorReduction(profile)*100)+'%';$('armor-track').classList.toggle('hidden',profile.armor==='none'&&profile.helmet==='none');while(clickTimes.length&&time-clickTimes[0]>5)clickTimes.shift();$('cps').textContent=clickTimes.filter(t=>time-t<1).length.toFixed(1);
+function updateHud(){updateBountyTracker();if(bountyDirty&&time-bountySavedAt>=1){persist();bountyDirty=false;bountySavedAt=time;}const kit=KITS[selectedKit],item=equippedItem(profile),gear=weaponStats(item),safe=safeZone(player.position);$('health').textContent=Math.ceil(player.health);$('max-health').textContent=kit.health;$('health-fill').style.width=Math.max(0,player.health/kit.health*100)+'%';$('health-trail').style.width=$('health-fill').style.width;$('stamina-fill').style.width=Math.max(0,(player.stamina??staminaMaximum(player))/staminaMaximum(player)*100)+'%';$('player-stamina').setAttribute('aria-valuenow',String(Math.round(player.stamina??STAMINA.maximum)));$('player-stamina').setAttribute('aria-valuemax',String(Math.round(staminaMaximum(player))));$('player-stamina').classList.toggle('exhausted',!!player.exhausted);$('ko-celebration').classList.toggle('hidden',time>=koUntil);updateItemHud();$('kills').textContent=player.kills;const held=profile.inventory.find(i=>i.id===profile.hotbar[profile.selectedHotbar]);$('equipped-name').textContent=held?itemName(held):'Empty slot';$('equipped-name').style.color=RARITIES[item.rarity].color;$('armor-value').textContent=Math.round(armorReduction(profile)*100)+'%';$('armor-track').classList.toggle('hidden',profile.armor==='none'&&profile.helmet==='none');while(clickTimes.length&&time-clickTimes[0]>5)clickTimes.shift();$('cps').textContent=clickTimes.filter(t=>time-t<1).length.toFixed(1);
  currentStation=null;if(safe&&!isDueling()){let nearest=3.3;for(const station of stations){const delta=new V3().subVectors(station.position,player.position);if(delta.length()<nearest&&(delta.x*-Math.sin(yaw)+delta.z*-Math.cos(yaw)>-.1)){currentStation=station;nearest=delta.length();}}}currentLoot=nearestLoot(player);currentDungeonAction=dungeonInteraction();$('interact-prompt').classList.toggle('match-prompt',currentStation?.type==='match'&&!currentLoot&&!currentDungeonAction);$('interact-prompt').classList.toggle('unavailable',currentDungeonAction?.type==='disabled'&&!currentLoot);$('interact-prompt').classList.toggle('hidden',!currentStation&&!currentLoot&&!currentDungeonAction);if(currentLoot)$('interact-prompt').querySelector('span').textContent='Pick up '+itemName(currentLoot.item);else if(currentDungeonAction)$('interact-prompt').querySelector('span').textContent=currentDungeonAction.name;else if(currentStation)$('interact-prompt').querySelector('span').textContent=currentStation.name;$('spawn-progress').classList.toggle('hidden',!returnAt);if(returnAt){$('spawn-progress').querySelector('b').textContent=Math.max(0,returnAt-time).toFixed(1);$('spawn-progress').querySelector('i').style.transform='scaleX('+Math.max(0,Math.min(1,(3-(returnAt-time))/3))+')';}if(keys.has('Tab')||scorePinned)showScoreboard();$('hud-streak').classList.toggle('hidden',player.streak<2);$('hud-streak').textContent=player.streak+' streak';renderChat();updateKillFeed();updateEventHud();}
 
 function addAlchemyTable(station){
@@ -1168,7 +1176,7 @@ function updateBotChat(){for(let i=pendingChats.length-1;i>=0;i--){const msg=pen
 function updateMovementEffects(dt){return movementLines.update({player,yaw,time,sprinting,enabled:settings.motionEffects,reduced:reducedMotion.matches,playing:mode==='play',chat:chatOpen,freecam:freecam.active,flying:admin.flying},dt,innerWidth,innerHeight);}
 function frame(now){requestAnimationFrame(frame);pruneLoot();const elapsed=Math.min((now-last)/1000,.05);last=now;if(mode==='play'||mode==='lobby'){time+=elapsed;world.update(time);updateMerchant(elapsed);if(mode==='play'){updateDuel(elapsed);if(isDueling()||dungeon.active){arenaEvent.at+=elapsed;arenaEvent.nextPulse+=elapsed;}else updateArenaEvents(elapsed);}if(hero&&mode==='lobby'){if(time>hero.gestureAt){hero.gestureAt=time+7+Math.random()*5;animateActor(hero,['Idle_Sword','StanceAlt','Wave','Talk'][Math.floor(time/7)%4],false,.9);}updateAnimator(hero,elapsed);updateCosmetic(hero,profile.cosmetic,time);}accumulator+=elapsed;while(accumulator>=1/90){if(mode==='play'){validateChargeOrb();updatePressureFields();updateAscensionFields(1/90);updatePlayer(1/90);updateDungeon(1/90);}if(loaded){updateProjectiles(1/90);updateFighters(1/90,false);}updateFX(1/90);if(mode==='play')updateLoot(1/90);accumulator-=1/90;}updateCamera(elapsed);updateFighterVisuals(elapsed);updateAimFeedback();world.setView(camera);updateAtmosphere(elapsed);updateWeapon(elapsed);updateBotChat();if(ambience)ambience.update(Math.hypot(Math.max(0,lavaDistance(player.position.x,player.position.z)),Math.max(0,player.position.y)));uiTimer+=elapsed;if(uiTimer>.1){if(mode==='play')updateHud();uiTimer=0;}}else accumulator=0;
  if(mode==='play'||mode==='lobby'||mode==='dead')ragdolls.update(elapsed);
- updateMovementEffects(elapsed);music?.update();if(chestLid)chestLid.rotation.x=THREE.MathUtils.lerp(chestLid.rotation.x,chestBaseRotation+(time<chestLidUntil?-1.15:0),.08);$('hitmarker').style.opacity=time<hitmarkerUntil?1:0;updateDamageFlash();$('fire-flash').style.opacity=mode==='play'&&!freecam.active&&!thirdPerson&&time<(player.effects?.fire?.until??0)?.22+Math.sin(time*11)*.035:0;$('heal-flash').style.opacity=mode==='play'&&!freecam.active?Math.max(0,(healUntil-time)*.33):0;if(time-lastHit>1.5)$('combo').classList.add('hidden');render();}
+ inventoryPreview?.update(elapsed);updateMovementEffects(elapsed);music?.update();if(chestLid)chestLid.rotation.x=THREE.MathUtils.lerp(chestLid.rotation.x,chestBaseRotation+(time<chestLidUntil?-1.15:0),.08);$('hitmarker').style.opacity=time<hitmarkerUntil?1:0;updateDamageFlash();$('fire-flash').style.opacity=mode==='play'&&!freecam.active&&!thirdPerson&&time<(player.effects?.fire?.until??0)?.22+Math.sin(time*11)*.035:0;$('heal-flash').style.opacity=mode==='play'&&!freecam.active?Math.max(0,(healUntil-time)*.33):0;if(time-lastHit>1.5)$('combo').classList.add('hidden');render();}
 window.addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;weaponCamera.aspect=camera.aspect;camera.updateProjectionMatrix();weaponCamera.updateProjectionMatrix();});
 function rebuildPlayerAvatar(){
  if(!loaded)return;if(playerAvatar){disposeCosmetic(playerAvatar);scene.remove(playerAvatar.root);playerAvatar.animator.mixer.stopAllAction();playerAvatar.animator.mixer.uncacheRoot(playerAvatar.rig);disposeMaterials(playerAvatar.rig);}const template=models[CHARACTERS[profile.character].file],rig=prepareModel(cloneRig(template.scene)),root=new THREE.Group();root.add(rig);scene.add(root);attachGear(rig,equippedItem(profile),profile.armor,profile.helmet);
@@ -1268,7 +1276,7 @@ function applyWeaponEffects(victim,owner,stats){
  }
 }
 function effectDamage(victim,effect,color){
- if(effect.type==='bleed')bleedBurst(victim,8);
+ const resistance=skillBonuses(victim.account??victim)[effect.type==='fire'?'fireResistance':effect.type==='bleed'?'bleedResistance':'none']??0;const source=effect.owner===player?profile:effect.owner?.account,sourceStats=effect.owner===player?weaponStats(equippedItem(profile)):effect.owner?.stats;effect={...effect,damage:effect.damage*(1-resistance)*(1+(sourceStats?.kind==='staff'?skillBonuses(source).magicDamage:0))};if(effect.type==='bleed')bleedBurst(victim,8);
  if(victim===player){hurtPlayer(effect.damage,effect.owner,false,false,effect.owner===player?weaponStats(equippedItem(profile)):effect.owner?.stats,true);return;}
  const kit=effect.owner===player?KITS[selectedKit]:effect.owner?.kit??KITS.vanguard,amount=attackDamage(effect.damage,kit,false,false,armorReduction(victim));victim.hp-=amount;victim.hitFlashUntil=time+.12;victim.lastImpact=time;victim.returnAt=0;burst(victim.position.clone().add(new V3(0,.9,0)),color,6,.4);
  if(effect.owner===player){lastCombat=time;damageNumber(victim.position.clone().add(new V3(0,1.6,0)),amount);}
@@ -1360,7 +1368,7 @@ function updateAilments(f,dt){
  }
  if(time<(f.slowUntil??0)&&Math.random()<dt*9)burst(f.position.clone().add(new V3(0,.4,0)),0xa4e7ff,2,.22,f);
 }
-function slowMultiplier(actor){const pressure=actor.pressureSlow??1;if(time>=(actor.slowUntil??0))return pressure;const frost=actor.effects?.frost;return pressure*(frost&&frost.until>time?1-(EFFECTS.frost.baseSlowPercent+frost.level*EFFECTS.frost.slowPercentPerLevel)/100:SPELLS.frost.speedMultiplier);}
+function slowMultiplier(actor){const pressure=actor.pressureSlow??1,resistance=skillBonuses(actor.account??actor).frostResistance;if(time>=(actor.slowUntil??0))return pressure;const frost=actor.effects?.frost;const slow=frost&&frost.until>time?(EFFECTS.frost.baseSlowPercent+frost.level*EFFECTS.frost.slowPercentPerLevel)/100:1-SPELLS.frost.speedMultiplier;return pressure*(1-slow*(1-resistance));}
 
 function arrowMesh(){return makeArrow();}
 function releaseBow(){if(bowDrawAt<0)return;const charge=Math.min(1,(time-bowDrawAt)/BOW.fullDraw);bowDrawAt=-1;if(player.health<=0||mode!=='play'||freecam.active||selectedSlot!=='bow'||chatOpen||safeZone(player.position)||arrowCount<=0)return;arrowCount--;bountyEvent('arrows');const direction=aimDirection(),mesh=arrowMesh();mesh.position.copy(player.position).add(new V3(0,player.crouched?1.02:1.5,0)).addScaledVector(direction,.45);const velocity=direction.multiplyScalar(26+charge*31);mesh.quaternion.setFromUnitVectors(new V3(0,0,-1),velocity.clone().normalize());scene.add(mesh);projectiles.push({mesh,velocity,life:3,damage:arrowDamage(charge),owner:player});sound('arrow');swingAge=0;lastCombat=time;updateHud();}
@@ -1372,8 +1380,8 @@ function updateProjectiles(dt){
   const now=shot.mesh.position,segment=now.clone().sub(old),length=segment.length();let victim=null,closest=2;
   for(const f of validVictims(shot.owner)){if(safeZone(f.position))continue;const point=f.position.clone().add(new V3(0,f.crouched?.65:.95,0)),t=THREE.MathUtils.clamp(point.clone().sub(old).dot(segment)/Math.max(.001,segment.lengthSq()),0,1);if(point.distanceTo(old.clone().addScaledVector(segment,t))<(magic?.72:.6)&&t<closest){closest=t;victim=f;}}
   const direction=segment.clone().normalize(),index=activeSceneryIndex(),distance=index?index.distance(old,direction,length,.001):new THREE.Raycaster(old,direction,.001,length).intersectObjects(cameraGeometry(),false)[0]?.distance;const wall=distance==null?null:{distance,point:old.clone().addScaledVector(direction,distance)};
-  const obstructed=!!wall||now.y<=groundHeight(now.x,now.z,now.y)||(inDungeon(now.x,now.z)?dungeonBlocked(now.x,now.z,now.y,.03,dungeon):inMiniArena(now.x,now.z)?Math.abs(now.x-MINI.x)>13||Math.abs(now.z)>15:Math.hypot(now.x,now.z)>34);
-  if(victim&&(!obstructed||wall&&closest*length<wall.distance)){if(magic)applyMagicHit(shot,victim);else if(victim===player?hurtPlayer(shot.damage,shot.owner,false,false,{damage:shot.damage,knockback:3,effects:[]}):hurtFighter(victim,shot.owner,false,shot.damage,{damage:shot.damage,knockback:3,effects:[]})){if(shot.owner===player){hitmarkerUntil=time+.13;sound('hit');}}shot.life=0;}
+  const obstructed=!!wall||now.y<=groundHeight(now.x,now.z,now.y)||(inDungeon(now.x,now.z)?dungeonBlocked(now.x,now.z,now.y,.03,dungeon):inMiniArena(now.x,now.z)?Math.abs(now.x-MINI.x)>MINI.halfWidth||Math.abs(now.z-MINI.z)>MINI.halfDepth:Math.hypot(now.x,now.z)>34);
+  if(victim&&(!obstructed||wall&&closest*length<wall.distance)){if(magic)applyMagicHit(shot,victim);else if(victim===player?hurtPlayer(shot.damage,shot.owner,false,false,{kind:'bow',damage:shot.damage,knockback:3,effects:[]}):hurtFighter(victim,shot.owner,false,shot.damage,{kind:'bow',damage:shot.damage,knockback:3,effects:[]})){if(shot.owner===player){hitmarkerUntil=time+.13;sound('hit');}}shot.life=0;}
   else if(obstructed){burst(wall?.point??now,magic?shot.stats.color:0xd3b690,magic?12:5,.5);shot.life=0;}
   if(shot.life<=0){scene.remove(shot.mesh);shot.mesh.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();}});projectiles.splice(i,1);}
  }

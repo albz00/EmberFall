@@ -187,3 +187,9 @@ export function parseMap(raw,file=`${raw?.id??'map'}.json`){
  if(issues.length)throw new ConfigError(issues);
  return map;
 }
+
+// The duel map is separate from the editable main arena; its authored terrain
+// drives drawing, walkable slopes, cover and match bounds together.
+const duelMeters=(min,max)=>number({unit:'m',min,max});
+const duelMapSchema=object({schemaVersion:literal(1),name:string(),x:duelMeters(65,500),z:duelMeters(-500,500),halfWidth:duelMeters(10,30),halfDepth:duelMeters(15,50),duration:number({unit:'s',min:30,max:600}),spawnZ:duelMeters(5,45),cover:array(object({x:duelMeters(65,500),z:duelMeters(-500,500),w:duelMeters(.5,12),d:duelMeters(.5,15),h:duelMeters(.3,8)}),{min:1,max:40}),terraces:array(object({type:oneOf(['flat','ramp']),x:duelMeters(65,500),z:duelMeters(-500,500),w:duelMeters(1,15),d:duelMeters(1,20),height:duelMeters(.1,4),rises:oneOf(['+z','-z'])}),{max:20}),effects:object({motes:integer({unit:'particles',min:0,max:300}),runeRadius:duelMeters(1,6),crystalHeight:duelMeters(2,8)})});
+export function parseDuelMap(raw){const ctx={issues:[],refs:[],file:'maps/duel-courtyard.json'},m=parse(duelMapSchema,raw,'',ctx);if(!ctx.issues.length){if(m.spawnZ>=m.halfDepth-2)ctx.issues.push('maps/duel-courtyard.json → spawnZ: must leave 2m inside the end wall');for(const c of[...m.cover,...m.terraces])if(Math.abs(c.x-m.x)+c.w/2>=m.halfWidth||Math.abs(c.z-m.z)+c.d/2>=m.halfDepth)ctx.issues.push('maps/duel-courtyard.json → terrain must fit inside the courtyard');}if(ctx.issues.length)throw new ConfigError(ctx.issues);return m;}

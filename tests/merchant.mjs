@@ -18,7 +18,7 @@ const offers=new Set();for(let n=0;n<40;n++)for(const i of merchantStock({},star
 assert.equal(offers.size,MERCHANT.weapons.length,'every exotic rotates into stock');
 
 // Buying takes coins, gives one physical exotic copy, and marks it bought for this cycle only.
-const state=sanitizeMerchantState(null),rich=makeProfile({coins:100000}),pick=stock.items[0].weapon;
+const state=sanitizeMerchantState(null),rich=makeProfile({coins:100000,rating:1000000}),pick=stock.items[0].weapon;
 assert.equal(buyExotic(makeProfile({coins:9999}),sanitizeMerchantState(null),pick,start+1000).ok,false);
 const bought=buyExotic(rich,state,pick,start+1000);
 assert(bought.ok);assert.equal(bought.item.rarity,'exotic');assert.equal(rich.coins,100000-WEAPONS[pick].price);

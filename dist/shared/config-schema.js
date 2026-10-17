@@ -8,6 +8,7 @@ export const CONFIG_FILES=['combat','weapons','armor','consumables','cosmetics',
 // Saved profiles, chest storage and settings store these ids. Renaming display
 // text is safe; removing an id would silently strip owned items from saves.
 export const PERSISTED_IDS={
+ skills:['mobility','endurance','protection','battlecraft','alchemy','arcana'].flatMap(id=>Array.from({length:10},(_,i)=>id+'-'+(i+1))),
  bounties:['kills-1','kills-2','kills-3','arrows-1','arrows-2','arrows-3','melee-1','melee-2','melee-3','crits-1','crits-2','crits-3','spells-1','spells-2','spells-3','potions-1','potions-2','potions-3','crates-1','crates-2','crates-3','wins-1','wins-2','wins-3','blocks-1','blocks-2','blocks-3'],
  kits:['vanguard','rogue','sentinel'],
  weapons:['classic','dagger','broadsword','mace','gemblade','frost','venom','arcane','god','riftfang','gilded-oath','thunderclap','voidsplitter','eclipse-edge','cinderfang','warden-cleaver','hollow-scepter'],
@@ -112,8 +113,12 @@ const cosmeticsSchema=object({
 
 const voiceFile=description=>string({pattern:/^[\w-]+\.mp3$/,patternLabel:'an .mp3 file name in assets/voice',description});
 const rollRange=(damageMax,max)=>object({damage:object({min:integer({min:0,max:damageMax}),spread:integer({min:1,max:damageMax})}),reach:object({min:meters({max}),spread:meters({max})}),speed:object({min:number({min:0,max}),spread:number({min:0,max})})});
+export const SKILL_EFFECTS=["sprintSpeed", "dodgeCost", "rollCost", "staminaMax", "staminaRegen", "sprintDrain", "protection", "knockResistance", "blockStrength", "bleedResistance", "healing", "fireResistance", "magicDamage", "arrowDamage", "frostResistance"];
+const skillBonuses=object(Object.fromEntries(SKILL_EFFECTS.map(id=>[id,optional(factor({description:'Additive bonus, capped per effect'}))])));
 const progressionSchema=object({
  schemaVersion:header,
+ purchaseLevels:object(Object.fromEntries(['weapons','armor','potions'].map(kind=>[kind,record(integer({unit:'level',min:1,max:496}))]))),
+ skills:object({caps:object(Object.fromEntries(SKILL_EFFECTS.map(id=>[id,number({unit:'fraction',min:0,max:.75})]))),branches:array(object({id:label(32),name:label(32),color:cssColor(),icon:label(24),nodes:array(object({id:label(40),name:label(40),level:integer({unit:'level',min:1,max:496}),price:coins(),requires:array(ref('skills'),{max:4,unique:true}),bonuses:skillBonuses}),{min:1,max:20,unique:'id'})}),{min:1,max:12,unique:'id'})}),
  bounties:object({activeLimit:integer({unit:'contracts',min:1,max:3}),contracts:array(object({id:label(40),name:label(40),metric:oneOf(['kills','arrows','melee','crits','spells','potions','crates','wins','blocks']),target:integer({unit:'actions',min:1,max:100000}),coins:coins(),points:integer({unit:'EXP',min:0,max:100000})}),{min:1,unique:'id'})}),
  inventory:object({carrySlots:integer({unit:'slots',min:1,max:200}),hotbarSlots:integer({unit:'slots',min:1,max:9}),stackLimit:integer({unit:'items',min:1,max:999})}),
  storage:object({initialSlots:integer({unit:'slots',min:0,max:1000}),stepSlots:integer({unit:'slots',min:1,max:1000}),basePrice:coins()}),
@@ -136,7 +141,7 @@ const progressionSchema=object({
   }),
  }),
  salvage:object({potionFactor:factor(),priceFactor:factor()}),
- match:object({rounds:integer({unit:'rounds',min:1,max:9}),betweenRounds:seconds({min:1,max:15})}),
+ match:object({winBy:integer({unit:'round lead',min:1,max:10}),betweenRounds:seconds({min:1,max:15})}),
  rewards:object({
   knockout:object({coins:coins(),streakCoins:coins(),maxStreakCoins:coins(),points:integer({unit:'points',min:0,max:1e4}),ratingDivisor:number({above:0,max:1e6}),minPoints:integer({unit:'points',min:0,max:1e4}),maxPoints:integer({unit:'points',min:0,max:1e4})}),
   death:object({points:integer({unit:'points',min:0,max:1e4}),ratingDivisor:number({above:0,max:1e6}),minPoints:integer({unit:'points',min:0,max:1e4}),maxPoints:integer({unit:'points',min:0,max:1e4})}),
@@ -177,6 +182,9 @@ const SCHEMAS={combat:combatSchema,weapons:weaponsSchema,armor:armorSchema,consu
 
 function crossCheck(c,issue){
  const {combat,weapons,armor,consumables,cosmetics,progression,bots,events}=c;
+ const skillNodes=progression?.skills?.branches?.flatMap(b=>b?.nodes??[])??[],skillIds=skillNodes.map(n=>n?.id),seenSkills=new Set();for(const node of skillNodes){if(!node)continue;if(seenSkills.has(node.id))issue('progression.json','skills: duplicate node '+node.id);for(const id of node.requires??[])if(!seenSkills.has(id))issue('progression.json','skills.'+node.id+': prerequisites must precede the skill; cycles are not allowed');if(!Object.keys(node.bonuses??{}).length)issue('progression.json','skills.'+node.id+': needs a bonus');seenSkills.add(node.id);}
+ for(const id of PERSISTED_IDS.skills)if(!skillIds.includes(id))issue('progression.json','skills: '+id+' is stored in saved profiles and must not be removed');
+ for(const [kind,table]of Object.entries(progression?.purchaseLevels??{}))for(const id of Object.keys(table??{}))if(!Object.hasOwn(kind==='weapons'?weapons?.weapons??{}:kind==='armor'?armor?.armor??{}:consumables?.potions??{},id))issue('progression.json','purchaseLevels.'+kind+': unknown item '+id);
  const keep=(file,label,ids,list)=>{if(ids)for(const id of list)if(!ids.includes(id))issue(file,`${label}: ${JSON.stringify(id)} is stored in saved profiles and must not be removed`);};
  keep('combat.json','kits',combat?.kits&&Object.keys(combat.kits),PERSISTED_IDS.kits);
  keep('weapons.json','weapons',weapons?.weapons&&Object.keys(weapons.weapons),PERSISTED_IDS.weapons);
@@ -235,6 +243,7 @@ export function parseConfig(raw){
  for(const name of CONFIG_FILES){ctx.file=name+'.json';out[name]=parse(SCHEMAS[name],raw?.[name],'',ctx);}
  ctx.file='';
  resolveRefs(ctx,{
+  skills:out.progression?.skills?.branches?.flatMap(b=>b?.nodes?.map(n=>n?.id)??[])??[],
   weapons:Object.keys(out.weapons?.weapons??{}),spells:Object.keys(out.weapons?.spells??{}),rarities:Object.keys(out.progression?.rarities??{}),potions:Object.keys(out.consumables?.potions??{}),
  });
  crossCheck(out,(file,message)=>ctx.issues.push(`${file} → ${message}`));

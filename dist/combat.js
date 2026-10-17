@@ -1,5 +1,6 @@
+import {skillBonuses} from './skills.js?v=68';
 export const PRESENTATION=CONFIG.combat.presentation;
-import {CONFIG} from './shared/config.js?v=65';
+import {CONFIG} from './shared/config.js?v=68';
 const {kits,movement,melee,knockback:KNOCK,bow}=CONFIG.combat;
 export const KITS=kits;
 export const BOTS=CONFIG.bots;
@@ -55,7 +56,7 @@ export function registerMeleeHit(attacker,victim,time){
 export function breakCombo(actor){actor.comboCount=0;actor.comboTarget=null;}
 export function combatKnockback(victim,attacker,force,critical,guarded=false,sprintHit=false){
  let x=victim.position.x-attacker.position.x,z=victim.position.z-attacker.position.z,d=Math.hypot(x,z);if(d<.001){x=0;z=-1;d=1;}x/=d;z/=d;
- const power=Math.min(KNOCK.maximum,force*KNOCK.forceScale+(sprintHit?force*KNOCK.sprintForceScale+KNOCK.sprintBonus:0))*(guarded?KNOCK.guardedScale:1);
+ const power=Math.min(KNOCK.maximum,force*KNOCK.forceScale+(sprintHit?force*KNOCK.sprintForceScale+KNOCK.sprintBonus:0))*(guarded?KNOCK.guardedScale:1)*(1-skillBonuses(victim.account??victim).knockResistance);
  victim.knock.x=victim.knock.x*KNOCK.retained+x*power;victim.knock.z=victim.knock.z*KNOCK.retained+z*power;
  const magnitude=Math.hypot(victim.knock.x,victim.knock.z);if(magnitude>KNOCK.maximum){victim.knock.x*=KNOCK.maximum/magnitude;victim.knock.z*=KNOCK.maximum/magnitude;}
  const into=victim.velocity.x*x+victim.velocity.z*z;if(into<0){victim.velocity.x-=x*into*KNOCK.counterVelocity;victim.velocity.z-=z*into*KNOCK.counterVelocity;}
@@ -88,7 +89,7 @@ export function planLavaJump(position,target,isBlocked,isHazard){
  }
  return null;
 }
-export function attackDamage(base,kit,critical=false,blocking=false,armor=0){return Math.max(melee.minimumDamage,Math.round(base*kit.damageMultiplier*(critical?melee.criticalMultiplier:1)*(blocking?melee.blockMultiplier:1)*(1-armor)));}
+export function attackDamage(base,kit,critical=false,blocking=false,armor=0,guardStrength=0){return Math.max(melee.minimumDamage,Math.round(base*kit.damageMultiplier*(critical?melee.criticalMultiplier:1)*(blocking?melee.blockMultiplier*(1-guardStrength):1)*(1-armor)));}
 export function clickInterval(profile,random=Math.random){return (1/profile.cps)*(BOTS.clicks.jitterMin+random()*BOTS.clicks.jitterSpread);}
 export function turnAngle(current,target,factor){const delta=Math.atan2(Math.sin(target-current),Math.cos(target-current));return current+delta*Math.min(1,Math.max(0,factor));}
 export function chooseSteer(position,target,isBlocked,isHazard,time,id){
@@ -99,5 +100,5 @@ export function chooseSteer(position,target,isBlocked,isHazard,time,id){
 }
 
 export const MOVEMENT=movement;
-export function movementSpeed(kit,gear=0,sprint=false){return(kit.speed+gear*MOVEMENT.gearSpeed)*(sprint?MOVEMENT.sprint:1);}
+export function movementSpeed(kit,gear=0,sprint=false,bonuses={}){return(kit.speed+gear*MOVEMENT.gearSpeed)*(sprint?MOVEMENT.sprint*(1+(bonuses.sprintSpeed??0)):1);}
 export function gaitStride(leg,speed,crouched=false){return leg*(crouched?1.4:speed>5.65?3.45:speed>3.45?2.7:1.75);}

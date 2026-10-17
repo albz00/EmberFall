@@ -3,12 +3,12 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
 import bundled from './maps/emberfall.json?v=67' with {type:'json'};
-import {buildWorld} from './world.js?v=67';
+import {buildWorld} from './world.js?v=68';
 import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects,surfaceWorld} from './shared/map-queries.js?v=65';
-import {inspectMap} from './shared/map-schema.js?v=65';
-import {DRAFT_KEY} from './shared/map.js?v=67';
+import {inspectMap} from './shared/map-schema.js?v=68';
+import {DRAFT_KEY} from './shared/map.js?v=68';
 import {PROP_FILES,placeMapProps} from './map-props.js?v=46';
-import * as model from './editor-model.js?v=65';
+import * as model from './editor-model.js?v=68';
 
 const $=id=>document.getElementById(id);
 const canvas=$('view'),outline=$('outline'),inspector=$('inspector'),issuesBox=$('issues'),readout=$('readout'),hoverLabel=$('hover-label');

@@ -7,7 +7,7 @@ import {groundHeight,isLava} from '../dist/world.js';
 const V=T.Vector3,Q=T.Quaternion;
 export async function verifyPolish(t,{byId,windowEvents,storage}){
  const reset=()=>{t.setMode('play');t.setFreecam(false,false);t.admin.god=t.admin.hunt=t.admin.flying=false;t.cancelAttack(true);t.resetPlayer();t.keys.clear();for(const f of t.fighters){f.alive=false;f.respawnAt=Infinity;}t.player.position.set(7,0,10);t.player.velocity.set(0,0,0);t.player.knock.set(0,0,0);t.player.grounded=true;t.player.health=1000;t.setAim(0,0);t.setBlock(false);};
- Object.assign(t.profile,makeProfile({coins:10000}));reset();
+ Object.assign(t.profile,makeProfile({coins:10000,rating:1000000}));reset();
  t.keys.add('KeyW');for(let i=0;i<90;i++)t.playerTick();t.keys.clear();assert(Math.abs(t.player.velocity.length()-KITS.vanguard.speed)<.02);assert(Math.abs((10-t.player.position.z)-KITS.vanguard.speed*.95)<.1,'one second covers the configured walking distance');
  reset();t.keys.add('KeyW');t.keys.add('ShiftLeft');for(let i=0;i<90;i++)t.playerTick();t.keys.clear();assert(Math.abs(Math.hypot(t.player.velocity.x,t.player.velocity.z)-movementSpeed(KITS.vanguard,0,true))<.03);assert(Math.abs((10-t.player.position.z)-movementSpeed(KITS.vanguard,0,true)*.95)<.1,'sprint covers the configured distance');
  // 47 clicks keep instant attacks and fast first-person swings; the body completes its own arcs.

@@ -4,7 +4,7 @@ import {WEAPONS,COSMETICS,makeProfile,purchaseWeapon,purchaseCosmetic,weaponStat
 import {updateCosmetic,disposeCosmetic} from '../dist/cosmetics.js';
 
 assert.equal(WEAPONS.god.price,1000000);assert.equal(COSMETICS.ascension.price,1000000);
-const p=makeProfile({coins:999999});assert(!purchaseWeapon(p,'god').ok);assert(!purchaseCosmetic(p,'ascension').ok);assert.equal(p.coins,999999);
+const p=makeProfile({coins:999999,rating:1000000});assert(!purchaseWeapon(p,'god').ok);assert(!purchaseCosmetic(p,'ascension').ok);assert.equal(p.coins,999999);
 p.coins=4000000;const first=purchaseWeapon(p,'god'),second=purchaseWeapon(p,'god');assert(first.ok&&second.ok);assert.notEqual(first.item.id,second.item.id);assert.equal(p.coins,2000000);assert.equal(first.item.rarity,'legendary');assert.equal(p.equipped,'starter');
 for(const rarity of ['common','rare','epic','legendary'])assert.equal(weaponStats({weapon:'god',rarity,rolls:{damage:7}}).damage,9999);
 assert(purchaseCosmetic(p,'ascension').ok);assert.equal(p.coins,1000000);assert(purchaseCosmetic(p,'ascension').ok);assert.equal(p.coins,1000000,'owned aura re-equips without charging twice');
