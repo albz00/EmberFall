@@ -1,5 +1,5 @@
-import {CONFIG} from './shared/config.js?v=59';
-import {MAP,isUnderBridge} from './shared/map.js?v=59';
+import {CONFIG} from './shared/config.js?v=60';
+import {MAP,isUnderBridge} from './shared/map.js?v=60';
 const BOW=CONFIG.combat.bow,TARGETING=CONFIG.bots.targeting,{schedule:SCHEDULE,killstreaks:KILLSTREAKS}=CONFIG.events;
 export const EVENT_SCHEDULE=SCHEDULE,SUPPLIES=CONFIG.events.supplies;
 // Retained arena navigation helpers; scheduled events are supply giveaways only.

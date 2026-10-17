@@ -35,6 +35,7 @@ const combatSchema=object({
  kits:record(object({name:label(24),health:integer({unit:'hp',min:1,max:1e5}),damageMultiplier:multiplier({above:0}),speed:speed({above:0,max:50}),tint:hexColor(),description:label(80)}),{min:1}),
  movement:object({walk:speed({above:0,max:50,description:'Bot travel pace and camera stride reference'}),shop:speed({above:0,max:50}),sprint:multiplier({above:0}),flight:multiplier({above:0}),block:factor({above:0}),crouch:factor({above:0}),gearSpeed:multiplier({description:'Movement added per point of gear speed'})}),
  roll:object({duration:seconds({above:0,max:3}),cooldown:seconds({above:0,max:10}),speed:speed({above:0,max:20}),minimumClearance:meters({above:0,max:3}),cameraDip:meters({max:0.6})}),
+ stamina:object({maximum:number({unit:'stamina',above:0,max:1000}),sprintDrain:number({unit:'stamina/s',above:0,max:100}),regenRate:number({unit:'stamina/s',above:0,max:200}),regenDelay:seconds({max:10}),resumeAt:number({unit:'stamina',min:0,max:1000}),rollCost:number({unit:'stamina',min:0,max:1000}),dodgeCost:number({unit:'stamina',min:0,max:1000})}),
  flightPose:object({blendRate:number({unit:'1/s',above:0,max:30}),response:number({unit:'1/s',above:0,max:30}),maxLean:number({unit:'rad',min:0,max:0.4}),hoverAmount:meters({max:0.1}),jointRate:number({unit:'rad/s',above:0,max:20,description:'Maximum flight leg rotation per second'})}),
  dodge:object({duration:seconds({above:0,max:1}),cooldown:seconds({above:0,max:5}),speed:speed({above:0,max:20}),minimumClearance:meters({above:0,max:3})}),
  melee:object({
@@ -182,6 +183,7 @@ function crossCheck(c,issue){
  keep('progression.json','rarities',progression?.rarities&&Object.keys(progression.rarities),PERSISTED_IDS.rarities);
  keep('progression.json','chest.forged.titles',progression?.chest?.forged?.titles,PERSISTED_IDS.titles);
  if(combat?.melee?.hitbox&&combat.melee.hitbox.crouched>combat.melee.hitbox.height)issue('combat.json','melee.hitbox.crouched must not exceed melee.hitbox.height');
+ const stamina=combat?.stamina;if(stamina)for(const key of ['resumeAt','rollCost','dodgeCost'])if(stamina[key]>stamina.maximum)issue('combat.json',`stamina.${key} must not exceed stamina.maximum`);
  const h=combat?.heavy;
  if(combat?.bow&&combat.bow.maxArrows<combat.bow.quiver)issue('combat.json','bow.maxArrows must be at least bow.quiver');
  if(h){if(h.windup>=h.full)issue('combat.json','heavy.windup must be shorter than heavy.full');if(h.minimum>h.full)issue('combat.json','heavy.minimum must not exceed heavy.full');if(h.minRecovery>h.maxRecovery)issue('combat.json','heavy.minRecovery must not exceed heavy.maxRecovery');}

@@ -2,13 +2,13 @@
 // the draft lives in this browser, exports as a map file, and plays through index.html?draft.
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
-import bundled from './maps/emberfall.json?v=59' with {type:'json'};
-import {buildWorld} from './world.js?v=59';
+import bundled from './maps/emberfall.json?v=60' with {type:'json'};
+import {buildWorld} from './world.js?v=60';
 import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects} from './shared/map-queries.js?v=45';
-import {inspectMap} from './shared/map-schema.js?v=47';
-import {DRAFT_KEY} from './shared/map.js?v=59';
+import {inspectMap} from './shared/map-schema.js?v=60';
+import {DRAFT_KEY} from './shared/map.js?v=60';
 import {PROP_FILES,placeMapProps} from './map-props.js?v=46';
-import * as model from './editor-model.js?v=47';
+import * as model from './editor-model.js?v=60';
 
 const $=id=>document.getElementById(id);
 const canvas=$('view'),outline=$('outline'),inspector=$('inspector'),issuesBox=$('issues'),readout=$('readout'),hoverLabel=$('hover-label');

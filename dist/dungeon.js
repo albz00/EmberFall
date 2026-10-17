@@ -1,4 +1,4 @@
-import {CRYPT,DUNGEON} from './shared/dungeon-data.js?v=59';
+import {CRYPT,DUNGEON} from './shared/dungeon-data.js?v=60';
 export {CRYPT,DUNGEON};
 export const inDungeon=(x,z)=>x<-64;
 export const dungeonPoint=p=>({x:CRYPT.origin.x+p.x,y:p.y??0,z:CRYPT.origin.z+p.z});

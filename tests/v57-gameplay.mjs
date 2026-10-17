@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import * as T from '../dist/vendor/three.module.js';
 import {KITS,DODGE,resetMeleeState} from '../dist/combat.js';
 import {WEAPONS,ARMORS,POTIONS,CHARACTERS,CHEST_PRICE,makeProfile,weaponStats,purchaseWeapon,purchaseArmor,openChest} from '../dist/progression.js';
+import {CONFIG} from '../dist/shared/config.js';
 import {MAP} from '../dist/shared/map.js';
 
 export async function verifyV57(t,{byId,windowEvents}){
@@ -43,13 +44,13 @@ export async function verifyV58(t){
   for(let i=0;i<80;i++){
    if(i===35)t.player.velocity.set(0,0,7);
    t.wait(1/60);t.updatePlayerAvatar(1/60);
-   assert(pose.flightBlend>0&&pose.flightBlend<=1);assert(pose.flightVelocity.toArray().every(Number.isFinite));assert(Math.abs(pose.flightHover)<=.0351);
+   assert(pose.flightBlend>0&&pose.flightBlend<=1);assert(pose.flightVelocity.toArray().every(Number.isFinite));assert(Math.abs(pose.flightHover)<=CONFIG.combat.flightPose.hoverAmount+.0001);
    if(i===0)assert(pose.flightBlend<.2,'entry blends instead of snapping');
    if(i===35)assert(pose.flightVelocity.z<0,'a reversed input does not instantly reverse the pose');
    if(previous){const step=previous.angleTo(leg.quaternion);maxStep=Math.max(maxStep,step);assert(step<.3,id+' leg pose changes smoothly');}previous=leg.quaternion.clone();frames++;
   }
   t.admin.flying=false;t.player.velocity.set(0,0,0);const before=pose.flightBlend;t.wait(1/60);t.updatePlayerAvatar(1/60);assert(pose.flightBlend>0&&pose.flightBlend<before,'exit fades instead of snapping');
-  for(let i=0;i<60;i++){t.wait(1/60);t.updatePlayerAvatar(1/60);}assert(pose.flightBlend<.002);
+  for(let i=0;i<90;i++){t.wait(1/60);t.updatePlayerAvatar(1/60);}assert(pose.flightBlend<.002);
  }
  t.admin.flying=t.admin.god=false;t.profile.character='adventurer';t.refreshEquipment();t.resetPlayer();
  console.log(JSON.stringify({v58:'passed',configuredPriceFloors:true,starterWalletCannotBuyUpgrades:true,preservedMillionCoinSword:true,flightCharacters:Object.keys(CHARACTERS).length,flightFrames:frames,maxLegStep:+maxStep.toFixed(3),filteredReversals:true,blendedEntryAndExit:true}));

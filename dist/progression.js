@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=59';
+import {CONFIG} from './shared/config.js?v=60';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;

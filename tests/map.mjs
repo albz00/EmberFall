@@ -72,7 +72,7 @@ expectIssue(c=>{c.stringLights[1].to='crate-1';},'stringLights[1].to: "crate-1" 
 
 // Queries are driven by the data, not a parallel copy.
 const edited=structuredClone(raw);edited.prefabs.ledge.surfaces[0].height=9;edited.regions.safe.minY=8.65;edited.prefabs.bridge.surfaces[0].height=6;edited.prefabs.ramp.surfaces[0].height=6;
-for(const p of edited.navigation.destinations)if(p.y!==undefined)p.y=6;
+for(const p of edited.navigation.destinations)if(p.parent?.startsWith('ramp-'))p.y=6;
 const editedMap=parseMap(edited),q=createMapQueries(editedMap);
 assert.equal(q.groundHeight(0,25),21);assert.equal(q.groundHeight(0,-10),6);assert(Math.abs(q.groundHeight(25.1,-10,6)-6)<1e-9&&Math.abs(q.groundHeight(25.1,.8,6)-3)<1e-9,'ramps rise to the edited deck height');assert(!q.safeZone({x:0,y:20,z:28}));
 assert(stationObjects(editedMap).every(o=>o.y===21),'stations stand on the edited ledge surface');
@@ -105,7 +105,7 @@ try{
  assert(E.isUnderBridge({x:0,y:3,z:-10}),'bridge cover height follows the map file');
  // Moving an object in the map moves its collider and its mesh together.
  const T=await load('vendor/three.module.js'),scene=new T.Scene(),built=W.buildWorld(scene);
- assert.equal(W.colliders.length,36,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
+ assert.equal(W.colliders.length,40,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
  assert(W.blocked(15,-25)&&!W.blocked(9,-21),'blocking follows the moved boulder');
  assert.deepEqual(W.colliders.slice(13,15).map(c=>[c.x,c.z]),[[-3.35,-27],[3.35,-27]]);
  assert.deepEqual(W.colliders[15],{type:'box',x:1,z:-20,w:1.2,d:1.2,minY:0,maxY:1.4},'crate colliders follow their object');

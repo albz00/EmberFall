@@ -1,5 +1,5 @@
-import {HURT_WINDOW,BOTS} from './combat.js?v=59';
-import {WEAPONS,SHOP_WEAPONS,ARMORS,POTIONS,CHEST_PRICE,weaponStats,equippedItem,armorReduction,purchaseWeapon,purchaseArmor,purchasePotion,openChest,sellItem,equipInventoryItem} from './progression.js?v=59';
+import {HURT_WINDOW,BOTS} from './combat.js?v=60';
+import {WEAPONS,SHOP_WEAPONS,ARMORS,POTIONS,CHEST_PRICE,weaponStats,equippedItem,armorReduction,purchaseWeapon,purchaseArmor,purchasePotion,openChest,sellItem,equipInventoryItem} from './progression.js?v=60';
 
 export function itemScore(item,role='duelist'){
  const s=weaponStats(item),ranged=s.kind==='staff';

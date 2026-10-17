@@ -253,3 +253,13 @@ Validated `progression.match` sets three rounds and four seconds between rounds.
 The ledge object moves vertically by 12 m to place its existing surface at 20 m. Child rails, safe region, spawns, stations, navigation exit and sign follow the parent and shared ground queries. Ground-anchored posts overlap transverse crossbeams seated against the platform underside, with long side braces.
 
 Inventory rendering returns a selection controller: inspection changes selected classes and details in place. An equipment signature avoids rebuilding character and held models for unrelated moves; refreshed panels preserve scroll, while new contexts start at the top. Repeated I/F keydown events cannot flicker menus.
+
+## Stamina, camera indexing and under-ledge arena (v0.60)
+
+`stamina.js` reads validated combat tuning and shares sprint exhaustion, delayed recovery and mobility costs across player/bots. Safe ledge and admin bypass restore full stamina; respawns and rounds reset it. Melee input, hurt immunity and weapon stats are unaffected. The HUD interpolates the bar widths in CSS and respects reduced motion.
+
+`scenery-index.js` builds an X/Z grid of static world-space triangles once after asset placement. DDA ray traversal tests only crossed cells with vertical bounds; material sidedness and draw ranges are preserved. Camera collision uses four short probes; third-person aiming uses one scenery query plus the same fighter hitboxes as melee, without CPU-skinning opponents. Hover feedback reuses the rendered camera; actual combat input refreshes the indexed camera probes for immediate mouse aim. Generated dungeon indexes are separate. This does not establish a browser frame-rate measurement.
+
+The new combat deck and both staircases are map prefabs, with surfaces shared by physics and mesh builders. Four grounded piers support the terrace above a walkable underpass. `elevation-route.js` derives ascent paths from shared flat/ramp surfaces rather than hardcoded ramp coordinates. Raised spawn garlands clear the stations; the merchant stands directly on the planks. Floating inverted cavern cones were removed.
+
+Flight lean/IK has one owner, character-pose, with filtered travel and independent limb drift. Lower-body flight locomotion no longer adds a second lean. Potion healing remains immediate with its existing cooldown; the bottle and left-arm sip are cosmetic and cancel on attacks, slot changes, death or modal opening. KO announcements are short-lived and keep match reward accounting separate.

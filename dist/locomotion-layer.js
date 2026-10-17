@@ -1,4 +1,4 @@
-import {gaitStride} from './combat.js?v=59';
+import {gaitStride} from './combat.js?v=60';
 import * as THREE from './vendor/three.module.js';
 const V=THREE.Vector3,Q=THREE.Quaternion;
 const lower=new Set(['Body','Hips','UpperLegL','LowerLegL','FootL','UpperLegR','LowerLegR','FootR']);
@@ -34,6 +34,5 @@ export function applyLocomotion(rig,layer,actor,dt,{flying=false,disabled=false,
   if(!['position','quaternion','scale'].includes(property))continue;save(layer,t.bone,property);
   if(property==='quaternion')t.bone.quaternion.slerp(new Q().fromArray(value),weight);else t.bone[property].lerp(new V().fromArray(value),weight);
  }}
- if(!flying)return;
- const body=rig.getObjectByName('Body');if(body){save(layer,body,'position');save(layer,body,'quaternion');body.position.y+=Math.sin(time*2.1)*.018;const local=new V(actor.velocity?.x??0,0,actor.velocity?.z??0).applyAxisAngle(new V(0,1,0),-rig.rotation.y);body.quaternion.multiply(new Q().setFromEuler(new THREE.Euler(THREE.MathUtils.clamp(local.z*.025,-.15,.18),0,THREE.MathUtils.clamp(-local.x*.02,-.12,.12))));}
+ // Flight has one pose owner in character-pose.js, so travel lean is not applied twice.
 }

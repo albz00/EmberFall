@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
-import {CRYPT,DUNGEON,roomContains,dungeonGateClosed} from './dungeon.js?v=59';
+import {CRYPT,DUNGEON,roomContains,dungeonGateClosed} from './dungeon.js?v=60';
 
 const V=THREE.Vector3;
 export function createDungeonBolt(color){

@@ -40,7 +40,8 @@
       {"x": 0, "z": -25},
       {"x": 20, "z": -3},
       {"parent": "ramp-west", "x": 0, "z": -10.8, "y": 5.2},
-      {"parent": "ramp-east", "x": 0, "z": -10.8, "y": 5.2}
+      {"parent": "ramp-east", "x": 0, "z": -10.8, "y": 5.2},
+      {"x": 0, "z": 27.2, "y": 3.2}
     ],
     "bridgeCover": [
       {"parent": "bridge", "x": -21, "z": 0},
@@ -67,7 +68,9 @@
     "volcano": {"visual": "volcano", "colliders": [{"type": "circle", "r": 0.36, "minY": 0, "maxY": 2.8, "scaleTop": false}]},
     "station-pedestal": {"visual": "station", "colliders": [{"type": "circle", "r": 0.82, "minY": 0, "maxY": 2}]},
     "potion-table": {"visual": "potion-table", "colliders": [{"type": "box", "w": 1.87, "d": 1.69, "minY": 0, "maxY": 1.5}]},
-    "merchant-stand": {"visual": "merchant", "colliders": [{"type": "circle", "r": 0.6, "minY": 0, "maxY": 2.2}]}
+    "merchant-stand": {"visual": "merchant", "colliders": [{"type": "circle", "r": 0.6, "minY": 0, "maxY": 2.2}]},
+    "combat-deck": {"visual": "combat-deck", "surfaces": [{"type": "flat", "w": 14.6, "d": 5.6, "height": 3.2, "stepUp": 0.5}], "colliders": [{"type": "circle", "x": -6.8, "z": -2.1, "r": 0.28, "minY": 0, "maxY": 2.72}, {"type": "circle", "x": -6.8, "z": 2.1, "r": 0.28, "minY": 0, "maxY": 2.72}, {"type": "circle", "x": 6.8, "z": -2.1, "r": 0.28, "minY": 0, "maxY": 2.72}, {"type": "circle", "x": 6.8, "z": 2.1, "r": 0.28, "minY": 0, "maxY": 2.72}]},
+    "combat-stairs": {"visual": "combat-stairs", "surfaces": [{"type": "ramp", "w": 3.2, "d": 8.4, "height": 3.2, "rises": "+z", "stepUp": 0.65}]}
   },
   "objects": [
     {"id": "central-crag", "prefab": "crag", "x": 0, "z": 0},
@@ -104,7 +107,10 @@
     {"id": "bridge", "prefab": "bridge", "x": 0, "z": -10},
     {"id": "ramp-west", "prefab": "ramp", "x": -25.1, "z": 0.8},
     {"id": "ramp-east", "prefab": "ramp", "x": 25.1, "z": 0.8},
-    {"id": "ledge", "prefab": "ledge", "x": 0, "y": 12, "z": 25.2}
+    {"id": "ledge", "prefab": "ledge", "x": 0, "y": 12, "z": 25.2},
+    {"id": "under-ledge-deck", "prefab": "combat-deck", "x": 0, "z": 27.2},
+    {"id": "under-ledge-stairs-west", "prefab": "combat-stairs", "x": -5.4, "z": 20.2},
+    {"id": "under-ledge-stairs-east", "prefab": "combat-stairs", "x": 5.4, "z": 20.2}
   ],
   "stringLights": [
     {"from": "tower-northwest", "to": "tower-northeast", "sag": 2.1},

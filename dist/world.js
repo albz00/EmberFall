@@ -2,9 +2,9 @@ import {addRockRunes} from './rock-runes.js?v=24';
 import {buildSky} from './arena-sky.js?v=46';
 import {buildPortal,addStringLights} from './portal.js?v=59';
 import * as THREE from './vendor/three.module.js';
-import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=59';
+import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=60';
 import {mapColliders,createCollision,createMapQueries,objectSurfaces,rampSurfaceHeight} from './shared/map-queries.js?v=45';
-import {PREFAB_VISUALS} from './shared/map-schema.js?v=47';
+import {PREFAB_VISUALS} from './shared/map-schema.js?v=60';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
 
 // Every collider in the arena comes from the map: world meshes, model props and station furniture.
@@ -57,7 +57,7 @@ export function buildWorld(scene,map=MAP){
   const ring=mesh(new THREE.RingGeometry(33.6,36.8,90),lavaMat,0,.04,0,root);ring.rotation.x=-Math.PI/2;
   for(const path of paths){const vertices=[];for(let i=0;i<path.points.length-1;i++){const [ax,az]=path.points[i],[bx,bz]=path.points[i+1];const len=Math.hypot(bx-ax,bz-az),nx=-(bz-az)/len*path.width*.52,nz=(bx-ax)/len*path.width*.52;vertices.push(ax+nx,.035,az+nz,bx-nx,.035,bz-nz,bx+nx,.035,bz+nz,ax+nx,.035,az+nz,ax-nx,.035,az-nz,bx-nx,.035,bz-nz);for(let j=0;j<len;j+=1.8){const t=j/len,x=mix(ax,bx,t),z=mix(az,bz,t);for(const sign of [-1,1])rock(root,x+nx*1.5*sign,.03,z+nz*1.5*sign,.4+rand()*.4,.16+rand()*.12,.3+rand()*.3,0x493d49);}}const geom=new THREE.BufferGeometry();geom.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geom.computeVertexNormals();root.add(new THREE.Mesh(geom,lavaMat));for(const [x,z]of path.points){const join=mesh(new THREE.CircleGeometry(path.width*.53,8),lavaMat,x,.037,z,root);join.rotation.x=-Math.PI/2;}}
   // Deep faceted cavern: irregular slabs, buttresses, and distant rim.
-  for(let i=0;i<45;i++){const a=i/45*Math.PI*2,r=38+rand()*2,x=Math.cos(a)*r,z=Math.sin(a)*r;rock(root,x,9+rand()*3,z,5+rand()*3,13+rand()*7,5+rand()*3,[0x655d67,0x6f6268,0x585361,0x786b71][i%4],0);rock(root,x*1.04,26+rand()*4,z*1.04,7,13+rand()*6,7,[0x514d5f,0x635864,0x585162][i%3]);if(i%2===0)rock(root,x*.88,1.6,z*.88,3+rand()*1.5,2.4+rand()*2,3,0x615a66);if(i%3===0){const stal=mesh(new THREE.ConeGeometry(1.4+rand(),9+rand()*8,5),material(0x4b4658),x*.81,33+rand()*4,z*.81,root);stal.rotation.z=Math.PI;}}
+  for(let i=0;i<45;i++){const a=i/45*Math.PI*2,r=38+rand()*2,x=Math.cos(a)*r,z=Math.sin(a)*r;rock(root,x,9+rand()*3,z,5+rand()*3,13+rand()*7,5+rand()*3,[0x655d67,0x6f6268,0x585361,0x786b71][i%4],0);rock(root,x*1.04,26+rand()*4,z*1.04,7,13+rand()*6,7,[0x514d5f,0x635864,0x585162][i%3]);if(i%2===0)rock(root,x*.88,1.6,z*.88,3+rand()*1.5,2.4+rand()*2,3,0x615a66);}
   // Map objects: each world visual draws its mesh at the object; the object's colliders come from the map. game.js places model visuals.
   let rockRunes=null,portal=null;
   const builders={
@@ -84,6 +84,14 @@ export function buildWorld(scene,map=MAP){
     for(let z=top+.25;z<s.maxZ;z+=.62){const plank=box(root,x,h(z)-.08,z,3.8,.18,.56,0x987352);plank.rotation.x=slope;}
     for(let z=top+3;z<=top+15;z+=6){const y=h(z);bandedPost(root,x,s.base,z,Math.max(.15,y-s.base-.34));beam(root,[x-1.65,y-.34,z],[x+1.65,y-.34,z],.15);}
     for(const side of [-1,1]){const edge=x+side*1.87;for(let z=top+2;z<=top+20;z+=6){const y=h(z);beam(root,[edge,y-.1,z],[edge,y+1.05,z],.1,0x684934);if(z<top+20){const next=z+6;beam(root,[edge,y+1,z],[edge,h(next)+1,next],.075,0xc2a174);}}}},
+   'combat-deck'(o){const s=objectSurfaces(map,o)[0],h=s.top,centerZ=(s.minZ+s.maxZ)/2;box(root,o.x,h-.28,centerZ,s.maxX-s.minX,.42,s.maxZ-s.minZ,0x50454b);
+    for(let x=s.minX+.19;x<s.maxX;x+=.4)box(root,x,h-.045,centerZ,.37,.09,s.maxZ-s.minZ,0x987352);
+    for(const c of map.prefabs[o.prefab].colliders??[])bandedPost(root,o.x+c.x,o.y??0,o.z+c.z,h-.4);
+    for(const z of [s.minZ+.2,s.maxZ-.2])beam(root,[s.minX,h-.4,z],[s.maxX,h-.4,z],.15,0x684934);
+    for(const side of [-1,1]){beam(root,[o.x+side*6.8,1.1,centerZ-2.1],[o.x+side*5.5,h-.4,centerZ-2.1],.12,0x684934);bandedPost(root,o.x+side*6.8,h-.4,centerZ+2.1,1.15);torch(root,o.x+side*6.8,h+1.3,centerZ+2.1,.5,true);}},
+   'combat-stairs'(o){const s=objectSurfaces(map,o).find(s=>s.type==='ramp'),n=Math.ceil(s.rise/.2),depth=(s.maxZ-s.minZ)/n;
+    for(let i=0;i<n;i++){const z=s.minZ+(i+.5)*depth,h=s.base+s.rise*(i+.5)/n;box(root,o.x,h-.08,z,s.maxX-s.minX,.16,depth+.015,i%2?0xa17e57:0x93704e);}
+    for(const side of [-1,1]){const x=o.x+side*(s.maxX-s.minX-.25)/2;beam(root,[x,s.base-.1,s.minZ],[x,s.base+s.rise-.1,s.maxZ],.16,0x684934);bandedPost(root,x,s.base,s.maxZ-1,s.rise-.5);}},
    // Safe spawn balcony, open along the front so the entry is a real drop.
    ledge(o){const X=o.x,Y=o.y??0,Z=o.z;
     box(root,X,Y+7.25,Z,18.8,1.05,12.6,0x50454b);let plank=0;for(let z=-6.1;z<6.4;z+=.63)box(root,X,Y+7.89,Z+z,18.55,.22,.59,plank++%2?0xa17e57:0x93704e);
@@ -92,9 +100,9 @@ export function buildWorld(scene,map=MAP){
     for(const x of [-8,8]){const base=(map===MAP?groundHeight:createMapQueries(map).groundHeight)(X+x,Z,0),top=Y+6.4;if(top-base>9){beam(root,[X+x,base+2,Z-4.2],[X+x,top-1,Z+3.8],.17);beam(root,[X+x,base+2,Z+3.8],[X+x,top-1,Z-4.2],.17);beam(root,[X+x,(base+top)/2,Z-4.2],[X+x,(base+top)/2,Z+3.8],.18);}}
     const garland=(a,b,count,sag)=>{const point=t=>new THREE.Vector3(mix(a[0],b[0],t),mix(a[1],b[1],t)-4*t*(1-t)*sag,mix(a[2],b[2],t)),points=Array.from({length:41},(_,i)=>point(i/40));root.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),new THREE.LineBasicMaterial({color:0xc39b6b})));
      const length=point(0).distanceTo(point(1));for(let i=1;i<=count;i++){const t=i/(count+1),p=point(t),cloth=banner(root,p.x,p.y-.12,p.z,.6,.85,Math.atan2(b[2]-a[2],b[0]-a[0]));banners.push(cloth);const bar=cloth.parent.children.find(o=>o.geometry?.type==='CylinderGeometry');bar?.removeFromParent();for(const side of [-1,1]){const q=point(t+side*.3/length),r=point(t+side*.25/length);beam(root,q.toArray(),[r.x,p.y-.12,r.z],.012,0xc39b6b);}}};
-    for(const x of [-8.8,8.8])for(const z of [-5.6,4.9]){beam(root,[X+x,Y+8,Z+z],[X+x,Y+11.15,Z+z],.075,0x987352);mesh(new THREE.SphereGeometry(.11,6,4),material(0xc39b6b),X+x,Y+11.15,Z+z,root);}
-    garland([X-8.8,Y+11.05,Z+4.9],[X+8.8,Y+11.05,Z+4.9],11,.25);
-    for(const x of [-8.8,8.8])garland([X+x,Y+11.05,Z-5.6],[X+x,Y+11.05,Z+4.9],7,.2);
+    for(const x of [-8.8,8.8])for(const z of [-5.6,4.9]){beam(root,[X+x,Y+8,Z+z],[X+x,Y+13.8,Z+z],.075,0x987352);mesh(new THREE.SphereGeometry(.11,6,4),material(0xc39b6b),X+x,Y+13.8,Z+z,root);}
+    garland([X-8.8,Y+13.7,Z+4.9],[X+8.8,Y+13.7,Z+4.9],11,.25);
+    for(const x of [-8.8,8.8])garland([X+x,Y+13.7,Z-5.6],[X+x,Y+13.7,Z+4.9],7,.2);
     for(let z=-5.2;z<-2.2;z+=1.1){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([X-.35,Y+8.018,Z+z+.4,X+.35,Y+8.018,Z+z+.4,X,Y+8.018,Z+z-.25],3));g.computeVertexNormals();root.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:0xffd08b,side:THREE.DoubleSide})));}},
   };
   for(const [visual,spec]of Object.entries(PREFAB_VISUALS)){if(spec.builtBy==='world'&&!builders[visual])throw new Error('No mesh builder for prefab visual '+visual);if(spec.anchor&&!ANCHORS[visual])throw new Error('No string light anchor for prefab visual '+visual);}

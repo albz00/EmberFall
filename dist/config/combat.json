@@ -121,10 +121,19 @@
     "minimumClearance": 0.6
   },
   "flightPose": {
-    "blendRate": 7,
-    "response": 5,
-    "maxLean": 0.18,
-    "hoverAmount": 0.035,
-    "jointRate": 7.5
+    "blendRate": 5,
+    "response": 6,
+    "maxLean": 0.32,
+    "hoverAmount": 0.045,
+    "jointRate": 5.5
+  },
+  "stamina": {
+    "maximum": 100,
+    "sprintDrain": 12,
+    "regenRate": 24,
+    "regenDelay": 0.65,
+    "resumeAt": 20,
+    "rollCost": 24,
+    "dodgeCost": 18
   }
 }

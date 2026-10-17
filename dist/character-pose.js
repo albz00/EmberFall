@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=59';
+import {CONFIG} from './shared/config.js?v=60';
 import * as THREE from './vendor/three.module.js';
 const V=THREE.Vector3,Q=THREE.Quaternion,Y=new V(0,1,0),FLIGHT=CONFIG.combat.flightPose;
 export function makeCharacterPose(){return{saved:[],weight:0,flightBlend:0,flightVelocity:new V(),flightPhase:0,flightHover:0,flightAnchors:{},flightJoints:{},flightSolving:false,flightDt:0};}
@@ -22,12 +22,12 @@ function limb(rig,layer,names,target,pole,weight){
  const along=(l1*l1-l2*l2+d*d)/(2*d),elbow=a.clone().addScaledVector(axis,along).addScaledVector(bend,Math.sqrt(Math.max(0,l1*l1-along*along)));
  aim(layer,upper,lower,elbow,weight);aim(layer,lower,end,a.clone().addScaledVector(axis,d),weight);
 }
-export function applyCharacterPose(rig,layer,actor,dt,{flying=false,blocking=false,attacking=false,disabled=false,armed=true,time=0,gaitPhase=0}={}){
+export function applyCharacterPose(rig,layer,actor,dt,{flying=false,blocking=false,attacking=false,disabled=false,armed=true,time=0,gaitPhase=0,drinking=false,drinkAge=0}={}){
  layer.flightDt=dt;layer.flightSolving=false;
  layer.flightBlend=THREE.MathUtils.damp(layer.flightBlend,flying&&!disabled?1:0,FLIGHT.blendRate,dt);layer.flightVelocity.lerp(actor.velocity??new V(),1-Math.exp(-FLIGHT.response*dt));layer.flightPhase+=dt*(1.65+Math.min(12,layer.flightVelocity.length())*.025);layer.flightHover=Math.sin(layer.flightPhase)*FLIGHT.hoverAmount*layer.flightBlend;if(layer.flightBlend<.001)layer.flightJoints={};
- layer.weight=THREE.MathUtils.damp(layer.weight,disabled||attacking?0:1,24,dt);const weight=layer.weight;if((weight<.001||disabled||attacking)&&layer.flightBlend<.001)return;
+ layer.weight=THREE.MathUtils.damp(layer.weight,disabled||attacking?0:1,24,dt);const weight=layer.weight;if((weight<.001||disabled||attacking)&&layer.flightBlend<.001&&!drinking)return;
  rig.updateMatrixWorld(true);const point=v=>rig.localToWorld(new V(...v)),local=bone=>rig.worldToLocal(bone.getWorldPosition(new V()));
- const speed=Math.hypot(actor.velocity?.x??0,actor.velocity?.z??0);
+ const localVelocity=layer.flightVelocity.clone().applyQuaternion(rig.getWorldQuaternion(new Q()).invert()),travel=THREE.MathUtils.clamp(localVelocity.z/7,-1,1),sideTravel=THREE.MathUtils.clamp(localVelocity.x/7,-1,1);
  // Keep imported shoulder and elbow motion intact. Only an explicit guard lifts the arms.
  if(blocking&&!disabled&&!attacking)for(const side of ['L','R']){
   const shoulder=rig.getObjectByName('UpperArm'+side),hand=rig.getObjectByName('Wrist'+side),elbow=rig.getObjectByName('LowerArm'+side);if(!shoulder||!hand||!elbow)continue;
@@ -41,15 +41,21 @@ export function applyCharacterPose(rig,layer,actor,dt,{flying=false,blocking=fal
   const q=new Q().setFromUnitVectors(current,desired).multiply(hand.getWorldQuaternion(new Q())).premultiply(hand.parent.getWorldQuaternion(new Q()).invert());save(layer,hand);hand.quaternion.slerp(q,weight);hand.updateWorldMatrix(false,true);
  }
  if(layer.flightBlend>.001){
-  layer.flightSolving=true;const flightWeight=layer.flightBlend,filteredSpeed=Math.hypot(layer.flightVelocity.x,layer.flightVelocity.z);
+  layer.flightSolving=true;const flightWeight=layer.flightBlend;
   // Almost straight legs at rest; feet trail softly only while travelling.
 
-  for(const side of ['L','R']){const hip=rig.getObjectByName('UpperLeg'+side),shin=rig.getObjectByName('LowerLeg'+side),foot=rig.getObjectByName('Foot'+side);if(!hip||!shin||!foot)continue;const h=local(hip),length=hip.getWorldPosition(new V()).distanceTo(shin.getWorldPosition(new V()))+shin.getWorldPosition(new V()).distanceTo(foot.getWorldPosition(new V())),trail=Math.min(.24,filteredSpeed*.026),sign=side==='R'?-1:1;
+  for(const side of ['L','R']){const hip=rig.getObjectByName('UpperLeg'+side),shin=rig.getObjectByName('LowerLeg'+side),foot=rig.getObjectByName('Foot'+side);if(!hip||!shin||!foot)continue;const h=local(hip),length=hip.getWorldPosition(new V()).distanceTo(shin.getWorldPosition(new V()))+shin.getWorldPosition(new V()).distanceTo(foot.getWorldPosition(new V())),trail=travel*.26,sign=side==='R'?-1:1,sway=Math.sin(layer.flightPhase+sign*.75)*.045;
    // Detached legacy feet need to follow the shin while solving, then retain their ankle offset.
-   if(foot.parent.name==='Root'){const offset=shin.worldToLocal(foot.getWorldPosition(new V()));const anchor=layer.flightAnchors[side]??=new THREE.Object3D();anchor.position.copy(offset);shin.add(anchor);limb(rig,layer,[hip.name,shin.name,anchor.name='flight-ankle-'+side],point([h.x+sign*.04,h.y-length*.975,h.z-trail+Math.sin(layer.flightPhase+sign)*.018]),point([h.x,h.y-.3,h.z+.5]),flightWeight);save(layer,foot,'position');foot.position.copy(foot.parent.worldToLocal(anchor.getWorldPosition(new V())));shin.remove(anchor);}else limb(rig,layer,[hip.name,shin.name,foot.name],point([h.x+sign*.04,h.y-length*.975,h.z-trail]),point([h.x,h.y-.3,h.z+.5]),flightWeight);
+   if(foot.parent.name==='Root'){const offset=shin.worldToLocal(foot.getWorldPosition(new V()));const anchor=layer.flightAnchors[side]??=new THREE.Object3D();anchor.position.copy(offset);shin.add(anchor);limb(rig,layer,[hip.name,shin.name,anchor.name='flight-ankle-'+side],point([h.x+sign*.055-sideTravel*.1,h.y-length*(.97+Math.sin(layer.flightPhase+sign)*.008),h.z-trail+sway]),point([h.x,h.y-.3,h.z+.5]),flightWeight);save(layer,foot,'position');foot.position.copy(foot.parent.worldToLocal(anchor.getWorldPosition(new V())));shin.remove(anchor);}else limb(rig,layer,[hip.name,shin.name,foot.name],point([h.x+sign*.055-sideTravel*.1,h.y-length*(.97+Math.sin(layer.flightPhase+sign)*.008),h.z-trail+sway]),point([h.x,h.y-.3,h.z+.5]),flightWeight);
+  }
+  if(!attacking&&!disabled&&!blocking&&!drinking)for(const side of ['L','R']){
+   const shoulder=rig.getObjectByName('UpperArm'+side),elbow=rig.getObjectByName('LowerArm'+side),hand=rig.getObjectByName('Wrist'+side);if(!shoulder||!elbow||!hand)continue;
+   const p=local(shoulder),sign=side==='R'?-1:1,length=shoulder.getWorldPosition(new V()).distanceTo(elbow.getWorldPosition(new V()))+elbow.getWorldPosition(new V()).distanceTo(hand.getWorldPosition(new V())),sway=Math.sin(layer.flightPhase+sign*.7);
+   limb(rig,layer,[shoulder.name,elbow.name,hand.name],point([p.x+sign*(.12+sway*.035)-sideTravel*.07,p.y-length*.88+sway*.018,p.z-travel*.18+sway*.045]),point([p.x+sign*.32,p.y-.3,p.z+.12]),flightWeight);
   }
  }
  layer.flightSolving=false;
- if(layer.flightBlend>.001){const localVelocity=layer.flightVelocity.clone().applyQuaternion(rig.getWorldQuaternion(new Q()).invert()),pitch=THREE.MathUtils.clamp(localVelocity.z*.018,-FLIGHT.maxLean,FLIGHT.maxLean),bank=THREE.MathUtils.clamp(-localVelocity.x*.015,-FLIGHT.maxLean*.7,FLIGHT.maxLean*.7);save(layer,rig);rig.quaternion.multiply(new Q().setFromEuler(new THREE.Euler(pitch*layer.flightBlend,0,bank*layer.flightBlend)));}
+ if(layer.flightBlend>.001){const pitch=THREE.MathUtils.clamp(localVelocity.z*.018,-FLIGHT.maxLean,FLIGHT.maxLean),bank=THREE.MathUtils.clamp(-localVelocity.x*.015,-FLIGHT.maxLean*.7,FLIGHT.maxLean*.7);save(layer,rig);rig.quaternion.multiply(new Q().setFromEuler(new THREE.Euler(pitch*layer.flightBlend,0,(bank+Math.sin(layer.flightPhase)*.025)*layer.flightBlend)));}
+ if(drinking){const shoulder=rig.getObjectByName('UpperArmL'),head=rig.getObjectByName('Head');if(shoulder&&head){const p=local(shoulder),mouth=local(head),weight=Math.min(1,drinkAge/.14)*Math.min(1,(.72-drinkAge)/.16);limb(rig,layer,['UpperArmL','LowerArmL','WristL'],point([mouth.x+.045,mouth.y-.09,mouth.z+.17]),point([p.x+.34,p.y-.18,p.z+.25]),Math.max(0,weight));}}
  rig.updateMatrixWorld(true);
 }

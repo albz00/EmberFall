@@ -14,6 +14,7 @@ export const PREFAB_VISUALS={
  'ledge-side-rail':{builtBy:'world',anchor:true},'ledge-back-rail':{builtBy:'world'},'ledge-front-rail':{builtBy:'world'},portal:{builtBy:'world',once:true},
  crate:{builtBy:'model',rotation:true},'rock-cluster':{builtBy:'model',scale:true,rotation:true,variants:5},volcano:{builtBy:'model',scale:true},
  station:{builtBy:'model',station:true},'potion-table':{builtBy:'model',station:true},merchant:{builtBy:'model',station:true},
+ 'combat-deck':{builtBy:'world'},'combat-stairs':{builtBy:'world',stairs:true},
  ledge:{builtBy:'world'},bridge:{builtBy:'world'},ramp:{builtBy:'world',ramp:true},
 };
 
@@ -135,6 +136,7 @@ function crossCheck(map,report){
  for(const [id,prefab]of Object.entries(map.prefabs)){
   if(!prefab.colliders&&!prefab.surfaces)report(`prefabs.${id} needs colliders or surfaces`);
   prefab.colliders?.forEach((c,i)=>{if(!(c.minY<c.maxY))report(`prefabs.${id}.colliders[${i}].minY must be less than maxY`);});
+  if(PREFAB_VISUALS[prefab.visual].stairs&&!(prefab.surfaces?.filter(s=>s.type==='ramp').length===1&&prefab.surfaces.find(s=>s.type==='ramp').rises==='+z'))report(`prefabs.${id} needs exactly one ramp surface rising toward +z for the ${prefab.visual} visual`);
   if(PREFAB_VISUALS[prefab.visual].ramp&&!(prefab.surfaces?.filter(s=>s.type==='ramp').length===1&&prefab.surfaces.find(s=>s.type==='ramp').rises==='-z'))report(`prefabs.${id} needs exactly one ramp surface rising toward -z for the ${prefab.visual} visual`);
  }
  const placed=[];

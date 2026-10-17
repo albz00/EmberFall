@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=59';
+import {CONFIG} from './shared/config.js?v=60';
 const {kits,movement,melee,knockback:KNOCK,bow}=CONFIG.combat;
 export const KITS=kits;
 export const BOTS=CONFIG.bots;

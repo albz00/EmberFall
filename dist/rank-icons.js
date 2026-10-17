@@ -1,4 +1,4 @@
-import {RANKS} from './progression.js?v=59';
+import {RANKS} from './progression.js?v=60';
 
 // Shared vector primitives keep the HUD badges and world nameplates identical.
 const polygon=(points,fill,stroke='#211928',width=1.4)=>({points,fill,stroke,width});
