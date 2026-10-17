@@ -43,7 +43,7 @@
     "cameraDip": 0.38
   },
   "melee": {
-    "hurtWindow": 0.5,
+    "hurtWindow": 0,
     "aimPadding": 0.055,
     "defaultReach": 3.15,
     "comboWindow": 1.25,
@@ -139,5 +139,20 @@
   "guard": {
     "resumeDelay": 0.07,
     "heavyResumeDelay": 0.32
+  },
+  "presentation": {
+    "damageFlash": {
+      "peak": 0.86,
+      "duration": 0.48,
+      "lowHealth": 0.14
+    },
+    "shaders": {
+      "bloomStrength": 0.42,
+      "bloomThreshold": 1.05,
+      "exposure": 1.06,
+      "normalEmbers": 620,
+      "performanceEmbers": 240,
+      "advancedEmbers": 1100
+    }
   }
 }

@@ -2,13 +2,13 @@
 // the draft lives in this browser, exports as a map file, and plays through index.html?draft.
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
-import bundled from './maps/emberfall.json?v=64' with {type:'json'};
-import {buildWorld} from './world.js?v=64';
-import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects} from './shared/map-queries.js?v=62';
-import {inspectMap} from './shared/map-schema.js?v=62';
-import {DRAFT_KEY} from './shared/map.js?v=64';
+import bundled from './maps/emberfall.json?v=65' with {type:'json'};
+import {buildWorld} from './world.js?v=65';
+import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects,surfaceWorld} from './shared/map-queries.js?v=65';
+import {inspectMap} from './shared/map-schema.js?v=65';
+import {DRAFT_KEY} from './shared/map.js?v=65';
 import {PROP_FILES,placeMapProps} from './map-props.js?v=46';
-import * as model from './editor-model.js?v=62';
+import * as model from './editor-model.js?v=65';
 
 const $=id=>document.getElementById(id);
 const canvas=$('view'),outline=$('outline'),inspector=$('inspector'),issuesBox=$('issues'),readout=$('readout'),hoverLabel=$('hover-label');
@@ -80,7 +80,7 @@ function colliderLines(c,base,color){
  segments(out,color,.75);
 }
 function surfaceFill(s,color){
- const corners=[[s.minX,s.minZ],[s.maxX,s.minZ],[s.maxX,s.maxZ],[s.minX,s.maxZ]].map(([x,z])=>[x,(s.type==='flat'?s.top:rampSurfaceHeight(s,x,z))+.06,z]);
+ const corners=[[s.minX,s.minZ],[s.maxX,s.minZ],[s.maxX,s.maxZ],[s.minX,s.maxZ]].map(([x,z])=>{const p=surfaceWorld(s,x,z);return[p.x,(s.type==='flat'?s.top:rampSurfaceHeight(s,p.x,p.z))+.06,p.z];});
  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(corners.flat(),3));g.setIndex([0,2,1,0,3,2]);
  const mesh=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.2,depthWrite:false,side:THREE.DoubleSide}));mesh.renderOrder=1;overlay.add(mesh);
  const out=[];for(let i=0;i<4;i++)out.push(corners[i],corners[(i+1)%4]);segments(out,color,.7);

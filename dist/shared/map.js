@@ -1,7 +1,7 @@
 // Loads the bundled arena map once, validates it, and exposes one frozen copy with its queries.
-import emberfall from '../maps/emberfall.json?v=64' with {type:'json'};
-import {parseMap,MAP_SCHEMA_VERSION} from './map-schema.js?v=62';
-import {createMapQueries} from './map-queries.js?v=62';
+import emberfall from '../maps/emberfall.json?v=65' with {type:'json'};
+import {parseMap,MAP_SCHEMA_VERSION} from './map-schema.js?v=65';
+import {createMapQueries} from './map-queries.js?v=65';
 import {deepFreeze,contentHash} from './schema.js?v=26';
 
 // The map editor saves drafts here; index.html?draft plays the saved draft instead of the bundled map.

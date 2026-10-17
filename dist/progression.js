@@ -1,5 +1,5 @@
-import {sanitizeBounties} from './bounties.js?v=64';
-import {CONFIG} from './shared/config.js?v=64';
+import {sanitizeBounties} from './bounties.js?v=65';
+import {CONFIG} from './shared/config.js?v=65';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;

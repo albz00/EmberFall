@@ -1,7 +1,7 @@
 // Arena map schema: field types, units, limits and placement rules for dist/maps/*.json.
 // Shared by the browser, tests and a future match server.
 import {ConfigError,number,integer,string,boolean,literal,oneOf,optional,array,object,record,variant,ref,parse,resolveRefs,ID} from './schema.js?v=26';
-import {createMapQueries,objectColliders,stationObjects,colliderTouches,snap} from './map-queries.js?v=62';
+import {createMapQueries,objectColliders,stationObjects,colliderTouches,snap} from './map-queries.js?v=65';
 
 export const MAP_SCHEMA_VERSION=2;
 // Mesh builders, one per prefab visual, and the placement options each one draws. "world" visuals are
@@ -40,7 +40,7 @@ const surfaceBase={x:optional(coord('offset from the object')),z:optional(coord(
  stepUp:number({unit:'m',min:0,max:3,description:'how far below the surface feet can be and still land on it'})};
 const surface=variant('type',{
  flat:object(surfaceBase),
- ramp:object({...surfaceBase,rises:oneOf(['-z','+z','-x','+x'])}),
+ ramp:object({...surfaceBase,rotation:optional(number({unit:'rad',min:-6.284,max:6.284,description:'rotates the slope and footprint together about its center'})),rises:oneOf(['-z','+z','-x','+x'])}),
 });
 
 export const mapSchema=object({
@@ -139,6 +139,7 @@ function crossCheck(map,report){
   if(!prefab.colliders&&!prefab.surfaces)report(`prefabs.${id} needs colliders or surfaces`);
   prefab.colliders?.forEach((c,i)=>{if(c.type==='ring'&&(c.inner>=c.r||c.doorWidth>=c.r*2))report(`prefabs.${id}.colliders[${i}] needs inner < r and doorWidth < diameter`);if(!(c.minY<c.maxY))report(`prefabs.${id}.colliders[${i}].minY must be less than maxY`);});
   if(PREFAB_VISUALS[prefab.visual].stairs&&!(prefab.surfaces?.filter(s=>s.type==='ramp').length===1&&prefab.surfaces.find(s=>s.type==='ramp').rises==='+z'))report(`prefabs.${id} needs exactly one ramp surface rising toward +z for the ${prefab.visual} visual`);
+  if(PREFAB_VISUALS[prefab.visual].ramp&&prefab.surfaces?.some(s=>s.rotation))report(`prefabs.${id} does not support rotated surfaces; use combat-stairs for diagonal flights`);
   if(PREFAB_VISUALS[prefab.visual].ramp&&!(prefab.surfaces?.filter(s=>s.type==='ramp').length===1&&prefab.surfaces.find(s=>s.type==='ramp').rises==='-z'))report(`prefabs.${id} needs exactly one ramp surface rising toward -z for the ${prefab.visual} visual`);
  }
  const placed=[];

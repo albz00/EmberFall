@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=64';
+import {CONFIG} from './shared/config.js?v=65';
 export const STAMINA=CONFIG.combat.stamina;
 export function resetStamina(actor){actor.stamina=STAMINA.maximum;actor.staminaReadyAt=0;actor.exhausted=false;}
 export function canSprint(actor){return !actor.exhausted&&(actor.stamina??STAMINA.maximum)>0;}

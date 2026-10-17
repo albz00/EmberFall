@@ -12,7 +12,7 @@ for(const attacker of Object.values(KITS))for(const victim of Object.values(KITS
 }
 assert.equal(Math.ceil(KITS.vanguard.health/WEAPONS.classic.damage),5);
 const armored=armorReduction({armor:'gold',helmet:'helmet'}),starter=attackDamage(WEAPONS.classic.damage,KITS.vanguard,false,false,armored),upgrade=attackDamage(WEAPONS.gemblade.damage,KITS.vanguard,false,false,armored);
-assert(starter<WEAPONS.classic.damage);assert(upgrade>starter);assert(attackDamage(60,KITS.vanguard,false,true)<60);assert.equal(MELEE.hurtWindow,.5);assert.equal(weaponStats({weapon:'god',rarity:'legendary'}).damage,9999);
+assert(starter<WEAPONS.classic.damage);assert(upgrade>starter);assert(attackDamage(60,KITS.vanguard,false,true)<60);assert.equal(MELEE.hurtWindow,0);assert.equal(weaponStats({weapon:'god',rarity:'legendary'}).damage,9999);
 
 // Hovering is wider than the damage ray, but never locks aim or sees through walls.
 const actor=(x,z)=>({alive:true,position:{x,y:0,z}}),origin={x:0,y:1.52,z:0},forward={x:0,y:0,z:-1};

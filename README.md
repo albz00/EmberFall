@@ -14,7 +14,7 @@ A static Three.js kit arena with thirteen selectable characters, instant sword i
 
 ## Combat and progression
 
-Vanguard, Rogue, and Sentinel have 300, 260, and 330 HP. Instant attacks use a shared 0.5-second hurt-resistance window; falling strikes crit, guard reduces frontal damage, and armor reduces incoming attacks.
+Vanguard, Rogue, and Sentinel have 300, 260, and 330 HP. Every eligible aimed sword click lands immediately, with no shared hurt-resistance window; falling strikes crit, guard reduces frontal damage, and armor reduces incoming attacks.
 
 Nine named AI fighters have distinct reaction times, aim error, and click profiles from 2.9 to 12.2 CPS, including a 9.4 CPS opponent. They respawn on the same ledge and physically run and jump down. Their plans include dueling, flanking, roaming, recovering, collecting supplies, and seeking advantageous positions. Bots plan lava crossings before jumping, check a dry landing footprint, and commit to the crossing. Three-, five-, and ten-KO streaks gain progressively brighter auras and rings. High-streak fighters attract more attention.
 
@@ -74,7 +74,7 @@ Carried inventory, chest storage and death drops keep their ordinary rules. Grou
 
 `dist/game-panels.css` and `dist/assets/ui/panel-frame.svg` provide sculpted menu frames, beveled controls and cartoon overlay styling.
 
-The starter iron sword deals 60 damage: five unblocked hits defeat an unarmored 300-HP Vanguard. All starter class pairings take four to six hits. Armor and guard reduce damage; upgraded weapons reduce the number of hits. The direct-hit immunity window stays at 0.5 seconds.
+The starter iron sword deals 60 damage: five unblocked hits defeat an unarmored 300-HP Vanguard. All starter class pairings take four to six hits. Armor and guard reduce damage; upgraded weapons reduce the number of hits. The direct-hit immunity window is zero. Light clicks remain available during heavy recovery; charged follow-ups retain their own recovery.
 
 Q/E are short directional dodges with a shared mobility cooldown, while A/D retain ordinary strafing. Hovering an opponent gives faint body/foot cues and an in-range crosshair cue without steering aim or extending reach. Red droplets accompany sword hits and bleed status ticks, with personal particles hidden in first person.
 
@@ -91,3 +91,5 @@ Rendering optimization keeps texture files and model geometry unchanged. Arena p
 Torch flames are also instanced into one draw while retaining their colors and individual flicker phases. The procedural arena scene now checks at 117 mesh objects, within its existing 180-mesh budget.
 
 Collision/visibility point queries also use spatial bins, preserving their exact narrow-phase tests and the wide-query fallback.
+
+Graphics Settings includes opt-in Advanced shaders: HDR glow, color grading, richer lava, 4096-pixel shadows and more rising embers. No motion blur is used. High and Performance keep the direct renderer.

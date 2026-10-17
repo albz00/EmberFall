@@ -20,11 +20,16 @@ export function objectSurfaces(map,object){
  const y=object.y??0;
  return (map.prefabs[object.prefab].surfaces??[]).map(s=>{const x=object.x+(s.x??0),z=object.z+(s.z??0),top=snap(y+s.height);
   const edges={minX:snap(x-s.w/2),maxX:snap(x+s.w/2),minZ:snap(z-s.d/2),maxZ:snap(z+s.d/2)};
-  return s.type==='flat'?{type:'flat',...edges,top,minFeet:snap(top-s.stepUp)}:{type:'ramp',...edges,base:snap(y),rise:s.height,rises:s.rises,stepUp:s.stepUp};});
+  return s.type==='flat'?{type:'flat',...edges,top,minFeet:snap(top-s.stepUp)}:{type:'ramp',...edges,base:snap(y),rise:s.height,rises:s.rises,stepUp:s.stepUp,...(s.rotation?{rotation:s.rotation}:{})};});
 }
 export const mapSurfaces=map=>map.objects.flatMap(object=>objectSurfaces(map,object));
+// Oriented ramp coordinates; absent rotation preserves all existing exact query results.
+export function surfaceLocal(s,x,z){if(!s.rotation)return{x,z};const cx=(s.minX+s.maxX)/2,cz=(s.minZ+s.maxZ)/2,dx=x-cx,dz=z-cz,c=Math.cos(s.rotation),n=Math.sin(s.rotation);return{x:cx+dx*c-dz*n,z:cz+dx*n+dz*c};}
+export function surfaceWorld(s,x,z){if(!s.rotation)return{x,z};const cx=(s.minX+s.maxX)/2,cz=(s.minZ+s.maxZ)/2,dx=x-cx,dz=z-cz,c=Math.cos(s.rotation),n=Math.sin(s.rotation);return{x:cx+dx*c+dz*n,z:cz-dx*n+dz*c};}
+export function surfaceContains(s,p,margin=0){const q=surfaceLocal(s,p.x,p.z);return q.x>s.minX-margin&&q.x<s.maxX+margin&&q.z>s.minZ-margin&&q.z<s.maxZ+margin;}
 // Height of a ramp at a point along its slope; the ramp reaches base + rise at the end it rises toward.
 export function rampSurfaceHeight(s,x,z){
+ ({x,z}=surfaceLocal(s,x,z));
  const [lo,hi,at]=s.rises[1]==='z'?[s.minZ,s.maxZ,z]:[s.minX,s.maxX,x];
  return s.base+s.rise*(s.rises[0]==='-'?hi-at:at-lo)/(hi-lo);
 }
@@ -33,8 +38,8 @@ export function rampSurfaceHeight(s,x,z){
 // they meet the floor and the deck, and catch feet within stepUp below the slope.
 export function surfaceHeight(s,x,z,feet){
  if(s.type==='flat')return x>s.minX&&x<s.maxX&&z>s.minZ&&z<s.maxZ&&feet>=s.minFeet?s.top:null;
- const alongZ=s.rises[1]==='z';
- if(!(alongZ?x>s.minX&&x<s.maxX&&z>=s.minZ&&z<=s.maxZ:z>s.minZ&&z<s.maxZ&&x>=s.minX&&x<=s.maxX))return null;
+ const local=surfaceLocal(s,x,z),alongZ=s.rises[1]==='z';
+ if(!(alongZ?local.x>s.minX&&local.x<s.maxX&&local.z>=s.minZ-(s.rotation?1e-8:0)&&local.z<=s.maxZ+(s.rotation?1e-8:0):local.z>s.minZ&&local.z<s.maxZ&&local.x>=s.minX-(s.rotation?1e-8:0)&&local.x<=s.maxX+(s.rotation?1e-8:0)))return null;
  const h=rampSurfaceHeight(s,x,z);return feet>=h-s.stepUp?h:null;
 }
 // Stations with a prefab stand on the surface at the station's own position.

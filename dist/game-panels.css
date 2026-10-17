@@ -313,3 +313,6 @@
 .bounty-track span{color:#f1d9af;}.bounty-track b{color:#fff1da;font-size:11px;white-space:nowrap;}.bounty-track i{grid-column:1/-1;height:3px;background:#09071573;border-radius:4px;overflow:hidden;}.bounty-track i:after{content:'';display:block;width:calc(var(--progress)*100%);height:100%;background:#e2bb75;box-shadow:0 0 5px #e2bb75;transition:width .2s;}.bounty-track small{grid-column:1/-1;color:#9ce8b6;}.bounty-track.complete{border-color:#9ce8b6;}
 @media(max-width:650px){#bounty-tracker{top:110px;right:8px;width:170px;max-width:37vw;}.bounty-track{padding:6px;font-size:10px;gap:4px;}.bounty-track b{font-size:10px;}}
 @media(prefers-reduced-motion:reduce){#health-fill:before,#stamina-fill:before{animation:none;}.bounty-track i:after{transition:none;}}
+
+/* Strong, immediate red impact with a clear central aim area. No motion blur. */
+#damage-flash{background:radial-gradient(ellipse at center,#e2091912 12%,#d508285e 48%,#cf001ec9 76%,#900015f5 100%);box-shadow:inset 0 0 10vh 3vh #dd0729aa;transition:none;backdrop-filter:none;}

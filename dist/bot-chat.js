@@ -1,4 +1,4 @@
-import {weaponStats,equippedItem,ARMORS,CHEST_PRICE,rankFor,RANKS,LEVELS_PER_RANK,EFFECTS,COSMETICS} from './progression.js?v=64';
+import {weaponStats,equippedItem,ARMORS,CHEST_PRICE,rankFor,RANKS,LEVELS_PER_RANK,EFFECTS,COSMETICS} from './progression.js?v=65';
 
 const VOICES=[
  ['Okay, ','Honestly, ','',''],['','Alright, ','',''],['','For me, ','',''],['','Yeah, ','',''],['','Fair. ','',''],['','Right, ','',''],['','Watch this. ','',''],['','My take: ','',''],['','Fine, ','',''],

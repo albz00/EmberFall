@@ -1,4 +1,4 @@
-import {gaitStride} from './combat.js?v=64';
+import {gaitStride} from './combat.js?v=65';
 import * as THREE from './vendor/three.module.js';
 const V=THREE.Vector3,Q=THREE.Quaternion;
 const lower=new Set(['Body','Hips','UpperLegL','LowerLegL','FootL','UpperLegR','LowerLegR','FootR']);

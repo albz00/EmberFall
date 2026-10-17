@@ -1,12 +1,14 @@
+import {CONFIG} from './shared/config.js?v=65';
+const SHADERS=CONFIG.combat.presentation.shaders;
 import {batchFlames} from './flame-batch.js?v=62';
 import {makeWindCloth} from './wind-cloth.js?v=64';
 import {addRockRunes} from './rock-runes.js?v=24';
 import {buildSky} from './arena-sky.js?v=46';
 import {buildPortal,addStringLights} from './portal.js?v=59';
 import * as THREE from './vendor/three.module.js';
-import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=64';
-import {mapColliders,createCollision,createMapQueries,objectSurfaces,rampSurfaceHeight} from './shared/map-queries.js?v=62';
-import {PREFAB_VISUALS} from './shared/map-schema.js?v=62';
+import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=65';
+import {mapColliders,createCollision,createMapQueries,objectSurfaces,rampSurfaceHeight,surfaceWorld} from './shared/map-queries.js?v=65';
+import {PREFAB_VISUALS} from './shared/map-schema.js?v=65';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
 
 // Every collider in the arena comes from the map: world meshes, model props and station furniture.
@@ -54,7 +56,7 @@ export function buildWorld(scene,map=MAP){
   const sun=new THREE.DirectionalLight(0xffdec0,3.0);sun.position.set(-18,38,15);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-40,right:40,top:40,bottom:-40,near:1,far:100});sun.shadow.bias=-.0005;sun.shadow.normalBias=.1;scene.add(sun);
   const sky=buildSky(scene),moon=sky.moon;
   const fill=new THREE.DirectionalLight(0xa6bfda,1.5);fill.position.set(20,25,-20);scene.add(fill);
-  const lavaMat=new THREE.ShaderMaterial({uniforms:{time:{value:0}},vertexShader:`varying vec2 vP;void main(){vec4 p=modelMatrix*vec4(position,1.);vP=p.xz;gl_Position=projectionMatrix*viewMatrix*p;}`,fragmentShader:`uniform float time;varying vec2 vP;void main(){vec2 p=vP;float a=sin(p.x*4.+sin(p.y*2.5+time*.6)*1.8-time*.7);float b=sin(p.y*5.-sin(p.x*2.+time*.7)*1.5+time*.5);float c=pow(abs(a*b),2.);vec3 col=mix(vec3(1.,.21,.022),vec3(1.,.76,.14),smoothstep(.13,.85,c));gl_FragColor=vec4(col,1.);}`,side:THREE.DoubleSide});
+  const lavaMat=new THREE.ShaderMaterial({uniforms:{time:{value:0},quality:{value:0}},vertexShader:`varying vec2 vP;void main(){vec4 p=modelMatrix*vec4(position,1.);vP=p.xz;gl_Position=projectionMatrix*viewMatrix*p;}`,fragmentShader:`uniform float time;uniform float quality;varying vec2 vP;void main(){vec2 p=vP;float a=sin(p.x*4.+sin(p.y*2.5+time*.6)*1.8-time*.7);float b=sin(p.y*5.-sin(p.x*2.+time*.7)*1.5+time*.5);float c=pow(abs(a*b),2.);vec3 col=mix(vec3(1.,.21,.022),vec3(1.,.76,.14),smoothstep(.13,.85,c));float veins=pow(abs(sin(p.x*13.+p.y*9.+sin(p.y*5.-time))),14.);col=mix(col,col*(1.3+veins*.8),quality);gl_FragColor=vec4(col,1.);}`,side:THREE.DoubleSide});
   mesh(new THREE.CylinderGeometry(36.5,37,2,64),material(0x433744),0,-3.2,0,root);
   const floor=floorMesh(map,gaps);root.add(floor);floor.receiveShadow=true;
   const ring=mesh(new THREE.RingGeometry(33.6,36.8,90),lavaMat,0,.04,0,root);ring.rotation.x=-Math.PI/2;
@@ -89,16 +91,16 @@ export function buildWorld(scene,map=MAP){
     for(const side of [-1,1]){const edge=x+side*1.87;for(let z=top+2;z<=top+20;z+=6){const y=h(z);beam(root,[edge,y-.1,z],[edge,y+1.05,z],.1,0x684934);if(z<top+20){const next=z+6;beam(root,[edge,y+1,z],[edge,h(next)+1,next],.075,0xc2a174);}}}},
    'screen-wall'(o){const c=map.prefabs[o.prefab].colliders[0],h=c.maxY-c.minY,y=(o.y??0)+c.minY;box(root,o.x,y+h/2,o.z,c.w,h,c.d,0x5f5461);const alongX=c.w>c.d;
     box(root,o.x,y+h+.04,o.z,c.w+.06,.12,c.d+.06,0x9f7650);for(const side of [-1,1])bandedPost(root,o.x+(alongX?side*(c.w/2-.15):0),y,o.z+(alongX?0:side*(c.d/2-.15)),h+.12);},
-   'combat-mezzanine'(o){for(const s of objectSurfaces(map,o)){const x=(s.minX+s.maxX)/2,z=(s.minZ+s.maxZ)/2;box(root,x,s.top-.22,z,s.maxX-s.minX,.36,s.maxZ-s.minZ,0x50454b);for(let xx=s.minX+.16;xx<s.maxX;xx+=.34)box(root,xx,s.top-.03,z,.31,.06,s.maxZ-s.minZ,0x987352);}
-    const h=objectSurfaces(map,o)[0].top;for(const z of [o.z-2.6,o.z+1.8])beam(root,[o.x-8,h-.44,z],[o.x+8,h-.44,z],.18,0x684934);for(const x of [-8,8])beam(root,[o.x+x,h-.44,o.z-6.2],[o.x+x,h-.44,o.z+1.8],.18,0x684934);},
+   'combat-mezzanine'(o){for(const s of objectSurfaces(map,o)){const x=(s.minX+s.maxX)/2,z=(s.minZ+s.maxZ)/2;const narrow=s.maxX-s.minX<4;box(root,x,s.top-(narrow?.15:.22),z,s.maxX-s.minX,narrow?.18:.36,s.maxZ-s.minZ,0x50454b);for(let xx=s.minX+.16;xx<s.maxX;xx+=.34)box(root,xx,s.top-.03,z,.31,.06,s.maxZ-s.minZ,0x987352);}
+    const s=objectSurfaces(map,o)[0],h=s.top;if(s.maxX-s.minX<4)return;for(const z of [s.minZ+.2,s.maxZ-.2])beam(root,[s.minX-.7,h-.44,z],[s.maxX+.7,h-.44,z],.18,0x684934);for(const x of [s.minX-.7,s.maxX+.7])beam(root,[x,h-.44,o.z-6.2],[x,h-.44,s.maxZ-.2],.18,0x684934);},
    'combat-deck'(o){const s=objectSurfaces(map,o)[0],h=s.top,centerZ=(s.minZ+s.maxZ)/2;box(root,o.x,h-.28,centerZ,s.maxX-s.minX,.42,s.maxZ-s.minZ,0x50454b);
     for(let x=s.minX+.19;x<s.maxX;x+=.4)box(root,x,h-.045,centerZ,.37,.09,s.maxZ-s.minZ,0x987352);
     for(const c of map.prefabs[o.prefab].colliders??[])bandedPost(root,o.x+c.x,o.y??0,o.z+c.z,h-.4);
     for(const z of [s.minZ+.2,s.maxZ-.2])beam(root,[s.minX,h-.4,z],[s.maxX,h-.4,z],.15,0x684934);
     for(const side of [-1,1]){beam(root,[o.x+side*6.8,1.1,centerZ-2.1],[o.x+side*5.5,h-.4,centerZ-2.1],.12,0x684934);bandedPost(root,o.x+side*6.8,h-.4,centerZ+2.1,1.15);torch(root,o.x+side*6.8,h+1.3,centerZ+2.1,.5,true);}},
-   'combat-stairs'(o){const s=objectSurfaces(map,o).find(s=>s.type==='ramp'),n=Math.ceil(s.rise/.2),depth=(s.maxZ-s.minZ)/n;
-    for(let i=0;i<n;i++){const z=s.minZ+(i+.5)*depth,h=s.base+s.rise*(i+.5)/n;box(root,o.x,h-.08,z,s.maxX-s.minX,.16,depth+.015,i%2?0xa17e57:0x93704e);}
-    for(const side of [-1,1]){const x=o.x+side*(s.maxX-s.minX-.25)/2;beam(root,[x,s.base-.1,s.minZ],[x,s.base+s.rise-.1,s.maxZ],.16,0x684934);bandedPost(root,x,s.base,s.maxZ-1,s.rise-.5);}},
+   'combat-stairs'(o){const s=objectSurfaces(map,o).find(s=>s.type==='ramp'),n=Math.ceil(s.rise/.2),depth=(s.maxZ-s.minZ)/n,cx=(s.minX+s.maxX)/2;
+    for(let i=0;i<n;i++){const z=s.minZ+(i+.5)*depth,h=s.base+s.rise*(i+.5)/n,p=surfaceWorld(s,cx,z),step=box(root,p.x,h-.08,p.z,s.maxX-s.minX,.16,depth+.015,i%2?0xa17e57:0x93704e);step.rotation.y=s.rotation??0;}
+    for(const side of [-1,1]){const x=cx+side*(s.maxX-s.minX-.25)/2,a=surfaceWorld(s,x,s.minZ),b=surfaceWorld(s,x,s.maxZ);beam(root,[a.x,s.base-.1,a.z],[b.x,s.base+s.rise-.1,b.z],.16,0x684934);if(!s.rotation)bandedPost(root,x,s.base,s.maxZ-1,s.rise-.5);}},
    // Safe spawn balcony, open along the front so the entry is a real drop.
    ledge(o){const X=o.x,Y=o.y??0,Z=o.z;
     box(root,X,Y+7.25,Z,18.8,1.05,12.6,0x50454b);let plank=0;for(let z=-6.1;z<6.4;z+=.63)box(root,X,Y+7.89,Z+z,18.55,.22,.59,plank++%2?0xa17e57:0x93704e);
@@ -145,9 +147,9 @@ export function buildWorld(scene,map=MAP){
   bandedPost(root,-6.2,0,-29.8,7.8);beam(root,[-7,7.4,-29.8],[-5.4,7.4,-29.8],.08);banners.push(banner(root,-6.2,7.28,-29.25,1.35,2.8));for(const x of [-6.95,-5.45])beam(root,[x,7.4,-29.8],[x,7.4,-29.25],.07);
   for(const x of [-5.1,5.1]){bandedPost(root,x,0,-30.8,4.5);torch(root,x,5.05,-30.8,.65);}
   // Embers originate along the actual lava streams and rise into the cavern.
-  const emberCount=620,positions=new Float32Array(emberCount*3),sizes=new Float32Array(emberCount);
+  const emberCount=SHADERS.advancedEmbers,positions=new Float32Array(emberCount*3),sizes=new Float32Array(emberCount);
   for(let i=0;i<emberCount;i++){const path=paths[i%paths.length],segment=Math.floor(rand()*(path.points.length-1)),a=path.points[segment],b=path.points[segment+1],t=rand(),dx=b[0]-a[0],dz=b[1]-a[1],length=Math.hypot(dx,dz),across=(rand()-.5)*path.width*.8;positions[i*3]=mix(a[0],b[0],t)+dz/length*across;positions[i*3+1]=.12;positions[i*3+2]=mix(a[1],b[1],t)-dx/length*across;sizes[i]=rand();}
-  const eGeo=new THREE.BufferGeometry();eGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));eGeo.setAttribute('phase',new THREE.BufferAttribute(sizes,1));
+  const eGeo=new THREE.BufferGeometry();eGeo.setDrawRange(0,SHADERS.normalEmbers);eGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));eGeo.setAttribute('phase',new THREE.BufferAttribute(sizes,1));
   const eMat=new THREE.ShaderMaterial({uniforms:{time:{value:0},pressureCenter:{value:new THREE.Vector2()},pressureRadius:{value:0}},vertexShader:`uniform float time;uniform vec2 pressureCenter;uniform float pressureRadius;attribute float phase;varying float vA;varying float vHeat;void main(){float life=fract(phase+time/(4.8+phase*4.));vec3 p=position;float weight=pressureRadius>0.?1.-smoothstep(0.,pressureRadius,distance(p.xz,pressureCenter)):0.;p.y+=mix(life,1.-life*life,weight)*(3.5+phase*4.5)*(1.-weight*.6);p.x+=sin(time*.55+phase*40.)*life*.75+life*life*.6;p.z+=cos(time*.4+phase*23.)*life*.55;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((90.+phase*65.)/-mv.z,1.4,6.5);vA=smoothstep(0.,.06,life)*(1.-smoothstep(.62,1.,life))*(.6+phase*.35);vHeat=phase;}`,fragmentShader:`varying float vA;varying float vHeat;void main(){float d=length(gl_PointCoord-vec2(.5));float glow=1.-smoothstep(.08,.5,d);vec3 color=mix(vec3(1.,.30,.055),vec3(1.,.78,.28),vHeat);gl_FragColor=vec4(color,vA*glow);}`,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
   const embers=new THREE.Points(eGeo,eMat);embers.frustumCulled=false;scene.add(embers);
   // A few ore seams connect the foundry to the reference mine.
@@ -162,7 +164,7 @@ export function buildWorld(scene,map=MAP){
    ambient.color.setHex(0xb9b7d3).lerp(new THREE.Color(0xe5a6ae),amount);ambient.groundColor.setHex(0x664344).lerp(new THREE.Color(0x571f32),amount);ambient.color.lerp(new THREE.Color(0x9a82cb),pressure*.65);ambient.groundColor.lerp(new THREE.Color(0x221a32),pressure*.7);ambient.intensity=2.05-amount*.18-pressure*.35;
    sun.color.setHex(0xffdec0).lerp(new THREE.Color(0xffb8a3),amount);sun.color.lerp(new THREE.Color(0xbbb0ef),pressure*.65);sun.intensity=3-amount*.35-pressure*.35;
    fill.color.setHex(0xa6bfda).lerp(new THREE.Color(0xb984ab),amount);fill.color.lerp(new THREE.Color(0x9456d5),pressure*.75);fill.intensity=1.5-amount*.35+pressure*.35;
-  },update(t){rockRunes.update(t);portal.update(t);stringLights.update(t);lavaMat.uniforms.time.value=t;eMat.uniforms.time.value=t;flames.time.value=t;cloth.time.value=t;},setQuality(high){sun.castShadow=high;embers.visible=true;eGeo.setDrawRange(0,high?emberCount:240);for(const g of glows)g.visible=high;}};
+  },update(t){rockRunes.update(t);portal.update(t);stringLights.update(t);lavaMat.uniforms.time.value=t;eMat.uniforms.time.value=t;flames.time.value=t;cloth.time.value=t;},setQuality(high,advanced=false){const size=advanced?4096:2048;if(sun.shadow.mapSize.x!==size){sun.shadow.mapSize.set(size,size);sun.shadow.map?.dispose();sun.shadow.map=null;}lavaMat.uniforms.quality.value=advanced?1:0;sun.castShadow=high;embers.visible=true;eGeo.setDrawRange(0,advanced?emberCount:high?SHADERS.normalEmbers:SHADERS.performanceEmbers);for(const g of glows)g.visible=high;}};
 }
 
 export function makeHeroStage(scene){const stage=new THREE.Group();scene.add(stage);plinth(stage,0,0,0,1.12);mesh(new THREE.CylinderGeometry(.96,1.08,.6,8),material(0x4e414c),0,-.54,0,stage);const key=new THREE.DirectionalLight(0xffe2ac,4);key.position.set(-3,5,4);scene.add(key);const rim=new THREE.DirectionalLight(0xff9059,5);rim.position.set(3,2,-3);scene.add(rim);scene.add(new THREE.HemisphereLight(0xc1d6fa,0x5f414b,2.4));return stage;}

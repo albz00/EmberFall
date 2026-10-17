@@ -14,12 +14,12 @@ export async function verifyNewCombat(t,{byId,windowEvents,isolate,target}){
  const start=f.hp;down();assert.equal(start-f.hp,60,'light sword hit happens on mouse down');up();assert.equal(start-f.hp,60,'quick release does not add damage');
  t.wait(.6);down();const afterLight=f.hp;t.wait(HEAVY.full);t.updateWeapon(.01);assert.equal(f.hp,afterLight,'holding never auto-attacks');assert(byId.get('bow-charge').classList.contains('charged'));
  const lightKnock=f.knock.length();up();assert.equal(afterLight-f.hp,144,'full charge deals rounded 2.4x sword damage');assert(f.knock.length()>lightKnock,'heavy strike adds knockback');assert(f.impactReaction,'hard hit starts procedural recoil');assert(Math.abs(t.meleeRecoveryUntil-t.time-1.65)<.0001);
- const afterHeavy=f.hp;down();up();t.wait(.7);down();up();assert.equal(f.hp,afterHeavy,'recovery rejects repeated click damage');t.setSlot('bow');t.setSlot('sword');down();up();assert.equal(f.hp,afterHeavy,'switching slots cannot bypass heavy recovery');t.wait(1);down();up();assert.equal(f.hp,afterHeavy-60,'quick combat resumes after recovery');
+ const afterHeavy=f.hp;down();up();t.wait(.7);down();up();assert.equal(f.hp,afterHeavy-120,'light clicks remain available during heavy recovery');t.setSlot('bow');t.setSlot('sword');down();up();assert.equal(f.hp,afterHeavy-180,'light hits remain responsive across slot changes');t.wait(1);down();up();assert.equal(f.hp,afterHeavy-240,'ordinary clicks continue after heavy recovery');
  t.wait(.6);down();t.wait(.7);const beforeCancel=f.hp;t.setSlot('bow');up();assert.equal(f.hp,beforeCancel,'switching weapons cancels charge');t.setSlot('sword');
  for(const cancel of [()=>t.openChat(),()=>t.openModal('pause'),()=>windowEvents.pointercancel.forEach(fn=>fn({}))]){
   t.setMode('play');t.cancelAttack(true);t.wait(.6);down();t.wait(.8);const hp=f.hp;cancel();up();assert.equal(f.hp,hp,'chat, pause and pointer cancellation never release a heavy attack');if(t.mode!=='play')t.setMode('play');t.closeChat(false);
  }
- t.cancelAttack(true);t.wait(2);down();t.wait(1.2);f.lastDirectHit=t.time;const immuneHP=f.hp;up();assert.equal(f.hp,immuneHP,'heavy attack respects the existing hit immunity');
+ t.cancelAttack(true);t.wait(2);down();t.wait(1.2);f.lastDirectHit=t.time;const immuneHP=f.hp;up();assert.equal(f.hp,immuneHP-144,'charged follow-up also has no victim hit-immunity delay');
  assert.equal(chargedStats(weaponStats({id:'god-test',weapon:'god',rarity:'legendary'}),1).damage,9999,'God Sword remains exactly 9999');
 
  // A spring reaction restores the underlying rig, and corpse snapshots work
@@ -65,5 +65,5 @@ export async function verifyNewCombat(t,{byId,windowEvents,isolate,target}){
  t.duel.phase='active';t.player.team=f.team='blue';t.player.position.set(105,0,7);f.position.set(105,0,4);t.updatePressureFields();assert.equal(t.player.pressureSlow,1,'teammates are protected');t.player.team=f.team=null;t.duel.phase='idle';
  f.account.cosmetic='none';t.profile.cosmetic='pressure';t.player.position.set(7,0,10);t.updatePressureFields();t.updatePlayerAvatar(.01);assert(!t.playerAvatar.root.visible,'own pressure is hidden in first person');t.executeCommand('/freecam on');t.updatePlayerAvatar(.01);assert(t.playerAvatar.root.visible&&t.playerAvatar.cosmetic.visible,'free camera displays pressure around the body');t.executeCommand('/freecam off');
  const visualCount=pressure.children.length;updatePressureVisual(pressure,100);assert.equal(pressure.children.length,visualCount);updatePressureVisual(pressure,101,{alive:false});assert(!pressure.visible);
- console.log(JSON.stringify({chargedMelee:'passed',instantMouseDown:true,fullDamage:144,recovery:1.65,immunityPreserved:true,cancellation:true,ragdollCharacters:12,worstStretch:+worstStretch.toFixed(3),orbInventory:true,orbPullAndFreecam:true,spiritualPressure:true,ownerAndTeamImmunity:true,boundedVisuals:true}));
+ console.log(JSON.stringify({chargedMelee:'passed',instantMouseDown:true,fullDamage:144,recovery:1.65,unlockedDirectHits:true,cancellation:true,ragdollCharacters:12,worstStretch:+worstStretch.toFixed(3),orbInventory:true,orbPullAndFreecam:true,spiritualPressure:true,ownerAndTeamImmunity:true,boundedVisuals:true}));
 }

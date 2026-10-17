@@ -1,4 +1,5 @@
-import {CONFIG} from './shared/config.js?v=64';
+export const PRESENTATION=CONFIG.combat.presentation;
+import {CONFIG} from './shared/config.js?v=65';
 const {kits,movement,melee,knockback:KNOCK,bow}=CONFIG.combat;
 export const KITS=kits;
 export const BOTS=CONFIG.bots;
@@ -10,7 +11,7 @@ export function botProfile(id){
  const base=BOT_PROFILES[(id*5+2)%BOT_PROFILES.length],variation=Math.sin(id*17.3);
  return {...base,name:EXTRA_NAMES[id-BOT_PROFILES.length]??'Fighter'+(id+1),cps:Math.max(GENERATED.cps.min,Math.min(GENERATED.cps.max,base.cps+variation*GENERATED.cps.variation)),reaction:Math.max(GENERATED.reaction.min,base.reaction+variation*GENERATED.reaction.variation),rating:Math.max(GENERATED.rating.min,Math.round(base.rating+variation*GENERATED.rating.variation))};
 }
-// Classic melee hurt resistance. Input and impact happen immediately, independently of swing animation.
+// Direct-hit resistance is configurable; zero means every eligible click can land immediately.
 export const HURT_WINDOW=melee.hurtWindow;
 export const HITBOX=melee.hitbox;
 export const MELEE=melee;
@@ -41,7 +42,7 @@ export function updateSprint(actor,requested){
 }
 export function consumeSprintHit(actor,time){
  const s=actor.sprint,boost=!!s?.active&&Math.hypot(actor.velocity.x,actor.velocity.z)>melee.sprintHit.minimumSpeed;
- // Only a registered melee hit consumes sprint. Misses and immune contacts do not.
+ // Only a registered melee hit consumes sprint. Misses do not.
  if(s?.active){s.active=false;s.needsReset=true;actor.velocity.x*=melee.sprintHit.velocityRetained;actor.velocity.z*=melee.sprintHit.velocityRetained;}
  if(boost)actor.lastSprintHit=time;
  return boost;

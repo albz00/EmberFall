@@ -33,6 +33,7 @@ const header=literal(SCHEMA_VERSION);
 
 const combatSchema=object({
  schemaVersion:header,
+ presentation:object({damageFlash:object({peak:factor(),duration:seconds({above:0,max:3}),lowHealth:factor()}),shaders:object({bloomStrength:factor(),bloomThreshold:number({unit:'HDR luminance',min:0,max:10}),exposure:number({unit:'exposure',above:0,max:4}),normalEmbers:integer({unit:'particles',min:0,max:5000}),performanceEmbers:integer({unit:'particles',min:0,max:5000}),advancedEmbers:integer({unit:'particles',min:0,max:5000})})}),
  kits:record(object({name:label(24),health:integer({unit:'hp',min:1,max:1e5}),damageMultiplier:multiplier({above:0}),speed:speed({above:0,max:50}),tint:hexColor(),description:label(80)}),{min:1}),
  movement:object({walk:speed({above:0,max:50,description:'Bot travel pace and camera stride reference'}),shop:speed({above:0,max:50}),sprint:multiplier({above:0}),flight:multiplier({above:0}),block:factor({above:0}),crouch:factor({above:0}),gearSpeed:multiplier({description:'Movement added per point of gear speed'})}),
  roll:object({duration:seconds({above:0,max:3}),cooldown:seconds({above:0,max:10}),speed:speed({above:0,max:20}),minimumClearance:meters({above:0,max:3}),cameraDip:meters({max:0.6})}),
@@ -202,6 +203,7 @@ function crossCheck(c,issue){
  const none=armor?.armor?.none;if(none&&(none.file!==null||none.reduction!==0||none.price!==0))issue('armor.json','armor.none must have file null, price 0 and reduction 0');
  for(const [id,a]of Object.entries(armor?.armor??{}))if(id!=='none'&&a&&!a.file)issue('armor.json',`armor.${id}.file is required`);
  for(const key of['cosmetics','nameplates'])if(cosmetics?.[key]?.none&&cosmetics[key].none.price!==0)issue('cosmetics.json',`${key}.none.price must be 0`);
+ const shaders=combat?.presentation?.shaders;if(shaders&&(shaders.advancedEmbers<shaders.normalEmbers||shaders.normalEmbers<shaders.performanceEmbers))issue('combat.json','presentation.shaders needs advancedEmbers >= normalEmbers >= performanceEmbers');
  const inv=progression?.inventory;
  if(inv){if(inv.hotbarSlots>inv.carrySlots)issue('progression.json','inventory.hotbarSlots must not exceed inventory.carrySlots');if(progression.starterKit&&progression.starterKit.potionCount>inv.stackLimit)issue('progression.json','starterKit.potionCount must not exceed inventory.stackLimit');}
  if(progression?.rarities){const total=Object.values(progression.rarities).reduce((a,r)=>a+(r?.weight??0),0);if(Math.abs(total-100)>1e-9)issue('progression.json',`rarity weights must total 100%, got ${total}`);}

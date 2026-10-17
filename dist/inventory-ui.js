@@ -1,4 +1,4 @@
-import {CARRY_SLOTS,HOTBAR_SLOTS,VAULT_STEP,CHEST_PRICE,RARITIES,ARMORS,POTIONS,itemKind,itemName,itemArtKey,weaponStats,salvageValue,storagePrice} from './progression.js?v=64';
+import {CARRY_SLOTS,HOTBAR_SLOTS,VAULT_STEP,CHEST_PRICE,RARITIES,ARMORS,POTIONS,itemKind,itemName,itemArtKey,weaponStats,salvageValue,storagePrice} from './progression.js?v=65';
 const icon=id=>`<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
 export function slotArt(item,thumbs){
  if(!item)return '';

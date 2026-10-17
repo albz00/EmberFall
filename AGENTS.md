@@ -1,7 +1,7 @@
 # Emberfall update conventions
 
 - Continue this project in place and preserve its audience and existing assets. It is a static site served from `dist/` (no build step); run it locally with `python3 -m http.server 8080 --directory dist`.
-- Each new game-update request, including a new user message adding scope during an update, advances `GAME_VERSION` in `dist/changelog.js` by exactly 0.01 and prepends a factual changelog entry. Do not bump for status, pricing, or other non-update questions, or multiple implementation passes for the same request. Multiple new requests can be published together while retaining their separate changelog entries. Current version: 0.64.
+- Each new game-update request, including a new user message adding scope during an update, advances `GAME_VERSION` in `dist/changelog.js` by exactly 0.01 and prepends a factual changelog entry. Do not bump for status, pricing, or other non-update questions, or multiple implementation passes for the same request. Multiple new requests can be published together while retaining their separate changelog entries. Current version: 0.65.
 - Keep version query strings for changed modules and assets synchronized so published updates replace cached files.
 - Preserve the user's clean cartoon UI: no marketing quips, mini headers, redundant location labels, or duplicate health bars.
 - Bots and their chat are local simulations. Do not claim online multiplayer or LLM conversation without implementing those services.
@@ -10,7 +10,7 @@
 
 - Physical gear uses individual copies in a 20-slot carried inventory: `carrySlots[0..8]` are the actual hotbar slots, with eleven backpack slots after them; `hotbar` is derived compatibility data, never another inventory. Preserve physical slot positions and the v4 save migration. Buying never grants permanent equipment ownership. Rare or better carried gear drops on death, common carried gear is lost, starter kit remains, and chest storage survives. Cosmetics and nameplates remain permanent unlocks. Preserve existing collections during migrations.
 
-- Charged melee preserves an immediate light swing on pointer-down; holding winds up a heavy follow-up. Keep the shared 0.5s immunity and post-heavy recovery across sword slot changes.
+- Charged melee preserves an immediate light swing on pointer-down; holding winds up a heavy follow-up. Direct-hit immunity is zero by user request: every eligible aimed click lands immediately. Ordinary light clicks remain available during heavy recovery; only the charged follow-up retains its recovery across sword slot changes.
 - Charge orbs are physical legendary items requiring equipped, owned Ascension. `/chargeorb on` latches the held orb for free-camera viewing; manual charges cancel on interrupted input.
 
 - Restore material color caches through `material-state.js`; THREE material clones serialize Color userData as numbers. Lower-body distance-driven motion must continue during attacks on all character rigs.
