@@ -284,3 +284,8 @@
 @keyframes ko-pop-a {0%{opacity:0;scale:1.5;}12%{opacity:1;scale:.96;}21%,70%{opacity:1;scale:1;}100%{opacity:0;translate:0 -13px;}}
 @keyframes ko-pop-b {0%{opacity:0;scale:1.5;}12%{opacity:1;scale:.96;}21%,70%{opacity:1;scale:1;}100%{opacity:0;translate:0 -13px;}}
 @media(prefers-reduced-motion:reduce){#health-fill:after,#stamina-fill:after{animation:none;}#ko-celebration{animation:none!important;}#health-fill,#health-trail,#stamina-fill{transition:none;}}
+
+#crosshair.guarding:after{border-color:#bdeaffb3;transform:translate(-50%,-50%) scale(1.25);box-shadow:0 0 8px #8dd6ff55;}#crosshair.guard-impact:after{border-color:#fff;box-shadow:0 0 15px #b9e8ff;}
+.modal,.scoreboard-card{contain:layout style;}.cosmetic-preview{contain:layout paint;}
+
+#hud-streak{font-size:12px;color:#ffce83;font-weight:950;margin-right:9px;}

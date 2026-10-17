@@ -2,13 +2,13 @@
 // the draft lives in this browser, exports as a map file, and plays through index.html?draft.
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
-import bundled from './maps/emberfall.json?v=60' with {type:'json'};
-import {buildWorld} from './world.js?v=60';
-import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects} from './shared/map-queries.js?v=45';
-import {inspectMap} from './shared/map-schema.js?v=60';
-import {DRAFT_KEY} from './shared/map.js?v=60';
+import bundled from './maps/emberfall.json?v=62' with {type:'json'};
+import {buildWorld} from './world.js?v=62';
+import {objectColliders,objectSurfaces,rampSurfaceHeight,stationObjects} from './shared/map-queries.js?v=62';
+import {inspectMap} from './shared/map-schema.js?v=62';
+import {DRAFT_KEY} from './shared/map.js?v=62';
 import {PROP_FILES,placeMapProps} from './map-props.js?v=46';
-import * as model from './editor-model.js?v=60';
+import * as model from './editor-model.js?v=62';
 
 const $=id=>document.getElementById(id);
 const canvas=$('view'),outline=$('outline'),inspector=$('inspector'),issuesBox=$('issues'),readout=$('readout'),hoverLabel=$('hover-label');
@@ -74,7 +74,8 @@ function ring(out,x,z,y,r){for(let i=0;i<32;i++){const a=i/32*Math.PI*2,b=(i+1)/
 function rect(out,minX,maxX,minZ,maxZ,y){out.push([minX,y,minZ],[maxX,y,minZ],[maxX,y,minZ],[maxX,y,maxZ],[maxX,y,maxZ],[minX,y,maxZ],[minX,y,maxZ],[minX,y,minZ]);}
 function colliderLines(c,base,color){
  const out=[],low=Math.max(c.minY,base)+.04;
- if(c.type==='circle'){ring(out,c.x,c.z,low,c.r);ring(out,c.x,c.z,c.maxY,c.r);for(const a of [0,Math.PI/2,Math.PI,Math.PI*1.5])out.push([c.x+Math.cos(a)*c.r,low,c.z+Math.sin(a)*c.r],[c.x+Math.cos(a)*c.r,c.maxY,c.z+Math.sin(a)*c.r]);}
+ if(c.type==='ring'){for(const r of [c.inner,c.r])for(const y of [low,c.maxY])ring(out,c.x,c.z,y,r);const sin=Math.sin(c.rotation),cos=Math.cos(c.rotation);for(const side of [-1,1]){const x=c.x+sin*c.r+cos*side*c.doorWidth/2,z=c.z+cos*c.r-sin*side*c.doorWidth/2;out.push([x,low,z],[x,c.minY+c.doorHeight,z]);}}
+ else if(c.type==='circle'){ring(out,c.x,c.z,low,c.r);ring(out,c.x,c.z,c.maxY,c.r);for(const a of [0,Math.PI/2,Math.PI,Math.PI*1.5])out.push([c.x+Math.cos(a)*c.r,low,c.z+Math.sin(a)*c.r],[c.x+Math.cos(a)*c.r,c.maxY,c.z+Math.sin(a)*c.r]);}
  else{const [x0,x1,z0,z1]=[c.x-c.w/2,c.x+c.w/2,c.z-c.d/2,c.z+c.d/2];rect(out,x0,x1,z0,z1,low);rect(out,x0,x1,z0,z1,c.maxY);for(const [x,z]of [[x0,z0],[x1,z0],[x1,z1],[x0,z1]])out.push([x,low,z],[x,c.maxY,z]);}
  segments(out,color,.75);
 }

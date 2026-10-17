@@ -80,6 +80,6 @@ export function installScrollbars(){
  document.addEventListener('transitionend',schedule,true);
  document.fonts?.ready.then(schedule);
  window.addEventListener('resize',schedule);
- new MutationObserver(records=>{if(records.some(r=>r.type==='childList'))scanNeeded=true;schedule();}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden']});
+ new MutationObserver(records=>{let relevant=false;for(const r of records){const el=r.target;if(el.nodeType!==1)continue;if(el.matches(CANDIDATES)||el.closest(CANDIDATES)||r.type==='attributes'&&el.querySelector(CANDIDATES)){relevant=true;if(r.type==='childList')scanNeeded=true;}}if(relevant)schedule();}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden']});
  schedule();
 }

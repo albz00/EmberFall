@@ -22,5 +22,5 @@
 <div id="readout" aria-hidden="true"></div><div id="hover-label" class="hidden"></div><div id="toast" role="status"></div>
 <div id="fatal" class="hidden"><h2>Unable to load</h2><p id="fatal-message"></p><button onclick="location.reload()">Reload</button></div>
 <script>function editorFatal(m){document.getElementById('fatal').classList.remove('hidden');document.getElementById('fatal-message').textContent=m;}addEventListener('error',e=>{if(e.error)editorFatal(e.error.message);});</script>
-<script type="module" src="./editor.js?v=60" onerror="editorFatal('Editor files could not be loaded. Check that the server is running, then reload.')"></script>
+<script type="module" src="./editor.js?v=62" onerror="editorFatal('Editor files could not be loaded. Check that the server is running, then reload.')"></script>
 </body></html>

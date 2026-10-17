@@ -1,4 +1,4 @@
-import {MAP,groundHeight} from './shared/map.js?v=60';
+import {MAP,groundHeight} from './shared/map.js?v=62';
 import * as THREE from './vendor/three.module.js';
 
 export const MINI={x:96,z:0,halfWidth:11.5,halfDepth:13.5,duration:100};

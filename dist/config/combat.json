@@ -135,5 +135,9 @@
     "resumeAt": 20,
     "rollCost": 24,
     "dodgeCost": 18
+  },
+  "guard": {
+    "resumeDelay": 0.07,
+    "heavyResumeDelay": 0.32
   }
 }

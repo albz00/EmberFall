@@ -1,6 +1,6 @@
 // Edits raw map JSON, where parented positions stay relative to their parent. No THREE or DOM, so tests drive it directly.
-import {PREFAB_VISUALS,PLACED_FIELDS} from './shared/map-schema.js?v=60';
-import {createMapQueries} from './shared/map-queries.js?v=45';
+import {PREFAB_VISUALS,PLACED_FIELDS} from './shared/map-schema.js?v=62';
+import {createMapQueries} from './shared/map-queries.js?v=62';
 
 export const GRID=.1;
 // Drops float noise and negative zero, so edited numbers stay as written decimals.

@@ -45,7 +45,7 @@ expectIssue(c=>{c.prefabs.tower.visual='castle';},'prefabs.tower.visual: must be
 expectIssue(c=>{obj(c,'portal').prefab='gate';},'objects[13].prefab: "gate" is not a defined prefabs id');
 expectIssue(c=>{obj(c,'boulder-east').id='boulder-west';},'objects[3]: duplicates "boulder-west"');
 expectIssue(c=>{delete c.prefabs['ledge-back-rail'].colliders[0].w;},'prefabs.ledge-back-rail.colliders[0].w: is required');
-expectIssue(c=>{c.prefabs.crag.colliders[0].type='cone';},'type must be one of "circle", "box", got "cone"');
+expectIssue(c=>{c.prefabs.crag.colliders[0].type='cone';},'type must be one of "circle", "ring", "box", got "cone"');
 expectIssue(c=>{c.prefabs.boulder.colliders[0].minY=2;},'prefabs.boulder.colliders[0].minY must be less than maxY');
 expectIssue(c=>{delete c.prefabs.crate.colliders;},'prefabs.crate needs colliders or surfaces');
 expectIssue(c=>{c.prefabs.tower.surfaces=[{type:'flat',w:4,d:4,height:8.5,stepUp:.5}];},'"tower-northwest" has walkable surfaces, so it cannot be rotated or scaled');
@@ -105,7 +105,7 @@ try{
  assert(E.isUnderBridge({x:0,y:3,z:-10}),'bridge cover height follows the map file');
  // Moving an object in the map moves its collider and its mesh together.
  const T=await load('vendor/three.module.js'),scene=new T.Scene(),built=W.buildWorld(scene);
- assert.equal(W.colliders.length,40,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
+ assert.equal(W.colliders.length,50,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
  assert(W.blocked(15,-25)&&!W.blocked(9,-21),'blocking follows the moved boulder');
  assert.deepEqual(W.colliders.slice(13,15).map(c=>[c.x,c.z]),[[-3.35,-27],[3.35,-27]]);
  assert.deepEqual(W.colliders[15],{type:'box',x:1,z:-20,w:1.2,d:1.2,minY:0,maxY:1.4},'crate colliders follow their object');

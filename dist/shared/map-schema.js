@@ -1,7 +1,7 @@
 // Arena map schema: field types, units, limits and placement rules for dist/maps/*.json.
 // Shared by the browser, tests and a future match server.
 import {ConfigError,number,integer,string,boolean,literal,oneOf,optional,array,object,record,variant,ref,parse,resolveRefs,ID} from './schema.js?v=26';
-import {createMapQueries,objectColliders,stationObjects,colliderTouches,snap} from './map-queries.js?v=45';
+import {createMapQueries,objectColliders,stationObjects,colliderTouches,snap} from './map-queries.js?v=62';
 
 export const MAP_SCHEMA_VERSION=2;
 // Mesh builders, one per prefab visual, and the placement options each one draws. "world" visuals are
@@ -14,6 +14,7 @@ export const PREFAB_VISUALS={
  'ledge-side-rail':{builtBy:'world',anchor:true},'ledge-back-rail':{builtBy:'world'},'ledge-front-rail':{builtBy:'world'},portal:{builtBy:'world',once:true},
  crate:{builtBy:'model',rotation:true},'rock-cluster':{builtBy:'model',scale:true,rotation:true,variants:5},volcano:{builtBy:'model',scale:true},
  station:{builtBy:'model',station:true},'potion-table':{builtBy:'model',station:true},merchant:{builtBy:'model',station:true},
+ 'combat-mezzanine':{builtBy:'world'},'screen-wall':{builtBy:'world'},
  'combat-deck':{builtBy:'world'},'combat-stairs':{builtBy:'world',stairs:true},
  ledge:{builtBy:'world'},bridge:{builtBy:'world'},ramp:{builtBy:'world',ramp:true},
 };
@@ -31,6 +32,7 @@ const groundPoint=object({parent,x:coord('eastâ€“west position'),z:coord('northâ
 const colliderBase={x:optional(coord('offset from the object')),z:optional(coord('offset from the object')),minY:height('bottom, relative to the object; not scaled'),maxY:height('top, relative to the object; scales with it'),scaleTop:optional(boolean({description:'false keeps maxY fixed when the object is scaled'}))};
 const collider=variant('type',{
  circle:object({...colliderBase,r:length('radius')}),
+ ring:object({...colliderBase,r:length('outer radius'),inner:length('interior radius'),doorWidth:length('door clearance'),doorHeight:length('door clearance height')}),
  box:object({...colliderBase,w:length('width along x'),d:length('depth along z')}),
 });
 const surfaceBase={x:optional(coord('offset from the object')),z:optional(coord('offset from the object')),w:length('width along x'),d:length('depth along z'),
@@ -135,7 +137,7 @@ function crossCheck(map,report){
  map.navigation.bridgeCover.forEach((p,i)=>{const label=`navigation.bridgeCover[${i}]`;if(inside(label,p)&&!q.isUnderBridge({x:p.x,y:0,z:p.z}))report(`${label} must be inside regions.bridgeCover`);});
  for(const [id,prefab]of Object.entries(map.prefabs)){
   if(!prefab.colliders&&!prefab.surfaces)report(`prefabs.${id} needs colliders or surfaces`);
-  prefab.colliders?.forEach((c,i)=>{if(!(c.minY<c.maxY))report(`prefabs.${id}.colliders[${i}].minY must be less than maxY`);});
+  prefab.colliders?.forEach((c,i)=>{if(c.type==='ring'&&(c.inner>=c.r||c.doorWidth>=c.r*2))report(`prefabs.${id}.colliders[${i}] needs inner < r and doorWidth < diameter`);if(!(c.minY<c.maxY))report(`prefabs.${id}.colliders[${i}].minY must be less than maxY`);});
   if(PREFAB_VISUALS[prefab.visual].stairs&&!(prefab.surfaces?.filter(s=>s.type==='ramp').length===1&&prefab.surfaces.find(s=>s.type==='ramp').rises==='+z'))report(`prefabs.${id} needs exactly one ramp surface rising toward +z for the ${prefab.visual} visual`);
   if(PREFAB_VISUALS[prefab.visual].ramp&&!(prefab.surfaces?.filter(s=>s.type==='ramp').length===1&&prefab.surfaces.find(s=>s.type==='ramp').rises==='-z'))report(`prefabs.${id} needs exactly one ramp surface rising toward -z for the ${prefab.visual} visual`);
  }
