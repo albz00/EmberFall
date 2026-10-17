@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=55';
+import {CONFIG} from './shared/config.js?v=59';
 const {kits,movement,melee,knockback:KNOCK,bow}=CONFIG.combat;
 export const KITS=kits;
 export const BOTS=CONFIG.bots;
@@ -15,6 +15,7 @@ export const HURT_WINDOW=melee.hurtWindow;
 export const HITBOX=melee.hitbox;
 export const MELEE=melee;
 export const ROLL=CONFIG.combat.roll;
+export const DODGE=CONFIG.combat.dodge;
 export const BOW=bow;
 export function rayHitCandidate(origin,direction,target,reach=melee.defaultReach,height=HITBOX.height,padding=0){
  // The aim allowance cannot make a body outside the weapon's reach hittable.

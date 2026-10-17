@@ -1,5 +1,5 @@
 // Loads the bundled arena map once, validates it, and exposes one frozen copy with its queries.
-import emberfall from '../maps/emberfall.json?v=55' with {type:'json'};
+import emberfall from '../maps/emberfall.json?v=59' with {type:'json'};
 import {parseMap,MAP_SCHEMA_VERSION} from './map-schema.js?v=47';
 import {createMapQueries} from './map-queries.js?v=45';
 import {deepFreeze,contentHash} from './schema.js?v=26';

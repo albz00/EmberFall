@@ -1,10 +1,10 @@
-import {HURT_WINDOW} from './combat.js?v=55';
-import {WEAPONS,SHOP_WEAPONS,ARMORS,CHEST_PRICE,weaponStats,equippedItem,armorReduction,purchaseWeapon,purchaseArmor,purchasePotion,openChest,sellItem,equipInventoryItem} from './progression.js?v=55';
+import {HURT_WINDOW,BOTS} from './combat.js?v=59';
+import {WEAPONS,SHOP_WEAPONS,ARMORS,POTIONS,CHEST_PRICE,weaponStats,equippedItem,armorReduction,purchaseWeapon,purchaseArmor,purchasePotion,openChest,sellItem,equipInventoryItem} from './progression.js?v=59';
 
 export function itemScore(item,role='duelist'){
  const s=weaponStats(item),ranged=s.kind==='staff';
- const damage=ranged?s.damage/s.cooldown*.65:s.damage/HURT_WINDOW;
- return damage+(ranged?7:s.reach*5)+s.speed*7+s.effects.reduce((v,e)=>v+(e.type==='frost'?5:6)*e.level,0)+(role==='ranger'&&ranged?38:role!=='ranger'&&ranged?-12:0);
+ const damage=ranged?s.damage/s.cooldown*BOTS.strategy.spellAccuracy:s.damage/HURT_WINDOW;
+ return damage+(ranged?7:s.reach*5)+s.speed*7+s.effects.reduce((v,e)=>v+(e.type==='frost'?5:6)*e.level,0)+(role==='ranger'&&ranged?WEAPONS.classic.damage*BOTS.strategy.rangerBonus:role!=='ranger'&&ranged?-WEAPONS.classic.damage*BOTS.strategy.meleeBias:0);
 }
 export function bestItem(account,role){return account.inventory.filter(i=>i.weapon).reduce((best,i)=>!best||itemScore(i,role)>itemScore(best,role)?i:best,null);}
 // Every decision uses the bot's actual wallet and current gear. A guaranteed
@@ -18,7 +18,7 @@ export function choosePurchase(account,role='duelist',risk=.5){
  if(armor.length&&armorReduction(account)<.25&&risk<.72)return{kind:'armor',id:armor[0][0],station:'weapons'};
  if(coins>=CHEST_PRICE&&score>=38)return{kind:'chest',station:'chest'};
  if(weapons.length)return{kind:'weapon',id:weapons[0],station:'weapons'};
- if(coins>=35&&account.potions.healing<2)return{kind:'potion',id:'healing',station:'potions'};
+ if(coins>=POTIONS.healing.price&&account.potions.healing<2)return{kind:'potion',id:'healing',station:'potions'};
  return null;
 }
 export function transactBot(account,choice,role,random=Math.random){

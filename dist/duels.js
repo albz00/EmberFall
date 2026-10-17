@@ -1,3 +1,4 @@
+import {MAP,groundHeight} from './shared/map.js?v=59';
 import * as THREE from './vendor/three.module.js';
 
 export const MINI={x:96,z:0,halfWidth:11.5,halfDepth:13.5,duration:100};
@@ -55,7 +56,7 @@ export function buildMiniArena(scene){
  return{root};
 }
 export function makeMatchSign(scene){
- const root=new THREE.Group();root.position.set(0,8,30.7);scene.add(root);
+ const root=new THREE.Group();const at=MAP.stations.match;root.position.set(at.x,groundHeight(at.x,at.z),at.z+1.1);scene.add(root);
  const wood=new THREE.MeshStandardMaterial({color:0x634637,roughness:1}),frame=new THREE.MeshStandardMaterial({color:0xd2a66b,roughness:.7});
  const add=(w,h,d,x,y,z,material)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);m.position.set(x,y,z);m.castShadow=true;root.add(m);};
  add(.18,2.5,.18,-1.35,1.25,0,wood);add(.18,2.5,.18,1.35,1.25,0,wood);add(3.1,1.42,.22,0,2.05,0,frame);

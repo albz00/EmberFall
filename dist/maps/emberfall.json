@@ -61,7 +61,7 @@
     "ledge-side-rail": {"visual": "ledge-side-rail", "colliders": [{"type": "box", "w": 0.2, "d": 12.5, "minY": -0.5, "maxY": 1.2}]},
     "ledge-back-rail": {"visual": "ledge-back-rail", "colliders": [{"type": "box", "w": 18, "d": 0.25, "minY": -0.5, "maxY": 2}]},
     "ledge-front-rail": {"visual": "ledge-front-rail", "colliders": [{"type": "box", "w": 3.9, "d": 0.2, "minY": -0.4, "maxY": 1.2}]},
-    "portal": {"visual": "portal", "colliders": [{"type": "box", "x": -3.35, "w": 1.4, "d": 1.4, "minY": -1, "maxY": 5}, {"type": "box", "x": 3.35, "w": 1.4, "d": 1.4, "minY": -1, "maxY": 5}, {"type": "box", "z": 0.45, "w": 4.2, "d": 2.8, "minY": 0, "maxY": 3.1}]},
+    "portal": {"visual": "portal", "colliders": [{"type": "box", "x": -3.35, "w": 1.4, "d": 1.4, "minY": -1, "maxY": 5}, {"type": "box", "x": 3.35, "w": 1.4, "d": 1.4, "minY": -1, "maxY": 5}]},
     "crate": {"visual": "crate", "colliders": [{"type": "box", "w": 1.2, "d": 1.2, "minY": 0, "maxY": 1.4}]},
     "rock-cluster": {"visual": "rock-cluster", "colliders": [{"type": "circle", "r": 0.37, "minY": 0, "maxY": 0.8}]},
     "volcano": {"visual": "volcano", "colliders": [{"type": "circle", "r": 0.36, "minY": 0, "maxY": 2.8, "scaleTop": false}]},
@@ -104,7 +104,7 @@
     {"id": "bridge", "prefab": "bridge", "x": 0, "z": -10},
     {"id": "ramp-west", "prefab": "ramp", "x": -25.1, "z": 0.8},
     {"id": "ramp-east", "prefab": "ramp", "x": 25.1, "z": 0.8},
-    {"id": "ledge", "prefab": "ledge", "x": 0, "z": 25.2}
+    {"id": "ledge", "prefab": "ledge", "x": 0, "y": 12, "z": 25.2}
   ],
   "stringLights": [
     {"from": "tower-northwest", "to": "tower-northeast", "sag": 2.1},

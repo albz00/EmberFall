@@ -4,7 +4,7 @@ A static Three.js kit arena with thirteen selectable characters, instant sword i
 
 ## Controls
 
-- WASD move; Shift sprint; Space jump; press Space again in the air for a diving roll, or Alt for a ground roll; Q/E strafe left/right; hold C or Ctrl to crouch. V toggles first and third person. Touch has crouch and camera controls.
+- WASD move; Shift sprint; Space jump; press Space again in the air for a diving roll, or Alt for a ground roll; Q/E perform quick left/right dodges; hold C or Ctrl to crouch. V toggles first and third person. Touch has crouch and camera controls.
 - 1 selects the equipped sword or staff; left click strikes immediately or casts the staff spell; right click guards.
 - 2 selects the bow; hold left click to draw, release to fire. Full draw takes 0.8 seconds. Arrow flight has gravity and collision. KOs and returning to the ledge refill arrows.
 - I opens and closes inventory; drag items to move or swap them. F interacts with stations and dropped items. X drinks the selected potion; Z changes potion.
@@ -14,13 +14,13 @@ A static Three.js kit arena with thirteen selectable characters, instant sword i
 
 ## Combat and progression
 
-Vanguard, Rogue, and Sentinel have 300, 260, and 390 HP. Instant attacks use a shared 0.5-second hurt-resistance window; falling strikes crit, guard reduces frontal damage, and armor reduces incoming attacks.
+Vanguard, Rogue, and Sentinel have 300, 260, and 330 HP. Instant attacks use a shared 0.5-second hurt-resistance window; falling strikes crit, guard reduces frontal damage, and armor reduces incoming attacks.
 
-Nine named AI fighters have distinct reaction times, aim error, and click profiles from 2.9 to 12.2 CPS, including a 9.4 CPS opponent. They respawn on the same ledge and physically run and jump down. Their plans include dueling, flanking, roaming, recovering, collecting supplies, and taking cover beneath the existing bridge. Bots plan lava crossings before jumping, check a dry landing footprint, and commit to the crossing. Three-, five-, and ten-KO streaks gain progressively brighter auras and rings. High-streak fighters attract more attention.
+Nine named AI fighters have distinct reaction times, aim error, and click profiles from 2.9 to 12.2 CPS, including a 9.4 CPS opponent. They respawn on the same ledge and physically run and jump down. Their plans include dueling, flanking, roaming, recovering, collecting supplies, and seeking advantageous positions. Bots plan lava crossings before jumping, check a dry landing footprint, and commit to the crossing. Three-, five-, and ten-KO streaks gain progressively brighter auras and rings. High-streak fighters attract more attention.
 
-KOs award coins and rank points; deaths reduce rank points. Earned coins buy weapons, body armor, a separately wearable helmet, and potions. Helmet and cuirass reduction combine multiplicatively. Helmet fitting follows the chosen character’s head. A crate costs 180 coins and awards a weapon with disclosed 52/32/13/3 percent common/rare/epic/legendary odds. Variants have bonus damage and emissive materials; inventory supports equip and salvage. Original profile storage is preserved. Staffs also appear in equipment chest rolls and gain rarity damage bonuses.
+KOs award coins and rank points; deaths reduce rank points. Earned coins buy weapons, body armor, a separately wearable helmet, and potions. Helmet and cuirass reduction combine multiplicatively. Helmet fitting follows the chosen character’s head. A crate costs 650 coins and awards a weapon with disclosed 52/32/13/3 percent common/rare/epic/legendary odds. Variants have bonus damage and emissive materials; inventory supports equip and salvage. Original profile storage is preserved. Staffs also appear in equipment chest rolls and gain rarity damage bonuses.
 
-Frost staffs deal 30 base damage and slow movement 35% for two seconds. Venom staffs deal 28, then four 6-damage poison ticks. Arcane staffs deal 40 and chain to up to two nearby targets for 18 each. Actual projectiles collide with arena geometry and use 0.65–0.9 second cast intervals. Existing sword input remains immediate.
+Frost staffs deal 60 base damage and slow movement 35% for two seconds. Venom staffs deal 56, then four 6-damage poison ticks. Arcane staffs deal 80 and chain to up to two nearby targets for 18 each. Actual projectiles collide with arena geometry and use 0.65–0.9 second cast intervals. Existing sword input remains immediate.
 
 Healing potions restore 115 health; haste grants 25% movement speed for 12 seconds; guard reduces combat damage 25% for 10 seconds. X consumes one saved bottle, Z cycles type, and the exact supplied bottle appears during drinking. Active buffs show their remaining time and expire on death. Healing stock refills to a minimum of three on respawn or return; purchased extra stock is retained. The supplied wizard table stands on the ledge with all three supplied potion models displayed. The original equipment chest stays in place.
 
@@ -60,7 +60,7 @@ The nine new actors were also checked through the production GLTFLoader and samp
 
 ## Ashen Crypt (closed)
 
-The portal is blocked and inactive as of v0.55. The implementation below is retained for future work; there is no entry prompt or playable dungeon access. Existing carried or stored relics remain valid.
+The portal is fully built and glowing, but interaction reports that the dungeon is unavailable. The implementation below is retained for future work; there is no playable dungeon access. Existing carried or stored relics remain valid.
 
 The retained generator works as follows. Every run generates an eight- or nine-room floor with branching routes, two optional reliquaries, a Riftweaver miniboss and either the Cinder Warden or Tempest Regent. Templates supply distinct rectangular, cross-shaped and octagonal spaces: ossuary, archive, forge, conservatory, observatory, vault and final sanctums. The seed reproduces geometry, routes and enemy packs; returning after death resumes that floor during the same session.
 
@@ -73,3 +73,11 @@ Carried inventory, chest storage and death drops keep their ordinary rules. Grou
 `tests/dungeon.mjs` checks 256 seeds, room/door clearance, safe spawns, flood-filled navigation, spell timing, physical loot rules and finite batched geometry. `tests/v54-gameplay.mjs` retains the previous integration scenarios for future dungeon work and is not invoked while the entrance is closed. `tests/v55-gameplay.mjs` instead verifies disabled entry, supply-only scheduling, Q/E and I controls, physical rolls, mouse-button chording, inventory interactions and repaired roof geometry. WebGL output and real browser performance require a browser playtest.
 
 `dist/game-panels.css` and `dist/assets/ui/panel-frame.svg` provide sculpted menu frames, beveled controls and cartoon overlay styling.
+
+The starter iron sword deals 60 damage: five unblocked hits defeat an unarmored 300-HP Vanguard. All starter class pairings take four to six hits. Armor and guard reduce damage; upgraded weapons reduce the number of hits. The direct-hit immunity window stays at 0.5 seconds.
+
+Q/E are short directional dodges with a shared mobility cooldown, while A/D retain ordinary strafing. Hovering an opponent gives faint body/foot cues and an in-range crosshair cue without steering aim or extending reach. Red droplets accompany sword hits and bleed status ticks, with personal particles hidden in first person.
+
+Equipment chest rolls cost 650 coins. Basic upgrades now require several KOs: dagger 250, broadsword 500, leather 300 and iron 600. A gemblade costs 1,800; golden armor costs 1,800. Existing coins, item copies, starter gear and the two million-coin items are preserved. Flight blends and pose limits are configured in combat JSON.
+
+The unchanged spawn platform is now 20 m above the arena, with grounded posts and bracing. 2v2 plays three scored rounds with fresh health and countdowns; the final score determines the single match reward. Gear is retained during match eliminations. Inventory selection updates details without replacing the slot grid; moving unequipped copies preserves character models, and slot numbers are plain labels.

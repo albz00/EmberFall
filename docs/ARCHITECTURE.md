@@ -237,3 +237,19 @@ Q/E and A/D strafe, I toggles inventory, X uses potions. Inventory slots only in
 ## Popup presentation (v0.56)
 
 `game-panels.css` is loaded after the existing HUD stylesheet. A repository-owned SVG border (`assets/ui/panel-frame.svg`) uses nine-slice scaling for sculpted transparent corners and a consistent gold/wood rim across pause, settings, equipment, match signup and leaderboard. Buttons, tabs, inventory trays and lightweight notices share the palette. The treatment does not add menu actions or explanatory labels. Small-screen and short-screen rules retain scrollable content; panel entry motion respects reduced-motion settings.
+
+## Arena tuning and presentation (v0.57–0.58)
+
+`panel-layout.js` computes inset scrollbar bounds from actual frame borders/padding and transforms. The scrollbar installer observes resize and completed transitions, and scans for new controls only after DOM child changes. Panel grids use shrinkable columns, wrapping actions and dedicated compact layouts.
+
+`aim-focus.js` selects one visible enemy near the input ray for visual feedback. It does not modify input, reach, immunity or the damage ray. Character material highlights use the existing restoration path, while four small floor arcs and crosshair styling indicate focus and reach. Blood droplets share the capped particle pool, fall onto short-lived floor flecks and remain hidden on the first-person owner. The complete lit portal exposes `dungeonEnabled: false` separately from its visual `active` state.
+
+Melee base damage, ranged damage, Sentinel HP and item prices are retuned in validated config. The unarmored starter class matrix is explicitly tested at 4–6 direct hits. `flightPose` config controls transition/response rates, maximum lean and hover amplitude; filtered velocity drives trailing feet and whole-body lean, with non-destructive saved transforms and a fade on exit.
+
+## Multi-round matches and taller spawn (v0.59)
+
+Validated `progression.match` sets three rounds and four seconds between rounds. Match phases now include `round-result`; each next round resets health, effects, projectiles, ragdolls and cooldowns, while physical equipment stays with its owner. Match death bypasses arena loot/rank rewards; the final score pays the match reward once. Forfeits remain unrewarded.
+
+The ledge object moves vertically by 12 m to place its existing surface at 20 m. Child rails, safe region, spawns, stations, navigation exit and sign follow the parent and shared ground queries. Ground-anchored posts overlap transverse crossbeams seated against the platform underside, with long side braces.
+
+Inventory rendering returns a selection controller: inspection changes selected classes and details in place. An equipment signature avoids rebuilding character and held models for unrelated moves; refreshed panels preserve scroll, while new contexts start at the top. Repeated I/F keydown events cannot flicker menus.

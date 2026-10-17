@@ -35,8 +35,11 @@ const combatSchema=object({
  kits:record(object({name:label(24),health:integer({unit:'hp',min:1,max:1e5}),damageMultiplier:multiplier({above:0}),speed:speed({above:0,max:50}),tint:hexColor(),description:label(80)}),{min:1}),
  movement:object({walk:speed({above:0,max:50,description:'Bot travel pace and camera stride reference'}),shop:speed({above:0,max:50}),sprint:multiplier({above:0}),flight:multiplier({above:0}),block:factor({above:0}),crouch:factor({above:0}),gearSpeed:multiplier({description:'Movement added per point of gear speed'})}),
  roll:object({duration:seconds({above:0,max:3}),cooldown:seconds({above:0,max:10}),speed:speed({above:0,max:20}),minimumClearance:meters({above:0,max:3}),cameraDip:meters({max:0.6})}),
+ flightPose:object({blendRate:number({unit:'1/s',above:0,max:30}),response:number({unit:'1/s',above:0,max:30}),maxLean:number({unit:'rad',min:0,max:0.4}),hoverAmount:meters({max:0.1}),jointRate:number({unit:'rad/s',above:0,max:20,description:'Maximum flight leg rotation per second'})}),
+ dodge:object({duration:seconds({above:0,max:1}),cooldown:seconds({above:0,max:5}),speed:speed({above:0,max:20}),minimumClearance:meters({above:0,max:3})}),
  melee:object({
   hurtWindow:seconds({max:10,description:'Shared direct-hit immunity'}),aimPadding:meters({max:0.1,description:'Small melee-only horizontal edge allowance; never extends weapon reach'}),defaultReach:meters({above:0,max:60}),comboWindow:seconds({max:30}),
+  targeting:object({range:meters({above:0,max:40}),cone:number({unit:'rad',above:0,max:0.15,description:'Visual hover cone; does not widen attack hitboxes'})}),
   criticalMultiplier:multiplier({min:1}),blockMultiplier:factor(),minimumDamage:integer({unit:'hp',min:0,max:1000}),
   hitbox:object({radius:meters({above:0,max:5}),height:meters({above:0,max:10}),crouched:meters({above:0,max:10})}),
   sprintHit:object({minimumSpeed:speed({max:50}),velocityRetained:factor()}),
@@ -128,6 +131,7 @@ const progressionSchema=object({
   }),
  }),
  salvage:object({potionFactor:factor(),priceFactor:factor()}),
+ match:object({rounds:integer({unit:'rounds',min:1,max:9}),betweenRounds:seconds({min:1,max:15})}),
  rewards:object({
   knockout:object({coins:coins(),streakCoins:coins(),maxStreakCoins:coins(),points:integer({unit:'points',min:0,max:1e4}),ratingDivisor:number({above:0,max:1e6}),minPoints:integer({unit:'points',min:0,max:1e4}),maxPoints:integer({unit:'points',min:0,max:1e4})}),
   death:object({points:integer({unit:'points',min:0,max:1e4}),ratingDivisor:number({above:0,max:1e6}),minPoints:integer({unit:'points',min:0,max:1e4}),maxPoints:integer({unit:'points',min:0,max:1e4})}),
@@ -144,6 +148,7 @@ const progressionSchema=object({
 
 const botsSchema=object({
  schemaVersion:header,
+ strategy:object({spellAccuracy:factor({description:'Estimated projectile accuracy for purchase comparisons'}),rangerBonus:multiplier({description:'Staff preference in starter-sword damage units'}),meleeBias:multiplier({description:'Non-ranger staff penalty in starter-sword damage units'})}),
  maxBots:integer({unit:'bots',min:0,max:64}),
  profiles:array(object({name:label(16),cps:number({unit:'clicks/s',above:0,max:30}),reaction:seconds({max:5}),aimError:number({unit:'rad',min:0,max:3}),turn:number({unit:'rad/s',above:0,max:100}),jump:factor(),aggression:multiplier({max:3}),rating:integer({unit:'points',min:0,max:1e6})}),{min:1,unique:'name'}),
  extraNames:array(label(16),{unique:true}),

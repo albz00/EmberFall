@@ -1,28 +1,24 @@
+import {scrollTrackBox} from './panel-layout.js?v=59';
 const CANDIDATES='.modal,#score-scroll,#chat-log,.shop-tabs,.inventory-grid';
 
 function scrolling(el,axis){
+ if(!el.isConnected||el.closest('.hidden'))return false;
  const style=getComputedStyle(el),value=axis==='y'?style.overflowY:style.overflowX;
  if(value!=='auto'&&value!=='scroll')return false;
- if(!el.isConnected||el.closest('.hidden'))return false;
  const box=el.getBoundingClientRect();
  if(box.width<2||box.height<2)return false;
  return axis==='y'?el.scrollHeight>el.clientHeight+2:el.scrollWidth>el.clientWidth+2;
 }
 function trackBox(el,axis){
- const box=el.getBoundingClientRect(),modal=el.classList.contains('modal');
- if(axis==='y'){
-  const top=modal?(el.querySelector('.modal-close')?46:16):6,bottom=modal?16:6,right=modal?12:6;
-  return {left:box.right-right-8,top:box.top+top,width:8,height:Math.max(0,box.height-top-bottom)};
- }
- const left=10,right=modal?18:10,bottom=el.classList.contains('shop-tabs')?3:8;
- return {left:box.left+left,top:box.bottom-bottom-8,width:Math.max(0,box.width-left-right),height:8};
+ const box=el.getBoundingClientRect(),style=getComputedStyle(el);
+ return scrollTrackBox(box,axis,style,{modal:el.classList.contains('modal'),close:!!el.querySelector('.modal-close'),scaleX:el.offsetWidth?box.width/el.offsetWidth:1,scaleY:el.offsetHeight?box.height/el.offsetHeight:1});
 }
 function place(el,track,thumb,axis){
  const box=trackBox(el,axis);
  track.style.left=box.left+'px';track.style.top=box.top+'px';track.style.width=box.width+'px';track.style.height=box.height+'px';
  const scroll=axis==='y'?el.scrollTop:el.scrollLeft,size=axis==='y'?el.scrollHeight:el.scrollWidth,view=axis==='y'?el.clientHeight:el.clientWidth;
- const span=axis==='y'?box.height:box.width,thumbLen=Math.max(22,Math.min(span,span*view/Math.max(size,1))),max=Math.max(0,size-view);
- const pos=max<=0?0:scroll/max*(span-thumbLen);
+ const span=axis==='y'?box.height:box.width,thumbLen=Math.min(span,Math.max(22,span*view/Math.max(size,1))),max=Math.max(0,size-view);
+ const pos=max<=0?0:Math.max(0,Math.min(max,scroll))/max*(span-thumbLen);
  track._travel=Math.max(1,span-thumbLen);
  if(axis==='y'){thumb.style.top=pos+'px';thumb.style.height=thumbLen+'px';thumb.style.left='1px';thumb.style.right='1px';thumb.style.width='auto';}
  else{thumb.style.left=pos+'px';thumb.style.width=thumbLen+'px';thumb.style.top='1px';thumb.style.bottom='1px';thumb.style.height='auto';}
@@ -60,11 +56,12 @@ function layout(el){
 export function installScrollbars(){
  if(typeof MutationObserver!=='function'||!document.documentElement)return;
  const owned=new Set();
- let frame=0;
+ const resize=typeof ResizeObserver==='function'?new ResizeObserver(()=>schedule()):null;
+ let frame=0,scanNeeded=true;
  const sync=()=>{
   frame=0;
-  for(const el of [...owned])if(!el.isConnected){el._emberTracks.y.remove();el._emberTracks.x.remove();owned.delete(el);}
-  for(const el of document.querySelectorAll(CANDIDATES)){
+  for(const el of [...owned])if(!el.isConnected){el._emberTracks.y.remove();el._emberTracks.x.remove();resize?.unobserve(el);owned.delete(el);}
+  if(scanNeeded)for(const el of document.querySelectorAll(CANDIDATES)){
    if(el.dataset.emberScroll)continue;
    el.dataset.emberScroll='1';
    const tracks={};
@@ -73,13 +70,16 @@ export function installScrollbars(){
     const thumb=document.createElement('i');thumb.className='ember-scroll-thumb';track.append(thumb);document.body.append(track);
     wire(el,track,thumb,axis);tracks[axis]=track;tracks[axis+'Thumb']=thumb;
    }
-   el._emberTracks=tracks;owned.add(el);el.addEventListener('scroll',schedule,{passive:true});
+   el._emberTracks=tracks;owned.add(el);resize?.observe(el);el.addEventListener('scroll',schedule,{passive:true});
   }
-  for(const el of owned)layout(el);
+  scanNeeded=false;for(const el of owned)layout(el);
  };
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(sync);};
  document.addEventListener('scroll',schedule,true);
+ document.addEventListener('animationend',schedule,true);
+ document.addEventListener('transitionend',schedule,true);
+ document.fonts?.ready.then(schedule);
  window.addEventListener('resize',schedule);
- new MutationObserver(schedule).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden']});
+ new MutationObserver(records=>{if(records.some(r=>r.type==='childList'))scanNeeded=true;schedule();}).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','hidden']});
  schedule();
 }

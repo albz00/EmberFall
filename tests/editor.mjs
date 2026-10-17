@@ -82,7 +82,7 @@ const badField=edit.setField(raw,'object:crate-1','x',500);
 assert.equal(inspectMap(badField).map,null,'a field outside its limits cannot be drawn');assert(inspectMap(badField).issues[0].includes('objects[14].x'));
 const handles=edit.handlePositions(map);
 assert.equal(handles.size,edit.listEntries(raw).length,'every listed entry has a handle');
-assert.equal(handles.get('station:chest').y,8,'stations stand on the ledge');
+assert.equal(handles.get('station:chest').y,20,'stations stand on the ledge');
 
 // Drafts reach the game only through index.html?draft, from this browser's storage.
 const store=new Map();globalThis.localStorage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,String(v))};

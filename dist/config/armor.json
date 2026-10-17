@@ -1,12 +1,53 @@
 {
   "schemaVersion": 1,
   "armor": {
-    "none": {"name": "No armor", "file": null, "price": 0, "reduction": 0},
-    "iron": {"name": "Iron cuirass", "file": "armor-iron.glb", "price": 240, "reduction": 0.12},
-    "gold": {"name": "Golden cuirass", "file": "armor-gold.glb", "price": 680, "reduction": 0.23},
-    "leather": {"name": "Leather armor", "file": "armor-leather.glb", "price": 120, "reduction": 0.08, "fit": "torso"},
-    "metal": {"name": "Metal armor", "file": "armor-metal.glb", "price": 440, "reduction": 0.18, "fit": "torso"},
-    "helmet": {"name": "Knight helmet", "file": "armor-helmet.glb", "price": 180, "reduction": 0.08, "slot": "head", "fit": "head"},
-    "cryptguard": {"name": "Cryptguard Cuirass", "file": "armor-metal.glb", "price": 1800, "reduction": 0.32, "fit": "torso", "dungeonOnly": true}
+    "none": {
+      "name": "No armor",
+      "file": null,
+      "price": 0,
+      "reduction": 0
+    },
+    "iron": {
+      "name": "Iron cuirass",
+      "file": "armor-iron.glb",
+      "price": 600,
+      "reduction": 0.12
+    },
+    "gold": {
+      "name": "Golden cuirass",
+      "file": "armor-gold.glb",
+      "price": 1800,
+      "reduction": 0.23
+    },
+    "leather": {
+      "name": "Leather armor",
+      "file": "armor-leather.glb",
+      "price": 300,
+      "reduction": 0.08,
+      "fit": "torso"
+    },
+    "metal": {
+      "name": "Metal armor",
+      "file": "armor-metal.glb",
+      "price": 1100,
+      "reduction": 0.18,
+      "fit": "torso"
+    },
+    "helmet": {
+      "name": "Knight helmet",
+      "file": "armor-helmet.glb",
+      "price": 450,
+      "reduction": 0.08,
+      "slot": "head",
+      "fit": "head"
+    },
+    "cryptguard": {
+      "name": "Cryptguard Cuirass",
+      "file": "armor-metal.glb",
+      "price": 4200,
+      "reduction": 0.32,
+      "fit": "torso",
+      "dungeonOnly": true
+    }
   }
 }

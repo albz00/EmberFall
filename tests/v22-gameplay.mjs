@@ -32,11 +32,11 @@ export async function verifyRepairs(t,{byId,isolate,target}){
  for(const x of [-22,-12,12,22]){ray.set(new T.Vector3(x,7,-10),new T.Vector3(0,-1,0));ray.far=3;const hit=ray.intersectObjects(solids,false)[0];assert(hit&&hit.point.y<5.21,'support never projects through planks');}
  ray.set(new T.Vector3(0,11.75,24),new T.Vector3(0,0,1));ray.far=5;assert.equal(ray.intersectObjects(solids,false).length,0,'floating log above spawn removed');assert(w.moon.position.y>40);assert.equal(w.banners.length,35);
  // Actual navigation escapes the old physical-radius/path-radius mismatch.
- const f=t.fighters[0];t.profile.cosmetic='none';t.setMode('play');t.resetPlayer();isolate();t.player.position.set(0,8,28);
+ const f=t.fighters[0];t.profile.cosmetic='none';t.setMode('play');t.resetPlayer();isolate();t.player.position.set(0,t.groundHeight(0,28),28);
  for(const x of [-33,33]){target(f,x,0);f.position.y=0;f.grounded=true;f.velocity.set(0,0,0);f.knock.set(0,0,0);f.plan='roam';f.planUntil=t.time+20;f.goal={x:x<0?-25:25,z:0,y:0};f.target=null;f.navigation=null;f.aiTimer=0;
   const steering=chooseSteer(f.position,f.goal,blocked,isLava,t.time,f.id);assert(Math.abs(steering.x)>.3,'edge permits inward step');for(let n=0;n<120;n++)t.tick();assert(Math.hypot(f.position.x,f.position.z)<32,'bot leaves the edge');
  }
- for(const x of [-8.6,8.6]){t.spawnFighter(f);f.shopComplete=true;f.purchase=null;f.spawnUntil=t.time;f.position.set(x,8,19.6);resolveCollision(f.position);for(let n=0;n<90*12&&f.state!=='fight';n++){t.wait(1/90);t.updateBotSpawn(f,1/90);}assert.equal(f.state,'fight','bot routes from ledge corner into pit');}
+ for(const x of [-8.6,8.6]){t.spawnFighter(f);f.shopComplete=true;f.purchase=null;f.spawnUntil=t.time;f.position.set(x,t.groundHeight(0,28),19.6);resolveCollision(f.position);for(let n=0;n<90*12&&f.state!=='fight';n++){t.wait(1/90);t.updateBotSpawn(f,1/90);}assert.equal(f.state,'fight','bot routes from ledge corner into pit');}
  // Migrate a legacy shortcut layout without deleting or duplicating any copy.
  const legacy=makeProfile({coins:5000});const a=purchaseWeapon(legacy,'dagger').item,b=purchaseArmor(legacy,'gold').item;legacy.version=3;legacy.hotbar=[a.id,'starter-bow','starter-healing','starter',null,null,null,null,b.id];delete legacy.carrySlots;delete legacy.vaultSlots;
  const p=makeProfile(legacy);assert.equal(p.version,4);assert.equal(p.carrySlots[0],a.id);assert.equal(p.carrySlots[8],b.id);const originalIds=p.inventory.map(i=>i.id).sort();
@@ -48,7 +48,7 @@ export async function verifyRepairs(t,{byId,isolate,target}){
  assert(moveInventoryItem(p,b.id,true,false,8).ok);assert.equal(p.carrySlots[8],b.id);assert.equal(p.vaultSlots[17],a.id);assert.equal(p.inventory.length,20);assert.equal(new Set(p.carrySlots).size,20);
  const keep=p.carrySlots[18];sellItem(p,p.carrySlots[14]);assert.equal(p.carrySlots[14],null);assert.equal(p.carrySlots[18],keep,'selling does not collapse item positions');
  // Exercise the actual menus and their actual drag/drop event handlers.
- Object.assign(t.profile,makeProfile({coins:5000}));const paid=purchaseWeapon(t.profile,'dagger').item;syncInventory(t.profile);t.setMode('play');t.player.position.set(0,8,28);t.showShop('storage');
+ Object.assign(t.profile,makeProfile({coins:5000}));const paid=purchaseWeapon(t.profile,'dagger').item;syncInventory(t.profile);t.setMode('play');t.player.position.set(0,t.groundHeight(0,28),28);t.showShop('storage');
  assert.equal(t.menuContext,'chest');assert(byId.get('shop-tabs').hidden);assert(byId.get('personal-settings').hidden);let nodes=descendants(byId.get('shop-content')),slots=nodes.filter(n=>n.dataset?.container);assert.equal(slots.filter(n=>n.dataset.container==='carry').length,20);assert.equal(slots.filter(n=>n.dataset.container==='vault').length,20);
  const itemSlots=slots.filter(n=>n.dataset.itemId);assert.equal(itemSlots.length,t.profile.inventory.length);assert.equal(new Set(itemSlots.map(n=>n.dataset.itemId)).size,itemSlots.length,'hotbar is not repeated in backpack grid');
  const src=slots.find(n=>n.dataset.itemId===paid.id),dest=slots.find(n=>n.dataset.container==='vault'&&n.dataset.slot==='12'),payload=new Map(),dataTransfer={setData:(k,v)=>payload.set(k,v),getData:k=>payload.get(k)};

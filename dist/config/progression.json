@@ -1,94 +1,352 @@
 {
   "schemaVersion": 1,
-  "inventory": {"carrySlots": 20, "hotbarSlots": 9, "stackLimit": 20},
-  "storage": {"initialSlots": 20, "stepSlots": 10, "basePrice": 250},
-  "starterKit": {"weapon": "classic", "potion": "healing", "potionCount": 3},
+  "inventory": {
+    "carrySlots": 20,
+    "hotbarSlots": 9,
+    "stackLimit": 20
+  },
+  "storage": {
+    "initialSlots": 20,
+    "stepSlots": 10,
+    "basePrice": 250
+  },
+  "starterKit": {
+    "weapon": "classic",
+    "potion": "healing",
+    "potionCount": 3
+  },
   "rarities": {
-    "common": {"name": "Common", "color": "#d8cbb4", "damage": 0, "weight": 52, "salvage": 20, "effectChance": 0.12, "effectLevel": 1},
-    "rare": {"name": "Rare", "color": "#82c9fb", "damage": 2, "weight": 32, "salvage": 45, "effectChance": 0.55, "effectLevel": 1},
-    "epic": {"name": "Epic", "color": "#ca9afa", "damage": 4, "weight": 13, "salvage": 90, "effectChance": 0.85, "effectLevel": 2},
-    "legendary": {"name": "Legendary", "color": "#ffc35e", "damage": 7, "weight": 3, "salvage": 240, "effectChance": 1, "effectLevel": 2},
-    "exotic": {"name": "Exotic", "color": "#ff6ad5", "damage": 0, "weight": 0, "salvage": 800, "effectChance": 0, "effectLevel": 1}
+    "common": {
+      "name": "Common",
+      "color": "#d8cbb4",
+      "damage": 0,
+      "weight": 52,
+      "salvage": 20,
+      "effectChance": 0.12,
+      "effectLevel": 1
+    },
+    "rare": {
+      "name": "Rare",
+      "color": "#82c9fb",
+      "damage": 2,
+      "weight": 32,
+      "salvage": 45,
+      "effectChance": 0.55,
+      "effectLevel": 1
+    },
+    "epic": {
+      "name": "Epic",
+      "color": "#ca9afa",
+      "damage": 4,
+      "weight": 13,
+      "salvage": 90,
+      "effectChance": 0.85,
+      "effectLevel": 2
+    },
+    "legendary": {
+      "name": "Legendary",
+      "color": "#ffc35e",
+      "damage": 7,
+      "weight": 3,
+      "salvage": 240,
+      "effectChance": 1,
+      "effectLevel": 2
+    },
+    "exotic": {
+      "name": "Exotic",
+      "color": "#ff6ad5",
+      "damage": 0,
+      "weight": 0,
+      "salvage": 800,
+      "effectChance": 0,
+      "effectLevel": 1
+    }
   },
   "merchant": {
     "name": "Eye Squaller",
     "level": 500,
     "file": "npc-eye-squaller.glb",
-    "weapons": ["riftfang", "gilded-oath", "thunderclap", "voidsplitter", "eclipse-edge"],
+    "weapons": [
+      "riftfang",
+      "gilded-oath",
+      "thunderclap",
+      "voidsplitter",
+      "eclipse-edge"
+    ],
     "offered": 3,
     "restock": 600,
-    "sellOut": {"min": 45, "spread": 240},
+    "sellOut": {
+      "min": 45,
+      "spread": 240
+    },
     "voice": {
       "greet": "merchant-welcome.mp3",
       "call": "merchant-come-get-your-weapons.mp3",
       "greetCooldown": 25,
-      "callInterval": {"min": 40, "spread": 40},
+      "callInterval": {
+        "min": 40,
+        "spread": 40
+      },
       "hearing": 24,
       "volume": 0.9
     }
   },
   "chest": {
-    "price": 180,
+    "price": 650,
     "staffReachMultiplier": 5,
-    "weapons": ["dagger", "broadsword", "mace", "frost", "venom", "arcane", "gemblade"],
+    "weapons": [
+      "dagger",
+      "broadsword",
+      "mace",
+      "frost",
+      "venom",
+      "arcane",
+      "gemblade"
+    ],
     "rolls": {
-      "damage": {"min": 0, "spread": 4},
-      "reach": {"min": 0, "spread": 0.15},
-      "speed": {"min": 0, "spread": 0.2}
+      "damage": {
+        "min": 0,
+        "spread": 4
+      },
+      "reach": {
+        "min": 0,
+        "spread": 0.15
+      },
+      "speed": {
+        "min": 0,
+        "spread": 0.2
+      }
     },
     "forged": {
       "chance": 0.5,
-      "titles": ["Ruinbound", "Winterfang", "Bloodmoon", "Hellforged", "Starbreaker", "Ashreaver"],
-      "effectLevels": [3, 2],
+      "titles": [
+        "Ruinbound",
+        "Winterfang",
+        "Bloodmoon",
+        "Hellforged",
+        "Starbreaker",
+        "Ashreaver"
+      ],
+      "effectLevels": [
+        3,
+        2
+      ],
       "rolls": {
-        "damage": {"min": 4, "spread": 4},
-        "reach": {"min": 0.2, "spread": 0.15},
-        "speed": {"min": 0.25, "spread": 0.2}
+        "damage": {
+          "min": 4,
+          "spread": 4
+        },
+        "reach": {
+          "min": 0.2,
+          "spread": 0.15
+        },
+        "speed": {
+          "min": 0.25,
+          "spread": 0.2
+        }
       }
     }
   },
-  "salvage": {"potionFactor": 0.25, "priceFactor": 0.12},
+  "salvage": {
+    "potionFactor": 0.25,
+    "priceFactor": 0.12
+  },
   "rewards": {
-    "knockout": {"coins": 25, "streakCoins": 3, "maxStreakCoins": 20, "points": 20, "ratingDivisor": 140, "minPoints": 10, "maxPoints": 35},
-    "death": {"points": 10, "ratingDivisor": 220, "minPoints": 4, "maxPoints": 16},
+    "knockout": {
+      "coins": 25,
+      "streakCoins": 3,
+      "maxStreakCoins": 20,
+      "points": 20,
+      "ratingDivisor": 140,
+      "minPoints": 10,
+      "maxPoints": 35
+    },
+    "death": {
+      "points": 10,
+      "ratingDivisor": 220,
+      "minPoints": 4,
+      "maxPoints": 16
+    },
     "match": {
-      "win": {"coins": 80, "points": 25},
-      "draw": {"coins": 35, "points": 10},
-      "loss": {"coins": 20, "points": 5}
+      "win": {
+        "coins": 80,
+        "points": 25
+      },
+      "draw": {
+        "coins": 35,
+        "points": 10
+      },
+      "loss": {
+        "coins": 20,
+        "points": 5
+      }
     }
   },
-  "leveling": {"levelsPerRank": 16, "stepBase": 3, "stepGrowth": 1.15, "stepExponent": 0.7},
+  "leveling": {
+    "levelsPerRank": 16,
+    "stepBase": 3,
+    "stepGrowth": 1.15,
+    "stepExponent": 0.7
+  },
   "ranks": [
-    {"name": "Bronze", "min": 0, "color": "#d9a17b"},
-    {"name": "Silver", "min": 2380, "color": "#c5d7e2"},
-    {"name": "Gold", "min": 6680, "color": "#ffd073"},
-    {"name": "Platinum", "min": 12460, "color": "#89decf"},
-    {"name": "Diamond", "min": 19540, "color": "#82c5ff"},
-    {"name": "Master", "min": 27800, "color": "#d2a0ff"},
-    {"name": "Grandmaster", "min": 37180, "color": "#f3a0db"},
-    {"name": "Champion", "min": 47580, "color": "#f3a0db"},
-    {"name": "Warlord", "min": 59000, "color": "#f3a0db"},
-    {"name": "Vanguard Elite", "min": 71400, "color": "#f3a0db"},
-    {"name": "Conqueror", "min": 84720, "color": "#f3a0db"},
-    {"name": "Overlord", "min": 98940, "color": "#ffb579"},
-    {"name": "Titan", "min": 114020, "color": "#ffb579"},
-    {"name": "Colossus", "min": 129980, "color": "#ffb579"},
-    {"name": "Behemoth", "min": 146760, "color": "#ffb579"},
-    {"name": "Leviathan", "min": 164360, "color": "#ffb579"},
-    {"name": "Infernal", "min": 182740, "color": "#ffe38b"},
-    {"name": "Hellion", "min": 201920, "color": "#ffe38b"},
-    {"name": "Dreadlord", "min": 221840, "color": "#ffe38b"},
-    {"name": "Revenant", "min": 242540, "color": "#ffe38b"},
-    {"name": "Immortal", "min": 263960, "color": "#ffe38b"},
-    {"name": "Eternal", "min": 286100, "color": "#a7e0ef"},
-    {"name": "Celestial", "min": 308980, "color": "#a7e0ef"},
-    {"name": "Astral", "min": 332580, "color": "#a7e0ef"},
-    {"name": "Nova", "min": 356880, "color": "#a7e0ef"},
-    {"name": "Supernova", "min": 381860, "color": "#a7e0ef"},
-    {"name": "Voidwalker", "min": 407520, "color": "#b8aeff"},
-    {"name": "Worldbreaker", "min": 433860, "color": "#b8aeff"},
-    {"name": "Empyrean", "min": 460860, "color": "#b8aeff"},
-    {"name": "Ascendant", "min": 488540, "color": "#b8aeff"},
-    {"name": "Apex", "min": 516860, "color": "#b8aeff"}
-  ]
+    {
+      "name": "Bronze",
+      "min": 0,
+      "color": "#d9a17b"
+    },
+    {
+      "name": "Silver",
+      "min": 2380,
+      "color": "#c5d7e2"
+    },
+    {
+      "name": "Gold",
+      "min": 6680,
+      "color": "#ffd073"
+    },
+    {
+      "name": "Platinum",
+      "min": 12460,
+      "color": "#89decf"
+    },
+    {
+      "name": "Diamond",
+      "min": 19540,
+      "color": "#82c5ff"
+    },
+    {
+      "name": "Master",
+      "min": 27800,
+      "color": "#d2a0ff"
+    },
+    {
+      "name": "Grandmaster",
+      "min": 37180,
+      "color": "#f3a0db"
+    },
+    {
+      "name": "Champion",
+      "min": 47580,
+      "color": "#f3a0db"
+    },
+    {
+      "name": "Warlord",
+      "min": 59000,
+      "color": "#f3a0db"
+    },
+    {
+      "name": "Vanguard Elite",
+      "min": 71400,
+      "color": "#f3a0db"
+    },
+    {
+      "name": "Conqueror",
+      "min": 84720,
+      "color": "#f3a0db"
+    },
+    {
+      "name": "Overlord",
+      "min": 98940,
+      "color": "#ffb579"
+    },
+    {
+      "name": "Titan",
+      "min": 114020,
+      "color": "#ffb579"
+    },
+    {
+      "name": "Colossus",
+      "min": 129980,
+      "color": "#ffb579"
+    },
+    {
+      "name": "Behemoth",
+      "min": 146760,
+      "color": "#ffb579"
+    },
+    {
+      "name": "Leviathan",
+      "min": 164360,
+      "color": "#ffb579"
+    },
+    {
+      "name": "Infernal",
+      "min": 182740,
+      "color": "#ffe38b"
+    },
+    {
+      "name": "Hellion",
+      "min": 201920,
+      "color": "#ffe38b"
+    },
+    {
+      "name": "Dreadlord",
+      "min": 221840,
+      "color": "#ffe38b"
+    },
+    {
+      "name": "Revenant",
+      "min": 242540,
+      "color": "#ffe38b"
+    },
+    {
+      "name": "Immortal",
+      "min": 263960,
+      "color": "#ffe38b"
+    },
+    {
+      "name": "Eternal",
+      "min": 286100,
+      "color": "#a7e0ef"
+    },
+    {
+      "name": "Celestial",
+      "min": 308980,
+      "color": "#a7e0ef"
+    },
+    {
+      "name": "Astral",
+      "min": 332580,
+      "color": "#a7e0ef"
+    },
+    {
+      "name": "Nova",
+      "min": 356880,
+      "color": "#a7e0ef"
+    },
+    {
+      "name": "Supernova",
+      "min": 381860,
+      "color": "#a7e0ef"
+    },
+    {
+      "name": "Voidwalker",
+      "min": 407520,
+      "color": "#b8aeff"
+    },
+    {
+      "name": "Worldbreaker",
+      "min": 433860,
+      "color": "#b8aeff"
+    },
+    {
+      "name": "Empyrean",
+      "min": 460860,
+      "color": "#b8aeff"
+    },
+    {
+      "name": "Ascendant",
+      "min": 488540,
+      "color": "#b8aeff"
+    },
+    {
+      "name": "Apex",
+      "min": 516860,
+      "color": "#b8aeff"
+    }
+  ],
+  "match": {
+    "rounds": 3,
+    "betweenRounds": 4
+  }
 }

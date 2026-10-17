@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=55';
+import {CONFIG} from './shared/config.js?v=59';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;
@@ -33,6 +33,7 @@ for(let level=1;level<MAX_LEVEL;level++)expAtLevel[level+1]=expAtLevel[level]+st
 export const RANKS=CONFIG.progression.ranks.map((rank,index)=>({...rank,min:expAtLevel[index*LEVELS_PER_RANK+1]}));
 export const CHEST_PRICE=CHEST.price;
 export const MATCH_REWARDS=REWARDS.match;
+export const MATCH_RULES=CONFIG.progression.match;
 export const EFFECTS=CONFIG.weapons.statusEffects;
 const TITLES=CHEST.forged.titles;
 const rollTable=forged=>forged?CHEST.forged.rolls:CHEST.rolls;

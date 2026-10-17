@@ -1,32 +1,312 @@
 {
   "schemaVersion": 1,
   "weapons": {
-    "classic": {"name": "Iron sword", "file": "weapon-classic.glb", "price": 0, "damage": 12, "reach": 3.1, "knockback": 4.5, "speed": 0, "icon": "sword"},
-    "dagger": {"name": "Dagger", "file": "weapon-dagger.glb", "price": 90, "damage": 13, "reach": 2.65, "knockback": 3.8, "speed": 0.55, "icon": "dagger"},
-    "broadsword": {"name": "Broadsword", "file": "weapon-broadsword.glb", "price": 180, "damage": 15, "reach": 3.15, "knockback": 4.9, "speed": 0, "icon": "sword"},
-    "mace": {"name": "D20 mace", "file": "weapon-mace.glb", "price": 420, "damage": 18, "reach": 2.9, "knockback": 6.7, "speed": -0.3, "icon": "mace"},
-    "gemblade": {"name": "Gemblade", "file": "weapon-gemblade.glb", "price": 760, "damage": 21, "reach": 3.3, "knockback": 5.3, "speed": 0, "icon": "sword"},
-    "frost": {"name": "Frost staff", "file": "staff-frost.glb", "kind": "staff", "price": 320, "damage": 30, "reach": 28, "knockback": 2.6, "speed": 0, "icon": "staff", "spell": "frost", "cooldown": 0.65, "projectileSpeed": 32, "color": "#8bdfff", "description": "Chills movement by 35% for 2 seconds."},
-    "venom": {"name": "Venom staff", "file": "staff-venom.glb", "kind": "staff", "price": 520, "damage": 28, "reach": 26, "knockback": 2.3, "speed": 0, "icon": "staff", "spell": "venom", "cooldown": 0.85, "projectileSpeed": 27, "color": "#9ae57e", "description": "Poisons for 24 damage over 3.2 seconds."},
-    "arcane": {"name": "Arcane staff", "file": "staff-arcane.glb", "kind": "staff", "price": 840, "damage": 40, "reach": 30, "knockback": 3.2, "speed": 0, "icon": "staff", "spell": "arcane", "cooldown": 0.9, "projectileSpeed": 38, "color": "#c7a0ff", "description": "Chains to 2 nearby enemies for 18 damage each."},
-    "god": {"name": "God Sword", "file": "weapon-broadsword.glb", "price": 1000000, "damage": 9999, "absoluteDamage": true, "rarity": "legendary", "reach": 3.5, "knockback": 6.5, "speed": 0, "icon": "sword", "description": "9,999 damage on a landed hit, through armor and blocking. One physical copy; drops on death."},
-    "riftfang": {"name": "Riftfang", "file": "exotic-riftfang.glb", "price": 10000, "damage": 24, "rarity": "exotic", "reach": 3.35, "knockback": 5.2, "speed": 0.45, "icon": "sword", "description": "10% on hit: a rift opens under the target for 30 damage and flings it skyward.", "proc": {"kind": "launch", "chance": 0.1, "damage": 30, "lift": 15, "knockback": 5, "color": "#b48cff"}},
-    "gilded-oath": {"name": "Gilded Oath", "file": "exotic-gilded-oath.glb", "price": 11500, "damage": 25, "rarity": "exotic", "reach": 3.25, "knockback": 5, "speed": 0.15, "icon": "sword", "description": "8% on hit: a golden nova heals you for 60 and blasts enemies within 4.5 m for 35.", "proc": {"kind": "nova", "chance": 0.08, "damage": 35, "radius": 4.5, "heal": 60, "knockback": 9, "color": "#ffd76a"}},
-    "thunderclap": {"name": "Thunderclap Maul", "file": "exotic-thunderclap.glb", "price": 14000, "damage": 31, "rarity": "exotic", "reach": 3, "knockback": 8.5, "speed": -0.45, "icon": "mace", "description": "5% on hit: explodes for 80 damage within 5 m, hurling everyone caught in it and setting them on fire.", "proc": {"kind": "explosion", "chance": 0.05, "damage": 80, "radius": 5, "knockback": 18, "lift": 9, "ignite": true, "color": "#ff7a3d"}},
-    "voidsplitter": {"name": "Voidsplitter", "file": "exotic-voidsplitter.glb", "price": 16500, "damage": 28, "rarity": "exotic", "reach": 3.2, "knockback": 6, "speed": 0.1, "icon": "mace", "description": "7% on hit: lightning arcs through up to 4 enemies within 7 m for 40 each and chills them for 2.5 s.", "proc": {"kind": "chain", "chance": 0.07, "damage": 40, "targets": 4, "range": 7, "slow": 2.5, "color": "#7fe3ff"}},
-    "eclipse-edge": {"name": "Eclipse Edge", "file": "exotic-eclipse-edge.glb", "price": 20000, "damage": 30, "rarity": "exotic", "reach": 3.6, "knockback": 6, "speed": 0.25, "icon": "sword", "description": "4% on hit: a singularity drags every enemy within 8 m into the target and crushes them for 60.", "proc": {"kind": "singularity", "chance": 0.04, "damage": 60, "radius": 8, "pull": 16, "color": "#8a5cff"}},
-    "cinderfang": {"name": "Cinderfang", "file": "weapon-gemblade.glb", "price": 2200, "damage": 33, "rarity": "legendary", "reach": 3.4, "knockback": 5.8, "speed": 0.3, "icon": "sword", "dungeonOnly": true, "description": "Ashen Crypt relic. Burns with the Warden’s stolen ember."},
-    "warden-cleaver": {"name": "Warden’s Cleaver", "file": "weapon-broadsword.glb", "price": 2600, "damage": 38, "rarity": "legendary", "reach": 3.3, "knockback": 7.2, "speed": -0.15, "icon": "sword", "dungeonOnly": true, "description": "Ashen Crypt relic. A heavy blade claimed from the Cinder Warden."},
-    "hollow-scepter": {"name": "Hollow Scepter", "file": "staff-arcane.glb", "price": 2400, "damage": 48, "rarity": "legendary", "reach": 31, "knockback": 3.8, "speed": 0, "icon": "staff", "kind": "staff", "spell": "arcane", "cooldown": 0.85, "projectileSpeed": 38, "color": "#f7a75c", "dungeonOnly": true, "description": "Ashen Crypt relic. Fires piercingly bright, chaining arcane bolts."}
+    "classic": {
+      "name": "Iron sword",
+      "file": "weapon-classic.glb",
+      "price": 0,
+      "damage": 60,
+      "reach": 3.1,
+      "knockback": 4.5,
+      "speed": 0,
+      "icon": "sword"
+    },
+    "dagger": {
+      "name": "Dagger",
+      "file": "weapon-dagger.glb",
+      "price": 250,
+      "damage": 65,
+      "reach": 2.65,
+      "knockback": 3.8,
+      "speed": 0.55,
+      "icon": "dagger"
+    },
+    "broadsword": {
+      "name": "Broadsword",
+      "file": "weapon-broadsword.glb",
+      "price": 500,
+      "damage": 75,
+      "reach": 3.15,
+      "knockback": 4.9,
+      "speed": 0,
+      "icon": "sword"
+    },
+    "mace": {
+      "name": "D20 mace",
+      "file": "weapon-mace.glb",
+      "price": 1100,
+      "damage": 90,
+      "reach": 2.9,
+      "knockback": 6.7,
+      "speed": -0.3,
+      "icon": "mace"
+    },
+    "gemblade": {
+      "name": "Gemblade",
+      "file": "weapon-gemblade.glb",
+      "price": 1800,
+      "damage": 105,
+      "reach": 3.3,
+      "knockback": 5.3,
+      "speed": 0,
+      "icon": "sword"
+    },
+    "frost": {
+      "name": "Frost staff",
+      "file": "staff-frost.glb",
+      "kind": "staff",
+      "price": 850,
+      "damage": 60,
+      "reach": 28,
+      "knockback": 2.6,
+      "speed": 0,
+      "icon": "staff",
+      "spell": "frost",
+      "cooldown": 0.65,
+      "projectileSpeed": 32,
+      "color": "#8bdfff",
+      "description": "Chills movement by 35% for 2 seconds."
+    },
+    "venom": {
+      "name": "Venom staff",
+      "file": "staff-venom.glb",
+      "kind": "staff",
+      "price": 1350,
+      "damage": 56,
+      "reach": 26,
+      "knockback": 2.3,
+      "speed": 0,
+      "icon": "staff",
+      "spell": "venom",
+      "cooldown": 0.85,
+      "projectileSpeed": 27,
+      "color": "#9ae57e",
+      "description": "Poisons for 24 damage over 3.2 seconds."
+    },
+    "arcane": {
+      "name": "Arcane staff",
+      "file": "staff-arcane.glb",
+      "kind": "staff",
+      "price": 2200,
+      "damage": 80,
+      "reach": 30,
+      "knockback": 3.2,
+      "speed": 0,
+      "icon": "staff",
+      "spell": "arcane",
+      "cooldown": 0.9,
+      "projectileSpeed": 38,
+      "color": "#c7a0ff",
+      "description": "Chains to 2 nearby enemies for 18 damage each."
+    },
+    "god": {
+      "name": "God Sword",
+      "file": "weapon-broadsword.glb",
+      "price": 1000000,
+      "damage": 9999,
+      "absoluteDamage": true,
+      "rarity": "legendary",
+      "reach": 3.5,
+      "knockback": 6.5,
+      "speed": 0,
+      "icon": "sword",
+      "description": "9,999 damage on a landed hit, through armor and blocking. One physical copy; drops on death."
+    },
+    "riftfang": {
+      "name": "Riftfang",
+      "file": "exotic-riftfang.glb",
+      "price": 18000,
+      "damage": 120,
+      "rarity": "exotic",
+      "reach": 3.35,
+      "knockback": 5.2,
+      "speed": 0.45,
+      "icon": "sword",
+      "description": "10% on hit: a rift opens under the target for 30 damage and flings it skyward.",
+      "proc": {
+        "kind": "launch",
+        "chance": 0.1,
+        "damage": 30,
+        "lift": 15,
+        "knockback": 5,
+        "color": "#b48cff"
+      }
+    },
+    "gilded-oath": {
+      "name": "Gilded Oath",
+      "file": "exotic-gilded-oath.glb",
+      "price": 21000,
+      "damage": 125,
+      "rarity": "exotic",
+      "reach": 3.25,
+      "knockback": 5,
+      "speed": 0.15,
+      "icon": "sword",
+      "description": "8% on hit: a golden nova heals you for 60 and blasts enemies within 4.5 m for 35.",
+      "proc": {
+        "kind": "nova",
+        "chance": 0.08,
+        "damage": 35,
+        "radius": 4.5,
+        "heal": 60,
+        "knockback": 9,
+        "color": "#ffd76a"
+      }
+    },
+    "thunderclap": {
+      "name": "Thunderclap Maul",
+      "file": "exotic-thunderclap.glb",
+      "price": 25000,
+      "damage": 155,
+      "rarity": "exotic",
+      "reach": 3,
+      "knockback": 8.5,
+      "speed": -0.45,
+      "icon": "mace",
+      "description": "5% on hit: explodes for 80 damage within 5 m, hurling everyone caught in it and setting them on fire.",
+      "proc": {
+        "kind": "explosion",
+        "chance": 0.05,
+        "damage": 80,
+        "radius": 5,
+        "knockback": 18,
+        "lift": 9,
+        "ignite": true,
+        "color": "#ff7a3d"
+      }
+    },
+    "voidsplitter": {
+      "name": "Voidsplitter",
+      "file": "exotic-voidsplitter.glb",
+      "price": 30000,
+      "damage": 140,
+      "rarity": "exotic",
+      "reach": 3.2,
+      "knockback": 6,
+      "speed": 0.1,
+      "icon": "mace",
+      "description": "7% on hit: lightning arcs through up to 4 enemies within 7 m for 40 each and chills them for 2.5 s.",
+      "proc": {
+        "kind": "chain",
+        "chance": 0.07,
+        "damage": 40,
+        "targets": 4,
+        "range": 7,
+        "slow": 2.5,
+        "color": "#7fe3ff"
+      }
+    },
+    "eclipse-edge": {
+      "name": "Eclipse Edge",
+      "file": "exotic-eclipse-edge.glb",
+      "price": 36000,
+      "damage": 150,
+      "rarity": "exotic",
+      "reach": 3.6,
+      "knockback": 6,
+      "speed": 0.25,
+      "icon": "sword",
+      "description": "4% on hit: a singularity drags every enemy within 8 m into the target and crushes them for 60.",
+      "proc": {
+        "kind": "singularity",
+        "chance": 0.04,
+        "damage": 60,
+        "radius": 8,
+        "pull": 16,
+        "color": "#8a5cff"
+      }
+    },
+    "cinderfang": {
+      "name": "Cinderfang",
+      "file": "weapon-gemblade.glb",
+      "price": 5000,
+      "damage": 165,
+      "rarity": "legendary",
+      "reach": 3.4,
+      "knockback": 5.8,
+      "speed": 0.3,
+      "icon": "sword",
+      "dungeonOnly": true,
+      "description": "Ashen Crypt relic. Burns with the Warden’s stolen ember."
+    },
+    "warden-cleaver": {
+      "name": "Warden’s Cleaver",
+      "file": "weapon-broadsword.glb",
+      "price": 6000,
+      "damage": 190,
+      "rarity": "legendary",
+      "reach": 3.3,
+      "knockback": 7.2,
+      "speed": -0.15,
+      "icon": "sword",
+      "dungeonOnly": true,
+      "description": "Ashen Crypt relic. A heavy blade claimed from the Cinder Warden."
+    },
+    "hollow-scepter": {
+      "name": "Hollow Scepter",
+      "file": "staff-arcane.glb",
+      "price": 5500,
+      "damage": 144,
+      "rarity": "legendary",
+      "reach": 31,
+      "knockback": 3.8,
+      "speed": 0,
+      "icon": "staff",
+      "kind": "staff",
+      "spell": "arcane",
+      "cooldown": 0.85,
+      "projectileSpeed": 38,
+      "color": "#f7a75c",
+      "dungeonOnly": true,
+      "description": "Ashen Crypt relic. Fires piercingly bright, chaining arcane bolts."
+    }
   },
   "spells": {
-    "frost": {"slowDuration": 2, "speedMultiplier": 0.65},
-    "venom": {"tickInterval": 0.8, "ticks": 4, "tickDamage": 6},
-    "arcane": {"chainTargets": 2, "chainRange": 4.5, "chainDamage": 18, "chainKnockback": 1}
+    "frost": {
+      "slowDuration": 2,
+      "speedMultiplier": 0.65
+    },
+    "venom": {
+      "tickInterval": 0.8,
+      "ticks": 4,
+      "tickDamage": 6
+    },
+    "arcane": {
+      "chainTargets": 2,
+      "chainRange": 4.5,
+      "chainDamage": 18,
+      "chainKnockback": 1
+    }
   },
   "statusEffects": {
-    "bleed": {"name": "Bleed", "color": "#ed859a", "hex": "#e75b79", "kind": "damage", "interval": 0.85, "ticks": 4, "baseDamage": 3, "damagePerLevel": 2},
-    "frost": {"name": "Frost", "color": "#98e0ff", "hex": "#98e0ff", "kind": "slow", "duration": 2.2, "baseSlowPercent": 15, "slowPercentPerLevel": 5},
-    "fire": {"name": "Fire", "color": "#ffb06b", "hex": "#ff8d45", "kind": "damage", "interval": 0.75, "ticks": 4, "baseDamage": 4, "damagePerLevel": 2}
+    "bleed": {
+      "name": "Bleed",
+      "color": "#ed859a",
+      "hex": "#e75b79",
+      "kind": "damage",
+      "interval": 0.85,
+      "ticks": 4,
+      "baseDamage": 3,
+      "damagePerLevel": 2
+    },
+    "frost": {
+      "name": "Frost",
+      "color": "#98e0ff",
+      "hex": "#98e0ff",
+      "kind": "slow",
+      "duration": 2.2,
+      "baseSlowPercent": 15,
+      "slowPercentPerLevel": 5
+    },
+    "fire": {
+      "name": "Fire",
+      "color": "#ffb06b",
+      "hex": "#ff8d45",
+      "kind": "damage",
+      "interval": 0.75,
+      "ticks": 4,
+      "baseDamage": 4,
+      "damagePerLevel": 2
+    }
   }
 }

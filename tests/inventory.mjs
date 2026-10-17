@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {makeProfile,CARRY_SLOTS,HOTBAR_SLOTS,purchaseWeapon,purchaseArmor,purchasePotion,equipInventoryItem,armorReduction,equippedItem,addInventoryItem,transferItem,expandStorage,storagePrice,takeDeathItems,refillStarterPotions,bindHotbar,sellItem,consumePotion,openChest,weaponStats} from '../dist/progression.js';
-const p=makeProfile({coins:10000});assert.equal(p.inventory.length,3);assert.equal(p.vaultCapacity,20);assert.equal(p.hotbar.length,9);
-const w1=purchaseWeapon(p,'dagger'),w2=purchaseWeapon(p,'dagger');assert(w1.ok&&w2.ok);assert.notEqual(w1.item.id,w2.item.id);assert.equal(p.coins,9820);assert.equal(equippedItem(p).id,'starter','buying creates a copy, not an automatic permanent equip');
+const p=makeProfile({coins:20000});assert.equal(p.inventory.length,3);assert.equal(p.vaultCapacity,20);assert.equal(p.hotbar.length,9);
+const w1=purchaseWeapon(p,'dagger'),w2=purchaseWeapon(p,'dagger');assert(w1.ok&&w2.ok);assert.notEqual(w1.item.id,w2.item.id);assert.equal(p.coins,19500);assert.equal(equippedItem(p).id,'starter','buying creates a copy, not an automatic permanent equip');
 const armor1=purchaseArmor(p,'gold'),armor2=purchaseArmor(p,'gold');assert(armor1.ok&&armor2.ok);assert.notEqual(armor1.item.id,armor2.item.id);assert.equal(p.armor,'none');equipInventoryItem(p,armor1.item.id);assert.equal(p.armor,'gold');assert.equal(p.armorItem,armor1.item.id);assert(armorReduction(p)>.2);
 const count=p.inventory.length;equipInventoryItem(p,armor2.item.id);assert.equal(p.inventory.length,count,'wearing still uses a carried slot');assert.equal(p.armorItem,armor2.item.id);
 assert(transferItem(p,armor2.item.id,true).ok);assert.equal(p.armor,'none','storing equipped armor removes its protection');assert.equal(p.vault.length,1);assert(!transferItem(p,'starter',true).ok);

@@ -17,7 +17,7 @@ const expectIssue=(mutate,...fragments)=>{const issues=issuesFor(mutate);for(con
 assert.match(MAP_VERSION,/^2-[0-9a-f]{8}$/);
 assert(Object.isFrozen(MAP.lava.paths[0].points[0]));
 assert.throws(()=>{MAP.prefabs.ledge.surfaces[0].height=3;},TypeError);
-assert.equal(groundHeight(0,25),8);assert.equal(groundHeight(25.1,-10,5.2),5.2);assert(safeZone({x:0,y:8,z:28}));
+assert.equal(groundHeight(0,25),20);assert.equal(groundHeight(25.1,-10,5.2),5.2);assert(safeZone({x:0,y:20,z:28}));
 assert(isUnderBridge({x:0,y:1,z:-10}));assert(isLava(0,34));assert(!isLava(0,0));
 
 // Validation names the file and field.
@@ -74,14 +74,14 @@ expectIssue(c=>{c.stringLights[1].to='crate-1';},'stringLights[1].to: "crate-1" 
 const edited=structuredClone(raw);edited.prefabs.ledge.surfaces[0].height=9;edited.regions.safe.minY=8.65;edited.prefabs.bridge.surfaces[0].height=6;edited.prefabs.ramp.surfaces[0].height=6;
 for(const p of edited.navigation.destinations)if(p.y!==undefined)p.y=6;
 const editedMap=parseMap(edited),q=createMapQueries(editedMap);
-assert.equal(q.groundHeight(0,25),9);assert.equal(q.groundHeight(0,-10),6);assert(Math.abs(q.groundHeight(25.1,-10,6)-6)<1e-9&&Math.abs(q.groundHeight(25.1,.8,6)-3)<1e-9,'ramps rise to the edited deck height');assert(!q.safeZone({x:0,y:8,z:28}));
-assert(stationObjects(editedMap).every(o=>o.y===9),'stations stand on the edited ledge surface');
+assert.equal(q.groundHeight(0,25),21);assert.equal(q.groundHeight(0,-10),6);assert(Math.abs(q.groundHeight(25.1,-10,6)-6)<1e-9&&Math.abs(q.groundHeight(25.1,.8,6)-3)<1e-9,'ramps rise to the edited deck height');assert(!q.safeZone({x:0,y:20,z:28}));
+assert(stationObjects(editedMap).every(o=>o.y===21),'stations stand on the edited ledge surface');
 // Moving the ledge carries its rails, safe region, spawns, stations and exit; moving the bridge carries its cover.
 const shifted=structuredClone(raw);obj(shifted,'ledge').x=-4;obj(shifted,'bridge').z=-11;
 const S=parseMap(shifted),sq=createMapQueries(S);
 assert.deepEqual([S.spawns.player.x,S.spawns.player.z,S.spawns.bots.x,S.stations.chest.x,S.stations.chest.z,S.ledgeExit.x,S.regions.safe.x],[-4,28,-4,2.5,26.5,-4,-4]);
 assert.deepEqual(S.objects.filter(o=>o.parent==='ledge').map(o=>[o.x,o.z]),[[-13.1,25.2],[5.1,25.2],[-4,31.3],[-11.2,19],[3.2,19]]);
-assert(sq.safeZone({x:-12,y:8,z:28})&&!sq.safeZone({x:6,y:8,z:28}),'the safe region follows the ledge');
+assert(sq.safeZone({x:-12,y:20,z:28})&&!sq.safeZone({x:6,y:20,z:28}),'the safe region follows the ledge');
 assert(sq.isUnderBridge({x:0,y:1,z:-12.4})&&!sq.isUnderBridge({x:0,y:1,z:-8.6}),'bridge cover follows the bridge');
 assert.deepEqual(S.navigation.bridgeCover.map(p=>p.z),Array(6).fill(-11));
 assert.equal(sq.groundHeight(0,-12.5,5.2),5.2);assert.equal(sq.groundHeight(0,-8.5,5.2),0);
@@ -105,12 +105,12 @@ try{
  assert(E.isUnderBridge({x:0,y:3,z:-10}),'bridge cover height follows the map file');
  // Moving an object in the map moves its collider and its mesh together.
  const T=await load('vendor/three.module.js'),scene=new T.Scene(),built=W.buildWorld(scene);
- assert.equal(W.colliders.length,37,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
+ assert.equal(W.colliders.length,36,'world meshes, props and stations all collide from the map');assert.deepEqual(W.colliders[4],{type:'circle',x:15,z:-25,r:1.6,minY:-1,maxY:2.2});
  assert(W.blocked(15,-25)&&!W.blocked(9,-21),'blocking follows the moved boulder');
  assert.deepEqual(W.colliders.slice(13,15).map(c=>[c.x,c.z]),[[-3.35,-27],[3.35,-27]]);
- assert.deepEqual(W.colliders[16],{type:'box',x:1,z:-20,w:1.2,d:1.2,minY:0,maxY:1.4},'crate colliders follow their object');
- assert.deepEqual(W.colliders.at(-3),{type:'circle',x:5,z:27,r:.82,minY:8,maxY:10},'station furniture collides at the station');
- assert.deepEqual(W.colliders.at(-1),{type:'circle',x:7.6,z:22.2,r:.6,minY:8,maxY:10.2},'the merchant stand collides on the ledge');
+ assert.deepEqual(W.colliders[15],{type:'box',x:1,z:-20,w:1.2,d:1.2,minY:0,maxY:1.4},'crate colliders follow their object');
+ assert.deepEqual(W.colliders.at(-3),{type:'circle',x:5,z:27,r:.82,minY:20,maxY:22},'station furniture collides at the station');
+ assert.deepEqual(W.colliders.at(-1),{type:'circle',x:7.6,z:22.2,r:.6,minY:20,maxY:22.2},'the merchant stand collides on the ledge');
  assert(W.colliders.some(c=>c.type==='circle'&&c.r===4.1*.36&&c.maxY===2.8),'volcano tops stay fixed while their radius scales');
  scene.updateMatrixWorld(true);
  const vertexNear=(color,x,y,z,radius)=>{let hit=false;const v=new T.Vector3();scene.traverse(o=>{if(hit||!o.isMesh||Array.isArray(o.material)||o.material.color?.getHex()!==color)return;const pos=o.geometry.attributes.position;for(let i=0;i<pos.count&&!hit;i++){v.fromBufferAttribute(pos,i).applyMatrix4(o.matrixWorld);hit=Math.hypot(v.x-x,v.y-y,v.z-z)<radius;}});return hit;};
@@ -118,14 +118,14 @@ try{
  assert(vertexNear(0x3c3447,4,3.2,-26.35,.01)&&!vertexNear(0x3c3447,4,3.2,-29.85,.01),'the portal pillars moved with their object');
  assert(Math.abs(W.groundHeight(21,.8)-2.6)<1e-9,'the moved ramp is walkable at its new position');assert.equal(W.groundHeight(25.1,.8),0);
  assert(vertexNear(0x987352,22.9,2.55,.79,.3)&&!vertexNear(0x987352,26.9,2.55,.79,.3),'the ramp planks moved with its walkable surface');
- assert(vertexNear(0x282332,22,11.18,-24,.1)&&!vertexNear(0x282332,24,11.18,-22,.1),'string lights and roof posts follow the moved tower');
+ assert(vertexNear(0x282332,22,10.94,-24,.1)&&!vertexNear(0x282332,24,10.94,-22,.1),'string lights and roof posts follow the moved tower');
  assert(built.portal.center.equals(new T.Vector3(0,5.2,-11)),'the bridge rune lies on the moved deck');
  assert.equal(built.rockRunes.group.userData.markCount,10);
 }finally{await rm(scratch,{recursive:true,force:true});}
 
 // The shared collision, with no THREE or scene, matches the game's world module everywhere.
 const DW=await import('../dist/world.js'),server=createCollision(MAP,mapColliders(MAP));
-for(let x=-34;x<=34;x+=.7)for(let z=-34;z<=34;z+=.7)for(const y of [0,8]){assert.equal(server.blocked(x,z,y),DW.blocked(x,z,y));const a=server.resolveCollision({x,y,z}),b=DW.resolveCollision({x,y,z});assert(a.x===b.x&&a.z===b.z);}
+for(let x=-34;x<=34;x+=.7)for(let z=-34;z<=34;z+=.7)for(const y of [0,5.2,20]){assert.equal(server.blocked(x,z,y),DW.blocked(x,z,y));const a=server.resolveCollision({x,y,z}),b=DW.resolveCollision({x,y,z});assert(a.x===b.x&&a.z===b.z);}
 for(let i=0;i<200;i++){const a={x:Math.sin(i)*30,y:0,z:Math.cos(i*1.3)*30},b={x:Math.cos(i*.7)*30,y:i%3?0:5.2,z:Math.sin(i*2.1)*30};assert.equal(server.lineBlocked(a,b),DW.lineBlocked(a,b));}
 
 // The game reads spawns, stations, exits, supply drops and props from the map instead of repeating them.
