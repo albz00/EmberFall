@@ -1,5 +1,5 @@
-import {purchaseAccess} from './skills.js?v=68';
-import {MERCHANT,WEAPONS,addInventoryItem,makeItemId} from './progression.js?v=68';
+import {purchaseAccess} from './skills.js?v=69';
+import {MERCHANT,WEAPONS,addInventoryItem,makeItemId} from './progression.js?v=69';
 
 // Stock follows real time: each restock cycle draws its weapons and sell-out times from the cycle number,
 // so only the player's own purchases are saved.

@@ -1,5 +1,5 @@
-import {CONFIG} from './shared/config.js?v=68';
-import {rankFor} from './leveling.js?v=68';
+import {CONFIG} from './shared/config.js?v=69';
+import {rankFor} from './leveling.js?v=69';
 export const SKILL_BRANCHES=CONFIG.progression.skills.branches;
 export const SKILL_CAPS=CONFIG.progression.skills.caps;
 export const SKILLS=Object.fromEntries(SKILL_BRANCHES.flatMap(b=>b.nodes.map(n=>[n.id,{...n,branch:b.id}])));

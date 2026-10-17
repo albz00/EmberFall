@@ -1,4 +1,4 @@
-import {MELEE,HITBOX,rayHitCandidate} from './combat.js?v=68';
+import {MELEE,HITBOX,rayHitCandidate} from './combat.js?v=69';
 
 // Visual feedback only. The narrow melee ray remains the authority for damage.
 export function findAimFocus(actors,origin,direction,reach,eligible=()=>true,occluded=()=>false){

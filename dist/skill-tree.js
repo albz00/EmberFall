@@ -1,5 +1,5 @@
-import {SKILL_BRANCHES,SKILLS,skillAccess,skillBonuses,skillSummary} from './skills.js?v=68';
-import {rankFor} from './leveling.js?v=68';
+import {SKILL_BRANCHES,SKILLS,skillAccess,skillBonuses,skillSummary} from './skills.js?v=69';
+import {rankFor} from './leveling.js?v=69';
 const el=(tag,cls,text)=>{const e=document.createElement(tag);e.className=cls;if(text!==undefined)e.textContent=text;return e;};
 const icons={sprint:'rogue',shield:'sentinel'};
 export function createSkillTree(root,{profile,onBuy}){

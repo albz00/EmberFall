@@ -1,7 +1,7 @@
-import {sanitizeSkills,skillBonuses,purchaseAccess} from './skills.js?v=68';
+import {sanitizeSkills,skillBonuses,purchaseAccess} from './skills.js?v=69';
 import {sanitizeEmblem} from './emblems.js?v=66';
-import {sanitizeBounties} from './bounties.js?v=68';
-import {CONFIG} from './shared/config.js?v=68';
+import {sanitizeBounties} from './bounties.js?v=69';
+import {CONFIG} from './shared/config.js?v=69';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;
@@ -28,7 +28,7 @@ export function purchaseNameplate(p,id){
  p.coins-=plate.price;p.ownedNameplates.push(id);p.nameplate=id;return{ok:true};
 }
 export const RARITIES=deepFreeze(Object.fromEntries(Object.entries(CONFIG.progression.rarities).map(([id,{name,color,...rest}])=>[id,{name,color,hex:parseInt(color.slice(1),16),...rest}])));
-import {rankFor,RANKS,LEVELS_PER_RANK} from './leveling.js?v=68';
+import {rankFor,RANKS,LEVELS_PER_RANK} from './leveling.js?v=69';
 export {rankFor,RANKS,LEVELS_PER_RANK};
 export const CHEST_PRICE=CHEST.price;
 export const MATCH_REWARDS=REWARDS.match;

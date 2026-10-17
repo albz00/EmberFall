@@ -1,7 +1,7 @@
 # Emberfall update conventions
 
 - Continue this project in place and preserve its audience and existing assets. It is a static site served from `dist/` (no build step); run it locally with `python3 -m http.server 8080 --directory dist`.
-- Each new game-update request, including a new user message adding scope during an update, advances `GAME_VERSION` in `dist/changelog.js` by exactly 0.01 and prepends a factual changelog entry. Do not bump for status, pricing, or other non-update questions, or multiple implementation passes for the same request. Multiple new requests can be published together while retaining their separate changelog entries. Current version: 0.68.
+- Each new game-update request, including a new user message adding scope during an update, advances `GAME_VERSION` in `dist/changelog.js` by exactly 0.01 and prepends a factual changelog entry. Do not bump for status, pricing, or other non-update questions, or multiple implementation passes for the same request. Multiple new requests can be published together while retaining their separate changelog entries. Current version: 0.69.
 - Keep version query strings for changed modules and assets synchronized so published updates replace cached files.
 - Preserve the user's clean cartoon UI: no marketing quips, mini headers, redundant location labels, or duplicate health bars.
 - Bots and their chat are local simulations. Do not claim online multiplayer or LLM conversation without implementing those services.
@@ -20,3 +20,5 @@
 - Custom emblems save validated vector layers in the existing profile. Keep badge and shape ids in `emblems.js` stable so older designs survive. Draft edits stay separate until Save; never store arbitrary SVG, URLs or HTML as an emblem.
 
 - Skills are permanent validated node ids in `profile.skills`; prerequisites and bonuses come from progression JSON. Purchase level gates apply only to buying new copies; never strip, lock or unequip existing/found gear. A 2v2 ends only when the round-score lead reaches `match.winBy`; round rewards are not paid separately.
+
+- Ledge-entry protection is mutual: fighters cannot deal or take damage during the descent or the configured three seconds after first contact with ground/lava. Ordinary arena jumps never renew it. Reset temporary entry state on respawn/return/match teleports; match countdowns retain their own safety rules. Death timers are shared by player and bots. Roll steering keeps one normalized velocity and one roll cooldown; Q/E can steer an active roll without stacking a second dodge burst.

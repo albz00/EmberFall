@@ -1,6 +1,6 @@
-import {skillBonuses} from './skills.js?v=68';
+import {skillBonuses} from './skills.js?v=69';
 export const PRESENTATION=CONFIG.combat.presentation;
-import {CONFIG} from './shared/config.js?v=68';
+import {CONFIG} from './shared/config.js?v=69';
 const {kits,movement,melee,knockback:KNOCK,bow}=CONFIG.combat;
 export const KITS=kits;
 export const BOTS=CONFIG.bots;
@@ -102,3 +102,10 @@ export function chooseSteer(position,target,isBlocked,isHazard,time,id){
 export const MOVEMENT=movement;
 export function movementSpeed(kit,gear=0,sprint=false,bonuses={}){return(kit.speed+gear*MOVEMENT.gearSpeed)*(sprint?MOVEMENT.sprint*(1+(bonuses.sprintSpeed??0)):1);}
 export function gaitStride(leg,speed,crouched=false){return leg*(crouched?1.4:speed>5.65?3.45:speed>3.45?2.7:1.75);}
+
+// Redirect a roll with responsive but bounded turning. Lateral input adds to
+// the held movement direction, and normalization preserves the same roll speed.
+export function steerRoll(actor,yaw,x,z,strafe,dt){
+ x+=strafe*ROLL.strafeStrength;if(Math.hypot(x,z)<.01)return;
+ const length=Math.hypot(x,z),dx=(x*Math.cos(yaw)+z*Math.sin(yaw))/length,dz=(-x*Math.sin(yaw)+z*Math.cos(yaw))/length,current=Math.atan2(actor.rollDirection.x,actor.rollDirection.z),target=Math.atan2(dx,dz),delta=Math.atan2(Math.sin(target-current),Math.cos(target-current)),angle=current+Math.max(-ROLL.steerRate*dt,Math.min(ROLL.steerRate*dt,delta));actor.rollDirection.x=Math.sin(angle);actor.rollDirection.z=Math.cos(angle);
+}

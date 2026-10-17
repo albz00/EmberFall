@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=68';
+import {CONFIG} from './shared/config.js?v=69';
 const SHADERS=CONFIG.combat.presentation.shaders;
 import {batchFlames} from './flame-batch.js?v=67';
 import {makeWindCloth} from './wind-cloth.js?v=67';

@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=68';
+import {CONFIG} from './shared/config.js?v=69';
 const REWARDS=CONFIG.progression.rewards;
 const LEVELING=CONFIG.progression.leveling;
 export const LEVELS_PER_RANK=LEVELING.levelsPerRank;

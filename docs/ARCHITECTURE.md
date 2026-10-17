@@ -324,3 +324,14 @@ Inventory stats use one bounded hover/focus tooltip with no pointer capture. Sel
 `leveling.js` owns the existing EXP curve, re-exported by progression. `skills.js` validates permanent node ids, prerequisites, coin/level requirements, capped passive totals and purchase access. Sixty nodes across six branches are authored in progression JSON with explicit units and schema validation. Unknown, duplicate or orphaned saved skill ids are discarded; physical gear, slots, ranks and cosmetics retain their migration rules. Learned skills stay active if EXP later falls; level checks gate purchases only. Purchase locks apply to new weapon, armor, potion and merchant transactions, not loot, storage, equip, chest rolls or existing gear. Bots filter and transact through the same checks.
 
 Sprint/stamina costs, capacity/recovery, protection, guard strength, horizontal knockback resistance, elemental/status resistance, healing and ranged damage consume the same capped bonus functions. No direct-click timing, damage immunity, reach or melee animation gates changed.
+
+
+## Respawn, entry protection and steerable rolls (v0.69)
+
+Combat JSON owns the shared respawn delay, landing-protection duration, ledge floor tolerance, screen intensity and bounded roll steering rate/strength. `entry-protection.js` is a pure temporary-state tracker: actual observed ledge footing arms a fighter; leaving its safe region begins protected descent; the first ground or lava contact starts a finite timer. Further pit jumps/contacts cannot refresh it. Respawns, returns and match teleports clear the state; team/dungeon/flight movement cannot arm it.
+
+`canHit` rejects protected attackers and targets. Damage/ailment paths also guard environmental and periodic damage, and ranged release/cast paths prevent banking shots during protection. Aura and orb pressure use the same shared target gate. Character blue tint uses the cached material restore path and adds no new mesh. The player's blue overlay is a static gradient whose opacity decays over the landing window; first-person body visibility remains unchanged.
+
+Death respawn readiness uses the existing simulation clock. The world/bots now continue on the dead screen, while pause still pauses the simulation. A disabled countdown button plus a check in `startGame` prevent early player respawn; bots use the same delay. 2v2 eliminations retain round-based spectator/respawn behavior.
+
+Q/E during a roll sets lateral steering intent instead of creating an overlapping quickstep. A/D and held movement update the same direction through a turn-rate limit, normalized at the original roll speed. A quickstep can transition into a separately paid roll, cancelling its quickstep velocity window. Neither steering nor held keys refresh roll duration or cooldown.

@@ -1,5 +1,5 @@
-import {skillBonuses} from './skills.js?v=68';
-import {CONFIG} from './shared/config.js?v=68';
+import {skillBonuses} from './skills.js?v=69';
+import {CONFIG} from './shared/config.js?v=69';
 export const STAMINA=CONFIG.combat.stamina;
 export const staminaMaximum=actor=>STAMINA.maximum*(1+skillBonuses(actor.account??actor).staminaMax);
 export function resetStamina(actor){actor.stamina=staminaMaximum(actor);actor.staminaReadyAt=0;actor.exhausted=false;}

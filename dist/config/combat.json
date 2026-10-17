@@ -40,7 +40,9 @@
     "cooldown": 1.15,
     "speed": 8.5,
     "minimumClearance": 0.6,
-    "cameraDip": 0.38
+    "cameraDip": 0.38,
+    "steerRate": 5,
+    "strafeStrength": 0.85
   },
   "melee": {
     "hurtWindow": 0,
@@ -154,5 +156,11 @@
       "performanceEmbers": 240,
       "advancedEmbers": 1100
     }
+  },
+  "spawn": {
+    "respawnDelay": 3,
+    "landingProtection": 3,
+    "ledgeTolerance": 0.2,
+    "shieldOpacity": 0.85
   }
 }
