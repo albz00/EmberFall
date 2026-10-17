@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {makeProfile} from '../dist/progression.js';
+import {acceptBounty} from '../dist/bounties.js';
+export async function verifyV63(t,{byId,windowEvents,storage}){
+ t.closeAll();t.setMode('play');t.keys.clear();t.setFreecam(false,false);t.admin.god=t.admin.flying=false;Object.assign(t.profile,makeProfile());t.resetPlayer();for(const f of t.fighters){f.alive=false;f.respawnAt=Infinity;}
+ t.player.position.set(7,0,10);t.setAim(0,0);acceptBounty(t.profile,'arrows-1');acceptBounty(t.profile,'kills-1');
+ t.selectHotbarSlot(1);t.beginAttack();t.wait(.5);t.releaseBow();assert.equal(t.profile.bounties.active[0].progress,1,'actual bow release advances the arrow contract');t.updateHud();assert.equal(byId.get('bounty-tracker').children.length,2);assert(byId.get('bounty-tracker').children[0].innerHTML.includes('1 / 25'));
+ t.wait(1.1);t.updateHud();assert.equal(JSON.parse(storage.get('emberfall.profile.v2')).bounties.active[0].progress,1,'live progress persists without opening a menu');
+ const enemy=t.fighters[0];t.spawnFighter(enemy);enemy.position.set(7,0,7);t.killFighter(enemy,t.player);assert.equal(t.profile.bounties.active[1].progress,1);t.spawnFighter(enemy);t.killFighter(enemy,t.player,'Command');assert.equal(t.profile.bounties.active[1].progress,1,'command eliminations do not advance contracts');
+ t.completeReturn();t.showShop('bounties');assert.equal(t.menuContext,'merchant');assert.equal(byId.get('shop-content').children[1].children.length,27);const cards=byId.get('shop-content').children[1].children;assert(cards[0].innerHTML.includes('In progress'));const accept=cards.find(c=>c.innerHTML.includes('Sword hits 1')).querySelector('.bounty-action');accept.events.click[0]();assert(t.profile.bounties.active.some(a=>a.id==='melee-1'));assert.equal(JSON.parse(storage.get('emberfall.profile.v2')).bounties.active.length,3);
+ const active=t.profile.bounties.active.find(a=>a.id==='arrows-1');active.progress=25;t.renderShop();const card=byId.get('shop-content').children[1].children.find(c=>c.innerHTML.includes('Arrows fired 1'));const claim=card.querySelector('.bounty-action'),wallet=t.profile.coins;claim.events.click[0]();assert.equal(t.profile.coins,wallet+100);claim.events.click[0]();assert.equal(t.profile.coins,wallet+100,'stale reward button cannot pay twice');
+ t.closeAll();t.setMode('play');t.player.position.copy(t.world.portal.origin);t.updateHud();assert(byId.get('interact-prompt').classList.contains('unavailable'));t.interact();assert(byId.get('toast').classList.contains('unavailable'));t.showScoreboard();assert(byId.get('score-rows').children.length>0);t.resetPlayer();
+ console.log(JSON.stringify({v63:'passed',liveArrowAndKillBounties:true,commandsExcluded:true,tracker:true,progressSaved:true,merchantCatalog:27,merchantAcceptAndClaim:true,staleClaimPaysOnce:true,unavailablePromptAndToastRed:true}));
+}

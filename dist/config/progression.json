@@ -348,5 +348,226 @@
   "match": {
     "rounds": 3,
     "betweenRounds": 4
+  },
+  "bounties": {
+    "activeLimit": 3,
+    "contracts": [
+      {
+        "id": "kills-1",
+        "name": "Knockouts 1",
+        "metric": "kills",
+        "target": 5,
+        "coins": 150,
+        "points": 30
+      },
+      {
+        "id": "kills-2",
+        "name": "Knockouts 2",
+        "metric": "kills",
+        "target": 15,
+        "coins": 500,
+        "points": 100
+      },
+      {
+        "id": "kills-3",
+        "name": "Knockouts 3",
+        "metric": "kills",
+        "target": 40,
+        "coins": 1500,
+        "points": 300
+      },
+      {
+        "id": "arrows-1",
+        "name": "Arrows fired 1",
+        "metric": "arrows",
+        "target": 25,
+        "coins": 100,
+        "points": 20
+      },
+      {
+        "id": "arrows-2",
+        "name": "Arrows fired 2",
+        "metric": "arrows",
+        "target": 75,
+        "coins": 300,
+        "points": 60
+      },
+      {
+        "id": "arrows-3",
+        "name": "Arrows fired 3",
+        "metric": "arrows",
+        "target": 200,
+        "coins": 900,
+        "points": 180
+      },
+      {
+        "id": "melee-1",
+        "name": "Sword hits 1",
+        "metric": "melee",
+        "target": 20,
+        "coins": 150,
+        "points": 30
+      },
+      {
+        "id": "melee-2",
+        "name": "Sword hits 2",
+        "metric": "melee",
+        "target": 60,
+        "coins": 450,
+        "points": 90
+      },
+      {
+        "id": "melee-3",
+        "name": "Sword hits 3",
+        "metric": "melee",
+        "target": 160,
+        "coins": 1200,
+        "points": 240
+      },
+      {
+        "id": "crits-1",
+        "name": "Critical hits 1",
+        "metric": "crits",
+        "target": 5,
+        "coins": 200,
+        "points": 40
+      },
+      {
+        "id": "crits-2",
+        "name": "Critical hits 2",
+        "metric": "crits",
+        "target": 15,
+        "coins": 600,
+        "points": 120
+      },
+      {
+        "id": "crits-3",
+        "name": "Critical hits 3",
+        "metric": "crits",
+        "target": 40,
+        "coins": 1600,
+        "points": 320
+      },
+      {
+        "id": "spells-1",
+        "name": "Spells cast 1",
+        "metric": "spells",
+        "target": 15,
+        "coins": 100,
+        "points": 20
+      },
+      {
+        "id": "spells-2",
+        "name": "Spells cast 2",
+        "metric": "spells",
+        "target": 50,
+        "coins": 350,
+        "points": 70
+      },
+      {
+        "id": "spells-3",
+        "name": "Spells cast 3",
+        "metric": "spells",
+        "target": 150,
+        "coins": 1100,
+        "points": 220
+      },
+      {
+        "id": "potions-1",
+        "name": "Potions used 1",
+        "metric": "potions",
+        "target": 5,
+        "coins": 100,
+        "points": 20
+      },
+      {
+        "id": "potions-2",
+        "name": "Potions used 2",
+        "metric": "potions",
+        "target": 15,
+        "coins": 350,
+        "points": 70
+      },
+      {
+        "id": "potions-3",
+        "name": "Potions used 3",
+        "metric": "potions",
+        "target": 40,
+        "coins": 1000,
+        "points": 200
+      },
+      {
+        "id": "crates-1",
+        "name": "Supply crates 1",
+        "metric": "crates",
+        "target": 2,
+        "coins": 200,
+        "points": 40
+      },
+      {
+        "id": "crates-2",
+        "name": "Supply crates 2",
+        "metric": "crates",
+        "target": 6,
+        "coins": 650,
+        "points": 130
+      },
+      {
+        "id": "crates-3",
+        "name": "Supply crates 3",
+        "metric": "crates",
+        "target": 15,
+        "coins": 1800,
+        "points": 360
+      },
+      {
+        "id": "wins-1",
+        "name": "2v2 victories 1",
+        "metric": "wins",
+        "target": 1,
+        "coins": 250,
+        "points": 50
+      },
+      {
+        "id": "wins-2",
+        "name": "2v2 victories 2",
+        "metric": "wins",
+        "target": 3,
+        "coins": 800,
+        "points": 160
+      },
+      {
+        "id": "wins-3",
+        "name": "2v2 victories 3",
+        "metric": "wins",
+        "target": 10,
+        "coins": 2500,
+        "points": 500
+      },
+      {
+        "id": "blocks-1",
+        "name": "Attacks blocked 1",
+        "metric": "blocks",
+        "target": 10,
+        "coins": 150,
+        "points": 30
+      },
+      {
+        "id": "blocks-2",
+        "name": "Attacks blocked 2",
+        "metric": "blocks",
+        "target": 30,
+        "coins": 500,
+        "points": 100
+      },
+      {
+        "id": "blocks-3",
+        "name": "Attacks blocked 3",
+        "metric": "blocks",
+        "target": 80,
+        "coins": 1400,
+        "points": 280
+      }
+    ]
   }
 }

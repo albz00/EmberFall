@@ -8,6 +8,7 @@ export const CONFIG_FILES=['combat','weapons','armor','consumables','cosmetics',
 // Saved profiles, chest storage and settings store these ids. Renaming display
 // text is safe; removing an id would silently strip owned items from saves.
 export const PERSISTED_IDS={
+ bounties:['kills-1','kills-2','kills-3','arrows-1','arrows-2','arrows-3','melee-1','melee-2','melee-3','crits-1','crits-2','crits-3','spells-1','spells-2','spells-3','potions-1','potions-2','potions-3','crates-1','crates-2','crates-3','wins-1','wins-2','wins-3','blocks-1','blocks-2','blocks-3'],
  kits:['vanguard','rogue','sentinel'],
  weapons:['classic','dagger','broadsword','mace','gemblade','frost','venom','arcane','god','riftfang','gilded-oath','thunderclap','voidsplitter','eclipse-edge','cinderfang','warden-cleaver','hollow-scepter'],
  armor:['none','iron','gold','leather','metal','helmet','cryptguard'],
@@ -112,6 +113,7 @@ const voiceFile=description=>string({pattern:/^[\w-]+\.mp3$/,patternLabel:'an .m
 const rollRange=(damageMax,max)=>object({damage:object({min:integer({min:0,max:damageMax}),spread:integer({min:1,max:damageMax})}),reach:object({min:meters({max}),spread:meters({max})}),speed:object({min:number({min:0,max}),spread:number({min:0,max})})});
 const progressionSchema=object({
  schemaVersion:header,
+ bounties:object({activeLimit:integer({unit:'contracts',min:1,max:3}),contracts:array(object({id:label(40),name:label(40),metric:oneOf(['kills','arrows','melee','crits','spells','potions','crates','wins','blocks']),target:integer({unit:'actions',min:1,max:100000}),coins:coins(),points:integer({unit:'EXP',min:0,max:100000})}),{min:1,unique:'id'})}),
  inventory:object({carrySlots:integer({unit:'slots',min:1,max:200}),hotbarSlots:integer({unit:'slots',min:1,max:9}),stackLimit:integer({unit:'items',min:1,max:999})}),
  storage:object({initialSlots:integer({unit:'slots',min:0,max:1000}),stepSlots:integer({unit:'slots',min:1,max:1000}),basePrice:coins()}),
  starterKit:object({weapon:ref('weapons'),potion:ref('potions'),potionCount:integer({min:0,max:999})}),
@@ -181,6 +183,7 @@ function crossCheck(c,issue){
  keep('armor.json','armor',armor?.armor&&Object.keys(armor.armor),PERSISTED_IDS.armor);
  keep('cosmetics.json','cosmetics',cosmetics?.cosmetics&&Object.keys(cosmetics.cosmetics),PERSISTED_IDS.cosmetics);
  keep('cosmetics.json','nameplates',cosmetics?.nameplates&&Object.keys(cosmetics.nameplates),PERSISTED_IDS.nameplates);
+ keep('progression.json','bounties.contracts',progression?.bounties?.contracts?.map(b=>b.id),PERSISTED_IDS.bounties);
  keep('progression.json','rarities',progression?.rarities&&Object.keys(progression.rarities),PERSISTED_IDS.rarities);
  keep('progression.json','chest.forged.titles',progression?.chest?.forged?.titles,PERSISTED_IDS.titles);
  if(combat?.melee?.hitbox&&combat.melee.hitbox.crouched>combat.melee.hitbox.height)issue('combat.json','melee.hitbox.crouched must not exceed melee.hitbox.height');

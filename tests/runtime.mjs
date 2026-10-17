@@ -1,3 +1,4 @@
+import {verifyV63} from './v63-gameplay.mjs';
 import {verifyV61} from './v61-gameplay.mjs';
 import {verifyV60} from './v60-gameplay.mjs';
 import {verifyV57,verifyV58,verifyV59} from './v57-gameplay.mjs';
@@ -334,4 +335,5 @@ try{
  await verifyV59(t,{byId,windowEvents});
  await verifyV60(t,{byId,windowEvents});
  await verifyV61(t,{byId,windowEvents});
+ await verifyV63(t,{byId,windowEvents,storage});
 }finally{await unlink(path);}

@@ -1,10 +1,10 @@
 import {batchFlames} from './flame-batch.js?v=62';
-import {makeWindCloth} from './wind-cloth.js?v=62';
+import {makeWindCloth} from './wind-cloth.js?v=64';
 import {addRockRunes} from './rock-runes.js?v=24';
 import {buildSky} from './arena-sky.js?v=46';
 import {buildPortal,addStringLights} from './portal.js?v=59';
 import * as THREE from './vendor/three.module.js';
-import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=62';
+import {MAP,lavaDistance,isLava,groundHeight,safeZone} from './shared/map.js?v=64';
 import {mapColliders,createCollision,createMapQueries,objectSurfaces,rampSurfaceHeight} from './shared/map-queries.js?v=62';
 import {PREFAB_VISUALS} from './shared/map-schema.js?v=62';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
@@ -90,8 +90,7 @@ export function buildWorld(scene,map=MAP){
    'screen-wall'(o){const c=map.prefabs[o.prefab].colliders[0],h=c.maxY-c.minY,y=(o.y??0)+c.minY;box(root,o.x,y+h/2,o.z,c.w,h,c.d,0x5f5461);const alongX=c.w>c.d;
     box(root,o.x,y+h+.04,o.z,c.w+.06,.12,c.d+.06,0x9f7650);for(const side of [-1,1])bandedPost(root,o.x+(alongX?side*(c.w/2-.15):0),y,o.z+(alongX?0:side*(c.d/2-.15)),h+.12);},
    'combat-mezzanine'(o){for(const s of objectSurfaces(map,o)){const x=(s.minX+s.maxX)/2,z=(s.minZ+s.maxZ)/2;box(root,x,s.top-.22,z,s.maxX-s.minX,.36,s.maxZ-s.minZ,0x50454b);for(let xx=s.minX+.16;xx<s.maxX;xx+=.34)box(root,xx,s.top-.03,z,.31,.06,s.maxZ-s.minZ,0x987352);}
-    const h=objectSurfaces(map,o)[0].top;for(const z of [o.z-2.6,o.z+1.8])beam(root,[o.x-8,h-.45,z],[o.x+8,h-.45,z],.18,0x684934);for(const x of [-8,8])beam(root,[o.x+x,h-.45,o.z-6.2],[o.x+x,h-.45,o.z+2.1],.2,0x684934);
-    for(const x of [-3.6,3.6]){beam(root,[o.x+x,h-.45,o.z+1.5],[o.x+x,h-1.0,o.z+1.5],.035,0x403a48);torch(root,o.x+x,h-1.45,o.z+1.5,.3,true);}},
+    const h=objectSurfaces(map,o)[0].top;for(const z of [o.z-2.6,o.z+1.8])beam(root,[o.x-8,h-.44,z],[o.x+8,h-.44,z],.18,0x684934);for(const x of [-8,8])beam(root,[o.x+x,h-.44,o.z-6.2],[o.x+x,h-.44,o.z+1.8],.18,0x684934);},
    'combat-deck'(o){const s=objectSurfaces(map,o)[0],h=s.top,centerZ=(s.minZ+s.maxZ)/2;box(root,o.x,h-.28,centerZ,s.maxX-s.minX,.42,s.maxZ-s.minZ,0x50454b);
     for(let x=s.minX+.19;x<s.maxX;x+=.4)box(root,x,h-.045,centerZ,.37,.09,s.maxZ-s.minZ,0x987352);
     for(const c of map.prefabs[o.prefab].colliders??[])bandedPost(root,o.x+c.x,o.y??0,o.z+c.z,h-.4);
@@ -130,13 +129,13 @@ export function buildWorld(scene,map=MAP){
    box(g,0,(7.95+2.85)/2,frontZ,2.05,7.95-2.85,.64,0x7d7378);
    for(const side of [-1,1])box(g,side*1.05,1.4,frontZ+.35,.16,2.8,.13,0xb19a7b);box(g,0,2.87,frontZ+.35,2.26,.18,.13,0xb19a7b);
    for(let yy=1.5;yy<7;yy+=1.7)mesh(new THREE.CylinderGeometry(3.04,3.04,.16,8,1,true,Math.PI/8,Math.PI*2-Math.PI/4),material(0x5f5461),0,yy,0,g);
-   for(const xx of [-2.25,2.25])for(const zz of [-2.25,2.25])bandedPost(g,xx,.6,zz,7.1);
+   for(const xx of [-2.25,2.25])for(const zz of [-2.25,2.25])bandedPost(g,xx,0,zz,7.7);
    for(const yy of [4,7.6]){box(g,0,yy,0,6.3,.42,6.3,0x6c4938);box(g,0,yy+.26,0,6.7,.13,6.7,0x9f7650);}
    // Warm interior sconces and an inset floor, below the existing upper floors and roof.
-   mesh(new THREE.CylinderGeometry(1.85,1.85,.025,8),material(0x584954),0,-.0125,0,g);
+   mesh(new THREE.CylinderGeometry(1.85,1.85,.025,8),material(0x584954),0,.018,0,g);
    for(const xx of [-1.7,1.7]){beam(g,[xx,2.2,-1.55],[xx,2.2,-1.2],.06,0x403a48);torch(g,xx,2.7,-1.2,.4);}
    mesh(new THREE.ConeGeometry(4.8,2.5,4),material(0xa44e50),0,TOWER_EAVE+1.25,0,g).rotation.y=Math.PI/4;box(g,0,TOWER_EAVE+.01,0,6.7,.16,6.7,0x5a3b3d);
-   banners.push(banner(g,-1.7,6.3,3.18,.8,2.5));beam(g,[-2.2,6.42,2.9],[-2.2,6.42,3.18],.07);beam(g,[-1.2,6.42,2.9],[-1.2,6.42,3.18],.07);
+   banners.push(banner(g,0,6.3,3.18,.8,2.5));for(const xx of [-.5,.5])beam(g,[xx,6.42,2.9],[xx,6.42,3.18],.07);
    torch(g,-2.3,5.18,3.1,.8);torch(g,2.3,5.18,3.1,.8);
   }
   const objectsById=new Map(map.objects.map(o=>[o.id,o])),anchor=id=>{const o=objectsById.get(id);return ANCHORS[map.prefabs[o.prefab].visual](o);};

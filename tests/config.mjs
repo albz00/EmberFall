@@ -24,6 +24,9 @@ expectIssue(c=>{c.weapons.weapons.dagger.damage='13';},'weapons.json → weapons
 expectIssue(c=>{c.armor.armor.iron.price=-5;},'armor.json → armor.iron.price: must be at least 0 coins');
 expectIssue(c=>{c.combat.melee.hurtWindow=45;},'combat.json → melee.hurtWindow: must be at most 10 s');
 expectIssue(c=>{c.weapons.weapons.mace.reech=3;},'weapons.mace: unknown field "reech"');
+expectIssue(c=>{c.progression.bounties.contracts.shift();},'kills-1');
+expectIssue(c=>{c.progression.bounties.activeLimit=4;},'bounties.activeLimit: must be at most 3 contracts');
+expectIssue(c=>{c.progression.bounties.contracts[0].metric='cheats';},'bounties.contracts[0].metric');
 expectIssue(c=>{c.progression.schemaVersion=2;},'progression.json → schemaVersion: must be 1, got 2');
 expectIssue(c=>{delete c.cosmetics;},'cosmetics.json → (root): is required');
 expectIssue(c=>{c.progression.chest.weapons.push('spear');},'chest.weapons[7]: "spear" is not a defined weapons id');
@@ -67,7 +70,7 @@ for(const title of PERSISTED_IDS.titles)assert.equal(sanitizeItem({id:'f',weapon
 // One source of truth: edited JSON changes behavior in every migrated module.
 const scratch=await mkdtemp(join(tmpdir(),'emberfall-config-'));
 try{
- for(const file of['combat.js','progression.js','charged-melee.js','arena-events.js'])await cp(new URL(file,dist),join(scratch,file));
+ for(const file of['combat.js','progression.js','bounties.js','charged-melee.js','arena-events.js'])await cp(new URL(file,dist),join(scratch,file));
  await cp(new URL('shared/',dist),join(scratch,'shared'),{recursive:true});await cp(new URL('maps/',dist),join(scratch,'maps'),{recursive:true});await mkdir(join(scratch,'config'));
  const edited=copy();
  Object.assign(edited.combat.melee,{hurtWindow:.7,criticalMultiplier:2,blockMultiplier:.5});edited.combat.kits.vanguard.health=333;

@@ -1,4 +1,4 @@
-import {DUNGEON,seededRandom,roomContains} from './dungeon.js?v=62';
+import {DUNGEON,seededRandom,roomContains} from './dungeon.js?v=64';
 export function planDungeonSpell(run,owner,id,player,now,blocked=()=>false){
  const spec=DUNGEON.spells[id],room=run.layout.encounters[run.encounter],serial=++run.attacks,rng=seededRandom(run.seed^Math.imul(serial,2654435761));
  const aim={x:player.position.x+(player.velocity?.x??0)*DUNGEON.magic.prediction,z:player.position.z+(player.velocity?.z??0)*DUNGEON.magic.prediction};

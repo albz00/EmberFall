@@ -119,17 +119,7 @@
     {"id": "under-ledge-stairs-east", "prefab": "combat-stairs", "x": 5.4, "z": 20.2},
     {"id": "under-ledge-mezzanine", "prefab": "combat-mezzanine", "x": 0, "z": 27.2},
     {"id": "mezzanine-stairs-west", "prefab": "mezzanine-stairs", "x": -5.6, "y": 3.2, "z": 27.1},
-    {"id": "mezzanine-stairs-east", "prefab": "mezzanine-stairs", "x": 5.6, "y": 3.2, "z": 27.1},
-    {"id": "lower-screen-west", "prefab": "side-screen", "x": -7.15, "y": 3.2, "z": 27.2},
-    {"id": "lower-screen-east", "prefab": "side-screen", "x": 7.15, "y": 3.2, "z": 27.2},
-    {"id": "lower-screen-back", "prefab": "back-screen", "x": 0, "y": 3.2, "z": 29.9},
-    {"id": "lower-duel-cover-west", "prefab": "duel-cover", "x": -1.9, "y": 3.2, "z": 27.7},
-    {"id": "lower-duel-cover-east", "prefab": "duel-cover", "x": 1.9, "y": 3.2, "z": 27.7},
-    {"id": "upper-screen-west", "prefab": "side-screen", "x": -7.15, "y": 7, "z": 27.2},
-    {"id": "upper-screen-east", "prefab": "side-screen", "x": 7.15, "y": 7, "z": 27.2},
-    {"id": "upper-screen-back", "prefab": "back-screen", "x": 0, "y": 7, "z": 29.9},
-    {"id": "upper-duel-cover-west", "prefab": "duel-cover", "x": -1.9, "y": 7, "z": 27.7},
-    {"id": "upper-duel-cover-east", "prefab": "duel-cover", "x": 1.9, "y": 7, "z": 27.7}
+    {"id": "mezzanine-stairs-east", "prefab": "mezzanine-stairs", "x": 5.6, "y": 3.2, "z": 27.1}
   ],
   "stringLights": [
     {"from": "tower-northwest", "to": "tower-northeast", "sag": 2.1},

@@ -289,3 +289,27 @@
 .modal,.scoreboard-card{contain:layout style;}.cosmetic-preview{contain:layout paint;}
 
 #hud-streak{font-size:12px;color:#ffce83;font-weight:950;margin-right:9px;}
+
+/* Luminous enamel, fine filigree and flowing light within the two vital bars. */
+#combat-dock #player-health{filter:drop-shadow(0 2px 3px #110b22);}
+#combat-dock .health-track{height:24px;border-color:#eec1de9c;border-radius:9px 18px 9px 18px;box-shadow:inset 0 1px 4px #160d28,0 0 0 2px #33223a,0 0 0 3px #c8a36e77,0 0 16px #e55c8d40;}
+#combat-dock .health-track:before{content:'';position:absolute;inset:3px;border:1px solid #ffe8cf42;border-radius:6px 14px;pointer-events:none;z-index:3;}
+#combat-dock .health-track:after{content:'◇';position:absolute;right:10px;top:0;line-height:21px;color:#fff1c4b3;font-size:15px;z-index:3;text-shadow:0 0 6px #ffcfdc;}
+#health-fill{background:radial-gradient(ellipse at 30% 15%,#ffdbef77,transparent 58%),linear-gradient(0deg,#812d68,#de4f90 40%,#ff9eb4 78%,#ffe1da);box-shadow:0 0 18px #fa5d9e,inset 0 2px 3px #ffe8de99;}
+#health-fill:before,#stamina-fill:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 12% 55%,#fff6d9 0 1px,transparent 2px),radial-gradient(circle at 48% 25%,#ffeebc 0 1px,transparent 2px),radial-gradient(circle at 78% 65%,#fff3d6 0 1px,transparent 2px);background-size:83px 100%;opacity:.6;animation:vital-flow 9s linear infinite;}
+.stamina-track{height:9px;border-color:#9bf3d49c;border-radius:3px 9px;box-shadow:0 0 0 1px #42374e,0 0 11px #61e1c940,inset 0 1px 3px #080e1e;}
+#stamina-fill{background:linear-gradient(0deg,#2d528c,#49d6b7 54%,#dbffca);}
+.unavailable,#toast.unavailable,.sold-out .exotic-stock,.sold-out button:disabled{color:#ff7b84!important;}
+#score-tables th:nth-child(2),#score-tables td:nth-child(2){color:#82e4a3;}
+#score-tables th:nth-child(3),#score-tables td:nth-child(3){color:#ff7d87;}
+.bounty-summary{color:#d3c6ad;margin:0 0 16px;font-size:13px;}
+.bounty-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;}
+.bounty-card{min-width:0;padding:16px;border:1px solid #bc965b77;border-radius:14px;background:linear-gradient(145deg,#55433e,#302735);box-shadow:inset 0 1px #ffe3b130,0 3px #1e1828;}
+.bounty-card h3{font-size:17px;margin:0 0 8px;color:#ffdf9e;}.bounty-card p{font-size:13px;margin:6px 0;}.bounty-card .bounty-reward{color:#c8ead0;}
+.bounty-card .item-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}.bounty-card .secondary-button{flex:1;min-width:0;font-size:13px;}
+.bounty-abandon{background:none;border:0;color:#d7bbc5;text-decoration:underline;cursor:pointer;padding:8px;font-size:12px;}.bounty-card.complete{border-color:#a3e5b2;}
+#bounty-tracker{position:fixed;right:22px;top:max(140px,23%);width:220px;max-width:25vw;pointer-events:none;text-shadow:0 2px 3px #100b21;}
+.bounty-track{display:grid;grid-template-columns:1fr auto;gap:5px 10px;padding:9px 11px;margin-bottom:7px;border-right:2px solid #c7a36c99;background:linear-gradient(90deg,transparent,#241b2d80);border-radius:4px;font-size:12px;}
+.bounty-track span{color:#f1d9af;}.bounty-track b{color:#fff1da;font-size:11px;white-space:nowrap;}.bounty-track i{grid-column:1/-1;height:3px;background:#09071573;border-radius:4px;overflow:hidden;}.bounty-track i:after{content:'';display:block;width:calc(var(--progress)*100%);height:100%;background:#e2bb75;box-shadow:0 0 5px #e2bb75;transition:width .2s;}.bounty-track small{grid-column:1/-1;color:#9ce8b6;}.bounty-track.complete{border-color:#9ce8b6;}
+@media(max-width:650px){#bounty-tracker{top:110px;right:8px;width:170px;max-width:37vw;}.bounty-track{padding:6px;font-size:10px;gap:4px;}.bounty-track b{font-size:10px;}}
+@media(prefers-reduced-motion:reduce){#health-fill:before,#stamina-fill:before{animation:none;}.bounty-track i:after{transition:none;}}

@@ -5,10 +5,10 @@ import weapons from '../config/weapons.json?v=59' with {type:'json'};
 import armor from '../config/armor.json?v=59' with {type:'json'};
 import consumables from '../config/consumables.json?v=59' with {type:'json'};
 import cosmetics from '../config/cosmetics.json?v=26' with {type:'json'};
-import progression from '../config/progression.json?v=59' with {type:'json'};
+import progression from '../config/progression.json?v=64' with {type:'json'};
 import bots from '../config/bots.json?v=59' with {type:'json'};
 import events from '../config/events.json?v=55' with {type:'json'};
-import {parseConfig,CONFIG_FILES,SCHEMA_VERSION} from './config-schema.js?v=62';
+import {parseConfig,CONFIG_FILES,SCHEMA_VERSION} from './config-schema.js?v=64';
 import {deepFreeze,contentHash} from './schema.js?v=26';
 
 const raw={combat,weapons,armor,consumables,cosmetics,progression,bots,events};

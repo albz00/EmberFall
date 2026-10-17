@@ -277,3 +277,14 @@ The map adds a 7 m mezzanine above the 3.2 m terrace, stairwell openings, connec
 `flame-batch.js` also batches the three authored flame lobes per torch into one instanced draw. Original transforms, colors and per-flame phase are retained; flicker runs in the vertex shader. The detached old flame meshes dispose their geometry/materials after instance data is copied. This keeps the expanded architecture within the existing mesh budget.
 
 `createCollision` indexes pre-expanded collider bounds in 4 m cells for its repeated visibility/steering point samples. Queries with padding up to 1 m use that bin; wider probes fall back to the full collider list. The narrow phase and ordered collision resolution are unchanged, with grid comparisons against a brute-force reference.
+
+
+## Merchant contracts and arena corrections (v0.63–0.64)
+
+`config/progression.json` owns 27 bounty definitions, their action quantities, coin/EXP rewards and the three-contract limit. The schema restricts objective metrics and validates numeric units. `bounties.js` sanitizes additive profile state, accepts contracts from zero, advances matching active objectives, caps progress, abandons without reward, and pays each completed contract exactly once. Existing physical inventory and saves retain their v4 format. Actual player events advance progress; command eliminations do not. Claiming and acceptance save immediately; action progress batches writes at most once per game second, with a pagehide flush. The merchant Bounties tab lists contracts and the compact right-side tracker shows only accepted contracts. This remains browser-local progression, like the existing economy.
+
+Removed all ten under-ledge screen/cover objects and suspended mezzanine torches. The open floors, stairwell clearances, support timbers and routes remain. Tower banners sit centered above the doorway, corner timbers begin at floor height, and the inset stone floor top is separated from the base disk. Cloth uses a deterministic placement hash for speed, amplitude and phase while preserving pinned hems and one instanced draw.
+
+Projectile wall tests now query the existing static triangle index with the original 0.001 m near plane and exact segment length. Impact locations come from the nearest indexed hit; victim-versus-wall ordering is unchanged. `render-warmup.js` deduplicates and uploads scene/model textures in yielding batches and awaits compilation for arena, weapon and hero views before enabling Play. This addresses identifiable hot paths, not a measured browser FPS claim: actual WebGL shader rendering and intermittent stalls still require browser profiling.
+
+Both vital bars remain beneath the real hotbar, without a heart icon. Fine filigree, colored enamel gradients and flowing highlights use CSS, honoring reduced-motion settings. Unavailable notices are red. Leaderboard columns color kills green and deaths red across all tables.

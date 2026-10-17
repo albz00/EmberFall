@@ -23,5 +23,13 @@ for(let i=0;i<80;i++){
  if(expected===null)assert.equal(actual,null);else assert(actual!==null&&Math.abs(actual-expected)<.0001,`ray ${i}: ${actual} vs ${expected}`);
  if(far<5){totalTests+=index.lastTests;queries++;}
 }
+// Short projectile segments retain the original 1 mm near plane and exact nearest wall hit.
+let projectileTests=0;
+for(let i=0;i<240;i++){
+ const origin=new T.Vector3(Math.sin(i*.71)*31,1.4+(i%3)*3,Math.cos(i*.43)*31),direction=new T.Vector3(Math.sin(i*.91),Math.sin(i*.37)*.6,Math.cos(i*.91)).normalize(),far=.2+(i%4)*.15;
+ const expected=new T.Raycaster(origin,direction,.001,far).intersectObjects(meshes,false)[0]?.distance??null,actual=index.distance(origin,direction,far,.001);
+ if(expected===null)assert.equal(actual,null);else assert(actual!==null&&Math.abs(actual-expected)<.0001);projectileTests+=index.lastTests;
+}
+assert(projectileTests/240<index.triangles*.01,'projectiles inspect less than 1% of static triangles per segment');
 assert(totalTests/queries<index.triangles*.1,'near-camera rays inspect less than 10% of the map triangles');
 console.log(JSON.stringify({stamina:'passed',exhaustionAndRecovery:true,adminBypass:true,stairsAndUnderpass:true,routedStairApproach:true,indexedRays:80,triangles:index.triangles,meanCameraTriangles:Math.round(totalTests/queries),exactSceneryHits:true}));

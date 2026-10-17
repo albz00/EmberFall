@@ -1,4 +1,5 @@
-import {CONFIG} from './shared/config.js?v=62';
+import {sanitizeBounties} from './bounties.js?v=64';
+import {CONFIG} from './shared/config.js?v=64';
 import {deepFreeze} from './shared/schema.js?v=26';
 const {inventory:INVENTORY,storage:STORAGE,starterKit:STARTER,chest:CHEST,salvage:SALVAGE,rewards:REWARDS}=CONFIG.progression;
 export const WEAPONS=CONFIG.weapons.weapons;
@@ -100,6 +101,7 @@ export function makeProfile(saved={},legacy={}){
  p.ownedNameplates=[...new Set(['none',...(Array.isArray(saved.ownedNameplates)?saved.ownedNameplates.filter(id=>Object.hasOwn(NAMEPLATES,id)):[])])];
  p.nameplate=p.ownedNameplates.includes(saved.nameplate)?saved.nameplate:'none';p.cosmetic=p.ownedCosmetics.includes(saved.cosmetic)?saved.cosmetic:'none';
  p.duels={};for(const key of ['played','wins','losses'])p.duels[key]=Number.isFinite(saved.duels?.[key])?Math.max(0,Math.floor(saved.duels[key])):0;
+ p.bounties=sanitizeBounties(saved.bounties);
  syncInventory(p);return p;
 }
 export function equippedItem(p){return p.inventory.find(i=>i.id===p.equipped&&i.weapon)??p.inventory.find(i=>i.weapon);}

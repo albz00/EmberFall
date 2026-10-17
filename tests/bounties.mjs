@@ -1,0 +1,21 @@
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {makeProfile} from '../dist/progression.js';
+import {BOUNTIES,BOUNTY_LIMIT,acceptBounty,advanceBounties,claimBounty,abandonBounty,sanitizeBounties} from '../dist/bounties.js';
+import {warmRenderer} from '../dist/render-warmup.js';
+import * as T from '../dist/vendor/three.module.js';
+const css=await readFile(new URL('../dist/game-panels.css',import.meta.url),'utf8');assert(css.includes('#score-tables td:nth-child(2){color:#82e4a3;}'));assert(css.includes('#score-tables td:nth-child(3){color:#ff7d87;}'));
+const p=makeProfile(),originalItems=JSON.stringify(p.inventory);assert.equal(BOUNTIES.length,27);assert.equal(BOUNTY_LIMIT,3);
+assert(!advanceBounties(p,'kills',100));assert(acceptBounty(p,'kills-1').ok);assert(!claimBounty(p,'kills-1').ok);assert(!acceptBounty(p,'kills-1').ok);
+assert(acceptBounty(p,'arrows-1').ok);assert(acceptBounty(p,'blocks-1').ok);assert(!acceptBounty(p,'wins-1').ok);
+advanceBounties(p,'kills',4);advanceBounties(p,'arrows',24);assert.equal(p.bounties.active[2].progress,0);assert(!advanceBounties(p,'kills',Infinity));assert(!advanceBounties(p,'kills',-.1));
+const restored=makeProfile(JSON.parse(JSON.stringify(p)));assert.deepEqual(restored.bounties,p.bounties);assert.equal(JSON.stringify(restored.inventory),originalItems);
+assert(!claimBounty(restored,'kills-1').ok);advanceBounties(restored,'kills');const coins=restored.coins,exp=restored.rating;assert(claimBounty(restored,'kills-1').ok);assert.equal(restored.coins,coins+150);assert.equal(restored.rating,exp+30);assert(!claimBounty(restored,'kills-1').ok);assert(!acceptBounty(restored,'kills-1').ok);
+assert(abandonBounty(restored,'arrows-1').ok);assert(acceptBounty(restored,'arrows-1').ok);assert.equal(restored.bounties.active.find(b=>b.id==='arrows-1').progress,0);
+assert.deepEqual(makeProfile(JSON.parse(JSON.stringify(restored))).bounties,restored.bounties);
+const invalid=sanitizeBounties({claimed:['missing','kills-1','kills-1'],active:[{id:'kills-1',progress:999},{id:'missing'},{id:'arrows-1',progress:NaN},{id:'arrows-1',progress:9000},{id:'blocks-1',progress:-10},{id:'wins-1',progress:999},{id:'melee-1',progress:99}]});assert.deepEqual(invalid,{claimed:['kills-1'],active:[{id:'arrows-1',progress:0},{id:'blocks-1',progress:0},{id:'wins-1',progress:1}]});
+for(const metric of new Set(BOUNTIES.map(b=>b.metric))){const one=makeProfile(),b=BOUNTIES.find(b=>b.metric===metric);acceptBounty(one,b.id);assert(advanceBounties(one,metric,100000));assert.equal(one.bounties.active[0].progress,b.target);assert(!advanceBounties(one,metric));assert(claimBounty(one,b.id).ok);}
+const texture=new T.Texture(),scene=new T.Scene(),other=new T.Scene(),m=new T.MeshStandardMaterial({map:texture});scene.add(new T.Mesh(new T.BoxGeometry(),m),new T.Mesh(new T.BoxGeometry(),m));other.add(new T.Mesh(new T.BoxGeometry(),m.clone()));const calls=[];
+const fake={initTexture(t){calls.push(['texture',t]);},async compileAsync(s,c){await Promise.resolve();calls.push(['compile',s,c]);}};
+const result=await warmRenderer(fake,[[scene,'camera-a'],[other,'camera-b']]);assert.deepEqual(result,{textures:1,views:2});assert.equal(calls.filter(c=>c[0]==='texture').length,1);assert.equal(calls.at(-1)[1],other);
+console.log(JSON.stringify({bounties:'passed',contracts:27,actionTypes:9,threeActiveLimit:true,acceptanceBaseline:true,saveAndReload:true,claimExactlyOnce:true,abandonResetsProgress:true,invalidSaveSanitized:true,rendererWarmup:true,deduplicatedTextureUploads:true}));

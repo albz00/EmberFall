@@ -1,4 +1,4 @@
-import {CONFIG} from './shared/config.js?v=62';
+import {CONFIG} from './shared/config.js?v=64';
 import * as THREE from './vendor/three.module.js';
 const V=THREE.Vector3,Q=THREE.Quaternion,Y=new V(0,1,0),FLIGHT=CONFIG.combat.flightPose;
 export function makeCharacterPose(){return{bones:new Map(),saved:[],weight:0,flightBlend:0,flightVelocity:new V(),flightPhase:0,flightHover:0,flightAnchors:{},flightJoints:{},flightSolving:false,flightDt:0};}
